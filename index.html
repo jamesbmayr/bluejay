@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ave</title>
+		<link rel="shortcut icon" href="#">
+		<link rel="stylesheet" href="stylesheet.css">
+		<meta charset="UTF-8"/>
+		<meta name="description" content="ave is an action-voice engine by James Mayr"/>
+		<meta name="author" content="James Mayr"/>
+		<meta property="og:title" content="ave"/>
+		<meta property="og:url" content="https://jamesmayr.com/ave/"/>
+		<meta property="og:description" content="ave is an action-voice engine by is a Javascript web demo by James Mayr"/>
+		<meta property="og:image" content="https://jamesmayr.com/resources/j.png"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+		<script src="library.js"></script>
+		<script src="script.js"></script>
+	</head>
+	<body>
+		<!-- <a id="j-logo" href="https://jamesmayr.com" target="_blank"></a> -->
+		<div id="inputs">
+			<details id="inputs-advanced">
+				<summary id="inputs-advanced-toggle">&equiv;</summary>
+				<div id="inputs-advanced-inner">
+					<label id="inputs-duration-label">listen <input id="inputs-duration" type="number" value="10" min="1" max="60" step="1"> sec</label>
+					<br>
+					<label id="inputs-voices-label">voice <select id="inputs-voices">
+						<option value="null" selected>none</option>
+					</select></label>
+					<label id="inputs-volume-label">volume <input id="inputs-volume" type="number" value="100" min="0" max="100" step="1"></label>
+				</div>
+			</details>
+			<div id="inputs-main">
+				<button id="inputs-audio">&#9835;</button>
+				<form id="inputs-form" action="javascript:;">
+					<input id="inputs-text" type="text" autocomplete="off">
+				</form>
+				<div id="inputs-countdown-outer">
+					<div id="inputs-countdown"></div>
+				</div>
+			</div>
+		</div>
+		<div id="stream"></div>
+	</body>
+</html>

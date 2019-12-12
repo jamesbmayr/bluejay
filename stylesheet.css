@@ -1,0 +1,264 @@
+/*** page ***/
+	html, body {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		height: 100%;
+		width: 100%;
+		background-color: #dddddd;
+		color: #222222;
+		font-family: monospace;
+		font-size: 0px;
+		padding: 0px;
+		margin: 0px;
+		overflow: hidden;
+	}
+
+	details summary::-webkit-details-marker {
+		display:none;
+	}
+
+	/* j-logo */
+		#j-logo {
+			position: absolute;
+			top: 14px;
+			right: 8px;
+			background-color: transparent;
+			background-image: url("../resources/j.png");
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center center;
+			height: 32px;
+			width: 32px;
+			cursor: pointer;
+			z-index: 1000;
+			outline: none;
+			filter: drop-shadow(0px 0px 2px #555555);
+		}
+
+		#j-logo:hover, #j-logo:focus {
+			filter: drop-shadow(0px 0px 2px #222222);
+		}	
+
+/*** inputs ***/
+	#inputs {
+		background-color: #dddddd;
+		width: 80%;
+		height: 200px;
+		position: fixed;
+		top: 0px;
+		left: 10%;
+		text-align: center;
+	}
+
+	/* inputs-main */
+		#inputs-main {
+			position: absolute;
+			bottom: 0px;
+			left: 50%;
+			height: 50px;
+			width: 100%;
+			transform: translateX(-50%);
+		}
+
+		#inputs-audio {
+			z-index: 5;
+			position: absolute;
+			bottom: -25px;
+			left: 0px;
+			border-radius: 100%;
+			border: 2px solid #222222;
+			background-color: #222222;
+			color: #dddddd;
+			font-family: monospace;
+			font-size: 50px;
+			height: 100px;
+			width: 100px;
+			padding: 5px;
+			cursor: pointer;
+			outline: none;
+			user-select: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			-o-user-select: none;
+		}
+
+		#inputs-text {
+			z-index: 2;
+			float: left;
+			border-radius: 5px;
+			border: 2px solid #222222;
+			background-color: #dddddd;
+			color: #222222;
+			font-family: monospace;
+			font-size: 25px;
+			height: 30px;
+			width: calc(100% - 150px);
+			padding: 8px 40px 8px 56px;
+			outline: none;
+			margin-left: 50px;
+		}
+
+		#inputs-audio:hover, #inputs-audio:focus, #inputs-text:hover, #inputs-text:focus {
+			box-shadow: 0px 0px 10px #222222;
+		}
+
+		#inputs-countdown-outer {
+			position: absolute;
+			left: 50px;
+			bottom: 0px;
+			z-index: 4;
+			pointer-events: none;
+			width: calc(100% - 50px);
+			height: 50px;
+			border-radius: 5px;
+			overflow: hidden;
+		}
+
+		#inputs-countdown {
+			float: left;
+			z-index: 4;
+			pointer-events: none;
+			background-color: #222222;
+			height: 50px;
+			width: 0%;
+			border-radius: 5px;
+			user-select: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			-o-user-select: none;
+		}
+
+	/* inputs advanced */
+		#inputs-advanced {
+			float: left;
+			padding: 10px;
+			height: auto;
+			width: calc(100% - 20px);
+		}
+
+		#inputs-advanced-toggle {
+			position: absolute;
+			z-index: 3;
+			bottom: 0px;
+			right: 0px;
+			height: 34px;
+			width: 34px;
+			margin: 0px;
+			border: 0px;
+			background-color: transparent;
+			border-radius: 100%;
+			color: #222222;
+			font-family: monospace;
+			font-size: 30px;
+			padding: 8px;
+			cursor: pointer;
+			outline: none;
+			line-height: 1;
+			user-select: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			-o-user-select: none;
+		}
+
+		#inputs-advanced-toggle:hover, #inputs-advanced[open] #inputs-advanced-toggle {
+			text-shadow: 0px 0px 10px #222222;
+		}
+
+		#inputs-advanced-inner {
+			position: absolute;
+			text-align: right;
+			bottom: 50px;
+			right: 0px;
+			width: calc(100% - 110px);
+			height: auto;
+			padding-top: 5px;
+			max-height: 145px;
+			overflow-x: hidden;
+			overflow-y: scroll;
+		}
+
+		#inputs-advanced label {
+			display: inline-block;
+			font-size: 15px;
+			font-family: monospace;
+			font-weight: bold;
+			color: #111111;
+			background-color: #aaaaaa;
+			border-radius: 5px;
+			padding: 5px;
+			margin: 0px 0px 5px 5px;
+			cursor: pointer;
+			user-select: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			-o-user-select: none;
+		}
+
+		#inputs-advanced input, #inputs-advanced select {
+			border-radius: 5px;
+			background-color: #dddddd;
+			border: 0px;
+			color: #111111;
+			font-size: 15px;
+			font-family: monospace;
+			outline: none;
+		}
+
+		#inputs-advanced input:hover, #inputs-advanced input:focus {
+			box-shadow: 0px 0px 10px #222222;
+		}		
+
+/*** stream ***/
+	#stream {
+		height: calc(100% - 200px);
+		width: 80%;
+		margin: 200px auto 0px auto;
+		overflow-x: hidden;
+		overflow-y: scroll;
+	}
+
+	/* history */
+		.stream-history {
+			float: left;
+			border-radius: 5px;
+			background-color: #cccccc;
+			padding: 0px;
+			font-size: 15px;
+			font-family: monospace;
+			text-align: center;
+			height: auto;
+			width: 70%;
+			margin: 10px 15% 10px 15%;
+		}
+
+		.stream-history:first-child {
+			margin-top: 20px;
+		}
+
+		.stream-history:last-child {
+			margin-bottom: 20px;
+		}
+
+		.stream-history-phrase {
+			font-style: italic;
+			padding: 10px;
+			text-align: right;
+		}
+
+		.stream-history-action {
+			padding: 10px;
+			font-weight: bold;
+			font-size: 25px;
+			background-color: #aaaaaa;
+			text-align: center;
+		}
+
+		.stream-history-response {
+			padding: 10px;
+			text-align: left;
+		}
