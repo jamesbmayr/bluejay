@@ -6,18 +6,19 @@ window.addEventListener("load", function() {
 
 		/* triggers */
 			if ((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i).test(navigator.userAgent)) {
-				var on = { click: "touchstart", mousedown: "touchstart", mousemove: "touchmove", mouseup: "touchend" }
+				var ON = { click: "touchstart", mousedown: "touchstart", mousemove: "touchmove", mouseup: "touchend" }
 			}
 			else {
-				var on = { click:      "click", mousedown:  "mousedown", mousemove: "mousemove", mouseup:  "mouseup" }
+				var ON = { click:      "click", mousedown:  "mousedown", mousemove: "mousemove", mouseup:  "mouseup" }
 			}
 
 		/* constants */
 			var INTERVAL = 50
 			var DELAY = 1000
-			var VOICES = {}
 
 		/* libraries */
+			var VOICE_LIBRARY = {}
+			var FUNCTION_LIBRARY = window.FUNCTION_LIBRARY = {}
 			var PHRASE_LIBRARY = window.PHRASE_LIBRARY || {}
 			var ACTION_LIBRARY = window.ACTION_LIBRARY || {}
 
@@ -35,13 +36,17 @@ window.addEventListener("load", function() {
 
 		/* settings */
 			var DURATION = 10000
-			var VOICE = null
+			var VOICE = window.VOICE = null
 			var VOLUME = 1
 
 		/* statuses */
 			var LISTENING = false
 			var TIME = 0
 			var COUNTDOWN = null
+			var CONTEXT = window.CONTEXT = {
+				this: null,
+				that: null
+			}
 			
 		/* elements */
 			var INPUTS_AUDIO = document.getElementById("inputs-audio")
@@ -67,6 +72,7 @@ window.addEventListener("load", function() {
 
 	/*** settings ***/
 		/* listVoices  */
+			FUNCTION_LIBRARY.listVoices = listVoices
 			function listVoices() {
 				// clear options
 					INPUTS_VOICES.innerHTML = ""
@@ -80,11 +86,11 @@ window.addEventListener("load", function() {
 				// get all voices
 					var voiceList = SYNTHESIZER.getVoices()
 					for (var i in voiceList) {
-						VOICES[voiceList[i].name] = voiceList[i]
+						VOICE_LIBRARY[voiceList[i].name.toLowerCase().trim()] = voiceList[i]
 					}
 
 				// loop through voices
-					for (var i in VOICES) {
+					for (var i in VOICE_LIBRARY) {
 						var option = document.createElement("option")
 							option.innerText = i
 							option.value = i
@@ -93,27 +99,68 @@ window.addEventListener("load", function() {
 
 				// select first voice
 					if (voiceList.length) {
-						INPUTS_VOICES.value = voiceList[0].name
-						VOICE = VOICES[voiceList[0].name]
+						INPUTS_VOICES.value = voiceList[0].name.toLowerCase().trim()
+						VOICE = VOICE_LIBRARY[voiceList[0].name.toLowerCase().trim()]
 					}
 			}
 
 		/* changeVoice */
 			INPUTS_VOICES.addEventListener("change", changeVoice)
+			FUNCTION_LIBRARY.changeVoice = changeVoice
 			function changeVoice(event) {
-				// select voice from voices object
-					VOICE = VOICES[INPUTS_VOICES.value] || null
+				// via select
+					if (event.target && event.target.id == INPUTS_VOICES.id) {
+						// set voice from library
+							VOICE = VOICE_LIBRARY[INPUTS_VOICES.value.toLowerCase()] || null
+					}
+
+				// via action
+					else if (event.phrase) {
+						// if voice exists
+							if (VOICE_LIBRARY[event.phrase]) {
+								VOICE = VOICE_LIBRARY[event.phrase]
+								INPUTS_VOICES.value = event.phrase
+								return "Voice set to " + event.phrase
+							}
+
+						// otherwise
+							else {
+								return "I don't recognize that voice."
+							}
+					}
 			}
 
 		/* changeVolume */
 			INPUTS_VOLUME.addEventListener("change", changeVolume)
+			FUNCTION_LIBRARY.changeVolume = changeVolume
 			function changeVolume(event) {
-				// set volume
-					VOLUME = Math.max(0, Math.min(100, Number(INPUTS_VOLUME.value))) / 100
+				// via input
+					if (event.target && event.target.id == INPUTS_VOLUME.id) {
+						// set volume
+							VOLUME = Math.max(0, Math.min(100, Number(INPUTS_VOLUME.value))) / 100
+					}
+
+				// via action
+					else if (event.phrase) {
+						// if not a number
+							if (isNaN(Number(event.phrase))) {
+								return "That's not a valid number."
+							}
+
+						// otherwise
+							else {
+								var newVolume = Math.round(Math.max(0, Math.min(100, Number(event.phrase))))
+								INPUTS_VOLUME.value = newVolume
+								VOLUME = newVolume / 100
+								return "Volume set to " + newVolume
+							}
+					}
+
 			}
 
 		/* changeDuration */
 			INPUTS_DURATION.addEventListener("change", changeDuration)
+			FUNCTION_LIBRARY.changeDuration = changeDuration
 			function changeDuration(event) {
 				// set duration
 					DURATION = Math.max(0, Math.min(60, Number(INPUTS_DURATION.value))) * 1000
@@ -121,20 +168,24 @@ window.addEventListener("load", function() {
 
 	/*** audio input ***/
 		/* toggleListening */
-			INPUTS_AUDIO.addEventListener(on.click, toggleListening)
+			INPUTS_AUDIO.addEventListener(ON.click, toggleListening)
+			FUNCTION_LIBRARY.toggleListening = toggleListening
 			function toggleListening(event) {
 				// manual stop (don't transcribe)
 					if (LISTENING) {
-						stopListening(false)
+						FUNCTION_LIBRARY.stopListening(false)
 					}
 
 				// manual start
 					else {
+						SYNTHESIZER.pause()
+						SYNTHESIZER.cancel()
 						RECOGNITION.start()
 					}
 			}
 
 		/* startListening */
+			FUNCTION_LIBRARY.startListening = startListening
 			function startListening(event) {
 				// set global
 					LISTENING = true
@@ -145,6 +196,7 @@ window.addEventListener("load", function() {
 			}
 
 		/* countdownListening */
+			FUNCTION_LIBRARY.countdownListening = countdownListening
 			function countdownListening(event) {
 				// add to time
 					TIME += INTERVAL
@@ -154,11 +206,12 @@ window.addEventListener("load", function() {
 
 				// stop when duration is reached
 					if (TIME >= DURATION) {
-						stopListening(true)
+						FUNCTION_LIBRARY.stopListening(true)
 					}
 			}
 
 		/* stopListening */
+			FUNCTION_LIBRARY.stopListening = stopListening
 			function stopListening(continuable) {
 				// cancel countdown
 					clearInterval(COUNTDOWN)
@@ -177,13 +230,14 @@ window.addEventListener("load", function() {
 				// abort --> display "no results"
 					else {
 						RECOGNITION.abort()
-						matchPhrase()
+						FUNCTION_LIBRARY.matchPhrase()
 					}
 			}
 
 	/*** phrases ***/
 		/* submitPhrase */
 			INPUTS_FORM.addEventListener("submit", submitPhrase)
+			FUNCTION_LIBRARY.submitPhrase = submitPhrase
 			function submitPhrase(event) {
 				// get text
 					var phrase = INPUTS_TEXT.value || ""
@@ -192,12 +246,13 @@ window.addEventListener("load", function() {
 					INPUTS_TEXT.value = ""
 
 				// submit to match
-					matchPhrase({
+					FUNCTION_LIBRARY.matchPhrase({
 						results: [[{transcript: phrase}]]
 					})
 			}
 
 		/* matchPhrase */
+			FUNCTION_LIBRARY.matchPhrase = matchPhrase
 			function matchPhrase(event) {
 				// cancel countdown
 					clearInterval(COUNTDOWN)
@@ -222,73 +277,78 @@ window.addEventListener("load", function() {
 						}
 					} while (!action && phraseText.length)
 
-				// createHistory
-					createHistory(phrase, action, {
-						remainder: remainder.join(" ") || ""
-					})
+				// enact phrase
+					FUNCTION_LIBRARY.enactPhrase(phrase, action, (remainder.join(" ") || ""))
+			}
+
+		/* enactPhrase */
+			FUNCTION_LIBRARY.enactPhrase = enactPhrase
+			function enactPhrase(phrase, action, remainder) {
+				// no phrase
+					if (!phrase) {
+						phrase = NOPHRASE
+						action = NOACTION
+						var response = NOPHRASE_RESPONSES[NOPHRASE_INDEX]
+						NOPHRASE_INDEX = (NOPHRASE_INDEX == NOPHRASE_RESPONSES.length - 1) ? 0 : (NOPHRASE_INDEX + 1)
+
+						createHistory(phrase, action, response)
+					}
+
+				// phrase, but no action
+					else if (!action || !ACTION_LIBRARY[action]) {
+						action = NOACTION
+						var response = NOACTION_RESPONSES[NOACTION_INDEX]
+						NOACTION_INDEX = (NOACTION_INDEX == NOACTION_RESPONSES.length - 1) ? 0 : (NOACTION_INDEX + 1)
+
+						createHistory(phrase, action, response)
+					}
+
+				// phrase & action
+					else {
+						ACTION_LIBRARY[action](remainder, function(response) {
+							if (typeof response === undefined || response === null) {
+								var response = ERROR_RESPONSES[ERROR_INDEX]
+								ERROR_INDEX = (ERROR_INDEX == ERROR_RESPONSES.length - 1) ? 0 : (ERROR_INDEX + 1)
+							}
+
+							createHistory(phrase, action, response)
+						})
+					}
 			}
 
 	/*** stream output ***/
 		/* createHistory */
-			function createHistory(phrase, action, options) {
-				// structure
+			FUNCTION_LIBRARY.createHistory = createHistory
+			function createHistory(phrase, action, response) {
+				// visuals
 					var historyBlock = document.createElement("div")
 						historyBlock.className = "stream-history"
 
 					var phraseBlock = document.createElement("div")
 						phraseBlock.className = "stream-history-phrase"
+						phraseBlock.innerText = phrase
 					historyBlock.appendChild(phraseBlock)
 
 					var actionBlock = document.createElement("div")
 						actionBlock.className = "stream-history-action"
+						actionBlock.innerText = action
 					historyBlock.appendChild(actionBlock)
 
 					var responseBlock = document.createElement("div")
 						responseBlock.className = "stream-history-response"
+						responseBlock.innerHTML = response
 					historyBlock.appendChild(responseBlock)
-
-				// no phrase
-					if (!phrase) {
-						var response = NOPHRASE_RESPONSES[NOPHRASE_INDEX]
-						NOPHRASE_INDEX = (NOPHRASE_INDEX == NOPHRASE_RESPONSES.length - 1) ? 0 : (NOPHRASE_INDEX + 1)
-
-						phraseBlock.innerText = NOPHRASE
-						actionBlock.innerText = NOACTION
-						responseBlock.innerText = response
-					}
-
-				// phrase, but no action
-					else if (!action) {
-						var response = NOACTION_RESPONSES[NOACTION_INDEX]
-						NOACTION_INDEX = (NOACTION_INDEX == NOACTION_RESPONSES.length - 1) ? 0 : (NOACTION_INDEX + 1)
-
-						phraseBlock.innerText = phrase
-						actionBlock.innerText = NOACTION
-						responseBlock.innerText = response
-					}
-
-				// phrase & action
-					else {
-						var response = ACTION_LIBRARY[action](options.remainder)
-						if (!response) {
-							var response = ERROR_RESPONSES[ERROR_INDEX]
-							ERROR_INDEX = (ERROR_INDEX == ERROR_RESPONSES.length - 1) ? 0 : (ERROR_INDEX + 1)
-						}
-
-						phraseBlock.innerText = phrase
-						actionBlock.innerText = action
-						responseBlock.innerText = response
-					}
 
 				// prepend to stream
 					STREAM.prepend(historyBlock)
 
 				// speak
-					speakResponse(response)
+					FUNCTION_LIBRARY.speakResponse(response)
 			}
 
 	/*** audio output ***/
 		/* speakResponse */
+			FUNCTION_LIBRARY.speakResponse = speakResponse
 			function speakResponse(response) {
 				setTimeout(function() {
 					// remove previous utterances queued up
@@ -304,4 +364,24 @@ window.addEventListener("load", function() {
 				}, DELAY)
 			}
 
+	/*** back-end ***/
+		/* proxyRequest */
+			FUNCTION_LIBRARY.proxyRequest = proxyRequest
+			function proxyRequest(options, callback) {
+				// set action for server
+					options.action = "proxyRequest"
+
+				// create request object and send to server
+					var request = new XMLHttpRequest()
+						request.open("POST", location.pathname, true)
+						request.onload = function() {
+							if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+								callback(JSON.parse(request.responseText) || {success: false, message: "unknown error"})
+							}
+							else {
+								callback({success: false, readyState: request.readyState, message: request.status})
+							}
+						}
+						request.send(JSON.stringify(options))
+			}
 })

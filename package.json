@@ -1,0 +1,15 @@
+{
+  "name": "bluejay",
+  "version": "1.0.0",
+  "description": "bluejay is an action-voice engine by James Mayr",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"test\"",
+    "start": "node index.js"
+  },
+  "author": "James Mayr",
+  "license": "ISC",
+  "engines": {
+  	"node": "6.11.1"
+  }
+}
