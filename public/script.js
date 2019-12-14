@@ -121,12 +121,12 @@ window.addEventListener("load", function() {
 							if (VOICE_LIBRARY[event.phrase]) {
 								VOICE = VOICE_LIBRARY[event.phrase]
 								INPUTS_VOICES.value = event.phrase
-								return "Voice set to " + event.phrase
+								return {message: "Voice set to " + event.phrase, html: "voice: " + event.phrase}
 							}
 
 						// otherwise
 							else {
-								return "I don't recognize that voice."
+								return {message: "I don't recognize that voice.", html: "voice not found: " + event.phrase}
 							}
 					}
 			}
@@ -145,7 +145,7 @@ window.addEventListener("load", function() {
 					else if (event.phrase) {
 						// if not a number
 							if (isNaN(Number(event.phrase))) {
-								return "That's not a valid number."
+								return {message: "That's not a valid number.", html: "invalid volume: " + event.phrase}
 							}
 
 						// otherwise
@@ -153,7 +153,7 @@ window.addEventListener("load", function() {
 								var newVolume = Math.round(Math.max(0, Math.min(100, Number(event.phrase))))
 								INPUTS_VOLUME.value = newVolume
 								VOLUME = newVolume / 100
-								return "Volume set to " + newVolume
+								return {message: "Volume set to " + newVolume, html: "volume: " + newVolume}
 							}
 					}
 
@@ -191,7 +191,7 @@ window.addEventListener("load", function() {
 			function changeConfiguration(event) {
 				// missing key or value
 					if (!event.key || !event.value) {
-						return "I couldn't set that configuration."
+						return {message: "I couldn't set that configuration.", html: "invalid or missing key and value"}
 					}
 
 				// update config
@@ -199,7 +199,7 @@ window.addEventListener("load", function() {
 						CONFIGURATION_LIBRARY[event.key] = event.value
 						window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
 
-						return event.key + " is now " + event.value
+						return {message: event.key + " is now " + event.value, html: event.key + " = " + event.value}
 					}
 			}
 
@@ -325,18 +325,20 @@ window.addEventListener("load", function() {
 					if (!phrase) {
 						phrase = NOPHRASE
 						action = NOACTION
-						var response = NOPHRASE_RESPONSES[NOPHRASE_INDEX]
+						var message = NOPHRASE_RESPONSES[NOPHRASE_INDEX]
 						NOPHRASE_INDEX = (NOPHRASE_INDEX == NOPHRASE_RESPONSES.length - 1) ? 0 : (NOPHRASE_INDEX + 1)
 
+						var response = {message: message, html: message}
 						createHistory(phrase, action, response)
 					}
 
 				// phrase, but no action
 					else if (!action || !ACTION_LIBRARY[action]) {
 						action = NOACTION
-						var response = NOACTION_RESPONSES[NOACTION_INDEX]
+						var message = NOACTION_RESPONSES[NOACTION_INDEX]
 						NOACTION_INDEX = (NOACTION_INDEX == NOACTION_RESPONSES.length - 1) ? 0 : (NOACTION_INDEX + 1)
 
+						var response = {message: message, html: message}
 						createHistory(phrase, action, response)
 					}
 
@@ -344,8 +346,9 @@ window.addEventListener("load", function() {
 					else {
 						ACTION_LIBRARY[action](remainder, function(response) {
 							if (typeof response === undefined || response === null) {
-								var response = ERROR_RESPONSES[ERROR_INDEX]
+								var message = ERROR_RESPONSES[ERROR_INDEX]
 								ERROR_INDEX = (ERROR_INDEX == ERROR_RESPONSES.length - 1) ? 0 : (ERROR_INDEX + 1)
+								var response = {message: message, html: message}
 							}
 
 							createHistory(phrase, action, response)
@@ -373,27 +376,27 @@ window.addEventListener("load", function() {
 
 					var responseBlock = document.createElement("div")
 						responseBlock.className = "stream-history-response"
-						responseBlock.innerHTML = response
+						responseBlock.innerHTML = response.html
 					historyBlock.appendChild(responseBlock)
 
 				// prepend to stream
 					STREAM.prepend(historyBlock)
 
 				// speak
-					FUNCTION_LIBRARY.speakResponse(response)
+					FUNCTION_LIBRARY.speakResponse(response.message)
 			}
 
 	/*** audio output ***/
 		/* speakResponse */
 			FUNCTION_LIBRARY.speakResponse = speakResponse
-			function speakResponse(response) {
+			function speakResponse(message) {
 				setTimeout(function() {
 					// remove previous utterances queued up
 						SYNTHESIZER.cancel()
 
 					// speak the transcript
 						if (VOICE) {
-							var utterance = new SpeechSynthesisUtterance(response)
+							var utterance = new SpeechSynthesisUtterance(message)
 								utterance.voice = VOICE
 								utterance.volume = VOLUME
 							SYNTHESIZER.speak(utterance)

@@ -19,11 +19,20 @@
 			"edit configuration for": 			"edit configuration",
 			"set configuration": 				"edit configuration",
 			"set configuration for": 			"edit configuration",
+			"set my configuration for": 		"edit configuration",
 			"set a new configuration": 			"edit configuration",
 			"change a configuration": 			"edit configuration",
+			"change my configuration": 			"edit configuration",
+			"change my configuration for": 		"edit configuration",
 			"add to my profile": 				"edit configuration",
 			"add this to my profile": 			"edit configuration",
 			"edit my profile": 					"edit configuration",
+			"save my": 							"edit configuration",
+			"set my saved": 					"edit configuration",
+			"change my saved": 					"edit configuration",
+			"update my saved": 					"edit configuration",
+			"configure my": 					"edit configuration",
+			"configure": 						"edit configuration",
 
 		// meta
 			"repeat after me": 					"repeat after me",
@@ -57,11 +66,14 @@
 			"tell me the date": 				"what is the date",
 
 		// rng
-			"roll a d": 						"roll a die",
-			"roll me a d": 						"roll a die",
-			"roll a die": 						"roll a die",
-			"roll a": 							"roll a die",
-			"roll me a": 						"roll a die",
+			"roll a": 							"roll dice",
+			"roll me a": 						"roll dice",
+			"roll a die": 						"roll dice",
+			"roll me": 							"roll dice",
+			"roll me some": 					"roll dice",
+			"roll some dice": 					"roll dice",
+			"roll some": 						"roll dice",
+			"roll": 							"roll dice",
 
 			"flip a coin": 						"flip a coin",
 			"heads or tails": 					"flip a coin",
@@ -183,6 +195,7 @@
 			"fetch my events": 					"fetch events",
 			"fetch upcoming events": 			"fetch events",
 			"fetch my upcoming events": 		"fetch events",
+			"fetch my calendar": 				"fetch events",
 			"what is on my calendar": 			"fetch events",
 			"whats on my calendar": 			"fetch events",
 			"what is on the calendar": 			"fetch events",
@@ -222,9 +235,9 @@
 			"edit configuration": function(remainder, callback) {
 				try {
 					// get key and value
-						var pair = remainder.split(/\sequal\sto\s|\sequals\s|\sto\s|\sis\s/gi)
+						var pair = remainder.split(/ equal to | equals | to | is | as /gi)
 						if (pair[0] === undefined || pair[0] === null || pair[1] === undefined || pair[1] === null) {
-							callback("The key or value is missing.")
+							callback({message: "The key or value is missing.", html: "invalid key or value"})
 							return
 						}
 						else {
@@ -245,42 +258,58 @@
 		// meta
 			"repeat after me": function(remainder, callback) {
 				try {
-					callback(remainder)
+					callback({message: remainder, html: remainder})
 				} catch (error) {}
 			},
 
 		// time
 			"what time is it": function(remainder, callback) {
 				try {
-					callback((new Date().toLocaleTimeString()))
+					var response = new Date().toLocaleTimeString()
+					callback({message: response, html: "The time is " + response + "."})
 				} catch (error) {}
 			},
 			"what day is it": function(remainder, callback) {
 				try {
-					callback((["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()]))
+					var response = (["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()])
+					callback({message: response, html: "Today is " + response + "."})
 				} catch (error) {}
 			},
 			"what month is it": function(remainder, callback) {
 				try {
-					callback((["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()]))
+					var response = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()])
+					callback({message: response, html: "The month is " + response + "."})
 				} catch (error) {}
 			},
 			"what is the date": function(remainder, callback) {
 				try {
-					callback((["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + " " + new Date().getDate()))
+					var response = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + " " + new Date().getDate())
+					callback({message: response, html: "The date is " + response + "."})
 				} catch (error) {}
 			},
 
 		// rng
-			"roll a die": function(remainder, callback) {
+			"roll dice": function(remainder, callback) {
 				try {
-					var sides = Number(remainder.replace(/d/gi,"").replace(/[?!.,:;'"_\/\(\)\$\%]/gi,""))
-					callback(Math.floor(Math.random() * sides) + 1)
-				} catch (error) {}
+					console.log(remainder)
+					// extract options					
+						var count = Number(remainder.split(/dice with |die with |dice having |d/gi)[0]) || 1
+						var sides = (remainder.split(/dice with |die with |d/gi)[1] || remainder).replace(/[^0-9]/gi,"") || 6
+
+					// roll dice
+						var sum = 0
+						for (var i = 0; i < count; i++) {
+							sum += Math.floor(Math.random() * sides) + 1
+						}
+
+					// return sum
+						callback({message: sum || "Unable to roll dice.", html: count + "d" + sides + ": " + (sum || "invalid dice")})
+				} catch (error) { console.log(error) }
 			},
 			"flip a coin": function(remainder, callback) {
 				try {
-					callback(["heads","tails"][Math.floor(Math.random() * 2)])
+					var response = ["heads","tails"][Math.floor(Math.random() * 2)]
+					callback({message: response, html: "coin: " + response})
 				} catch (error) {}
 			},
 		
@@ -314,37 +343,39 @@
 					// evaluate and return result
 						var result = eval(terms.join(" "))
 						if (isNaN(result)) {
-							callback("Unable to calculate.")
+							callback({message: "Unable to calculate.", html: "invalid calculation: " + remainder})
 						}
 						else {
-							callback(Number(result))
+							callback({message: Number(result), html: terms.join(" ") + " = " + result})
 						}
 				}
-				catch (error) { callback("Unable to calculate.") }
+				catch (error) { callback({message: "Unable to calculate.", html: "invalid calculation"}) }
 			},
 			"double": function(remainder, callback) {
 				try {
-					var result = 2 * Number(remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,""))
+					var term = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"")
+					var result = 2 * Number(term)
 					if (isNaN(result)) {
-						callback("Unable to calculate.")
+						callback({message: "Unable to calculate.", html: "invalid calculation"})
 					}
 					else {
-						callback(Number(result))
+						callback({message: Number(result), html: "2 * " + term + " = " + result})
 					}
 				}
-				catch (error) { callback("Unable to calculate.") }
+				catch (error) { callback({message: "Unable to calculate.", html: "invalid calculation"}) }
 			},
 			"triple": function(remainder, callback) {
 				try {
-					var result = 3 * Number(remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,""))
+					var term = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"")
+					var result = 3 * Number(term)
 					if (isNaN(result)) {
-						callback("Unable to calculate.")
+						callback({message: "Unable to calculate.", html: "invalid calculation"})
 					}
 					else {
-						callback(Number(result))
+						callback({message: Number(result), html: "3 * " + term + " = " + result})
 					}
 				}
-				catch (error) { callback("Unable to calculate.") }
+				catch (error) { callback({message: "Unable to calculate.", html: "invalid calculation"}) }
 			},
 			"average": function(remainder, callback) {
 				try {
@@ -363,13 +394,13 @@
 
 					// return result
 						if (isNaN(result)) {
-							callback("Unable to calculate.")
+							callback({message: "Unable to calculate.", html: "invalid calculation"})
 						}
 						else {
-							callback(Number(result))
+							callback({message: Number(result), html: numbers.join(" + ") + " / " + numbers.length + " = " + result})
 						}
 				}
-				catch (error) { callback("Unable to calculate.") }
+				catch (error) { callback({message: "Unable to calculate.", html: "invalid calculation"}) }
 			},
 
 		// word api fetches
@@ -385,17 +416,19 @@
 							try {
 								// construct response list
 									var list = response || []
+									var listItems = []
 									for (var i in list) {
-										list[i] = "<li>" + list[i].word + "</li>"
+										list[i] = list[i].word
+										listItems[i] = "<li>" + list[i] + "</li>"
 									}
 
 								// message, link, list
 									var message = "I found " + list.length + " rhyme" + (list.length == 1 ? "" : "s") + " for " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim() + "."
 									var link = "<a target='_blank' href='https://rhymezone.com/r/rhyme.cgi?typeofrhyme=perfect&Word=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'>" + message + "</a>"
-									callback(link + "<ul>" + list.join("") + "</ul>")
+									callback({message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
 							}
 							catch (error) {
-								callback("I can't rhyme that.")
+								callback({message: "I can't rhyme that.", html: "invalid word: " + remainder})
 							}
 						})
 				} catch (error) {}
@@ -413,17 +446,19 @@
 							try {
 								// construct response list
 									var list = response || []
+									var listItems = []
 									for (var i in list) {
-										list[i] = "<li>" + list[i].word + "</li>"
+										list[i] = list[i].word
+										listItems[i] = "<li>" + list[i] + "</li>"
 									}
 
 								// message, link, list
 									var message = "I found " + list.length + " synonym" + (list.length == 1 ? "" : "s") + " for " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim() + "."
 									var link = "<a target='_blank' href='https://rhymezone.com/r/rhyme.cgi?typeofrhyme=syn&Word=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'>" + message + "</a>"
-									callback(link + "<ul>" + list.join("") + "</ul>")
+									callback({message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
 							}
 							catch (error) {
-								callback("I don't know any synonyms for that.")
+								callback({message: "I don't know any synonyms for that.", html: "invalid word: " + remainder})
 							}
 						})
 				} catch (error) {}
@@ -442,18 +477,21 @@
 								// construct response list
 									var word = response[0]
 									var list = []
+									var listItems = []
 									for (var i in word.defs) {
 										word.defs[i] = "[" + word.defs[i].replace(/\t/,"] ")
-										list[i] = "<li>" + word.defs[i] + "</li>"
+										word.defs[i] = word.defs[i].replace("[n]", "[noun]").replace("[v]", "[verb]").replace("[adj]", "[adjective]").replace("[adv]", "[adverb]").replace("[u]", "[other]")
+										list[i] = word.defs[i]
+										listItems[i] = "<li>" + word.defs[i] + "</li>"
 									}
 
 								// message, link, list
 									var message = "I found " + list.length + " definition" + (list.length == 1 ? "" : "s") + " for " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim() + "."
 									var link = "<a target='_blank' href='http://wordnetweb.princeton.edu/perl/webwn?s=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'>" + message + "</a>"
-									callback(link + "<ul>" + list.join("") + "</ul>")
+									callback({message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
 							}
 							catch (error) {
-								callback("I can't define that.")
+								callback({message: "I can't define that.", html: "invalid word: " + remainder})
 							}
 						})
 				} catch (error) {}
@@ -473,10 +511,10 @@
 								// construct response link
 									var jokeLink = "https://icanhazdadjoke.com"
 									var jokeText = response.attachments[0].text
-									callback("<a target='_blank' href='" + jokeLink + "'>" + jokeText + "</a>")	
+									callback({message: jokeText, html: "<a target='_blank' href='" + jokeLink + "'>" + jokeText + "</a>"})
 							}
 							catch (error) {
-								callback("I don't know any jokes.")
+								callback({message: "I don't know any jokes.", html: "unable to access jokes"})
 							}
 							
 						})
@@ -497,10 +535,10 @@
 									var quoteLink   = response.quoteLink
 									var quoteText   = response.quoteText
 									var quoteAuthor = response.quoteAuthor
-									callback("<a target='_blank' href='" + quoteLink + "'>\"" + quoteText + "\" - " + quoteAuthor + "</a>")
+									callback({message: quoteAuthor + " said " + quoteText, html: "<a target='_blank' href='" + quoteLink + "'>\"" + quoteText + "\" - " + quoteAuthor + "</a>"})
 							}
 							catch (error) {
-								callback("I don't know any quotes.")
+								callback({message: "I don't know any quotes.", html: "unable to access quotes"})
 							}
 						})
 				} catch (error) {}
@@ -509,7 +547,7 @@
 			"get the headlines": function(remainder, callback) {
 				try {
 					// initial callback
-						callback("Let me fetch the latest news.")
+						callback({message: "Let me fetch the latest news.", html: "querying the New York Times..."})
 
 					// options
 						var options = {
@@ -522,16 +560,18 @@
 								// construct response list
 									var list = response.rss.channel.item
 									var stories = []
+									var storyItems = []
 									for (var i = 0; i < list.length - 1; i++) {
-										stories.push("<li><a target='_blank' href='" + list[i].link + "'><b>" + list[i].title + "</b></a><p>" + list[i].description + "</p></li>")
+										stories.push(list[i].title + " " + list[i].description)
+										storyItems.push("<li><a target='_blank' href='" + list[i].link + "'><b>" + list[i].title + "</b></a><p>" + list[i].description + "</p></li>")
 									}
 
 								// message, link, list
 									var message = "I found " + stories.length + " stor" + (list.length == 1 ? "y" : "ies") + "."
-									callback(message + "<ul>" + stories.join("") + "</ul>")
+									callback({message: message + " " + stories.join("... "), html: message + "<ul>" + storyItems.join("") + "</ul>"})
 							}
 							catch (error) {
-								callback("I can't get the news.")
+								callback({message: "I can't get the news.", html: "unable to access headlines"})
 							}
 						})
 				}
@@ -543,7 +583,7 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback("I'm not authorized to do that yet. Set a configuration for google apps script.")
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: google apps script"})
 							return
 						}
 
@@ -564,7 +604,8 @@
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							callback(response.message)
+							var responseHTML = "<ul><li><b>item: </b>" + response.item + "</li><li><b>cost: </b>" + response.cost + "</li><li><b>type: </b>" + response.type + "</li></ul>" 
+							callback({message: response.message, html: responseHTML})
 						})
 				}
 				catch (error) { console.log(error) }
@@ -574,7 +615,7 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback("I'm not authorized to do that yet. Set a configuration for google apps script.")
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: google apps script"})
 							return
 						}
 
@@ -585,7 +626,8 @@
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							callback(response.message)
+							var responseHTML = "<ul><li><b>account: </b>" + response.account + "</li><li><b>amount: </b>" + response.amount + "</li></ul>" 
+							callback({message: response.message, html: responseHTML})
 						})
 				}
 				catch (error) { console.log(error) }
@@ -595,7 +637,7 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback("I'm not authorized to do that yet. Set a configuration for google apps script.")
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: google apps script"})
 							return
 						}
 
@@ -617,7 +659,8 @@
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							callback(response.message)
+							var responseHTML = "<ul><li><b>description: </b>" + response.description + "</li><li><b>amount: </b>" + response.amount + "</li><li><b>category: </b>" + response.category + "</li></ul>" 
+							callback({message: response.message, html: responseHTML})
 						})
 				}
 				catch (error) { console.log(error) }
@@ -627,7 +670,7 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback("I'm not authorized to do that yet. Set a configuration for google apps script.")
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: google apps script"})
 							return
 						}
 
@@ -653,17 +696,22 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							// create list
 								var eventList = []
+								var eventItems = []
 								if (response.events) {
 									for (var i = 0; i < response.events.length; i++) {
 										var event = response.events[i]
-										eventList.push("<li><b>" + event.title + "</b><p>" + new Date(event.startTime).toLocaleString() + " - " + new Date(event.endTime).toLocaleString() + "<br><a target='_blank' href='https://www.google.com/maps/?q=" + event.location + "'>" + event.location + "</a><br>" + event.description + "</p></li>")
+										var startTime = new Date(event.startTime).toLocaleString()
+										var endTime = new Date(event.endTime).toLocaleString()
+
+										eventList.push(event.title + " from " + startTime + " until " + endTime + " at " + (event.location || "unknown location"))
+										eventItems.push("<li><b>" + event.title + "</b><p>" + startTime + " - " + endTime + "<br><a target='_blank' href='https://www.google.com/maps/?q=" + event.location + "'>" + event.location + "</a><br>" + event.description + "</p></li>")
 									}
 								}
 
 							// send response
 								var responseLink = "https://calendar.google.com"
 								var responseText = response.message
-								callback("<a target='_blank' href='" + responseLink + "'>" + responseText + "</a><ul>" + eventList.join("") + "</ul>")
+								callback({message: response.message + " " + eventList.join("..."),html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a><ul>" + eventItems.join("") + "</ul>"})
 						})
 				}
 				catch (error) { console.log(error) }
@@ -674,7 +722,7 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google custom search"]) {
-							callback("I'm not authorized to do that yet. Set a configuration for google apps script.")
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google custom search.", html: "missing configuration: google custom search"})
 							return
 						}
 
@@ -689,6 +737,7 @@
 								if (!response.items || !response.items.length) {
 									var responseLink = "https://www.google.com?q=" + remainder
 									var responseText = "No results found."
+									var topResultText = ""
 									var topResult = ""
 								}
 
@@ -696,13 +745,14 @@
 								else {
 									var responseLink = "https://www.google.com?q=" + remainder
 									var responseText = "Top result:"
+									var topResultText = response.items[0].title + " " + response.items[0].snippet
 									var topResult = "<p><a target='_blank' href='" + response.items[0].link + "'><b>" + response.items[0].title + "</b></a><br>" + response.items[0].snippet + "</p>"
 								}
 
 							// send response								
-								callback("<a target='_blank' href='" + responseLink + "'>" + responseText + "</a>" + topResult)
+								callback({message: responseText + " " + topResultText, html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a>" + topResult})
 						})
 				}
-				catch (error) { console.log(error) }
+				catch (error) {}
 			}
 	}
