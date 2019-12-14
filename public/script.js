@@ -18,6 +18,7 @@ window.addEventListener("load", function() {
 
 		/* libraries */
 			var VOICE_LIBRARY = {}
+			var CONFIGURATION_LIBRARY = window.CONFIGURATION_LIBRARY = {}
 			var FUNCTION_LIBRARY = window.FUNCTION_LIBRARY = {}
 			var PHRASE_LIBRARY = window.PHRASE_LIBRARY || {}
 			var ACTION_LIBRARY = window.ACTION_LIBRARY || {}
@@ -71,7 +72,7 @@ window.addEventListener("load", function() {
 				SYNTHESIZER.onvoiceschanged = listVoices
 
 	/*** settings ***/
-		/* listVoices  */
+		/* listVoices */
 			FUNCTION_LIBRARY.listVoices = listVoices
 			function listVoices() {
 				// clear options
@@ -164,6 +165,42 @@ window.addEventListener("load", function() {
 			function changeDuration(event) {
 				// set duration
 					DURATION = Math.max(0, Math.min(60, Number(INPUTS_DURATION.value))) * 1000
+			}
+
+		/* initializeConfiguration */
+			FUNCTION_LIBRARY.initializeConfiguration = initializeConfiguration
+			initializeConfiguration()
+			function initializeConfiguration() {
+				// get localStorage
+					var storedConfigs = window.localStorage.getItem("CONFIGURATION_LIBRARY")
+
+				// if it exists, try writing to global variable
+					if (storedConfigs) {
+						try {
+							storedConfigs = JSON.parse(storedConfigs)
+							for (var i in storedConfigs) {
+								CONFIGURATION_LIBRARY[i] = storedConfigs[i]
+							}
+						}
+						catch (error) {}
+					}
+			}
+
+		/* changeConfiguration */
+			FUNCTION_LIBRARY.changeConfiguration = changeConfiguration
+			function changeConfiguration(event) {
+				// missing key or value
+					if (!event.key || !event.value) {
+						return "I couldn't set that configuration."
+					}
+
+				// update config
+					else {
+						CONFIGURATION_LIBRARY[event.key] = event.value
+						window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+
+						return event.key + " is now " + event.value
+					}
 			}
 
 	/*** audio input ***/
@@ -266,11 +303,11 @@ window.addEventListener("load", function() {
 					}
 
 				// match phrase to an action in the library
-					var phraseText = phrase.toLowerCase().replace(/[?!.,:;'"]/gi,"").split(/\s/gi)
+					var phraseText = phrase.split(/\s/gi)
 					var remainder = []
 					
 					do {
-						var action = PHRASE_LIBRARY[phraseText.join(" ")] || null
+						var action = PHRASE_LIBRARY[phraseText.join(" ").toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"")] || null
 						
 						if (!action) {
 							remainder.unshift(phraseText.pop())

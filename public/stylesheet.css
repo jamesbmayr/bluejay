@@ -234,6 +234,7 @@
 			height: auto;
 			width: 70%;
 			margin: 10px 15% 10px 15%;
+			overflow: hidden;
 		}
 
 		.stream-history:first-child {

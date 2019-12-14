@@ -2,6 +2,7 @@
 	var http       = require("http")
 	var https      = require("https")
 	var fs         = require("fs")
+	var qs         = require("querystring")
 	var debug      = getEnvironment("debug")
 	module.exports = {}
 
@@ -416,12 +417,18 @@
 				// gather parameters
 					var protocol = request.post.url.split("://")[0]
 					var method = request.post.method || "get"
-					var path = request.post.url.replace(protocol + "://", "").split("/")
+					var path = request.post.url.replace(protocol + "://", "").split("?")[0].split("/")
 					var host = path.shift() || ""
+					var body = JSON.stringify(qs.parse(request.post.url.split("?")[1]))
 					var options = {
+						host: host,
+						path: "/" + encodeURI(path.join("/")),
+						method: method.toUpperCase(),
 						headers: 	{
 							"Accept": request.post.contentType || "application/json",
-							"User-Agent": request.post.userAgent || "bluejay"
+							"Content-Type": "application/json",
+							"User-Agent": request.post.userAgent || "bluejay",
+							"followRedirects" : true
 						}
 					}
 
@@ -429,25 +436,43 @@
 					if (protocol == "http") {
 						if (method == "get") {
 							http.get(request.post.url, function (apiResponse) {
-								proxyResponse(apiResponse, callback)
+								if (apiResponse.headers.location) {
+									http.get(apiResponse.headers.location, function(apiReResponse) {
+										proxyResponse(apiReResponse, callback)
+									})
+								}
+								else {
+									proxyResponse(apiResponse, callback)
+								}
 							}).on("error", callback)
 						}
 						else if (method == "post") {
-							http.post(request.post.url, function (apiResponse) {
+							var apiRequest = http.request(options, function (apiResponse) {
 								proxyResponse(apiResponse, callback)
 							}).on("error", callback)
+							apiRequest.write(body)
+							apiRequest.end()
 						}
 					}
 					else if (protocol == "https") {
 						if (method == "get") {
 							https.get(request.post.url, function (apiResponse) {
-								proxyResponse(apiResponse, callback)
+								if (apiResponse.headers.location) {
+									https.get(apiResponse.headers.location, function(apiReResponse) {
+										proxyResponse(apiReResponse, callback)
+									})
+								}
+								else {
+									proxyResponse(apiResponse, callback)
+								}
 							}).on("error", callback)
 						}
 						else if (method == "post") {
-							https.post(request.post.url, function (apiResponse) {
+							var apiRequest = https.request(options, function (apiResponse) {
 								proxyResponse(apiResponse, callback)
 							}).on("error", callback)
+							apiRequest.write(body)
+							apiRequest.end()
 						}
 					}
 
