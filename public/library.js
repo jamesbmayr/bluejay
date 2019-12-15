@@ -20,7 +20,9 @@
 			"set configuration": 				"edit configuration",
 			"set configuration for": 			"edit configuration",
 			"set my configuration for": 		"edit configuration",
+			"set new configuration": 			"edit configuration",
 			"set a new configuration": 			"edit configuration",
+			"set a new configuration for": 		"edit configuration",
 			"change a configuration": 			"edit configuration",
 			"change my configuration": 			"edit configuration",
 			"change my configuration for": 		"edit configuration",
@@ -35,13 +37,23 @@
 			"configure": 						"edit configuration",
 
 		// meta
-			"repeat after me": 					"repeat after me",
-			"say what i say": 					"repeat after me",
-			"say exactly what i say": 			"repeat after me",
-			"say this back": 					"repeat after me",
-			"jot this down": 					"repeat after me",
-			"copy this down": 					"repeat after me",
-			"write this down": 					"repeat after me",
+			"repeat after me": 					"repeat this",
+			"repeat this": 						"repeat this",
+			"say what i say": 					"repeat this",
+			"say exactly what i say": 			"repeat this",
+			"say this back": 					"repeat this",
+			"jot this down": 					"repeat this",
+			"copy this down": 					"repeat this",
+			"write this down": 					"repeat this",
+
+			"repeat that": 						"repeat that",
+			"repeat what you said": 			"repeat that",
+			"say what you said": 				"repeat that",
+			"say what you said again": 			"repeat that",
+			"say that again": 					"repeat that",
+			"run that by me again": 			"repeat that",
+			"can you repeat that": 				"repeat that",
+			"i didnt catch that": 				"repeat that",
 
 		// time
 			"what time is it": 					"what time is it",
@@ -60,6 +72,8 @@
 			"whats the month": 					"what month is it",
 			"tell me the month": 				"what month is it",
 
+			"what date is it": 					"what is the date",
+			"whats todays date": 				"what is the date",
 			"what is the date": 				"what is the date",
 			"what is todays date": 				"what is the date",
 			"whats the date": 					"what is the date",
@@ -127,6 +141,8 @@
 			"be funny": 						"tell a joke",
 			"i could use a joke": 				"tell a joke",
 			"tell a joke": 						"tell a joke",
+			"make me laugh": 					"tell a joke",
+			"fetch me a joke": 					"tell a joke",
 
 			"get a quote": 						"get a quote",
 			"get me a quote": 					"get a quote",
@@ -136,6 +152,9 @@
 			"give me a random quote": 			"get a quote",
 			"random quote": 					"get a quote",
 			"famous quote": 					"get a quote",
+			"inspire me": 						"get a quote",
+			"tell me a random quote": 			"get a quote",
+			"tell me a quote": 					"get a quote",
 
 			"get the headlines": 				"get the headlines",
 			"get todays headlines": 			"get the headlines",
@@ -215,6 +234,54 @@
 			"i wonder": 						"google search",
 			"i am curious": 					"google search",
 			"im curious": 						"google search",
+
+			"how do i get": 					"google directions",
+			"how do i go": 						"google directions",
+			"tell me how to get": 				"google directions",
+			"tell me how to go": 				"google directions",
+			"get me directions": 				"google directions",
+			"get directions": 					"google directions",
+			"look up directions": 				"google directions",
+			"look up how to get": 				"google directions",
+			"look up how to go": 				"google directions",
+			"get a route": 						"google directions",
+			"route me": 						"google directions",
+
+			"find a place called": 				"google places",
+			"find a place named": 				"google places",
+			"find a place by the name": 		"google places",
+			"find me a place called": 			"google places",
+			"find me a place named": 			"google places",
+			"find me a place by the name": 		"google places",
+			"look up a place called": 			"google places",
+			"look up a place named": 			"google places",
+			"look up a place by the name": 		"google places",
+			"look for a place called": 			"google places",
+			"look for a place named": 			"google places",
+			"look for a place by the name": 	"google places",
+
+		// games
+			"lets play more or less": 			"more or less",
+			"lets play the more or less game": 	"more or less",
+			"think of a number": 				"more or less",
+			"pick a number": 					"more or less",
+			"i want to guess a number": 		"more or less",
+			"play more or less": 				"more or less",
+			"lets play more or less": 			"more or less",
+
+			"ask me a question": 				"true or false",
+			"quiz me": 							"true or false",
+			"tell me a fact": 					"true or false",
+			"tell me a fun fact": 				"true or false",
+			"give me a fact": 					"true or false",
+			"give me a fun fact": 				"true or false",
+			"lets do trivia": 					"true or false",
+			"lets do some trivia": 				"true or false",
+			"lets play trivia": 				"true or false",
+			"lets play some trivia": 			"true or false",
+			"play true or false": 				"true or false",
+			"lets play true or false": 			"true or false",
+
 	}
 
 /* action library */
@@ -256,9 +323,15 @@
 			},
 
 		// meta
-			"repeat after me": function(remainder, callback) {
+			"repeat this": function(remainder, callback) {
 				try {
 					callback({message: remainder, html: remainder})
+				} catch (error) {}
+			},
+
+			"repeat that": function(remainder, callback) {
+				try {
+					callback({message: window.CONTEXT_LIBRARY.lastResponseMessage || "No previous response.", html: window.CONTEXT_LIBRARY.lastResponseHTML || "No previous response."})
 				} catch (error) {}
 			},
 
@@ -291,10 +364,10 @@
 		// rng
 			"roll dice": function(remainder, callback) {
 				try {
-					console.log(remainder)
-					// extract options					
-						var count = Number(remainder.split(/dice with |die with |dice having |d/gi)[0]) || 1
-						var sides = (remainder.split(/dice with |die with |d/gi)[1] || remainder).replace(/[^0-9]/gi,"") || 6
+					// extract options
+						remainder = " " + remainder
+						var count = Number(remainder.split(/ dice with | die with | dice having |d/gi)[0]) || 1
+						var sides = (remainder.split(/ dice with | die with |d/gi)[1] || remainder).replace(/[^0-9]/gi,"") || 6
 
 					// roll dice
 						var sum = 0
@@ -304,7 +377,7 @@
 
 					// return sum
 						callback({message: sum || "Unable to roll dice.", html: count + "d" + sides + ": " + (sum || "invalid dice")})
-				} catch (error) { console.log(error) }
+				} catch (error) {}
 			},
 			"flip a coin": function(remainder, callback) {
 				try {
@@ -532,10 +605,15 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
 								// construct response link
-									var quoteLink   = response.quoteLink
-									var quoteText   = response.quoteText
-									var quoteAuthor = response.quoteAuthor
-									callback({message: quoteAuthor + " said " + quoteText, html: "<a target='_blank' href='" + quoteLink + "'>\"" + quoteText + "\" - " + quoteAuthor + "</a>"})
+									if (response.quoteText && response.quoteAuthor) {
+										var quoteLink   = response.quoteLink
+										var quoteText   = response.quoteText
+										var quoteAuthor = response.quoteAuthor
+										callback({message: quoteAuthor + " said " + quoteText, html: "<a target='_blank' href='" + quoteLink + "'>\"" + quoteText + "\" - " + quoteAuthor + "</a>"})
+									}
+									else {
+										callback({message: "A wise man once said: the API didn't return any results.", html: "unable to access quotes"})
+									}
 							}
 							catch (error) {
 								callback({message: "I don't know any quotes.", html: "unable to access quotes"})
@@ -574,8 +652,7 @@
 								callback({message: "I can't get the news.", html: "unable to access headlines"})
 							}
 						})
-				}
-				catch (error) {}
+				} catch (error) {}
 			},
 
 		// Google Apps Script
@@ -587,7 +664,8 @@
 							return
 						}
 
-					// split at space
+					// split at keywords
+						remainder = " " + remainder
 						var cost = remainder.split(/ for | costing | that costs | which costs /gi)
 							cost = (cost[1] || cost[0]).split(/ called | named | by the name | which is a | which is an | which is the /gi)[0].trim()
 
@@ -607,8 +685,7 @@
 							var responseHTML = "<ul><li><b>item: </b>" + response.item + "</li><li><b>cost: </b>" + response.cost + "</li><li><b>type: </b>" + response.type + "</li></ul>" 
 							callback({message: response.message, html: responseHTML})
 						})
-				}
-				catch (error) { console.log(error) }
+				} catch (error) {}
 			},
 
 			"get balance": function(remainder, callback) {
@@ -629,8 +706,7 @@
 							var responseHTML = "<ul><li><b>account: </b>" + response.account + "</li><li><b>amount: </b>" + response.amount + "</li></ul>" 
 							callback({message: response.message, html: responseHTML})
 						})
-				}
-				catch (error) { console.log(error) }
+				} catch (error) {}
 			},
 
 			"log purchase": function(remainder, callback) {
@@ -641,7 +717,8 @@
 							return
 						}
 
-					// split at space
+					// split at keywords
+						remainder = " " + remainder
 						var amount = remainder.split(/ for | costing | that cost | that costs | which cost | which costs /gi)
 							amount = (amount[1] || amount[0]).split(/ called | named | by the name | item | which is a | which is an | which is the | which is type | which is category | which is | type | category /gi)[0].trim()
 							amount = amount.replace("$","")
@@ -662,8 +739,7 @@
 							var responseHTML = "<ul><li><b>description: </b>" + response.description + "</li><li><b>amount: </b>" + response.amount + "</li><li><b>category: </b>" + response.category + "</li></ul>" 
 							callback({message: response.message, html: responseHTML})
 						})
-				}
-				catch (error) { console.log(error) }
+				} catch (error) {}
 			},
 
 			"fetch events": function(remainder, callback) {
@@ -674,14 +750,15 @@
 							return
 						}
 
-					// split at space
-						var startDate = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/from |starting at |start date |between |for /gi)
+					// split at keywords
+						remainder = " " + remainder
+						var startDate = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ from | starting at | start date | between | for /gi)
 							startDate = (startDate[1] || startDate[0]).split(/ to | until | ending at | end time | and | through /gi)[0].toLowerCase().trim()
 							if (startDate == "today")     { startDate = new Date().toLocaleDateString() }
 							if (startDate == "yesterday") { startDate = new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).toLocaleDateString() }
 							if (startDate == "tomorrow")  { startDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24)).toLocaleDateString() }
 
-						var endDate = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/to |until |ending at |end date |and |through /gi)
+						var endDate = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ to | until | ending at | end date | and | through /gi)
 							endDate = (endDate[1] || endDate[0]).split(/ from | starting at | start time | between | for /gi)[0].toLowerCase().trim()
 							if (endDate == "today")     { endDate = new Date().toLocaleDateString() }
 							if (endDate == "yesterday") { endDate = new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).toLocaleDateString() }
@@ -713,8 +790,7 @@
 								var responseText = response.message
 								callback({message: response.message + " " + eventList.join("..."),html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a><ul>" + eventItems.join("") + "</ul>"})
 						})
-				}
-				catch (error) { console.log(error) }
+				} catch (error) {}
 			},
 
 		// Google APIs
@@ -725,10 +801,14 @@
 							callback({message: "I'm not authorized to do that yet. Set a configuration for google custom search.", html: "missing configuration: google custom search"})
 							return
 						}
+						else if (!window.CONFIGURATION_LIBRARY["google api key"]) {
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: google api key"})
+							return
+						}
 
 					// options
 						var options = {
-							url: window.CONFIGURATION_LIBRARY["google custom search"] + "&q=" + remainder
+							url: window.CONFIGURATION_LIBRARY["google custom search"] + "&key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&q=" + remainder
 						}
 
 					// proxy
@@ -752,7 +832,230 @@
 							// send response								
 								callback({message: responseText + " " + topResultText, html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a>" + topResult})
 						})
+				} catch (error) {}
+			},
+
+			"google directions": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: google api key"})
+							return
+						}
+
+					// split at keywords
+						remainder = " " + remainder
+						var origin = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ leaving from | from | starting at | start at | etween | originating at | origin /gi)
+							origin = (origin[1] || origin[0]).split(/ going to | go to | ending at | end at | to | and | arriving at | destination | for /gi)[0].toLowerCase().trim()
+
+						var destination = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ going to | go to | ending at | end at | to | and | arriving at | destination | for /gi)
+							destination = (destination[1] || destination[0]).split(/ leaving from | from | starting at | start at | between | originating at | origin /gi)[0].toLowerCase().trim()
+
+					// options
+						var options = {
+							url: "https://maps.googleapis.com/maps/api/directions/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&origin=" + origin + "&destination=" + destination
+						}
+
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							// no results?
+								if (!response || !response.routes || !response.routes[0] || !response.routes[0].legs || !response.routes[0].legs[0]) {
+									callback({message: "I couldn't find a route.", html: "unable to route from " + origin + " to " + destination})
+								}
+
+							// format response
+								else {
+									var distance = response.routes[0].legs[0].distance.text
+									var duration = response.routes[0].legs[0].duration.text
+									var steps = response.routes[0].legs[0].steps.map(function(step) {
+										return "<li><b>" + step.distance.text + " (" + step.duration.text + ")" + "</b><br>" + step.html_instructions + "</li>"
+									}) || []
+
+									var message = origin + " to " + destination + " is " + distance + " for " + duration + "."
+									var link = "<a target='_blank' href='https://www.google.com/maps/dir/" + origin + "/" + destination + "'>" + message + "</a>"
+									callback({message: message, html: link + "<ol>" + steps.join("") + "</ol>"})
+								}
+						})
+				} catch (error) {}
+			},
+
+			"google places": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: google api key"})
+							return
+						}
+
+					// options
+						var options = {
+							url: "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&inputtype=textquery&fields=place_id&input=" + remainder
+						}
+
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							// no results?
+								if (!response || !response.candidates || !response.candidates[0] || !response.candidates[0].place_id) {
+									callback({message: "I couldn't find that place.", html: "unable to find " + remainder})
+								}
+
+							// second trip, with place_id
+								else {
+									var place_id = response.candidates[0].place_id
+									var options = {
+										url: "https://maps.googleapis.com/maps/api/place/details/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&inputtype=textquery&fields=name,photo,url,website,formatted_phone_number,formatted_address,geometry,opening_hours&place_id=" + place_id
+									}
+
+									window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+										// no results?
+											if (!response || !response.result) {
+												callback({message: "I couldn't find that place.", html: "unable to find " + remainder})
+											}
+
+										// format response
+											else {
+												var place = response.result
+												var message = "I found " + place.name + " at " + place.formatted_address + ". It's currently " + (place.opening_hours.open_now ? " open." : "closed.")
+												var infoBlock = "<b>" + place.name + "</b><ul><li><a target='_blank' href='" + place.url + "'>" + place.formatted_address + "</a></li><li>" + place.formatted_phone_number + "</li><li>" + (place.website ? ("<a target='_blank' href='" + place.website + "'>" + place.website + "</a>") : "<i>no website found</i>") + "<li>hours:<br><ul><li>" + place.opening_hours.weekday_text.join("</li><li>") + "</li></ul></li>" + "</ul>"
+												callback({message: message, html: infoBlock})
+											}
+									})
+								}
+						})
+				} catch (error) {}
+			},
+
+		// games
+			"more or less": function(remainder, callback) {
+				try {					
+					// pick a number
+						if (window.CONTEXT_LIBRARY.flow !== "more or less") {
+							window.CONTEXT_LIBRARY.flow = "more or less"
+							window.CONTEXT_LIBRARY.moreOrLess = {
+								number: Math.floor(Math.random() * 100) + 1,
+								guesses: 0
+							}
+
+							callback({message: "Okay, I'm thinking of a number between 1 and 100.", html: "<b>I'm thinking of a number between 1 and 100.</b><br>Make a guess. I'll tell you if my number is more or less."})
+						}
+
+					// interpret guess
+						else {
+							var guess = Number(remainder)
+							if (isNaN(guess)) {
+								callback({message: "I don't know that number.", html: "not a number: " + remainder})
+							}
+							else {
+								// increase guess count
+									window.CONTEXT_LIBRARY.moreOrLess.guesses++
+
+								// correct
+									if (guess == window.CONTEXT_LIBRARY.moreOrLess.number) {
+										var message = "You took " + window.CONTEXT_LIBRARY.moreOrLess.guesses + " guess" + (window.CONTEXT_LIBRARY.moreOrLess.guesses == 1 ? "" : "es") + " to find my number: " + window.CONTEXT_LIBRARY.moreOrLess.number + "."
+										var messageBlock = "You took <b>" + window.CONTEXT_LIBRARY.moreOrLess.guesses + "</b> guess" + (window.CONTEXT_LIBRARY.moreOrLess.guesses == 1 ? "" : "es") + " to find my number: <b>" + window.CONTEXT_LIBRARY.moreOrLess.number + "</b>."
+										callback({message: message, html: messageBlock})
+
+										window.CONTEXT_LIBRARY.flow = null
+										delete window.CONTEXT_LIBRARY.moreOrLess
+									}
+
+								// more
+									else if (window.CONTEXT_LIBRARY.moreOrLess.number > guess) {
+										var message = "More than " + guess + "."
+										callback({message: message, html: "&uarr; " + message + " &uarr;"})
+									}
+
+								// less
+									else if (window.CONTEXT_LIBRARY.moreOrLess.number < guess) {
+										var message = "Less than " + guess + "."
+										callback({message: message, html: "&darr; " + message + " &darr;"})
+									}
+							}
+						}
 				}
 				catch (error) {}
-			}
+			},
+
+			"true or false": function(remainder, callback) {
+				try {					
+					// pick a number
+						if (window.CONTEXT_LIBRARY.flow !== "true or false") {
+							// options
+								var options = {
+									url: "https://opentdb.com/api.php?amount=10&type=boolean"
+								}
+
+							// proxy to server
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										// enter flow
+											window.CONTEXT_LIBRARY.flow = "true or false"
+											window.CONTEXT_LIBRARY.trueOrFalse = {
+												score: 0,
+												index: 0,
+												questions: response.results
+											}
+
+										// first question
+											var question = window.CONTEXT_LIBRARY.trueOrFalse.questions[window.CONTEXT_LIBRARY.trueOrFalse.index].question
+											var questionNumber = window.CONTEXT_LIBRARY.trueOrFalse.index + 1
+											callback({message: "True or False: " + question, html: "<b>True or False #" + questionNumber + "</b><br>" + question})
+									}
+									catch (error) {
+										window.CONTEXT_LIBRARY.flow = null
+										callback({message: "I don't know any fun facts.", html: "unable to access trivia"})
+									}
+								})
+						}
+
+					// interpret guess
+						else {
+							// validate
+								var guess = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
+								if (guess.includes("true")) {
+									guess = "True"
+								}
+								else if (guess.includes("false")) {
+									guess = "False"
+								}
+								else {
+									callback({message: "I only understand True and False.", html: "invalid guess: " + remainder})
+									return
+								}
+
+							// correct
+								var correctAnswer = window.CONTEXT_LIBRARY.trueOrFalse.questions[window.CONTEXT_LIBRARY.trueOrFalse.index].correct_answer
+								if (guess == correctAnswer) {
+									window.CONTEXT_LIBRARY.trueOrFalse.score++
+									var message = guess.toUpperCase() + " is correct!"
+								}
+
+							// incorrect
+								else {
+									var message = "Sorry, this is actually " + correctAnswer.toUpperCase() + "."
+								}
+
+							// advance
+								if (window.CONTEXT_LIBRARY.trueOrFalse.index + 1 < window.CONTEXT_LIBRARY.trueOrFalse.questions.length) {
+									window.CONTEXT_LIBRARY.trueOrFalse.index++
+
+									var nextQuestion = window.CONTEXT_LIBRARY.trueOrFalse.questions[window.CONTEXT_LIBRARY.trueOrFalse.index].question
+									var nextQuestionNumber = window.CONTEXT_LIBRARY.trueOrFalse.index + 1
+
+									callback({message: message + " ... " + "Question " + nextQuestionNumber + ": True or False: " + nextQuestion, html: message + "<br><br><b>True or False #" + nextQuestionNumber + "</b><br>" + nextQuestion})
+								}
+
+							// done
+								else {
+									var finalScore = window.CONTEXT_LIBRARY.trueOrFalse.score || 0
+
+									window.CONTEXT_LIBRARY.flow = null
+									delete window.CONTEXT_LIBRARY.trueOrFalse
+
+									callback({message: message + " ... " + "You got " + finalScore + " questions correct.", html: message + "<br><br><b>Final score: " + finalScore + "</b>"})
+								}
+						}
+				}
+				catch (error) {}
+			},
 	}

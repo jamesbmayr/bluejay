@@ -22,8 +22,17 @@ window.addEventListener("load", function() {
 			var FUNCTION_LIBRARY = window.FUNCTION_LIBRARY = {}
 			var PHRASE_LIBRARY = window.PHRASE_LIBRARY || {}
 			var ACTION_LIBRARY = window.ACTION_LIBRARY || {}
+			var CONTEXT_LIBRARY = window.CONTEXT_LIBRARY = {
+				lastPhrase: null,
+				lastAction: null,
+				lastResponseMessage: null,
+				lastResponseHTML: null,
+				flow: null
+			}
 
 		/* error responses */
+			var STOP_PHRASES = ["quit this game", "quit this", "quit", "abort this", "stop this", "stop", "stop talking", "stop speaking", "shut up"]
+
 			var NOPHRASE = "..."
 			var NOPHRASE_RESPONSES = ["Sorry, I didn't catch that.", "I didn't hear you.", "Wait, what?", "Can you say that again?", "I swear I'm listening!"]
 			var NOPHRASE_INDEX = Math.floor(Math.random() * NOPHRASE_RESPONSES.length)
@@ -44,10 +53,6 @@ window.addEventListener("load", function() {
 			var LISTENING = false
 			var TIME = 0
 			var COUNTDOWN = null
-			var CONTEXT = window.CONTEXT = {
-				this: null,
-				that: null
-			}
 			
 		/* elements */
 			var INPUTS_AUDIO = document.getElementById("inputs-audio")
@@ -302,17 +307,31 @@ window.addEventListener("load", function() {
 						var phrase = event.results[0][0].transcript
 					}
 
+				// match phrase to stop command
+					if (STOP_PHRASES.includes(phrase.trim())) {
+						var action = "stop"
+						var remainder = []
+					}
+
+				// existing flow?
+					else if (CONTEXT_LIBRARY.flow) {
+						var action = CONTEXT_LIBRARY.flow
+						var remainder = phrase.split(/\s/gi)
+					}
+
 				// match phrase to an action in the library
-					var phraseText = phrase.split(/\s/gi)
-					var remainder = []
-					
-					do {
-						var action = PHRASE_LIBRARY[phraseText.join(" ").toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"")] || null
+					else {
+						var phraseText = phrase.split(/\s/gi)
+						var remainder = []
 						
-						if (!action) {
-							remainder.unshift(phraseText.pop())
-						}
-					} while (!action && phraseText.length)
+						do {
+							var action = PHRASE_LIBRARY[phraseText.join(" ").toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"")] || null
+							
+							if (!action) {
+								remainder.unshift(phraseText.pop())
+							}
+						} while (!action && phraseText.length)
+					}
 
 				// enact phrase
 					FUNCTION_LIBRARY.enactPhrase(phrase, action, (remainder.join(" ") || ""))
@@ -321,8 +340,22 @@ window.addEventListener("load", function() {
 		/* enactPhrase */
 			FUNCTION_LIBRARY.enactPhrase = enactPhrase
 			function enactPhrase(phrase, action, remainder) {
+				// stop phrase
+					if (action == "stop") {
+						var previousFlow = CONTEXT_LIBRARY.flow
+						CONTEXT_LIBRARY.flow = null
+						if (previousFlow) {
+							delete CONTEXT_LIBRARY[previousFlow]
+						}
+						
+						SYNTHESIZER.pause()
+						SYNTHESIZER.cancel()
+
+						createHistory(phrase || "stop", action, {message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop"})
+					}
+
 				// no phrase
-					if (!phrase) {
+					else if (!phrase) {
 						phrase = NOPHRASE
 						action = NOACTION
 						var message = NOPHRASE_RESPONSES[NOPHRASE_INDEX]
@@ -360,6 +393,12 @@ window.addEventListener("load", function() {
 		/* createHistory */
 			FUNCTION_LIBRARY.createHistory = createHistory
 			function createHistory(phrase, action, response) {
+				// context
+					CONTEXT_LIBRARY.lastPhrase = phrase
+					CONTEXT_LIBRARY.lastAction = action
+					CONTEXT_LIBRARY.lastResponseMessage = response.message
+					CONTEXT_LIBRARY.lastResponseHTML = response.html
+
 				// visuals
 					var historyBlock = document.createElement("div")
 						historyBlock.className = "stream-history"
