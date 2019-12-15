@@ -247,15 +247,19 @@
 			"get a route": 						"google directions",
 			"route me": 						"google directions",
 
+			"find a place": 					"google places",
 			"find a place called": 				"google places",
 			"find a place named": 				"google places",
 			"find a place by the name": 		"google places",
+			"find me a place": 					"google places",
 			"find me a place called": 			"google places",
 			"find me a place named": 			"google places",
 			"find me a place by the name": 		"google places",
+			"look up a place": 					"google places",
 			"look up a place called": 			"google places",
 			"look up a place named": 			"google places",
 			"look up a place by the name": 		"google places",
+			"look for a place": 				"google places",
 			"look for a place called": 			"google places",
 			"look for a place named": 			"google places",
 			"look for a place by the name": 	"google places",
@@ -915,8 +919,17 @@
 										// format response
 											else {
 												var place = response.result
-												var message = "I found " + place.name + " at " + place.formatted_address + ". It's currently " + (place.opening_hours.open_now ? " open." : "closed.")
-												var infoBlock = "<b>" + place.name + "</b><ul><li><a target='_blank' href='" + place.url + "'>" + place.formatted_address + "</a></li><li>" + place.formatted_phone_number + "</li><li>" + (place.website ? ("<a target='_blank' href='" + place.website + "'>" + place.website + "</a>") : "<i>no website found</i>") + "<li>hours:<br><ul><li>" + place.opening_hours.weekday_text.join("</li><li>") + "</li></ul></li>" + "</ul>"
+												if (place.opening_hours) {
+													var openNow = "It's currently " + (place.opening_hours.open_now ? " open." : "closed.")
+													var openHours = "<br><ul><li>" + place.opening_hours.weekday_text.join("</li><li>") + "</li></ul>"
+												}
+												else {
+													var openNow = ""
+													var openHours = ""
+												}
+
+												var message = "I found " + place.name + " at " + (place.formatted_address || "an unknown address") + ". " + openNow
+												var infoBlock = "<b>" + place.name + "</b><ul><li><a target='_blank' href='" + place.url + "'>" + (place.formatted_address || "<i>no address found</i>") + "</a></li><li>" + (place.formatted_phone_number || "<i>no phone number found</i>") + "</li><li>" + (place.website ? ("<a target='_blank' href='" + place.website + "'>" + place.website + "</a>") : "<i>no website found</i>") + "<li>hours: " + (openHours || "<i>no hours found</i>") + "</li>" + "</ul>"
 												callback({message: message, html: infoBlock})
 											}
 									})

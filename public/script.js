@@ -68,7 +68,6 @@ window.addEventListener("load", function() {
 
 		/* recognition */
 			var RECOGNITION = new window.speechRecognition()
-				RECOGNITION.onstart = startListening
 				RECOGNITION.onsoundend = stopListening
 				RECOGNITION.onresult = matchPhrase
 
@@ -220,17 +219,20 @@ window.addEventListener("load", function() {
 
 				// manual start
 					else {
-						SYNTHESIZER.pause()
-						SYNTHESIZER.cancel()
-						RECOGNITION.start()
+						startListening()
 					}
 			}
 
 		/* startListening */
 			FUNCTION_LIBRARY.startListening = startListening
 			function startListening(event) {
+				// synthesizer
+					SYNTHESIZER.pause()
+					SYNTHESIZER.cancel()
+				
 				// set global
 					LISTENING = true
+					RECOGNITION.start()
 
 				// set countdown failsafe
 					TIME = 0
@@ -422,7 +424,9 @@ window.addEventListener("load", function() {
 					STREAM.prepend(historyBlock)
 
 				// speak
-					FUNCTION_LIBRARY.speakResponse(response.message)
+					if (response.message) {
+						FUNCTION_LIBRARY.speakResponse(response.message)
+					}
 			}
 
 	/*** audio output ***/
@@ -438,6 +442,7 @@ window.addEventListener("load", function() {
 							var utterance = new SpeechSynthesisUtterance(message)
 								utterance.voice = VOICE
 								utterance.volume = VOLUME
+								utterance.onend = startListening
 							SYNTHESIZER.speak(utterance)
 						}
 				}, DELAY)
