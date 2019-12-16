@@ -55,6 +55,13 @@
 			"can you repeat that": 				"repeat that",
 			"i didnt catch that": 				"repeat that",
 
+			"who is a good": 					"affirm the bird",
+			"whos a good": 						"affirm the bird",
+			"whose a good": 					"affirm the bird",
+			"who is my good": 					"affirm the bird",
+			"whos my good": 					"affirm the bird",
+			"whose my good": 					"affirm the bird",
+
 		// time
 			"what time is it": 					"what time is it",
 			"what is the time": 				"what time is it",
@@ -143,6 +150,7 @@
 			"tell a joke": 						"tell a joke",
 			"make me laugh": 					"tell a joke",
 			"fetch me a joke": 					"tell a joke",
+			"tell me something funny": 			"tell a joke",
 
 			"get a quote": 						"get a quote",
 			"get me a quote": 					"get a quote",
@@ -336,6 +344,12 @@
 			"repeat that": function(remainder, callback) {
 				try {
 					callback({message: window.CONTEXT_LIBRARY.lastResponseMessage || "No previous response.", html: window.CONTEXT_LIBRARY.lastResponseHTML || "No previous response."})
+				} catch (error) {}
+			},
+
+			"affirm the bird": function(remainder, callback) {
+				try {
+					callback({message: "I am. I am a good " + (remainder || "bird."), html: "I am. I am a good " + (remainder || "bird") + ". (So are you.)"})
 				} catch (error) {}
 			},
 
