@@ -88,7 +88,7 @@
 									case (/[.]([a-zA-Z0-9])+$/).test(request.url):
 										try {
 											response.writeHead(200, {"Content-Type": main.getContentType(request.url)})
-											fs.readFile("./public/" + request.path.join("/"), function (error, file) {
+											fs.readFile("./public" + request.path.join("/"), function (error, file) {
 												if (error) {_404(error)}
 												else {
 													response.end(file, "binary")

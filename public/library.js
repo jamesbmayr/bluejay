@@ -18,7 +18,11 @@
 			"edit configuration": 				"edit configuration",
 			"edit configuration for": 			"edit configuration",
 			"set configuration": 				"edit configuration",
+			"set a configuration": 				"edit configuration",
+			"set this configuration": 			"edit configuration",
 			"set configuration for": 			"edit configuration",
+			"set a configuration for": 			"edit configuration",
+			"set the configuration for": 		"edit configuration",
 			"set my configuration for": 		"edit configuration",
 			"set new configuration": 			"edit configuration",
 			"set a new configuration": 			"edit configuration",
@@ -55,12 +59,44 @@
 			"can you repeat that": 				"repeat that",
 			"i didnt catch that": 				"repeat that",
 
-			"who is a good": 					"affirm the bird",
-			"whos a good": 						"affirm the bird",
-			"whose a good": 					"affirm the bird",
-			"who is my good": 					"affirm the bird",
-			"whos my good": 					"affirm the bird",
-			"whose my good": 					"affirm the bird",
+			"thank you": 						"gratitude",
+			"thanks": 							"gratitude",
+			"i appreciate": 					"gratitude",
+			"well thank you": 					"gratitude",
+			"well thanks": 						"gratitude",
+			"good job": 						"gratitude",
+			"excellent work": 					"gratitude",
+			"job well done": 					"gratitude",
+			"well done": 						"gratitude",
+
+			"im sorry": 						"forgiveness",
+			"sorry": 							"forgiveness",
+			"i am sorry": 						"forgiveness",
+			"i apologize": 						"forgiveness",
+			"my apologies": 					"forgiveness",
+			"apologies": 						"forgiveness",
+			"can you forgive": 					"forgiveness",
+			"do you forgive": 					"forgiveness",
+			"would you forgive": 				"forgiveness",
+
+			"who is a good": 					"affirmation",
+			"whos a good": 						"affirmation",
+			"whose a good": 					"affirmation",
+			"who is my good": 					"affirmation",
+			"whos my good": 					"affirmation",
+			"whose my good": 					"affirmation",
+			"youre an excellent": 				"affirmation",
+			"you are an excellent": 			"affirmation",
+			"youre a good": 					"affirmation",
+			"you are a good": 					"affirmation",
+			"youre great": 						"affirmation",
+			"you are great": 					"affirmation",
+			"youre wonderful": 					"affirmation",
+			"you are wonderful": 				"affirmation",
+			"youre awesome": 					"affirmation",
+			"you are awesome": 					"affirmation",
+			"youre wonderful": 					"affirmation",
+			"you are wonderful": 				"affirmation",
 
 		// time
 			"what time is it": 					"what time is it",
@@ -115,6 +151,12 @@
 			"find the average of": 				"average",
 			"what is the average of": 			"average",
 			"whats the average of": 			"average",
+
+			"start counting": 					"count",
+			"count": 							"count",
+			"can you count": 					"count",
+			"lets count": 						"count",
+			"give me a count": 					"count",
 
 		// word api fetches
 			"what rhymes with": 				"find rhymes",
@@ -180,6 +222,18 @@
 			"what is happening in the news": 	"get the headlines",
 			"read the headlines": 				"get the headlines",
 			"read me the headlines": 			"get the headlines",
+
+			"get the weather": 					"get the weather",
+			"get the weather": 					"get the weather",
+			"whats the weather": 				"get the weather",
+			"what is the weather": 				"get the weather",
+			"what will the be": 				"get the weather",
+			"hows the weather": 				"get the weather",
+			"how is the weather": 				"get the weather",
+			"is it going to rain": 				"get the weather",
+			"will it rain": 					"get the weather",
+			"is it going to snow": 				"get the weather",
+			"will it snow": 					"get the weather",
 
 		// Google Apps Script
 			"add to wish list": 				"wish list",
@@ -340,16 +394,30 @@
 					callback({message: remainder, html: remainder})
 				} catch (error) {}
 			},
-
 			"repeat that": function(remainder, callback) {
 				try {
 					callback({message: window.CONTEXT_LIBRARY.lastResponseMessage || "No previous response.", html: window.CONTEXT_LIBRARY.lastResponseHTML || "No previous response."})
 				} catch (error) {}
 			},
-
-			"affirm the bird": function(remainder, callback) {
+			"gratitude": function(remainder, callback) {
 				try {
-					callback({message: "I am. I am a good " + (remainder || "bird."), html: "I am. I am a good " + (remainder || "bird") + ". (So are you.)"})
+					var messages = ["You're welcome.", "Glad I could help.", "Any time.", "Don't mention it.", "No problem."]
+					var message = messages[Math.floor(Math.random() * messages.length)]
+					callback({message: message, html: message })
+				} catch (error) {}
+			},
+			"forgiveness": function(remainder, callback) {
+				try {
+					var messages = ["Don't worry about it.", "I forgive you.", "It's all right.", "No worries.", "Everything will be okay."]
+					var message = messages[Math.floor(Math.random() * messages.length)]
+					callback({message: message, html: message })
+				} catch (error) {}
+			},
+			"affirmation": function(remainder, callback) {
+				try {
+					var messages = ["I am a good bird.", "Thank you. I try my hardest.", "That's kind of you to say.", "I'm glad you think so.", "I appreciate that."]
+					var message = messages[Math.floor(Math.random() * messages.length)]
+					callback({message: message, html: message})
 				} catch (error) {}
 			},
 
@@ -493,6 +561,35 @@
 				}
 				catch (error) { callback({message: "Unable to calculate.", html: "invalid calculation"}) }
 			},
+			"count": function(remainder, callback) {
+				try {
+					// numbers
+						var startNumber = (" " + remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"")).split(/ up from | down from | from | starting at | start at | between | for /gi)
+							startNumber = (startNumber[1] || startNumber[0]).split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)[0].toLowerCase().trim()
+						if (!startNumber || isNaN(startNumber)) { startNumber = 1 }
+
+						var endNumber = (" " + remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"")).split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)
+							endNumber = (endNumber[1] || endNumber[0]).split(/ up from | down from | starting at | start at | between | for /gi)[0].toLowerCase().trim()
+						if (!endNumber || isNaN(endNumber)) { endNumber = 100 }
+
+					// up or down
+						var list = []
+						if (startNumber <= endNumber) {
+							for (var i = startNumber; i <= endNumber; i++) {
+								list.push(i)
+							}
+						}
+						else {
+							for (var i = startNumber; i >= endNumber; i--) {
+								list.push(i)
+							}
+						}
+
+					// message
+						callback({message: list.join("..."), html: "Counting from <b>" + String(startNumber) + "</b> to <b>" + String(endNumber) + "</b>."})
+
+				} catch (error) {}
+			},
 
 		// word api fetches
 			"find rhymes": function(remainder, callback) {
@@ -524,7 +621,6 @@
 						})
 				} catch (error) {}
 			},
-
 			"find synonyms": function(remainder, callback) {
 				try {
 					// options
@@ -554,7 +650,6 @@
 						})
 				} catch (error) {}
 			},
-
 			"define": function(remainder, callback) {
 				try {
 					// options
@@ -611,7 +706,6 @@
 						})
 				} catch (error) {}
 			},
-
 			"get a quote": function(remainder, callback) {
 				try {
 					// options
@@ -639,7 +733,6 @@
 						})
 				} catch (error) {}
 			},
-
 			"get the headlines": function(remainder, callback) {
 				try {
 					// initial callback
@@ -672,13 +765,135 @@
 						})
 				} catch (error) {}
 			},
+			"get the weather": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["open weather api"]) {
+							callback({message: "I'm not authorized to do that yet. Set a configuration for open weather api.", html: "missing configuration: <b>open weather api</b>"})
+							return
+						}
+
+					// location
+						var location = (" " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"")).toLowerCase().replace(/ in | at | for | inside /gi,"").trim() || CONFIGURATION_LIBRARY["city"] || CONGIFURATION_LIBRARY["zip code"] || null
+
+					// no location
+						if (!location) {
+							window.CONTEXT_LIBRARY.flow = "get the weather"
+							window.CONTEXT_LIBRARY["get the weather"] = {
+								location: null
+							}
+
+							callback({message: "What city should I get the weather for?", html: "What <b>city</b> should I get the weather for?"})
+						}
+
+					// yes location
+						else {
+							// options
+								var options = {
+									url: "https://api.openweathermap.org/data/2.5/forecast?appid=" + CONFIGURATION_LIBRARY["open weather api"] + (isNaN(location) ? ("&q=" + location) : "&zip=" + location) + ",us&mode=json&units=imperial"
+								}
+
+							// proxy to server
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										// invalid response
+											if (!response || !response.city || !response.list) {
+												callback({message: "I was unable to get the weather for " + location, html: "I was unable to get the weather for <b>" + location + "</b>."})
+											}
+
+										// valid response
+											else {
+												// days of the week
+													var allDays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+
+												// axes
+													var dayColumns = []
+													var timeRows = []
+													for (var l in response.list) {
+														var segment = response.list[l]
+														var date = new Date(response.list[l].dt_txt + " UTC")
+														
+														segment.day = allDays[new Date(date).getDay()]
+														if (dayColumns[dayColumns.length - 1] !== segment.day) {
+															dayColumns.push(segment.day)
+														}
+														
+														segment.time = date.toLocaleTimeString()
+														if (!timeRows.includes(segment.time)) {
+															timeRows.push(segment.time)
+														}
+
+														segment.cell = "<td>" + segment.main.temp + "°F<br><br>" + (segment.weather ? segment.weather[0].description : "clear") + "</td>"
+													}
+
+												// sort times
+													timeRows.sort(function(a,b) {
+														a = a.replace(/\:/g,"")
+														b = b.replace(/\:/g,"")
+														if (a.toLowerCase().includes("pm")) { a = Number(a.replace(/pm/gi,"")) % 120000 + 120000 } else { a = Number(a.replace(/am/gi, "")) % 120000 }
+														if (b.toLowerCase().includes("pm")) { b = Number(b.replace(/pm/gi,"")) % 120000 + 120000 } else { b = Number(b.replace(/am/gi,"")) % 120000 }
+														return a - b
+													})
+
+												// grid
+													var grid = {}
+													for (var t in timeRows) {
+														grid[timeRows[t]] = {}
+														grid[timeRows[t]].time = "<td>" + timeRows[t] + "</td>"
+														for (var d in dayColumns) {
+															grid[timeRows[t]][dayColumns[d]] = "<td> - </td>"
+														}
+													}
+
+													for (var l in response.list) {
+														var data = response.list[l]
+														grid[data.time][data.day] = data.cell
+													}
+
+												// draw table
+													var heading = "<tr><th>&#128339;</th>"
+													for (var d in dayColumns) {
+														heading += ("<th>" + dayColumns[d] + "</th>")
+													}
+													heading += "</tr>"
+
+													var table = "<table><tbody>" + heading
+													for (var y in grid) {
+														var row = "<tr>"
+														for (var x in grid[y]) {
+															row += grid[y][x]
+														}
+														row += "</tr>"
+														table += row
+													}
+													table += "</tbody></table>"
+
+												// current weather
+													var currentTemperature = "unknown"
+													var currentWeather = "unknown"
+
+												// send response
+													var location = response.city.name + ", " + response.city.country
+													var conditions = "Right now it's " + response.list[0].main.temp + " degrees and " + (response.list[0].weather ? response.list[0].weather[0].description : "clear")
+													var message = "Here's the weather for " + location + "."
+													var link = "<b><a target='_blank' href='https://openweathermap.org/find?q=" + location + "'>" + message + "</a></b>"
+													callback({message: message + " ... " + conditions, html: link + "<br>" + table})
+											}
+									}
+									catch (error) {
+										callback({message: "I was unable to get the weather: " + remainder, html: "I was unable to get the weather: <b>" + remainder + "</b>."})
+									}
+								})
+						}
+				} catch (error) {}
+			},
 
 		// Google Apps Script
 			"wish list": function(remainder, callback) {
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: google apps script"})
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
 							return
 						}
 
@@ -705,12 +920,11 @@
 						})
 				} catch (error) {}
 			},
-
 			"get balance": function(remainder, callback) {
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: google apps script"})
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
 							return
 						}
 
@@ -726,12 +940,11 @@
 						})
 				} catch (error) {}
 			},
-
 			"log purchase": function(remainder, callback) {
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: google apps script"})
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
 							return
 						}
 
@@ -759,25 +972,24 @@
 						})
 				} catch (error) {}
 			},
-
 			"fetch events": function(remainder, callback) {
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: google apps script"})
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
 							return
 						}
 
 					// split at keywords
 						remainder = " " + remainder
-						var startDate = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ from | starting at | start date | between | for /gi)
-							startDate = (startDate[1] || startDate[0]).split(/ to | until | ending at | end time | and | through /gi)[0].toLowerCase().trim()
+						var startDate = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ from | starting at | start date | start time | between | for /gi)
+							startDate = (startDate[1] || startDate[0]).split(/ to | until | ending at | end date | end time | and | through /gi)[0].toLowerCase().trim()
 							if (startDate == "today")     { startDate = new Date().toLocaleDateString() }
 							if (startDate == "yesterday") { startDate = new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).toLocaleDateString() }
 							if (startDate == "tomorrow")  { startDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24)).toLocaleDateString() }
 
-						var endDate = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ to | until | ending at | end date | and | through /gi)
-							endDate = (endDate[1] || endDate[0]).split(/ from | starting at | start time | between | for /gi)[0].toLowerCase().trim()
+						var endDate = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ to | until | ending at | end date | end time | and | through /gi)
+							endDate = (endDate[1] || endDate[0]).split(/ from | starting at | start date | start time | between | for /gi)[0].toLowerCase().trim()
 							if (endDate == "today")     { endDate = new Date().toLocaleDateString() }
 							if (endDate == "yesterday") { endDate = new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).toLocaleDateString() }
 							if (endDate == "tomorrow")  { endDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24)).toLocaleDateString() }
@@ -816,11 +1028,11 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google custom search"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google custom search.", html: "missing configuration: google custom search"})
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google custom search.", html: "missing configuration: <b>google custom search</b>"})
 							return
 						}
 						else if (!window.CONFIGURATION_LIBRARY["google api key"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: google api key"})
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
 							return
 						}
 
@@ -852,12 +1064,11 @@
 						})
 				} catch (error) {}
 			},
-
 			"google directions": function(remainder, callback) {
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: google api key"})
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
 							return
 						}
 
@@ -896,12 +1107,11 @@
 						})
 				} catch (error) {}
 			},
-
 			"google places": function(remainder, callback) {
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: google api key"})
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
 							return
 						}
 
@@ -958,7 +1168,7 @@
 					// pick a number
 						if (window.CONTEXT_LIBRARY.flow !== "more or less") {
 							window.CONTEXT_LIBRARY.flow = "more or less"
-							window.CONTEXT_LIBRARY.moreOrLess = {
+							window.CONTEXT_LIBRARY["more or less"] = {
 								number: Math.floor(Math.random() * 100) + 1,
 								guesses: 0
 							}
@@ -974,26 +1184,26 @@
 							}
 							else {
 								// increase guess count
-									window.CONTEXT_LIBRARY.moreOrLess.guesses++
+									window.CONTEXT_LIBRARY["more or less"].guesses++
 
 								// correct
-									if (guess == window.CONTEXT_LIBRARY.moreOrLess.number) {
-										var message = "You took " + window.CONTEXT_LIBRARY.moreOrLess.guesses + " guess" + (window.CONTEXT_LIBRARY.moreOrLess.guesses == 1 ? "" : "es") + " to find my number: " + window.CONTEXT_LIBRARY.moreOrLess.number + "."
-										var messageBlock = "You took <b>" + window.CONTEXT_LIBRARY.moreOrLess.guesses + "</b> guess" + (window.CONTEXT_LIBRARY.moreOrLess.guesses == 1 ? "" : "es") + " to find my number: <b>" + window.CONTEXT_LIBRARY.moreOrLess.number + "</b>."
+									if (guess == window.CONTEXT_LIBRARY["more or less"].number) {
+										var message = "You took " + window.CONTEXT_LIBRARY["more or less"].guesses + " guess" + (window.CONTEXT_LIBRARY["more or less"].guesses == 1 ? "" : "es") + " to find my number: " + window.CONTEXT_LIBRARY["more or less"].number + "."
+										var messageBlock = "You took <b>" + window.CONTEXT_LIBRARY["more or less"].guesses + "</b> guess" + (window.CONTEXT_LIBRARY["more or less"].guesses == 1 ? "" : "es") + " to find my number: <b>" + window.CONTEXT_LIBRARY["more or less"].number + "</b>."
 										callback({message: message, html: messageBlock})
 
 										window.CONTEXT_LIBRARY.flow = null
-										delete window.CONTEXT_LIBRARY.moreOrLess
+										delete window.CONTEXT_LIBRARY["more or less"]
 									}
 
 								// more
-									else if (window.CONTEXT_LIBRARY.moreOrLess.number > guess) {
+									else if (window.CONTEXT_LIBRARY["more or less"].number > guess) {
 										var message = "More than " + guess + "."
 										callback({message: message, html: "&uarr; " + message + " &uarr;"})
 									}
 
 								// less
-									else if (window.CONTEXT_LIBRARY.moreOrLess.number < guess) {
+									else if (window.CONTEXT_LIBRARY["more or less"].number < guess) {
 										var message = "Less than " + guess + "."
 										callback({message: message, html: "&darr; " + message + " &darr;"})
 									}
@@ -1002,7 +1212,6 @@
 				}
 				catch (error) {}
 			},
-
 			"true or false": function(remainder, callback) {
 				try {					
 					// pick a number
@@ -1017,15 +1226,15 @@
 									try {
 										// enter flow
 											window.CONTEXT_LIBRARY.flow = "true or false"
-											window.CONTEXT_LIBRARY.trueOrFalse = {
+											window.CONTEXT_LIBRARY["true or false"] = {
 												score: 0,
 												index: 0,
 												questions: response.results
 											}
 
 										// first question
-											var question = window.CONTEXT_LIBRARY.trueOrFalse.questions[window.CONTEXT_LIBRARY.trueOrFalse.index].question
-											var questionNumber = window.CONTEXT_LIBRARY.trueOrFalse.index + 1
+											var question = window.CONTEXT_LIBRARY["true or false"].questions[window.CONTEXT_LIBRARY["true or false"].index].question
+											var questionNumber = window.CONTEXT_LIBRARY["true or false"].index + 1
 											callback({message: "True or False: " + question, html: "<b>True or False #" + questionNumber + "</b><br>" + question})
 									}
 									catch (error) {
@@ -1051,9 +1260,9 @@
 								}
 
 							// correct
-								var correctAnswer = window.CONTEXT_LIBRARY.trueOrFalse.questions[window.CONTEXT_LIBRARY.trueOrFalse.index].correct_answer
+								var correctAnswer = window.CONTEXT_LIBRARY["true or false"].questions[window.CONTEXT_LIBRARY["true or false"].index].correct_answer
 								if (guess == correctAnswer) {
-									window.CONTEXT_LIBRARY.trueOrFalse.score++
+									window.CONTEXT_LIBRARY["true or false"].score++
 									var message = guess.toUpperCase() + " is correct!"
 								}
 
@@ -1063,21 +1272,21 @@
 								}
 
 							// advance
-								if (window.CONTEXT_LIBRARY.trueOrFalse.index + 1 < window.CONTEXT_LIBRARY.trueOrFalse.questions.length) {
-									window.CONTEXT_LIBRARY.trueOrFalse.index++
+								if (window.CONTEXT_LIBRARY["true or false"].index + 1 < window.CONTEXT_LIBRARY["true or false"].questions.length) {
+									window.CONTEXT_LIBRARY["true or false"].index++
 
-									var nextQuestion = window.CONTEXT_LIBRARY.trueOrFalse.questions[window.CONTEXT_LIBRARY.trueOrFalse.index].question
-									var nextQuestionNumber = window.CONTEXT_LIBRARY.trueOrFalse.index + 1
+									var nextQuestion = window.CONTEXT_LIBRARY["true or false"].questions[window.CONTEXT_LIBRARY["true or false"].index].question
+									var nextQuestionNumber = window.CONTEXT_LIBRARY["true or false"].index + 1
 
 									callback({message: message + " ... " + "Question " + nextQuestionNumber + ": True or False: " + nextQuestion, html: message + "<br><br><b>True or False #" + nextQuestionNumber + "</b><br>" + nextQuestion})
 								}
 
 							// done
 								else {
-									var finalScore = window.CONTEXT_LIBRARY.trueOrFalse.score || 0
+									var finalScore = window.CONTEXT_LIBRARY["true or false"].score || 0
 
 									window.CONTEXT_LIBRARY.flow = null
-									delete window.CONTEXT_LIBRARY.trueOrFalse
+									delete window.CONTEXT_LIBRARY["true or false"]
 
 									callback({message: message + " ... " + "You got " + finalScore + " questions correct.", html: message + "<br><br><b>Final score: " + finalScore + "</b>"})
 								}

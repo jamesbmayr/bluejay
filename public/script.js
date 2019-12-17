@@ -14,6 +14,7 @@ window.addEventListener("load", function() {
 
 		/* libraries */
 			var AUDIO_LIBRARY 			= window.AUDIO_LIBRARY = null
+			var SOUND_LIBRARY 			= window.SOUND_LIBRARY = {}
 			var VOICE_LIBRARY 			= window.VOICE_LIBRARY = {}
 			var CONFIGURATION_LIBRARY 	= window.CONFIGURATION_LIBRARY = {}
 			var FUNCTION_LIBRARY 		= window.FUNCTION_LIBRARY = {}
@@ -28,7 +29,7 @@ window.addEventListener("load", function() {
 			}
 
 		/* abort & error messages */
-			var STOP_PHRASES = ["quit this game", "quit this", "quit", "abort this", "abort", "stop this", "stop", "stop talking", "stop speaking", "shut up"]
+			var STOP_PHRASES = ["quit this game", "quit this", "quit", "abort this", "abort", "stop this", "stop", "stop talking", "stop speaking", "please stop", "shut up", "never mind", "forget it", "forget that"]
 
 			var NOACTION = "???"
 			var NOACTION_RESPONSES = ["I'm not sure I follow.", "I don't understand.", "What does that mean?", "I don't know that one.", "I don't get it.", "I'm sorry, can you try that again?", "Can you repeat that?", "Please say that again.", "Wait, what was that?", "I'll need you to repeat that.", "What am I supposed to do?"]
@@ -113,6 +114,9 @@ window.addEventListener("load", function() {
 
 					// audio
 						initializeAudio()
+
+					// preload sounds
+						initializeSounds()
 				}
 			}
 
@@ -247,9 +251,26 @@ window.addEventListener("load", function() {
 			}
 
 	/*** audio input ***/
+		/* initializeSounds */
+			FUNCTION_LIBRARY.initializeSounds = initializeSounds
+			function initializeSounds() {
+				try {
+					// chirp
+						var audio = new Audio()
+							audio.src = "chirp.ogg"
+							audio.load()
+							audio.pause()
+							audio.volume = 0.5
+						SOUND_LIBRARY.chirp = audio
+						setTimeout(function() {
+							SOUND_LIBRARY.chirpDuration = audio.duration * 1000
+						}, VOICE_DELAY)
+				} catch (error) {}
+			}
+
 		/* initializeAudio */
 			FUNCTION_LIBRARY.initializeAudio = initializeAudio
-			function initializeAudio(event) {
+			function initializeAudio() {
 				// audio context
 					AUDIO_LIBRARY = new (window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext)()
 					window.AUDIO_LIBRARY = AUDIO_LIBRARY
@@ -357,7 +378,7 @@ window.addEventListener("load", function() {
 									AUDIO_LIBRARY.input.lastFrequencyCounter = 0
 
 									if (WHISTLE_RATIO_MINIMUM < ratio && ratio < WHISTLE_RATIO_MAXIMUM) {
-										FUNCTION_LIBRARY.startListening()
+										FUNCTION_LIBRARY.startListening({chirp: true})
 									}
 								}
 						}
@@ -381,7 +402,7 @@ window.addEventListener("load", function() {
 
 				// manual start
 					else {
-						startListening()
+						startListening({chirp: false})
 					}
 			}
 
@@ -398,16 +419,30 @@ window.addEventListener("load", function() {
 				// synthesizer
 					SYNTHESIZER.pause()
 					SYNTHESIZER.cancel()
+
+				// chirp
+					var chirpDelay = 0
+					if (event.chirp && SOUND_LIBRARY.chirp) {
+						try {
+							SOUND_LIBRARY.chirp.pause()
+							SOUND_LIBRARY.chirp.currentTime = 0
+							SOUND_LIBRARY.chirp.play()
+							var chirpDelay = SOUND_LIBRARY.chirpDuration
+						} catch (error) {}
+					}
 				
 				// set global
 					LISTENING = true
-					try {
-						RECOGNITION.start()
-					} catch (error) {}
 
 				// set countdown failsafe
-					LISTENING_TIME = 0
-					LISTENING_COUNTDOWN = setInterval(FUNCTION_LIBRARY.countdownListening, LISTENING_INTERVAL)
+					setTimeout(function() {
+						try {
+							RECOGNITION.start()
+						} catch (error) {}
+
+						LISTENING_TIME = 0
+						LISTENING_COUNTDOWN = setInterval(FUNCTION_LIBRARY.countdownListening, LISTENING_INTERVAL)
+					}, chirpDelay)
 			}
 
 		/* countdownListening */
