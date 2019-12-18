@@ -1,5 +1,6 @@
 /*** modules ***/
 	var http = require("http")
+	var https = require("https")
 	var fs   = require("fs")
 	var qs   = require("querystring")
 
@@ -7,7 +8,12 @@
 
 /*** server ***/
 	var port = main.getEnvironment("port")
-	var server = http.createServer(handleRequest)
+	if (main.getEnvironment("ssl")) {
+		var server = https.createServer(main.getEnvironment("certificates"), handleRequest)
+	}
+	else {
+		var server = http.createServer(handleRequest)
+	}
 		server.listen(port, function (error) {
 			if (error) {
 				main.logError(error)
@@ -80,6 +86,32 @@
 											main.renderHTML(request, "./public/index.html", function (html) {
 												response.end(html)
 											})
+										}
+										catch (error) {_404(error)}
+									break
+
+								// iframe
+									case (/^\/iframe\/?$/).test(request.url):
+										try {
+											response.writeHead(200, {
+												"Content-Type": "text/html; charset=utf-8"
+											})
+											if (request.get.embeddedPost) {
+												try {
+													request.post = JSON.parse(request.get.embeddedPost)
+													main.proxyRequest(request, function (data) {
+														request.apiResponse = data
+														main.renderHTML(request, "./public/iframe.html", function (html) {
+															response.end(html)
+														})
+													})
+												} catch (error) {_404(error)}
+											}
+											else {
+												main.renderHTML(request, "./public/iframe.html", function (html) {
+													response.end(html)
+												})
+											}
 										}
 										catch (error) {_404(error)}
 									break

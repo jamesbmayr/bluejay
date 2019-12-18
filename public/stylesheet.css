@@ -353,3 +353,10 @@
 			border-radius: 2px;
 			width: 1000px;
 		}
+
+		.stream-history iframe {
+			border: none;
+			border-radius: 5px;
+			width: 100%;
+			min-height: 300px;
+		}

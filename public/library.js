@@ -25,6 +25,7 @@
 			"set the configuration for": 		"edit configuration",
 			"set my configuration for": 		"edit configuration",
 			"set new configuration": 			"edit configuration",
+			"set new configuration for": 		"edit configuration",
 			"set a new configuration": 			"edit configuration",
 			"set a new configuration for": 		"edit configuration",
 			"change a configuration": 			"edit configuration",
@@ -39,6 +40,10 @@
 			"update my saved": 					"edit configuration",
 			"configure my": 					"edit configuration",
 			"configure": 						"edit configuration",
+
+			"authorize": 						"authorize",
+			"create authorization": 			"authorize",
+			"get authorization link": 			"authorize",
 
 		// meta
 			"repeat after me": 					"repeat this",
@@ -348,6 +353,7 @@
 			"play true or false": 				"true or false",
 			"lets play true or false": 			"true or false",
 
+		// SONOS
 	}
 
 /* action library */
@@ -356,13 +362,25 @@
 			"change voice": function(remainder, callback) {
 				try {
 					var name = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
-					callback(window.FUNCTION_LIBRARY.changeVoice({phrase: name}))
+					var success = window.FUNCTION_LIBRARY.changeVoice({name: name})
+					if (!success) {
+						callback({message: "I don't recognize that voice.", html: "voice not found: " + remainder})
+					}
+					else {
+						callback({message: "Voice set to " + name, html: "voice: " + name})
+					}
 				} catch (error) {}
 			},
 			"change volume": function(remainder, callback) {
 				try {
 					var volume = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
-					callback(window.FUNCTION_LIBRARY.changeVolume({phrase: volume}))
+					var success = window.FUNCTION_LIBRARY.changeVolume({volume: volume})
+					if (!success) {
+						callback({message: "That's not a valid number.", html: "invalid volume: " + remainder})
+					}
+					else {
+						callback({message: "Volume set to " + volume, html: "volume: " + Math.round(Math.max(0, Math.min(100, Number(volume))))})
+					}
 				} catch (error) {}
 			},
 			"edit configuration": function(remainder, callback) {
@@ -384,7 +402,57 @@
 						}
 
 					// save and respond
-						callback(window.FUNCTION_LIBRARY.changeConfiguration({key: key, value: value}))
+						var success = window.FUNCTION_LIBRARY.changeConfiguration({key: key, value: value})
+						if (!success) {
+							callback({message: "I couldn't set that configuration.", html: "invalid or missing key and value"})
+						}
+						else {
+							callback({message: key + " is now " + value, html: key + " = " + value})
+						}
+				} catch (error) {}
+			},
+			"authorize": function(remainder, callback) {
+				try {
+					// get credentials
+						var credentials = remainder.split(/\s/gi)
+						var platform = credentials[0] || ""
+
+					// no platform?
+						var availablePlatforms = ["sonos"]
+						if (!platform || !availablePlatforms.includes(platform.toLowerCase())) {
+							callback({message: "I need more information.", html: "unable to create authorization link: <b>" + remainder + "</b>"})
+						}
+
+					// credentials?
+						else if (platform == "sonos") {
+							// 1: this parses the user response or looks in the CONFIGURATION library for Sonos key, secret, and redirect
+							// 2: creates a history block with an <iframe> to bluejay/iframe with query params
+							// 3: <iframe> loads; its contents are a link to the sonos auth flow; the "state" query param includes this location and the API key & secret
+							// 4: user clicks the link, which opens the Sonos auth flow inside the iframe
+							// 5: user goes through and completes the auth flow
+							// 6: Sonos redirects the <iframe> based the redirect param (currently a Google Apps Script); auth code is a param of this page
+							// 7: Google Apps Script logs this and generates another bluejay/iframe link, using the "state" param from before and the new auth code
+							// 8: user clicks this link, which requests bluejay/iframe again, but with an embeddedPost param
+							// 9: bluejay server interprets this param and sends an API request to Sonos with the auth code
+							// 10: Sonos responds with the actual access token (and refresh token)
+							// 11: bluejay server sends back the bluejay/iframe document, which postMessages window.top with the Sonos data
+							// 12: the top window accepts this message and parses the data
+							// 13: the data includes a function to run (changeConfiguration) and input data (the Sonos tokens)
+							// 14: bluejay saves these values to CONFIGURATION_LIBRARY and localStorage
+							// 15: subsequent Sonos API calls can include the access_token
+							// 16: if the expiration date has been passed, bluejay will need to use the refresh_token to get a new access_token (TBD)
+
+							var key = credentials[1] || CONFIGURATION_LIBRARY["sonos key"] || ""
+							var secret = credentials[2] || CONFIGURATION_LIBRARY["sonos secret"] || ""
+							var redirect = credentials[2] || CONFIGURATION_LIBRARY["sonos redirect"] || ""
+
+							var encodedAuth = btoa(key + ":" + secret)
+							var state = encodeURIComponent(window.location + ";;;" + encodedAuth)
+
+							var url = "https://api.sonos.com/login/v3/oauth?response_type=code&scope=playback-control-all&client_id=" + key + "&state=" + state + "&redirect_uri=" + encodeURIComponent(redirect)
+							var iframe = "<iframe src='./iframe/?embeddedLink=" + encodeURIComponent(url) + "'></iframe>"
+							callback({message: "Here's an authorization link.", html: iframe})
+						}
 				} catch (error) {}
 			},
 
@@ -774,7 +842,7 @@
 						}
 
 					// location
-						var location = (" " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"")).toLowerCase().replace(/ in | at | for | inside /gi,"").trim() || CONFIGURATION_LIBRARY["city"] || CONGIFURATION_LIBRARY["zip code"] || null
+						var location = (" " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"")).toLowerCase().replace(/ in | at | for | inside /gi,"").trim() || CONFIGURATION_LIBRARY["city"] || CONFIGURATION_LIBRARY["zip code"] || null
 
 					// no location
 						if (!location) {

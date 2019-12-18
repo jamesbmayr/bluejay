@@ -143,15 +143,14 @@ window.addEventListener("load", function() {
 			function changeConfiguration(event) {
 				// missing key or value
 					if (!event.key || !event.value) {
-						return {message: "I couldn't set that configuration.", html: "invalid or missing key and value"}
+						return false
 					}
 
 				// update config
 					else {
 						CONFIGURATION_LIBRARY[event.key] = event.value
 						window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-
-						return {message: event.key + " is now " + event.value, html: event.key + " = " + event.value}
+						return true
 					}
 			}
 
@@ -199,17 +198,17 @@ window.addEventListener("load", function() {
 					}
 
 				// via action
-					else if (event.phrase) {
+					else if (event.name) {
 						// if voice exists
-							if (VOICE_LIBRARY[event.phrase]) {
-								VOICE = VOICE_LIBRARY[event.phrase]
-								INPUTS_VOICES.value = event.phrase
-								return {message: "Voice set to " + event.phrase, html: "voice: " + event.phrase}
+							if (VOICE_LIBRARY[event.name]) {
+								VOICE = VOICE_LIBRARY[event.name]
+								INPUTS_VOICES.value = event.name
+								return true
 							}
 
 						// otherwise
 							else {
-								return {message: "I don't recognize that voice.", html: "voice not found: " + event.phrase}
+								return false
 							}
 					}
 			}
@@ -225,21 +224,20 @@ window.addEventListener("load", function() {
 					}
 
 				// via action
-					else if (event.phrase) {
+					else if (event.volume) {
 						// if not a number
-							if (isNaN(Number(event.phrase))) {
-								return {message: "That's not a valid number.", html: "invalid volume: " + event.phrase}
+							if (isNaN(Number(event.volume))) {
+								return false
 							}
 
 						// otherwise
 							else {
-								var newVolume = Math.round(Math.max(0, Math.min(100, Number(event.phrase))))
+								var newVolume = Math.round(Math.max(0, Math.min(100, Number(event.volume))))
 								INPUTS_VOLUME.value = newVolume
 								VOICE_VOLUME = newVolume / 100
-								return {message: "Volume set to " + newVolume, html: "volume: " + newVolume}
+								return true
 							}
 					}
-
 			}
 
 		/* changeDuration */
@@ -650,6 +648,29 @@ window.addEventListener("load", function() {
 			}
 
 	/*** back-end ***/
+		/* receiveiFrameMessage */
+			FUNCTION_LIBRARY.receiveiFrameMessage = receiveiFrameMessage
+			window.onmessage = receiveiFrameMessage
+			function receiveiFrameMessage(event) {
+				try {
+					if (!event.isTrusted || event.origin !== window.location.origin) {
+						console.log("untrusted message from " + event.origin)
+					}
+					else {
+						event.data = JSON.stringify(event.data)
+
+						if (!event.data || !event.data.function || !FUNCTION_LIBRARY[event.data.function]) {
+							console.log("unable to complete postMessage function: " + event)
+						}
+						else {
+							FUNCTION_LIBRARY[event.data.function](event.data.input || null)
+							console.log("postMessage success")
+						}
+					}
+				}
+				catch (error) { console.log(error) }
+			}
+
 		/* proxyRequest */
 			FUNCTION_LIBRARY.proxyRequest = proxyRequest
 			function proxyRequest(options, callback) {

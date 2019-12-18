@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>bluejay iframe</title>
+	</head>
+	<body>
+		<script node>
+			if (request.get.embeddedLink)  {
+				"<a href='" + request.get.embeddedLink + "'>" + request.get.embeddedLink + "</a>"
+			}
+			else if (request.get.embeddedPost) {
+				var apiResponse = request.apiResponse
+				console.log(apiResponse)
+				var data = {
+					function: "changeConfiguration",
+					input: {
+						key: request.post.host,
+						value: {
+							access_token: apiResponse.access_token,
+							token_type: apiResponse.token_type,
+							expiration: new Date().getTime() + (apiResponse.expires_in * 1000),
+							refresh_token: apiResponse.refresh_token,
+							scope: apiResponse.scope
+						}
+					}
+				}
+
+				"<b>Success!</b>" + "<script>window.top.postMessage(" + JSON.stringify(data) + ")</script>"
+			}
+		</script>node>
+	</body>
+</html>

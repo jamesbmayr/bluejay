@@ -61,14 +61,21 @@
 					var environment = {
 						port:   process.env.PORT,
 						domain: process.env.DOMAIN,
-						debug:  (process.env.DEBUG || false)
+						debug:  (process.env.DEBUG || false),
+						ssl: (process.env.DEBUG || true),
+						certificates: (process.env.CERTIFICATES || {})
 					}
 				}
 				else {
 					var environment = {
 						port:   3000,
 						domain: "localhost",
-						debug:  true
+						debug:  true,
+						ssl: true,
+						certificates: {
+							key: fs.readFileSync("localhost.key"),
+							cert: fs.readFileSync("localhost.crt")
+						}
 					}
 				}
 
@@ -419,16 +426,18 @@
 					var method = request.post.method || "get"
 					var path = request.post.url.replace(protocol + "://", "").split("?")[0].split("/")
 					var host = path.shift() || ""
-					var body = JSON.stringify(qs.parse(request.post.url.split("?")[1]))
+					request.post.host = host
+					var body = request.post.url.split("?")[1]
 					var options = {
 						host: host,
 						path: "/" + encodeURI(path.join("/")),
 						method: method.toUpperCase(),
 						headers: 	{
-							"Accept": request.post.contentType || "application/json",
-							"Content-Type": "application/json",
-							"User-Agent": request.post.userAgent || "bluejay",
-							"followRedirects" : true
+							"Accept": request.post["Accept"] || "application/json",
+							"Content-Type": request.post["Content-Type"] || "application/json",
+							"User-Agent": request.post["User-Agent"] || "bluejay",
+							"followRedirects": request.post["followRedirects"] || true,
+							"Authorization": request.post["Authorization"] || true
 						}
 					}
 
