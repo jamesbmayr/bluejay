@@ -262,9 +262,18 @@
 			-moz-user-select: none;
 			-ms-user-select: none;
 			-o-user-select: none;
+			height: 25px;
+		}
+
+		#inputs-advanced label span {
+			float: left;
+			height: calc(100% - 10px);
+			padding: 5px;
+			line-height: 1;
 		}
 
 		#inputs-advanced input, #inputs-advanced select {
+			float: left;
 			border-radius: 5px;
 			background-color: #dddddd;
 			border: 0px;
@@ -273,11 +282,30 @@
 			font-family: monospace;
 			outline: none;
 			transition: 0.5s;
+			padding: 5px;
+			margin: 0px;
+			height: 15px;
+		}
+
+		#inputs-advanced input[type="checkbox"] {
+			zoom: 2;
+			cursor: pointer;
+			height: 13px;
+		}
+
+		#inputs-advanced select {
+			height: 25px;
+			padding: 0px;
+			cursor: pointer;
 		}
 
 		#inputs-advanced input:hover, #inputs-advanced input:focus, #inputs-advanced select:hover, #inputs-advanced select:focus {
-			box-shadow: 0px 0px 10px #222222;
-		}		
+			filter: drop-shadow(0px 0px 5px #222222);
+		}
+
+		#inputs-advanced input[type="checkbox"]:hover, #inputs-advanced input[type="checkbox"]:focus {
+			filter: drop-shadow(0px 0px 2px #222222);
+		}
 
 /*** stream ***/
 	#stream {

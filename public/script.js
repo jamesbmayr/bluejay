@@ -1,8 +1,9 @@
 window.addEventListener("load", function() {
 	/*** globals ***/
 		/* browser prefixes */
-			window.speechRecognition = window.webkitSpeechRecognition || window.speechRecognition
-			window.speechSynthesis   = window.webkitSpeechSynthesis   || window.speechSynthesis
+			window.speechRecognition 	= window.webkitSpeechRecognition || window.speechRecognition
+			window.speechSynthesis   	= window.webkitSpeechSynthesis   || window.speechSynthesis
+			window.AudioContext			= window.webkitAudioContext      || window.AudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext
 
 		/* triggers */
 			if ((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i).test(navigator.userAgent)) {
@@ -12,15 +13,20 @@ window.addEventListener("load", function() {
 				var ON = { click:      "click", mousedown:  "mousedown", mousemove: "mousemove", mouseup:  "mouseup" }
 			}
 
-		/* libraries */
-			var AUDIO_LIBRARY 			= window.AUDIO_LIBRARY = null
-			var SOUND_LIBRARY 			= window.SOUND_LIBRARY = {}
-			var VOICE_LIBRARY 			= window.VOICE_LIBRARY = {}
-			var CONFIGURATION_LIBRARY 	= window.CONFIGURATION_LIBRARY = {}
-			var FUNCTION_LIBRARY 		= window.FUNCTION_LIBRARY = {}
-			var PHRASE_LIBRARY 			= window.PHRASE_LIBRARY || {}
-			var ACTION_LIBRARY 			= window.ACTION_LIBRARY || {}
-			var CONTEXT_LIBRARY 		= window.CONTEXT_LIBRARY = {
+	/*** libraries ***/
+		/* empty globals */
+			var INITIALIZED 			= false
+			var AUDIO_LIBRARY 			= window.AUDIO_LIBRARY 			=  {}
+			var SOUND_LIBRARY 			= window.SOUND_LIBRARY 			=  {}
+			var RECOGNITION_LIBRARY 	= window.RECOGNITION_LIBRARY 	=  {}
+			var VOICE_LIBRARY 			= window.VOICE_LIBRARY 			=  {}
+
+			var FUNCTION_LIBRARY 		= window.FUNCTION_LIBRARY 		=  {}
+			var PHRASE_LIBRARY 			= window.PHRASE_LIBRARY 		|| {}
+			var ACTION_LIBRARY 			= window.ACTION_LIBRARY 		|| {}
+
+		/* context library */
+			var CONTEXT_LIBRARY = window.CONTEXT_LIBRARY = {
 				lastPhrase: null,
 				lastAction: null,
 				lastResponseMessage: null,
@@ -28,58 +34,82 @@ window.addEventListener("load", function() {
 				flow: null
 			}
 
-		/* abort & error messages */
-			var STOP_PHRASES = ["quit this game", "quit this", "quit", "abort this", "abort", "stop this", "stop", "stop talking", "stop speaking", "please stop", "shut up", "never mind", "forget it", "forget that"]
+		/* error library */
+			var ERROR_LIBRARY = window.ERROR_LIBRARY = {
+				"stop-phrases": ["quit this game", "quit this", "quit", "abort this", "abort", "stop this", "stop", "stop talking", "stop speaking", "please stop", "shut up", "never mind", "forget it", "forget that"],
+				"stop-listening-phrases": ["quit listening", "quit listening to me", "stop listening", "stop listening to me", "cease listening", "cease listening to me"],
+				"noaction": "???",
+				"noaction-responses": ["I'm not sure I follow.", "I don't understand.", "What does that mean?", "I don't know that one.", "I don't get it.", "I'm sorry, can you try that again?", "Can you repeat that?", "Please say that again.", "Wait, what was that?", "I'll need you to repeat that.", "What am I supposed to do?"],
+				"error-responses": ["Something went wrong.", "I couldn't do that.", "Let's try that again later.", "Sorry, I have failed you.", "I'm not sure what happened.", "I ran into an error.", "That's an error.", "That didn't go the way I expected.", "Sorry, I couldn't complete that action.", "I blame the developers for this failure."],
+			}
+			ERROR_LIBRARY["noaction-index"] = Math.floor(Math.random() * ERROR_LIBRARY["noaction-responses"].length)
+			ERROR_LIBRARY["error-index"]    = Math.floor(Math.random() * ERROR_LIBRARY["error-responses"].length)
 
-			var NOACTION = "???"
-			var NOACTION_RESPONSES = ["I'm not sure I follow.", "I don't understand.", "What does that mean?", "I don't know that one.", "I don't get it.", "I'm sorry, can you try that again?", "Can you repeat that?", "Please say that again.", "Wait, what was that?", "I'll need you to repeat that.", "What am I supposed to do?"]
-			var NOACTION_INDEX = Math.floor(Math.random() * NOACTION_RESPONSES.length)
+		/* configurations */
+			var CONFIGURATION_LIBRARY = window.CONFIGURATION_LIBRARY = {
+				settings: {
+					"whistle-on": true,
+					"whistle-interval": 100,
+					"whistle-fftsize": 8192 / 16,
+					"whistle-frequency-threshold": 500,
+					"whistle-energy-threshold": 0.0001,
+					"whistle-ratio-minimum": 0.5,
+					"whistle-ratio-maximum": 2,
+					"recognition-interval": 50,
+					"recognition-duration": 10,
+					"voice": null,
+					"voice-delay": 100,
+					"voice-volume": 100
+				}
+			}
 
-			var ERROR_RESPONSES = ["Something went wrong.", "I couldn't do that.", "Let's try that again later.", "Sorry, I have failed you.", "I'm not sure what happened.", "I ran into an error.", "That's an error.", "That didn't go the way I expected.", "Sorry, I couldn't complete that action.", "I blame the developers for this failure."]
-			var ERROR_INDEX = Math.floor(Math.random() * ERROR_RESPONSES.length)
+		/* element library */
+			var ELEMENT_LIBRARY = window.ELEMENT_LIBRARY = {
+				"overlay": 						document.getElementById("overlay"),
+				"overlay-button": 				document.getElementById("overlay-button"),
 
-		/* settings */
-			var LISTENING_INTERVAL = 50
-			var LISTENING_DURATION = 10000
-			var VOICE = window.VOICE = null
-			var VOICE_DELAY = 100
-			var VOICE_VOLUME = 1
-			var WHISTLE_INTERVAL = 100
-			var WHISTLE_FFTSIZE = 8192 / 16
-			var WHISTLE_FREQUENCY_THRESHOLD = 500
-			var WHISTLE_ENERGY_THRESHOLD = 0.0001
-			var WHISTLE_RATIO_MINIMUM = 0.5
-			var WHISTLE_RATIO_MAXIMUM = 2
+				"inputs-audio": 				document.getElementById("inputs-audio"),
+				"inputs-form": 					document.getElementById("inputs-form"),
+				"inputs-text": 					document.getElementById("inputs-text"),
+				"inputs-countdown": 			document.getElementById("inputs-countdown"),
 
-		/* statuses */
-			var INITIALIZED = false
-			var LISTENING = false
-			var LISTENING_TIME = 0
-			var LISTENING_COUNTDOWN = null
-			
-		/* elements */
-			var OVERLAY = document.getElementById("overlay")
-			var OVERLAY_BUTTON = document.getElementById("overlay-button")
+				"inputs-whistle-on": 			document.getElementById("inputs-whistle-on"),
+				"inputs-recognition-duration": 	document.getElementById("inputs-recognition-duration"),
+				"inputs-voice": 				document.getElementById("inputs-voice"),
+				"inputs-voice-volume": 			document.getElementById("inputs-voice-volume"),
 
-			var INPUTS_AUDIO = document.getElementById("inputs-audio")
-			var INPUTS_FORM = document.getElementById("inputs-form")
-			var INPUTS_TEXT = document.getElementById("inputs-text")
-			var INPUTS_COUNTDOWN = document.getElementById("inputs-countdown")
+				"stream": 						document.getElementById("stream")
+			}
 
-			var INPUTS_DURATION = document.getElementById("inputs-duration")
-			var INPUTS_VOICES = document.getElementById("inputs-voices")
-			var INPUTS_VOLUME = document.getElementById("inputs-volume")
+	/*** application ***/
+		/* initializeApplication */
+			ELEMENT_LIBRARY["overlay-button"].addEventListener(ON.click, initializeApplication)
+			FUNCTION_LIBRARY.initializeApplication = initializeApplication
+			function initializeApplication(event) {
+				if (!INITIALIZED) {
+					// hide overlay
+						INITIALIZED = true
+						ELEMENT_LIBRARY["overlay"].setAttribute("invisible", true)
 
-			var STREAM = document.getElementById("stream")
+					// focus on input
+						ELEMENT_LIBRARY["inputs-text"].focus()
 
-		/* recognition */
-			var RECOGNITION = new window.speechRecognition()
-				RECOGNITION.onsoundend = stopListening
-				RECOGNITION.onresult = matchPhrase
+					// preload sounds
+						initializeSounds()
 
-		/* synthesizer */
-			var SYNTHESIZER = window.speechSynthesis
-				SYNTHESIZER.onvoiceschanged = initializeVoices
+					// audio
+						initializeAudio()
+
+					// recognition
+						initializeRecognition()
+
+					// synthesizer
+						initializeVoices()
+
+					// configuration
+						initializeConfiguration()
+				}
+			}
 
 		/* getAverage */
 			FUNCTION_LIBRARY.getAverage = getAverage
@@ -97,29 +127,6 @@ window.addEventListener("load", function() {
 			}
 
 	/*** settings ***/
-		/* initializeApplication */
-			OVERLAY_BUTTON.addEventListener(ON.click, initializeApplication)
-			FUNCTION_LIBRARY.initializeApplication = initializeApplication
-			function initializeApplication(event) {
-				if (!INITIALIZED) {
-					// hide overlay
-						INITIALIZED = true
-						OVERLAY.setAttribute("invisible", true)
-
-					// focus on input
-						INPUTS_TEXT.focus()
-
-					// configuration
-						initializeConfiguration()
-
-					// audio
-						initializeAudio()
-
-					// preload sounds
-						initializeSounds()
-				}
-			}
-
 		/* initializeConfiguration */
 			FUNCTION_LIBRARY.initializeConfiguration = initializeConfiguration
 			function initializeConfiguration() {
@@ -131,7 +138,26 @@ window.addEventListener("load", function() {
 						try {
 							storedConfigs = JSON.parse(storedConfigs)
 							for (var i in storedConfigs) {
-								CONFIGURATION_LIBRARY[i] = storedConfigs[i]
+								// built-in settings
+									if (i == "settings") {
+										for (var j in storedConfigs.settings) {
+											CONFIGURATION_LIBRARY.settings[j] = storedConfigs.settings[j]
+
+											if (ELEMENT_LIBRARY["inputs-" + j]) {
+												if (j == "whistle-on") {
+													ELEMENT_LIBRARY["inputs-" + j].checked = CONFIGURATION_LIBRARY.settings[j]
+												}
+												else {
+													ELEMENT_LIBRARY["inputs-" + j].value = CONFIGURATION_LIBRARY.settings[j]
+												}
+											}
+										}
+									}
+
+								// custom
+									else {
+										CONFIGURATION_LIBRARY[i] = storedConfigs[i]
+									}
 							}
 						}
 						catch (error) {}
@@ -146,6 +172,11 @@ window.addEventListener("load", function() {
 						return false
 					}
 
+				// protect settings
+					else if (event.key.toLowerCase().trim() == "settings") {
+						return false
+					}
+
 				// update config
 					else {
 						CONFIGURATION_LIBRARY[event.key] = event.value
@@ -154,101 +185,7 @@ window.addEventListener("load", function() {
 					}
 			}
 
-		/* initializeVoices */
-			FUNCTION_LIBRARY.initializeVoices = initializeVoices
-			function initializeVoices() {
-				// clear options
-					INPUTS_VOICES.innerHTML = ""
-
-				// default (no voice)
-					var option = document.createElement("option")
-						option.innerText = "no voice"
-						option.value = null
-					INPUTS_VOICES.appendChild(option)
-
-				// get all voices
-					var voiceList = SYNTHESIZER.getVoices()
-					for (var i in voiceList) {
-						VOICE_LIBRARY[voiceList[i].name.toLowerCase().trim()] = voiceList[i]
-					}
-
-				// loop through voices
-					for (var i in VOICE_LIBRARY) {
-						var option = document.createElement("option")
-							option.innerText = i
-							option.value = i
-						INPUTS_VOICES.appendChild(option)
-					}
-
-				// select first voice
-					if (voiceList.length) {
-						INPUTS_VOICES.value = voiceList[0].name.toLowerCase().trim()
-						VOICE = VOICE_LIBRARY[voiceList[0].name.toLowerCase().trim()]
-					}
-			}
-
-		/* changeVoice */
-			INPUTS_VOICES.addEventListener("change", changeVoice)
-			FUNCTION_LIBRARY.changeVoice = changeVoice
-			function changeVoice(event) {
-				// via select
-					if (event.target && event.target.id == INPUTS_VOICES.id) {
-						// set voice from library
-							VOICE = VOICE_LIBRARY[INPUTS_VOICES.value.toLowerCase()] || null
-					}
-
-				// via action
-					else if (event.name) {
-						// if voice exists
-							if (VOICE_LIBRARY[event.name]) {
-								VOICE = VOICE_LIBRARY[event.name]
-								INPUTS_VOICES.value = event.name
-								return true
-							}
-
-						// otherwise
-							else {
-								return false
-							}
-					}
-			}
-
-		/* changeVolume */
-			INPUTS_VOLUME.addEventListener("change", changeVolume)
-			FUNCTION_LIBRARY.changeVolume = changeVolume
-			function changeVolume(event) {
-				// via input
-					if (event.target && event.target.id == INPUTS_VOLUME.id) {
-						// set volume
-							VOICE_VOLUME = Math.max(0, Math.min(100, Number(INPUTS_VOLUME.value))) / 100
-					}
-
-				// via action
-					else if (event.volume) {
-						// if not a number
-							if (isNaN(Number(event.volume))) {
-								return false
-							}
-
-						// otherwise
-							else {
-								var newVolume = Math.round(Math.max(0, Math.min(100, Number(event.volume))))
-								INPUTS_VOLUME.value = newVolume
-								VOICE_VOLUME = newVolume / 100
-								return true
-							}
-					}
-			}
-
-		/* changeDuration */
-			INPUTS_DURATION.addEventListener("change", changeDuration)
-			FUNCTION_LIBRARY.changeDuration = changeDuration
-			function changeDuration(event) {
-				// set duration
-					LISTENING_DURATION = Math.max(0, Math.min(60, Number(INPUTS_DURATION.value))) * 1000
-			}
-
-	/*** audio input ***/
+	/*** whistling ***/
 		/* initializeSounds */
 			FUNCTION_LIBRARY.initializeSounds = initializeSounds
 			function initializeSounds() {
@@ -262,7 +199,7 @@ window.addEventListener("load", function() {
 						SOUND_LIBRARY.chirp = audio
 						setTimeout(function() {
 							SOUND_LIBRARY.chirpDuration = audio.duration * 1000
-						}, VOICE_DELAY)
+						}, CONFIGURATION_LIBRARY.settings["voice-delay"])
 				} catch (error) {}
 			}
 
@@ -270,12 +207,11 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.initializeAudio = initializeAudio
 			function initializeAudio() {
 				// audio context
-					AUDIO_LIBRARY = new (window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext)()
-					window.AUDIO_LIBRARY = AUDIO_LIBRARY
+					AUDIO_LIBRARY.audio = new window.AudioContext
 
 				// analyzer
-					AUDIO_LIBRARY.analyzer = AUDIO_LIBRARY.createAnalyser()
-					AUDIO_LIBRARY.analyzer.fftSize = WHISTLE_FFTSIZE
+					AUDIO_LIBRARY.analyzer = AUDIO_LIBRARY.audio.createAnalyser()
+					AUDIO_LIBRARY.analyzer.fftSize = CONFIGURATION_LIBRARY.settings["whistle-fftsize"]
 
 				// input
 					AUDIO_LIBRARY.input = {
@@ -296,19 +232,35 @@ window.addEventListener("load", function() {
 				// microphone
 					if (navigator.mediaDevices) {
 						navigator.mediaDevices.getUserMedia({audio: true, video: false}).then(function(stream) {
-							AUDIO_LIBRARY.microphone = AUDIO_LIBRARY.createMediaStreamSource(stream)
+							AUDIO_LIBRARY.microphone = AUDIO_LIBRARY.audio.createMediaStreamSource(stream)
 							AUDIO_LIBRARY.microphone.connect(AUDIO_LIBRARY.analyzer)
-							AUDIO_LIBRARY.loop = setInterval(FUNCTION_LIBRARY.analyzeAudio, WHISTLE_INTERVAL)
+							AUDIO_LIBRARY.loop = setInterval(FUNCTION_LIBRARY.analyzeAudio, CONFIGURATION_LIBRARY.settings["whistle-interval"])
 						})
 					}
+			}
+
+		/* changeWhistleOn */
+			ELEMENT_LIBRARY["inputs-whistle-on"].addEventListener("change", changeWhistleOn)
+			FUNCTION_LIBRARY.changeWhistleOn = changeWhistleOn
+			function changeWhistleOn(event) {
+				try {
+					// start / stop listening
+						CONFIGURATION_LIBRARY.settings["whistle-on"] = ELEMENT_LIBRARY["inputs-whistle-on"].checked || false
+						window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+
+					// actually stop listening
+						if (!CONFIGURATION_LIBRARY.settings["whistle-on"]) {
+							FUNCTION_LIBRARY.stopRecognizing(false)
+						}
+				} catch (error) {}
 			}
 
 		/* analyzeAudio */
 			FUNCTION_LIBRARY.analyzeAudio = analyzeAudio
 			function analyzeAudio(event) {
-				if (!LISTENING) {
+				if (CONFIGURATION_LIBRARY.settings["whistle-on"] && !RECOGNITION_LIBRARY.active) {
 					// refresh data
-						AUDIO_LIBRARY.input.lastFrequencyCounter += WHISTLE_INTERVAL
+						AUDIO_LIBRARY.input.lastFrequencyCounter += CONFIGURATION_LIBRARY.settings["whistle-interval"]
 						AUDIO_LIBRARY.analyzer.getFloatTimeDomainData(AUDIO_LIBRARY.input.data)
 
 					// figure out some values
@@ -359,10 +311,10 @@ window.addEventListener("load", function() {
 						var complexity = Math.round(AUDIO_LIBRARY.input.wavelengths.length / AUDIO_LIBRARY.input.extremes)
 
 					// calculate the frequency & note (sample rate is usually 44100 Hz)
-						var newFrequency 	= AUDIO_LIBRARY.sampleRate / FUNCTION_LIBRARY.getAverage(AUDIO_LIBRARY.input.wavelengths) / complexity
+						var newFrequency 	= AUDIO_LIBRARY.audio.sampleRate / FUNCTION_LIBRARY.getAverage(AUDIO_LIBRARY.input.wavelengths) / complexity
 
 					// if above 500Hz and enough energy
-						if (newFrequency >= WHISTLE_FREQUENCY_THRESHOLD && AUDIO_LIBRARY.input.maximum >= WHISTLE_ENERGY_THRESHOLD && AUDIO_LIBRARY.input.minimum <= -WHISTLE_ENERGY_THRESHOLD) {
+						if (newFrequency >= CONFIGURATION_LIBRARY.settings["whistle-frequency-threshold"] && AUDIO_LIBRARY.input.maximum >= CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] && AUDIO_LIBRARY.input.minimum <= -CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"]) {
 							// no previous frequency
 								if (!AUDIO_LIBRARY.input.lastFrequency) {
 									AUDIO_LIBRARY.input.lastFrequency = newFrequency
@@ -375,8 +327,8 @@ window.addEventListener("load", function() {
 									AUDIO_LIBRARY.input.lastFrequency = newFrequency
 									AUDIO_LIBRARY.input.lastFrequencyCounter = 0
 
-									if (WHISTLE_RATIO_MINIMUM < ratio && ratio < WHISTLE_RATIO_MAXIMUM) {
-										FUNCTION_LIBRARY.startListening({chirp: true})
+									if (CONFIGURATION_LIBRARY.settings["whistle-ratio-minimum"] < ratio && ratio < CONFIGURATION_LIBRARY.settings["whistle-ratio-maximum"]) {
+										FUNCTION_LIBRARY.startRecognizing({chirp: true})
 									}
 								}
 						}
@@ -389,116 +341,144 @@ window.addEventListener("load", function() {
 				}
 			}
 
-		/* toggleListening */
-			INPUTS_AUDIO.addEventListener(ON.click, toggleListening)
-			FUNCTION_LIBRARY.toggleListening = toggleListening
-			function toggleListening(event) {
+	/*** recognition ***/
+		/* initializeRecognition */
+			FUNCTION_LIBRARY.initializeRecognition = initializeRecognition
+			function initializeRecognition() {
+				// statuses
+					RECOGNITION_LIBRARY.active = false
+					RECOGNITION_LIBRARY.time = 0
+					RECOGNITION_LIBRARY.wait = null
+					RECOGNITION_LIBRARY.countdown = null
+
+				// create speech recognition
+					RECOGNITION_LIBRARY.recognition = new window.speechRecognition()
+					RECOGNITION_LIBRARY.recognition.onsoundend = stopRecognizing
+					RECOGNITION_LIBRARY.recognition.onresult = matchPhrase
+			}
+
+		/* changeRecognitionDuration */
+			ELEMENT_LIBRARY["inputs-recognition-duration"].addEventListener("change", changeRecognitionDuration)
+			FUNCTION_LIBRARY.changeRecognitionDuration = changeRecognitionDuration
+			function changeRecognitionDuration(event) {
+				// set duration
+					CONFIGURATION_LIBRARY.settings["recognition-duration"] = Math.max(0, Math.min(60, Number(ELEMENT_LIBRARY["inputs-recognition-duration"].value)))
+					window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+			}
+
+		/* changeRecognizing */
+			ELEMENT_LIBRARY["inputs-audio"].addEventListener(ON.click, changeRecognizing)
+			FUNCTION_LIBRARY.changeRecognizing = changeRecognizing
+			function changeRecognizing(event) {
 				// manual stop (don't transcribe)
-					if (LISTENING) {
-						FUNCTION_LIBRARY.stopListening(false)
+					if (RECOGNITION_LIBRARY.active) {
+						FUNCTION_LIBRARY.stopRecognizing(false)
 					}
 
 				// manual start
 					else {
-						startListening({chirp: false})
+						FUNCTION_LIBRARY.startRecognizing({chirp: false})
 					}
 			}
 
-		/* startListening */
-			FUNCTION_LIBRARY.startListening = startListening
-			function startListening(event) {
-				// disable input
-					INPUTS_TEXT.setAttribute("disabled", true)
+		/* startRecognizing */
+			FUNCTION_LIBRARY.startRecognizing = startRecognizing
+			function startRecognizing(event) {
+				if (!RECOGNITION_LIBRARY.active) {
+					// disable input
+						ELEMENT_LIBRARY["inputs-text"].setAttribute("disabled", true)
 
-				// clear whistle history
-					AUDIO_LIBRARY.input.lastFrequency = 0
-					AUDIO_LIBRARY.input.lastFrequencyCounter = 0
+					// clear whistle history
+						AUDIO_LIBRARY.input.lastFrequency = 0
+						AUDIO_LIBRARY.input.lastFrequencyCounter = 0
 
-				// synthesizer
-					SYNTHESIZER.pause()
-					SYNTHESIZER.cancel()
+					// synthesizer
+						VOICE_LIBRARY.synthesizer.pause()
+						VOICE_LIBRARY.synthesizer.cancel()
 
-				// chirp
-					var chirpDelay = 0
-					if (event.chirp && SOUND_LIBRARY.chirp) {
-						try {
-							SOUND_LIBRARY.chirp.pause()
-							SOUND_LIBRARY.chirp.currentTime = 0
-							SOUND_LIBRARY.chirp.play()
-							var chirpDelay = SOUND_LIBRARY.chirpDuration
-						} catch (error) {}
-					}
-				
-				// set global
-					LISTENING = true
+					// chirp
+						var chirpDelay = 0
+						if (event.chirp && SOUND_LIBRARY.chirp) {
+							try {
+								SOUND_LIBRARY.chirp.pause()
+								SOUND_LIBRARY.chirp.currentTime = 0
+								SOUND_LIBRARY.chirp.play()
+								var chirpDelay = SOUND_LIBRARY.chirpDuration
+							} catch (error) {}
+						}
+					
+					// set global
+						RECOGNITION_LIBRARY.active = true
 
-				// set countdown failsafe
-					setTimeout(function() {
-						try {
-							RECOGNITION.start()
-						} catch (error) {}
+					// set countdown failsafe
+						RECOGNITION_LIBRARY.wait = setTimeout(function() {
+							try {
+								RECOGNITION_LIBRARY.recognition.start()
+							} catch (error) {}
 
-						LISTENING_TIME = 0
-						LISTENING_COUNTDOWN = setInterval(FUNCTION_LIBRARY.countdownListening, LISTENING_INTERVAL)
-					}, chirpDelay)
+							RECOGNITION_LIBRARY.time = 0
+							RECOGNITION_LIBRARY.countdown = setInterval(FUNCTION_LIBRARY.countdownRecognizing, CONFIGURATION_LIBRARY.settings["recognition-interval"])
+						}, chirpDelay)
+				}
 			}
 
-		/* countdownListening */
-			FUNCTION_LIBRARY.countdownListening = countdownListening
-			function countdownListening(event) {
+		/* countdownRecognizing */
+			FUNCTION_LIBRARY.countdownRecognizing = countdownRecognizing
+			function countdownRecognizing(event) {
 				// add to time
-					LISTENING_TIME += LISTENING_INTERVAL
+					RECOGNITION_LIBRARY.time += CONFIGURATION_LIBRARY.settings["recognition-interval"]
 
 				// update bar width
-					INPUTS_COUNTDOWN.style.width = (LISTENING_DURATION - LISTENING_TIME) / LISTENING_DURATION * 100 + "%"
+					ELEMENT_LIBRARY["inputs-countdown"].style.width = (CONFIGURATION_LIBRARY.settings["recognition-duration"] * 1000 - RECOGNITION_LIBRARY.time) / (CONFIGURATION_LIBRARY.settings["recognition-duration"] * 1000) * 100 + "%"
 
 				// stop when duration is reached
-					if (LISTENING_TIME >= LISTENING_DURATION) {
-						FUNCTION_LIBRARY.stopListening(true)
+					if (RECOGNITION_LIBRARY.time >= CONFIGURATION_LIBRARY.settings["recognition-duration"] * 1000) {
+						FUNCTION_LIBRARY.stopRecognizing(true)
 					}
 			}
 
-		/* stopListening */
-			FUNCTION_LIBRARY.stopListening = stopListening
-			function stopListening(continuable) {
+		/* stopRecognizing */
+			FUNCTION_LIBRARY.stopRecognizing = stopRecognizing
+			function stopRecognizing(continuable) {
 				// cancel countdown
-					clearInterval(LISTENING_COUNTDOWN)
+					clearInterval(RECOGNITION_LIBRARY.wait)
+					clearInterval(RECOGNITION_LIBRARY.countdown)
 
 				// unset global
-					LISTENING = false
+					RECOGNITION_LIBRARY.active = false
 
 				// button & text bar
-					INPUTS_COUNTDOWN.style.width = "0%"
-					INPUTS_TEXT.removeAttribute("disabled")
-					INPUTS_TEXT.focus()
+					ELEMENT_LIBRARY["inputs-countdown"].style.width = "0%"
+					ELEMENT_LIBRARY["inputs-text"].removeAttribute("disabled")
+					ELEMENT_LIBRARY["inputs-text"].focus()
 
 				// continue
 					if (continuable) {
-						RECOGNITION.stop()
+						RECOGNITION_LIBRARY.recognition.stop()
 					}
 
-				// abort --> display "no results"
+				// abort
 					else {
-						RECOGNITION.stop()
-						RECOGNITION.abort()
-						FUNCTION_LIBRARY.matchPhrase()
+						RECOGNITION_LIBRARY.recognition.stop()
+						RECOGNITION_LIBRARY.recognition.abort()
 					}
 			}
 
 	/*** phrases ***/
 		/* submitPhrase */
-			INPUTS_FORM.addEventListener("submit", submitPhrase)
+			ELEMENT_LIBRARY["inputs-form"].addEventListener("submit", submitPhrase)
 			FUNCTION_LIBRARY.submitPhrase = submitPhrase
 			function submitPhrase(event) {
 				// get text
-					var phrase = INPUTS_TEXT.value || ""
+					var phrase = ELEMENT_LIBRARY["inputs-text"].value || ""
 
 				// clear text / bar
-					INPUTS_TEXT.value = ""
-					INPUTS_COUNTDOWN.style.width = "0%"
+					ELEMENT_LIBRARY["inputs-text"].value = ""
+					ELEMENT_LIBRARY["inputs-countdown"].style.width = "0%"
 
 				// submit to match
 					FUNCTION_LIBRARY.matchPhrase({
+						inputType: "written",
 						results: [[{transcript: phrase}]]
 					})
 			}
@@ -507,7 +487,7 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.matchPhrase = matchPhrase
 			function matchPhrase(event) {
 				// cancel countdown
-					clearInterval(LISTENING_COUNTDOWN)
+					clearInterval(RECOGNITION_LIBRARY.countdown)
 
 				// get phrase
 					if (!event || !event.results || !event.results[0] || !event.results[0][0] || !event.results[0][0].transcript) {
@@ -517,10 +497,21 @@ window.addEventListener("load", function() {
 						var phrase = event.results[0][0].transcript
 					}
 
+				// followup
+					var followup = (event.inputType == "written") ? false : true
+
 				// match phrase to stop command
-					if (STOP_PHRASES.includes(phrase.trim())) {
+					if (ERROR_LIBRARY["stop-phrases"].includes(phrase.trim())) {
 						var action = "stop"
 						var remainder = []
+						    followup = false
+					}
+
+				// match phrase to stop-listening command
+					else if (ERROR_LIBRARY["stop-listening-phrases"].includes(phrase.trim())) {
+						var action = "stop listening"
+						var remainder = []
+						    followup = false
 					}
 
 				// existing flow?
@@ -544,12 +535,12 @@ window.addEventListener("load", function() {
 					}
 
 				// enact phrase
-					FUNCTION_LIBRARY.enactPhrase(phrase, action, (remainder.join(" ") || ""))
+					FUNCTION_LIBRARY.enactPhrase(phrase, action, (remainder.join(" ") || ""), followup)
 			}
 
 		/* enactPhrase */
 			FUNCTION_LIBRARY.enactPhrase = enactPhrase
-			function enactPhrase(phrase, action, remainder) {
+			function enactPhrase(phrase, action, remainder, followup) {
 				// stop phrase
 					if (action == "stop") {
 						// end flow
@@ -560,32 +551,59 @@ window.addEventListener("load", function() {
 							}
 						
 						// stop speaking
-							SYNTHESIZER.pause()
-							SYNTHESIZER.cancel()
+							VOICE_LIBRARY.synthesizer.pause()
+							VOICE_LIBRARY.synthesizer.cancel()
 
-						createHistory(phrase || "stop", action, {message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop"})
+						createHistory(phrase || "stop", action, {message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop", followup: false})
+					}
+
+				// stop-listening phrase
+					else if (action == "stop listening") {
+						// stop speaking
+							VOICE_LIBRARY.synthesizer.pause()
+							VOICE_LIBRARY.synthesizer.cancel()
+
+						// turn off whistle-on
+							CONFIGURATION_LIBRARY.settings["whistle-on"] = ELEMENT_LIBRARY["inputs-whistle-on"].checked = false
+							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+							FUNCTION_LIBRARY.stopRecognizing(false)
+
+						createHistory(phrase || "stop listening", action, {message: "", html: "whistle detection turned off", followup: false})
 					}
 
 				// no action
 					else if (!action || !ACTION_LIBRARY[action]) {
-						action = NOACTION
-						var message = NOACTION_RESPONSES[NOACTION_INDEX]
-						NOACTION_INDEX = (NOACTION_INDEX == NOACTION_RESPONSES.length - 1) ? 0 : (NOACTION_INDEX + 1)
+						action = ERROR_LIBRARY["noaction"]
+						var message = ERROR_LIBRARY["noaction-responses"][ERROR_LIBRARY["noaction-index"]]
+						ERROR_LIBRARY["noaction-index"] = (ERROR_LIBRARY["noaction-index"] == ERROR_LIBRARY["noaction-responses"].length - 1) ? 0 : (ERROR_LIBRARY["noaction-index"] + 1)
 
-						var response = {message: message, html: message}
+						var response = {message: message, html: message, followup: followup}
 						createHistory(phrase, action, response)
 					}
 
 				// phrase & action
 					else {
 						ACTION_LIBRARY[action](remainder, function(response) {
-							if (typeof response === undefined || response === null) {
-								var message = ERROR_RESPONSES[ERROR_INDEX]
-								ERROR_INDEX = (ERROR_INDEX == ERROR_RESPONSES.length - 1) ? 0 : (ERROR_INDEX + 1)
-								var response = {message: message, html: message}
-							}
+							// no response
+								if (typeof response === undefined || response === null) {
+									var message = ERROR_LIBRARY["error-responses"][ERROR_LIBRARY["error-index"]]
+									ERROR_LIBRARY["error-index"] = (ERROR_LIBRARY["error-index"] == ERROR_LIBRARY["error-responses"].length - 1) ? 0 : (ERROR_LIBRARY["error-index"] + 1)
+									var response = {message: message, html: message, followup: followup}
+								}
 
-							createHistory(phrase, action, response)
+							// followup?
+								if (followup === false) {
+									response.followup = false
+								}
+								else if (response.followup === false) {
+									response.followup = false
+								}
+								else {
+									response.followup = true
+								}
+
+							// history
+								createHistory(phrase, action, response)
 						})
 					}
 			}
@@ -620,34 +638,135 @@ window.addEventListener("load", function() {
 					historyBlock.appendChild(responseBlock)
 
 				// prepend to stream
-					STREAM.prepend(historyBlock)
+					ELEMENT_LIBRARY["stream"].prepend(historyBlock)
 
 				// speak
 					if (response.message) {
-						FUNCTION_LIBRARY.speakResponse(response.message)
+						FUNCTION_LIBRARY.voiceResponse(response)
+					}
+
+				// followup
+					else if (response.followup) {
+						FUNCTION_LIBRARY.startRecognizing()
 					}
 			}
 
-	/*** audio output ***/
-		/* speakResponse */
-			FUNCTION_LIBRARY.speakResponse = speakResponse
-			function speakResponse(message) {
-				setTimeout(function() {
-					// remove previous utterances queued up
-						SYNTHESIZER.cancel()
+	/*** voices ***/
+		/* initializeVoices */
+			FUNCTION_LIBRARY.initializeVoices = initializeVoices
+			function initializeVoices() {
+				// create synthesizer
+					VOICE_LIBRARY.synthesizer = window.speechSynthesis
 
-					// speak the transcript
-						if (VOICE) {
-							var utterance = new SpeechSynthesisUtterance(message)
-								utterance.voice = VOICE
-								utterance.volume = VOICE_VOLUME
-								utterance.onend = startListening
-							SYNTHESIZER.speak(utterance)
-						}
-				}, VOICE_DELAY)
+				// clear options
+					ELEMENT_LIBRARY["inputs-voice"].innerHTML = ""
+
+				// default (no voice)
+					var option = document.createElement("option")
+						option.innerText = "no voice"
+						option.value = null
+					ELEMENT_LIBRARY["inputs-voice"].appendChild(option)
+
+				// get all voices
+					VOICE_LIBRARY.voices = VOICE_LIBRARY.voices || {}
+					var voiceList = VOICE_LIBRARY.synthesizer.getVoices()
+					for (var i in voiceList) {
+						VOICE_LIBRARY.voices[voiceList[i].name.toLowerCase().trim()] = voiceList[i]
+					}
+
+				// loop through voices
+					for (var i in VOICE_LIBRARY.voices) {
+						var option = document.createElement("option")
+							option.innerText = i
+							option.value = i
+						ELEMENT_LIBRARY["inputs-voice"].appendChild(option)
+					}
+
+				// select first voice
+					if (voiceList.length) {
+						ELEMENT_LIBRARY["inputs-voice"].value = voiceList[0].name.toLowerCase().trim()
+						CONFIGURATION_LIBRARY.settings["voice"] =voiceList[0].name.toLowerCase().trim()
+					}
 			}
 
-	/*** back-end ***/
+		/* changeVoice */
+			ELEMENT_LIBRARY["inputs-voice"].addEventListener("change", changeVoice)
+			FUNCTION_LIBRARY.changeVoice = changeVoice
+			function changeVoice(event) {
+				// via select
+					if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-voice"].id && VOICE_LIBRARY.voices[ELEMENT_LIBRARY["inputs-voice"].value.toLowerCase()]) {
+						// set voice from library
+							CONFIGURATION_LIBRARY.settings["voice"] = ELEMENT_LIBRARY["inputs-voice"].value.toLowerCase()
+							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+					}
+
+				// via action
+					else if (event.name) {
+						// if voice exists
+							if (VOICE_LIBRARY.voices[event.name]) {
+								CONFIGURATION_LIBRARY.settings["voice"] = event.name
+								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+								ELEMENT_LIBRARY["inputs-voice"].value = event.name
+								return true
+							}
+
+						// otherwise
+							else {
+								return false
+							}
+					}
+			}
+
+		/* changeVoiceVolume */
+			ELEMENT_LIBRARY["inputs-voice-volume"].addEventListener("change", changeVoiceVolume)
+			FUNCTION_LIBRARY.changeVoiceVolume = changeVoiceVolume
+			function changeVoiceVolume(event) {
+				// via input
+					if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-voice-volume"].id) {
+						// set volume
+							CONFIGURATION_LIBRARY.settings["voice-volume"] = Math.max(0, Math.min(100, Number(ELEMENT_LIBRARY["inputs-voice-volume"].value)))
+							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+					}
+
+				// via action
+					else if (event.volume) {
+						// if not a number
+							if (isNaN(Number(event.volume))) {
+								return false
+							}
+
+						// otherwise
+							else {
+								var newVolume = Math.round(Math.max(0, Math.min(100, Number(event.volume))))
+								ELEMENT_LIBRARY["inputs-voice-volume"].value = newVolume
+								CONFIGURATION_LIBRARY.settings["voice-volume"] = newVolume
+								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+								return true
+							}
+					}
+			}
+
+		/* voiceResponse */
+			FUNCTION_LIBRARY.voiceResponse = voiceResponse
+			function voiceResponse(response) {
+				setTimeout(function() {
+					// remove previous utterances queued up
+						VOICE_LIBRARY.synthesizer.cancel()
+
+					// speak the transcript
+						if (CONFIGURATION_LIBRARY.settings["voice"] && VOICE_LIBRARY.voices[CONFIGURATION_LIBRARY.settings["voice"]]) {
+							var utterance = new SpeechSynthesisUtterance(response.message)
+								utterance.voice = VOICE_LIBRARY.voices[CONFIGURATION_LIBRARY.settings["voice"]]
+								utterance.volume = Math.max(0, Math.min(1, CONFIGURATION_LIBRARY.settings["voice-volume"] / 100))
+								if (response.followup) {
+									utterance.onend = FUNCTION_LIBRARY.startRecognizing
+								}
+							VOICE_LIBRARY.synthesizer.speak(utterance)
+						}
+				}, CONFIGURATION_LIBRARY.settings["voice-delay"])
+			}
+
+	/*** communication in/out ***/
 		/* receiveiFrameMessage */
 			FUNCTION_LIBRARY.receiveiFrameMessage = receiveiFrameMessage
 			window.onmessage = receiveiFrameMessage

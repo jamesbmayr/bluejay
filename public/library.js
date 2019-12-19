@@ -374,7 +374,7 @@
 			"change volume": function(remainder, callback) {
 				try {
 					var volume = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
-					var success = window.FUNCTION_LIBRARY.changeVolume({volume: volume})
+					var success = window.FUNCTION_LIBRARY.changeVoiceVolume({volume: volume})
 					if (!success) {
 						callback({message: "That's not a valid number.", html: "invalid volume: " + remainder})
 					}
