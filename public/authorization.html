@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>bluejay iframe</title>
+	</head>
+	<body>
+		<script node>
+			("redirecting to<br>" + 
+			"<a href='" + request.get.embeddedLink + "'>" + request.get.embeddedLink + "</a>" +
+			"<script>window.onload = function() { window.location = '" + request.get.embeddedLink + "' }</script>")
+		</script>node>
+	</body>
+</html>

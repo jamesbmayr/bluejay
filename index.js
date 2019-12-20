@@ -90,28 +90,32 @@
 										catch (error) {_404(error)}
 									break
 
+								// authorization
+									case (/^\/authorization\/?$/).test(request.url):
+										try {
+											response.writeHead(200, {
+												"Content-Type": "text/html; charset=utf-8"
+											})
+											main.renderHTML(request, "./public/iframe.html", function (html) {
+												response.end(html)
+											})
+										}
+										catch (error) {_404(error)}
+									break
+
 								// iframe
 									case (/^\/iframe\/?$/).test(request.url):
 										try {
 											response.writeHead(200, {
 												"Content-Type": "text/html; charset=utf-8"
 											})
-											if (request.get.embeddedPost) {
-												try {
-													request.post = JSON.parse(request.get.embeddedPost)
-													main.proxyRequest(request, function (data) {
-														request.apiResponse = data
-														main.renderHTML(request, "./public/iframe.html", function (html) {
-															response.end(html)
-														})
-													})
-												} catch (error) {_404(error)}
-											}
-											else {
+											request.post = JSON.parse(request.get.embeddedPost)
+											main.proxyRequest(request, function (data) {
+												request.apiResponse = data
 												main.renderHTML(request, "./public/iframe.html", function (html) {
 													response.end(html)
 												})
-											}
+											})
 										}
 										catch (error) {_404(error)}
 									break
