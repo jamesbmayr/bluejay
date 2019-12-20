@@ -31,7 +31,9 @@ window.addEventListener("load", function() {
 				lastAction: null,
 				lastResponseMessage: null,
 				lastResponseHTML: null,
-				flow: null
+				flow: null,
+				alarms: [],
+				loop: null
 			}
 
 		/* error library */
@@ -48,8 +50,8 @@ window.addEventListener("load", function() {
 		/* configurations */
 			var CONFIGURATION_LIBRARY = window.CONFIGURATION_LIBRARY = {
 				settings: {
+					"state-interval": 100,
 					"whistle-on": true,
-					"whistle-interval": 100,
 					"whistle-fftsize": 8192 / 16,
 					"whistle-frequency-threshold": 500,
 					"whistle-energy-threshold": 0.0001,
@@ -73,6 +75,7 @@ window.addEventListener("load", function() {
 				"inputs-text": 					document.getElementById("inputs-text"),
 				"inputs-countdown": 			document.getElementById("inputs-countdown"),
 
+				"inputs-configuration": 		document.getElementById("inputs-configuration"),
 				"inputs-whistle-on": 			document.getElementById("inputs-whistle-on"),
 				"inputs-recognition-duration": 	document.getElementById("inputs-recognition-duration"),
 				"inputs-voice": 				document.getElementById("inputs-voice"),
@@ -108,6 +111,9 @@ window.addEventListener("load", function() {
 
 					// configuration
 						initializeConfiguration()
+
+					// loop
+						CONTEXT_LIBRARY.loop = setInterval(iterateState, CONFIGURATION_LIBRARY["state-interval"])
 				}
 			}
 
@@ -185,6 +191,36 @@ window.addEventListener("load", function() {
 					}
 			}
 
+		/* uploadConfiguration */
+			ELEMENT_LIBRARY["inputs-configuration"].addEventListener("change", uploadConfiguration)
+			FUNCTION_LIBRARY.uploadConfiguration = uploadConfiguration
+			function uploadConfiguration(event) {
+				if (ELEMENT_LIBRARY["inputs-configuration"].value && ELEMENT_LIBRARY["inputs-configuration"].value.length) {
+					var reader = new FileReader()
+					reader.readAsText(event.target.files[0])
+					reader.onload = function(event) {
+						// data
+							var data = String(event.target.result)
+							try {
+								data = JSON.parse(data)
+								for (var i in data) {
+									changeConfiguration({key: i, value: data[i]})
+								}
+							} catch (error) { }
+					}
+				}
+			}
+
+		/* iterateState */
+			FUNCTION_LIBRARY.iterateState = iterateState
+			function iterateState(event) {
+				// analyze audio
+					FUNCTION_LIBRARY.analyzeAudio()
+
+				// update timers
+					FUNCTION_LIBRARY.checkAlarms()
+			}
+
 	/*** whistling ***/
 		/* initializeSounds */
 			FUNCTION_LIBRARY.initializeSounds = initializeSounds
@@ -234,7 +270,6 @@ window.addEventListener("load", function() {
 						navigator.mediaDevices.getUserMedia({audio: true, video: false}).then(function(stream) {
 							AUDIO_LIBRARY.microphone = AUDIO_LIBRARY.audio.createMediaStreamSource(stream)
 							AUDIO_LIBRARY.microphone.connect(AUDIO_LIBRARY.analyzer)
-							AUDIO_LIBRARY.loop = setInterval(FUNCTION_LIBRARY.analyzeAudio, CONFIGURATION_LIBRARY.settings["whistle-interval"])
 						})
 					}
 			}
@@ -258,9 +293,9 @@ window.addEventListener("load", function() {
 		/* analyzeAudio */
 			FUNCTION_LIBRARY.analyzeAudio = analyzeAudio
 			function analyzeAudio(event) {
-				if (CONFIGURATION_LIBRARY.settings["whistle-on"] && !RECOGNITION_LIBRARY.active) {
+				if (AUDIO_LIBRARY.audio && CONFIGURATION_LIBRARY.settings["whistle-on"] && !RECOGNITION_LIBRARY.active) {
 					// refresh data
-						AUDIO_LIBRARY.input.lastFrequencyCounter += CONFIGURATION_LIBRARY.settings["whistle-interval"]
+						AUDIO_LIBRARY.input.lastFrequencyCounter += CONFIGURATION_LIBRARY.settings["state-interval"]
 						AUDIO_LIBRARY.analyzer.getFloatTimeDomainData(AUDIO_LIBRARY.input.data)
 
 					// figure out some values
@@ -648,6 +683,22 @@ window.addEventListener("load", function() {
 				// followup
 					else if (response.followup) {
 						FUNCTION_LIBRARY.startRecognizing()
+					}
+			}
+
+		/* checkAlarms */
+			FUNCTION_LIBRARY.checkAlarms = checkAlarms
+			function checkAlarms() {
+				// current time
+					var timeNow = new Date().getTime()
+
+				// loop through timers to check (and send a message)
+					for (var i = 0; i < CONTEXT_LIBRARY.alarms.length; i++) {
+						if (CONTEXT_LIBRARY.alarms[i] <= timeNow) {
+							createHistory("-", "time's up", {message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "The time is now <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b>.", followup: false})
+							CONTEXT_LIBRARY.alarms.splice(i, 1)
+							i--
+						}
 					}
 			}
 

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>bluejay iframe</title>
+		<title>bluejay authorization</title>
 	</head>
 	<body>
 		<script node>
-			("redirecting to<br>" + 
+			("<style>html, body, a { font-family: monospace; font-color: #222222; font-size: 20px; }</style>" +
+			"redirecting to<br>" + 
 			"<a href='" + request.get.embeddedLink + "'>" + request.get.embeddedLink + "</a>" +
 			"<script>window.onload = function() { window.location = '" + request.get.embeddedLink + "' }</script>")
 		</script>node>

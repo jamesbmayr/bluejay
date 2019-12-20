@@ -5,12 +5,8 @@
 	</head>
 	<body>
 		<script node>
-			if (request.get.embeddedLink)  {
-				"<a href='" + request.get.embeddedLink + "'>" + request.get.embeddedLink + "</a>"
-			}
-			else if (request.get.embeddedPost) {
+			try {
 				var apiResponse = request.apiResponse
-				console.log(apiResponse)
 				var data = {
 					function: "changeConfiguration",
 					input: {
@@ -25,7 +21,12 @@
 					}
 				}
 
-				"<b>Success!</b>" + "<script>window.top.postMessage(" + JSON.stringify(data) + ")</script>"
+				("<style>html, body, a { font-family: monospace; font-color: #222222; font-size: 20px; }</style>" +
+				"<b>Success!</b>" +
+				"<script>window.top.postMessage(" + JSON.stringify(data) + ")</script>")
+			}
+			catch (error) {
+				"<b>Failure!</b><br>Please try this command again."
 			}
 		</script>node>
 	</body>

@@ -96,7 +96,7 @@
 											response.writeHead(200, {
 												"Content-Type": "text/html; charset=utf-8"
 											})
-											main.renderHTML(request, "./public/iframe.html", function (html) {
+											main.renderHTML(request, "./public/authorization.html", function (html) {
 												response.end(html)
 											})
 										}

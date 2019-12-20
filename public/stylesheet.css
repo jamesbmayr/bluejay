@@ -307,6 +307,36 @@
 			filter: drop-shadow(0px 0px 2px #222222);
 		}
 
+		#inputs-advanced input[type="file"] {
+			height: 0px;
+			width: 0px;
+			padding: 0px;
+			margin: 0px;
+			visibility: hidden;
+			opacity: 0;
+			pointer-events: none;
+			user-select: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			-o-user-select: none;
+		}
+
+		#inputs-advanced #inputs-configuration-label {
+			margin: 0px;
+			background-color: #dddddd;
+			height: 15px;
+			padding: 5px;
+			line-height: 1;
+			font-weight: bold;
+			outline: none;
+			transition: 0.5s;
+		}
+
+		#inputs-advanced #inputs-configuration-label:focus, #inputs-advanced #inputs-configuration-label:hover {
+			filter: drop-shadow(0px 0px 5px #222222);
+		}
+
 /*** stream ***/
 	#stream {
 		height: calc(100% - 200px);

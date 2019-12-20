@@ -127,6 +127,13 @@
 			"whats the date": 					"what is the date",
 			"tell me the date": 				"what is the date",
 
+			"set a timer": 						"set alarm",
+			"set timer": 						"set alarm",
+			"set an alarm": 					"set alarm",
+			"set alarm": 						"set alarm",
+			"wake me up": 						"set alarm",
+			"alert me": 						"set alarm",
+
 		// rng
 			"roll a": 							"roll dice",
 			"roll me a": 						"roll dice",
@@ -420,7 +427,7 @@
 					// no platform?
 						var availablePlatforms = ["sonos"]
 						if (!platform || !availablePlatforms.includes(platform.toLowerCase())) {
-							callback({message: "I need more information.", html: "unable to create authorization link: <b>" + remainder + "</b>"})
+							callback({message: "I couldn't identify that platform.", html: "unable to create authorization link: <b>" + remainder + "</b>"})
 						}
 
 					// credentials?
@@ -446,12 +453,17 @@
 							var secret = credentials[2] || CONFIGURATION_LIBRARY["sonos secret"] || ""
 							var redirect = credentials[2] || CONFIGURATION_LIBRARY["sonos redirect"] || ""
 
-							var encodedAuth = btoa(key + ":" + secret)
-							var state = encodeURIComponent(window.location + ";;;" + encodedAuth)
+							if (!key || !secret || !redirect) {
+								callback({message: "To connect to Sonos, I need a key, a secret, and a redirect.", html: "unable to create authorization link: <b>" + remainder + "</b><br><br><b>required configurations:</b><ul><li>sonos key</li><li>sonos secret</li><li>sonos redirect</li></ul>"})
+							}
+							else {
+								var encodedAuth = btoa(key + ":" + secret)
+								var state = encodeURIComponent(window.location + ";;;" + encodedAuth)
 
-							var url = "https://api.sonos.com/login/v3/oauth?response_type=code&scope=playback-control-all&client_id=" + key + "&state=" + state + "&redirect_uri=" + encodeURIComponent(redirect)
-							var iframe = "<iframe src='./iframe/?embeddedLink=" + encodeURIComponent(url) + "'></iframe>"
-							callback({message: "Here's an authorization link.", html: iframe})
+								var url = "https://api.sonos.com/login/v3/oauth?response_type=code&scope=playback-control-all&client_id=" + key + "&state=" + state + "&redirect_uri=" + encodeURIComponent(redirect)
+								var iframe = "<iframe src='./authorization/?embeddedLink=" + encodeURIComponent(url) + "'></iframe>"
+								callback({message: "Here's an authorization link.", html: iframe})
+							}
 						}
 				} catch (error) {}
 			},
@@ -512,6 +524,74 @@
 				try {
 					var response = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + " " + new Date().getDate())
 					callback({message: response, html: "The date is " + response + "."})
+				} catch (error) {}
+			},
+			"set alarm": function(remainder, callback) {
+				try {
+					// split into array
+						var words = remainder.split(/\s/gi) || []
+
+					// timer
+						if ((/second|minute|hour|day|in/gi).test(remainder)) {
+							var units = {
+								"second": 1000,
+								"minute": 1000 * 60,
+								"hour": 1000 * 60 * 60,
+								"day": 1000 * 60 * 60 * 24
+							}
+							var keys = Object.keys(units)
+
+							var amounts = []
+							for (var i in words) {
+								if (!isNaN(words[i])) {
+									if (words[i + 1] && keys[words[i + 1].replace(/s$/gi,"").toLowerCase()]) {
+										amounts.push({
+											number: Number(words[i]),
+											unit: words[i + 1].replace(/s$/gi,"")
+										})
+									}
+									else {
+										amounts.push({
+											number: Number(words[i]),
+											unit: "minute"
+										})
+									}
+								}
+							}
+
+							var duration = 0
+							for (var i in amounts) {
+								duration += (amounts[i].number * units[amounts[i].unit])
+							}
+
+							if (!duration) {
+								callback({message: "I was unable to set that timer.", html: "unable to set timer: " + response})
+							}
+							else {
+								var endTime = new Date().getTime() + duration
+								CONTEXT_LIBRARY.alarms.push(endTime)
+								callback({message: "Alarm set for " + new Date(endTime).toLocaleTimeString(), html: "&#128339; Alarm set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
+							}
+						}
+
+					// alarm
+						else {
+							var timePhrase = remainder.replace(/in|at|for|after|before|around/gi,"").toLowerCase().trim()
+								timePhrase = timePhrase.replace("p.m.", "PM").replace("a.m.", "AM")
+							var endTime = new Date(timePhrase).getTime() || new Date(new Date().toDateString() + " " + timePhrase).getTime()
+							
+							if (isNaN(endTime)) {
+								callback({message: "I was unable to set that alarm.", html: "unable to set alarm: " + response})
+							}
+							else {
+								if (endTime < new Date().getTime()) {
+									var endTime = new Date(new Date(new Date().getTime() + (1000 * 60 * 60 * 24)).toDateString() + " " + timePhrase).getTime()
+								}
+
+								CONTEXT_LIBRARY.alarms.push(endTime)
+								callback({message: "Alarm set for " + new Date(endTime).toLocaleTimeString(), html: "&#128339; Alarm set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
+							}
+						}
 				} catch (error) {}
 			},
 
