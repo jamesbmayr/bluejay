@@ -53,15 +53,17 @@ window.addEventListener("load", function() {
 					"state-interval": 100,
 					"whistle-on": true,
 					"whistle-fftsize": 8192 / 16,
-					"whistle-frequency-threshold": 500,
-					"whistle-energy-threshold": 0.0001,
+					"whistle-frequency-threshold": 1000,
+					"whistle-energy-threshold": 0.1,
 					"whistle-ratio-minimum": 0.5,
 					"whistle-ratio-maximum": 2,
 					"recognition-interval": 50,
 					"recognition-duration": 10,
 					"voice": null,
 					"voice-delay": 100,
-					"voice-volume": 100
+					"voice-volume": 100,
+					"fetch-interval": 3000,
+					"fetch-abandon": 10
 				}
 			}
 
@@ -818,35 +820,9 @@ window.addEventListener("load", function() {
 			}
 
 	/*** communication in/out ***/
-		/* receiveiFrameMessage */
-			FUNCTION_LIBRARY.receiveiFrameMessage = receiveiFrameMessage
-			window.onmessage = receiveiFrameMessage
-			function receiveiFrameMessage(event) {
-				try {
-					if (!event.isTrusted || event.origin !== window.location.origin) {
-						console.log("untrusted message from " + event.origin)
-					}
-					else {
-						event.data = JSON.stringify(event.data)
-
-						if (!event.data || !event.data.function || !FUNCTION_LIBRARY[event.data.function]) {
-							console.log("unable to complete postMessage function: " + event)
-						}
-						else {
-							FUNCTION_LIBRARY[event.data.function](event.data.input || null)
-							console.log("postMessage success")
-						}
-					}
-				}
-				catch (error) { console.log(error) }
-			}
-
-		/* proxyRequest */
-			FUNCTION_LIBRARY.proxyRequest = proxyRequest
-			function proxyRequest(options, callback) {
-				// set action for server
-					options.action = "proxyRequest"
-
+		/* sendPost */
+			FUNCTION_LIBRARY.sendPost = sendPost
+			function sendPost(options, callback) {
 				// create request object and send to server
 					var request = new XMLHttpRequest()
 						request.open("POST", location.pathname, true)
@@ -859,5 +835,39 @@ window.addEventListener("load", function() {
 							}
 						}
 						request.send(JSON.stringify(options))
+			}
+
+		/* proxyRequest */
+			FUNCTION_LIBRARY.proxyRequest = proxyRequest
+			function proxyRequest(options, callback) {
+				// set action for server
+					options.action = "proxyRequest"
+
+				// create request object and send to server
+					sendPost(options, callback)
+			}
+
+		/* fetchPeriodically */
+			FUNCTION_LIBRARY.fetchPeriodically = fetchPeriodically
+			function fetchPeriodically(action, key, callback) {
+				// set escape counter
+					var abandonCounter = CONFIGURATION_LIBRARY.settings["fetch-abandon"]
+
+				// create loop
+					var fetchLoop = setInterval(function() {
+						if (abandonCounter) {
+							abandonCounter--
+							// request data from server
+								FUNCTION_LIBRARY.sendPost({action: action, key: key}, function(data) {
+									if (data.success && data.data) {
+										clearInterval(fetchLoop)
+										callback(data.data)
+									}
+								})
+						}
+						else {
+							clearInterval(fetchLoop)
+						}
+					}, CONFIGURATION_LIBRARY.settings["fetch-interval"])
 			}
 })

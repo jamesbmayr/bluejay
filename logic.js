@@ -427,10 +427,12 @@
 					var path = request.post.url.replace(protocol + "://", "").split("?")[0].split("/")
 					var host = path.shift() || ""
 					request.post.host = host
-					var body = request.post.url.split("?")[1]
+					
+					var body = request.post.body ? JSON.stringify(request.post.body) : request.post.url.split("?")[1] || ""
 					var options = {
 						host: host,
 						path: "/" + encodeURI(path.join("/")),
+						url: request.post.url,
 						method: method.toUpperCase(),
 						headers: 	{
 							"Accept": request.post["Accept"] || "application/json",
@@ -441,9 +443,19 @@
 						}
 					}
 
+				// log it
+					logStatus("proxy request @ " + request.ip + "\n[" + method + "] " + host + "/" + path.join("/") + "\n" + JSON.stringify(options.headers) + "\n" + body)
+
 				// request by protocol / method
 					if (protocol == "http") {
-						if (method == "get") {
+						if (method !== "get" || request.post["Authorization"]) {
+							var apiRequest = http.request(options, function (apiResponse) {
+								proxyResponse(apiResponse, callback)
+							}).on("error", callback)
+							apiRequest.write(body)
+							apiRequest.end()
+						}
+						else if (method == "get") {
 							http.get(request.post.url, function (apiResponse) {
 								if (apiResponse.headers.location) {
 									http.get(apiResponse.headers.location, function(apiReResponse) {
@@ -455,16 +467,16 @@
 								}
 							}).on("error", callback)
 						}
-						else if (method == "post") {
-							var apiRequest = http.request(options, function (apiResponse) {
+					}
+					else if (protocol == "https") {
+						if (method !== "get" || request.post["Authorization"]) {
+							var apiRequest = https.request(options, function (apiResponse) {
 								proxyResponse(apiResponse, callback)
 							}).on("error", callback)
 							apiRequest.write(body)
 							apiRequest.end()
 						}
-					}
-					else if (protocol == "https") {
-						if (method == "get") {
+						else if (method == "get") {
 							https.get(request.post.url, function (apiResponse) {
 								if (apiResponse.headers.location) {
 									https.get(apiResponse.headers.location, function(apiReResponse) {
@@ -475,13 +487,6 @@
 									proxyResponse(apiResponse, callback)
 								}
 							}).on("error", callback)
-						}
-						else if (method == "post") {
-							var apiRequest = https.request(options, function (apiResponse) {
-								proxyResponse(apiResponse, callback)
-							}).on("error", callback)
-							apiRequest.write(body)
-							apiRequest.end()
 						}
 					}
 
@@ -567,5 +572,68 @@
 			catch (error) {
 				logError(error)
 				return false
+			}
+		}
+
+/*** database ***/
+	/* setAuthorization */
+		module.exports.setAuthorization = setAuthorization
+		function setAuthorization(request, db, data, callback) {
+			try {
+				db[request.session.id][request.post.host] = data
+				callback({success: true})
+			}
+			catch (error) {
+				logError(error)
+				callback({success: false, message: "unable to set authorization"})
+			}
+		}
+
+	/* getAuthorization */
+		module.exports.getAuthorization = getAuthorization
+		function getAuthorization(request, db, callback) {
+			try {
+				if (db[request.session.id] && request.post.key && db[request.session.id][request.post.key]) {
+					callback({success: true, data: db[request.session.id][request.post.key]})
+				}
+				else {
+					callback({success: false, data: null})
+				}
+			}
+			catch (error) {
+				logError(error)
+				callback({success: false, message: "unable to get authorization"})
+			}
+		}
+
+	/* determineSession */
+		module.exports.determineSession = determineSession
+		function determineSession(request, db) {
+			try {
+				if (!request.cookie.session || request.cookie.session == null || request.cookie.session == 0) {
+					request.session = {
+						id: generateRandom(),
+						updated: new Date().getTime(),
+						info: {
+							"ip":         request.ip,
+				 			"user-agent": request.headers["user-agent"],
+				 			"language":   request.headers["accept-language"],
+						}
+					}
+
+					db[request.session.id] = request.session
+				}
+				else if (db[request.cookie.session]) {
+					request.session = db[request.cookie.session]
+					request.session.updated = new Date().getTime()
+				}
+				else {
+					request.cookie.session = null
+					determineSession(request, db)
+				}
+			}
+			catch (error) {
+				logError(error)
+				callback({success: false, message: "unable to determine session"})
 			}
 		}

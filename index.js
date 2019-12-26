@@ -5,6 +5,7 @@
 	var qs   = require("querystring")
 
 	var main = require("./logic")
+	var db = {}
 
 /*** server ***/
 	var port = main.getEnvironment("port")
@@ -40,6 +41,9 @@
 						request.post   = data ? JSON.parse(data) : {}
 						request.cookie = request.headers.cookie ? qs.parse(request.headers.cookie.replace(/; /g, "&")) : {}
 						request.ip     = request.headers["x-forwarded-for"] || request.connection.remoteAddress || request.socket.remoteAddress || request.connection.socket.remoteAddress
+						
+					// session
+						main.determineSession(request, db)
 
 					// log it
 						if (request.url !== "/favicon.ico") {
@@ -80,7 +84,7 @@
 									case (/^\/$/).test(request.url):
 										try {
 											response.writeHead(200, {
-												// "Set-Cookie": String( "session=" + request.session.id + "; expires=" + (new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 7)).toUTCString()) + "; path=/; domain=" + main.getEnvironment("domain") ),
+												"Set-Cookie": String( "session=" + request.session.id + "; expires=" + (new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 7)).toUTCString()) + "; path=/; domain=" + main.getEnvironment("domain") ),
 												"Content-Type": "text/html; charset=utf-8"
 											})
 											main.renderHTML(request, "./public/index.html", function (html) {
@@ -96,24 +100,13 @@
 											response.writeHead(200, {
 												"Content-Type": "text/html; charset=utf-8"
 											})
-											main.renderHTML(request, "./public/authorization.html", function (html) {
-												response.end(html)
-											})
-										}
-										catch (error) {_404(error)}
-									break
-
-								// iframe
-									case (/^\/iframe\/?$/).test(request.url):
-										try {
-											response.writeHead(200, {
-												"Content-Type": "text/html; charset=utf-8"
-											})
 											request.post = JSON.parse(request.get.embeddedPost)
 											main.proxyRequest(request, function (data) {
-												request.apiResponse = data
-												main.renderHTML(request, "./public/iframe.html", function (html) {
-													response.end(html)
+												main.setAuthorization(request, db, data, function (authorizationResults) {
+													request.authorizationResults = authorizationResults
+													main.renderHTML(request, "./public/authorization.html", function (html) {
+														response.end(html)
+													})
 												})
 											})
 										}
@@ -149,6 +142,17 @@
 										try {
 											response.writeHead(200, {"Content-Type": "text/json"})
 											main.proxyRequest(request, function (data) {
+												response.end(JSON.stringify(data))
+											})
+										}
+										catch (error) {_403(error)}
+									break
+
+								// getAuthorization
+									case "getAuthorization":
+										try {
+											response.writeHead(200, {"Content-Type": "text/json"})
+											main.getAuthorization(request, db, function (data) {
 												response.end(JSON.stringify(data))
 											})
 										}

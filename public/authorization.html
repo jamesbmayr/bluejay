@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>bluejay authorization</title>
+		<title>bluejay API authorization</title>
 	</head>
 	<body>
 		<script node>
-			("<style>html, body, a { font-family: monospace; font-color: #222222; font-size: 20px; }</style>" +
-			"redirecting to<br>" + 
-			"<a href='" + request.get.embeddedLink + "'>" + request.get.embeddedLink + "</a>" +
-			"<script>window.onload = function() { window.location = '" + request.get.embeddedLink + "' }</script>")
+			try {
+				if (request.authorizationResults && request.authorizationResults.success) {
+					("<style>html, body, a { font-family: monospace; font-color: #222222; font-size: 20px; }</style>" +
+					"<b>Success!</b><br>You may close this window.")
+				}
+				else {
+					("<style>html, body, a { font-family: monospace; font-color: #222222; font-size: 20px; }</style>" +
+					"<b>Failure!</b><br>Please try this command again.")
+				}
+			}
+			catch (error) {
+				("<style>html, body, a { font-family: monospace; font-color: #222222; font-size: 20px; }</style>" +
+				"<b>Failure!</b><br>Please try this command again.")
+			}
 		</script>node>
 	</body>
 </html>
