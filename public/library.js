@@ -140,14 +140,10 @@
 			"alert me": 						"set alarm",
 
 		// rng
-			"roll a": 							"roll dice",
-			"roll me a": 						"roll dice",
-			"roll a die": 						"roll dice",
+			"roll": 							"roll dice",
 			"roll me": 							"roll dice",
 			"roll me some": 					"roll dice",
-			"roll some dice": 					"roll dice",
 			"roll some": 						"roll dice",
-			"roll": 							"roll dice",
 
 			"flip a coin": 						"flip a coin",
 			"heads or tails": 					"flip a coin",
@@ -343,6 +339,19 @@
 			"look for a place named": 			"google places",
 			"look for a place by the name": 	"google places",
 
+			"search youtube for": 				"youtube",
+			"find on youtube": 					"youtube",
+			"on youtube find": 					"youtube",
+			"on youtube look for": 				"youtube",
+			"on youtube play": 					"youtube",
+			"on youtube try": 					"youtube",
+			"play on youtube": 					"youtube",
+			"play this on youtube": 			"youtube",
+			"lets watch": 						"youtube",
+			"on youtube put on": 				"youtube",
+			"on youtube open up": 				"youtube",
+			"on youtube open": 					"youtube",
+
 		// games
 			"lets play more or less": 			"more or less",
 			"lets play the more or less game": 	"more or less",
@@ -381,6 +390,16 @@
 			"on wink change": 					"set wink devices",
 			"on wink alter": 					"set wink devices",
 			"on wink make": 					"set wink devices",
+
+			"on wink turn off": 				"turn off wink device",
+			"on wink switch off": 				"turn off wink device",
+			"on wink turn off": 				"turn off wink device",
+			"on wink deactivate": 				"turn off wink device",
+
+			"on wink turn on": 					"turn on wink device",
+			"on wink switch on": 				"turn on wink device",
+			"on wink flip on": 					"turn on wink device",
+			"on wink activate": 				"turn on wink device",
 	}
 
 /* action library */
@@ -401,6 +420,8 @@
 			"change volume": function(remainder, callback) {
 				try {
 					var volume = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
+						volume = window.FUNCTION_LIBRARY.getDigits(volume)
+
 					var success = window.FUNCTION_LIBRARY.changeVoiceVolume({volume: volume})
 					if (!success) {
 						callback({message: "That's not a valid number.", html: "invalid volume: " + remainder})
@@ -633,6 +654,8 @@
 
 							var amounts = []
 							for (var i in words) {
+								words[i] = window.FUNCTION_LIBRARY.getDigits(words[i])
+
 								if (!isNaN(words[i])) {
 									if (words[i + 1] && keys[words[i + 1].replace(/s$/gi,"").toLowerCase()]) {
 										amounts.push({
@@ -688,10 +711,24 @@
 		// rng
 			"roll dice": function(remainder, callback) {
 				try {
-					// extract options
+					// defaults
+						var count = 1
+						var sides = 6
 						remainder = " " + remainder
-						var count = Number(remainder.split(/ dice with | die with | dice having |d/gi)[0]) || 1
-						var sides = (remainder.split(/ dice with | die with |d/gi)[1] || remainder).replace(/[^0-9]/gi,"") || 6
+
+					// X dice with Y sides format
+						if (remainder.includes("side") || remainder.includes("face")) {
+							console.log(remainder.split(/ dice with | die with | dice having /gi)[0])
+							var count = Number(window.FUNCTION_LIBRARY.getDigits(remainder.split(/ dice with | die with | dice having /gi)[0])) || 1
+							console.log(remainder.split(/ dice with | die with | dice having /gi)[1])
+							var sides = Number(window.FUNCTION_LIBRARY.getDigits((remainder.split(/ dice with | die with | dice having /gi)[1] || "").replace(/sides/gi,"").replace(/faces/gi,"").replace(/side/gi,"").replace(/face/gi,"")))
+						}
+
+					// XdY format
+						else {
+							var count = Number(window.FUNCTION_LIBRARY.getDigits(remainder.split(/d/gi)[0])) || 1
+							var sides = Number(remainder.split(/d/gi)[1])
+						}
 
 					// roll dice
 						var sum = 0
@@ -731,6 +768,9 @@
 								else if (terms[i] == "root")    { terms[i] = "** (1/"; terms.splice(i + 2, 0, ")")}
 								else if (terms[i] == "percent") { terms[i] = "/ 100 *"}
 								else if (terms[i] == "(" || terms[i] == ")") {}
+								else {
+									terms[i] = window.FUNCTION_LIBRARY.getDigits(terms[i])
+								}
 							}
 							else {
 								terms[i] = Number(terms[i])
@@ -751,6 +791,7 @@
 			"double": function(remainder, callback) {
 				try {
 					var term = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"")
+						term = window.FUNCTION_LIBRARY.getDigits(term)
 					var result = 2 * Number(term)
 					if (isNaN(result)) {
 						callback({message: "Unable to calculate.", html: "invalid calculation"})
@@ -764,6 +805,7 @@
 			"triple": function(remainder, callback) {
 				try {
 					var term = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"")
+						term = window.FUNCTION_LIBRARY.getDigits(term)
 					var result = 3 * Number(term)
 					if (isNaN(result)) {
 						callback({message: "Unable to calculate.", html: "invalid calculation"})
@@ -780,6 +822,8 @@
 						var terms = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").split(/\s/gi)
 						var numbers = []
 						for (var i = 0; i < terms.length; i++) {
+							terms[i] = window.FUNCTION_LIBRARY.getDigits(terms[i])
+
 							if (!isNaN(terms[i])) {
 								numbers.push(Number(terms[i]))
 							}
@@ -804,10 +848,12 @@
 					// numbers
 						var startNumber = (" " + remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"")).split(/ up from | down from | from | starting at | start at | between | for /gi)
 							startNumber = (startNumber[1] || startNumber[0]).split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)[0].toLowerCase().trim()
+							startNumber = window.FUNCTION_LIBRARY.getDigits(startNumber)
 						if (!startNumber || isNaN(startNumber)) { startNumber = 1 }
 
 						var endNumber = (" " + remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"")).split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)
 							endNumber = (endNumber[1] || endNumber[0]).split(/ up from | down from | starting at | start at | between | for /gi)[0].toLowerCase().trim()
+							endNumber = window.FUNCTION_LIBRARY.getDigits(endNumber)
 						if (!endNumber || isNaN(endNumber)) { endNumber = 100 }
 
 					// up or down
@@ -1403,6 +1449,38 @@
 						})
 				} catch (error) {}
 			},
+			"youtube": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
+							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
+							return
+						}
+
+					// options
+						var options = {
+							url: "https://www.googleapis.com/youtube/v3/search?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&part=snippet&type=video&videoEmbeddable=true&maxResults=5&order=viewCount&q=" + remainder
+						}
+
+					// proxy request
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							if (!response || !response.items || !response.items.length || !response.items[0].id || !response.items[0].id.videoId) {
+								callback({message: "I couldn't find " + remainder + " on Youtube.", html: "unable to find <b>" + remainder + "</b> on Youtube."})
+							}
+							else {
+								// turn off whistle-on
+									CONFIGURATION_LIBRARY.settings["whistle-on"] = ELEMENT_LIBRARY["inputs-whistle-on"].checked = false
+									window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+									FUNCTION_LIBRARY.stopRecognizing(false)
+
+								// response
+									var responseHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response.items[0].id.videoId + '?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+									callback({message: "Now playing " + remainder, html: responseHTML, followup: false})
+							}
+						})
+				}
+				catch (error) { console.log(error) }
+			},
 
 		// games
 			"more or less": function(remainder, callback) {
@@ -1420,7 +1498,7 @@
 
 					// interpret guess
 						else {
-							var guess = Number(remainder)
+							var guess = Number(window.FUNCTION_LIBRARY.getDigits(remainder))
 							if (isNaN(guess)) {
 								callback({message: "I don't know that number.", html: "not a number: " + remainder})
 							}
@@ -1602,7 +1680,7 @@
 									responseHTML += "<li><b>" + devices[i].name + "</b><br>" + devices[i].model_name + "</li>"
 								}
 								responseHTML += "</ul>"
-								callback({message: "I detected " + devices.length + " devices on Wink.", html: responseHTML})
+								callback({message: "I detected " + Object.keys(devices).length + " devices on Wink.", html: responseHTML})
 						})
 				} catch (error) {}
 			},
@@ -1623,6 +1701,13 @@
 						var deviceName = components[0].toLowerCase().trim()
 						var desiredState = components[1].toLowerCase().trim()
 
+					// replace number words with numbers
+						deviceName = deviceName.split(/\s/gi)
+						for (var word in deviceName) {
+							deviceName[word] = window.FUNCTION_LIBRARY.getDigits(deviceName[word])
+						}
+						deviceName = deviceName.join(" ")
+
 					// identify devices
 						var deviceIds = []
 						if (deviceName == "all lights" || deviceName == "all the lights") {
@@ -1631,10 +1716,15 @@
 							}) || []
 						}
 						else {
-							var deviceId = Object.keys(window.CONFIGURATION_LIBRARY["api.wink.com"].devices).find(function(d) {
-								return window.CONFIGURATION_LIBRARY["api.wink.com"].devices[d].name.toLowerCase() == deviceName
-							}) || null
-							deviceIds = deviceId ? [deviceId] : []
+							deviceNames = deviceName.split(" and ")
+							for (var i in deviceNames) {
+								var deviceId = Object.keys(window.CONFIGURATION_LIBRARY["api.wink.com"].devices).find(function(d) {
+									return window.CONFIGURATION_LIBRARY["api.wink.com"].devices[d].name.toLowerCase() == deviceNames[i]
+								}) || null
+								if (deviceId) {
+									deviceIds.push(deviceId)
+								}
+							}
 						}
 
 						if (!deviceIds.length) {
@@ -1660,7 +1750,7 @@
 							responseHTML += "<li>" + window.CONFIGURATION_LIBRARY["api.wink.com"].devices[deviceIds[i]].name + ": " + JSON.stringify(desiredState) + "</li>"
 						}
 						responseHTML += "</ul>"
-						callback({message: "Okay, I set " + deviceName + " to " + desiredState, html: responseHTML})
+						callback({message: "Okay, I set " + deviceName + " to " + (desiredState.powered ? "on" : "off"), html: responseHTML})
 
 					// loop through ids
 						for (var i in deviceIds) {
@@ -1679,6 +1769,18 @@
 									console.log(response)
 								})
 						}
-				} catch (error) {}
-			}
+				} catch (error) { callback({message: "I couldn't identify that device.", html: "unable to find device: " + remainder}) }
+			},
+			"turn off wink device": function(remainder, callback) {
+				try {
+					window.ACTION_LIBRARY["set wink devices"](remainder + " to off", callback)
+				}
+				catch (error) {}
+			},
+			"turn on wink device": function(remainder, callback) {
+				try {
+					window.ACTION_LIBRARY["set wink devices"](remainder + " to on", callback)
+				}
+				catch (error) {}
+			},
 	}

@@ -52,9 +52,10 @@ window.addEventListener("load", function() {
 				settings: {
 					"state-interval": 100,
 					"whistle-on": true,
-					"whistle-fftsize": 8192 / 16,
-					"whistle-frequency-threshold": 1000,
-					"whistle-energy-threshold": 0.1,
+					"whistle-fftsize": 256,
+					"whistle-frequency-minimum": 1000,
+					"whistle-frequency-maximum": 2000,
+					"whistle-energy-threshold": 0.5,
 					"whistle-ratio-minimum": 0.5,
 					"whistle-ratio-maximum": 2,
 					"recognition-interval": 50,
@@ -131,6 +132,58 @@ window.addEventListener("load", function() {
 						sum += arr[i]
 					}
 					return (sum / arr.length)
+				}
+			}
+
+		/* getDigit */
+			FUNCTION_LIBRARY.getDigits = getDigits
+			function getDigits(numberWord) {
+				try {
+					if (!isNaN(numberWord)) {
+						return numberWord
+					}
+					else {
+						numberWord = numberWord.toLowerCase().trim()
+						     if (numberWord == "zero") 		{ return 0 }
+						else if (numberWord == "one") 		{ return 1 }
+						else if (numberWord == "two") 		{ return 2 }
+						else if (numberWord == "three") 	{ return 3 }
+						else if (numberWord == "four") 		{ return 4 }
+						else if (numberWord == "five") 		{ return 5 }
+						else if (numberWord == "six") 		{ return 6 }
+						else if (numberWord == "seven") 	{ return 7 }
+						else if (numberWord == "eight") 	{ return 8 }
+						else if (numberWord == "nine") 		{ return 9 }
+						else if (numberWord == "ten") 		{ return 10 }
+						else if (numberWord == "eleven") 	{ return 11 }
+						else if (numberWord == "twelve") 	{ return 12 }
+						else if (numberWord == "thirteen") 	{ return 13 }
+						else if (numberWord == "fourteen") 	{ return 14 }
+						else if (numberWord == "fifteen") 	{ return 15 }
+						else if (numberWord == "sixteen") 	{ return 16 }
+						else if (numberWord == "seventeen") { return 17 }
+						else if (numberWord == "eighteen") 	{ return 18 }
+						else if (numberWord == "nineteen") 	{ return 19 }
+						else if (numberWord == "twenty") 	{ return 20 }
+						else if (numberWord == "thirty") 	{ return 30 }
+						else if (numberWord == "forty") 	{ return 40 }
+						else if (numberWord == "fifty") 	{ return 50 }
+						else if (numberWord == "sixty") 	{ return 60 }
+						else if (numberWord == "seventy") 	{ return 70 }
+						else if (numberWord == "eighty") 	{ return 80 }
+						else if (numberWord == "ninety") 	{ return 90 }
+						else if (numberWord == "hundred") 	{ return 100 }
+						else if (numberWord == "thousand") 	{ return 1000 }
+						else if (numberWord == "million") 	{ return 1000000 }
+						else if (numberWord == "billion") 	{ return 1000000000 }
+						else if (numberWord == "trillion") 	{ return 1000000000000 }
+						else {
+							return numberWord
+						}
+					}
+				}
+				catch (error) {
+					return numberWord
 				}
 			}
 
@@ -351,7 +404,8 @@ window.addEventListener("load", function() {
 						var newFrequency 	= AUDIO_LIBRARY.audio.sampleRate / FUNCTION_LIBRARY.getAverage(AUDIO_LIBRARY.input.wavelengths) / complexity
 
 					// if above 500Hz and enough energy
-						if (newFrequency >= CONFIGURATION_LIBRARY.settings["whistle-frequency-threshold"] && AUDIO_LIBRARY.input.maximum >= CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] && AUDIO_LIBRARY.input.minimum <= -CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"]) {
+						if (CONFIGURATION_LIBRARY.settings["whistle-frequency-minimum"] <= newFrequency && newFrequency <= CONFIGURATION_LIBRARY.settings["whistle-frequency-maximum"] && AUDIO_LIBRARY.input.maximum >= CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] && AUDIO_LIBRARY.input.minimum <= -CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"]) {
+							console.log(newFrequency.toFixed(4), AUDIO_LIBRARY.input.minimum.toFixed(4), AUDIO_LIBRARY.input.maximum.toFixed(4))
 							// no previous frequency
 								if (!AUDIO_LIBRARY.input.lastFrequency) {
 									AUDIO_LIBRARY.input.lastFrequency = newFrequency
