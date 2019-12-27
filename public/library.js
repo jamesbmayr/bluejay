@@ -262,6 +262,17 @@
 			"fetch a fortune": 					"get a fortune",
 			"fetch me a fortune": 				"get a fortune",
 
+			"get a wikipedia entry": 			"get a wikipedia entry",
+			"on wikipedia, look up": 			"get a wikipedia entry",
+			"tell me about": 					"get a wikipedia entry",
+			"on wikipedia tell me about": 		"get a wikipedia entry",
+			"look this up on wikipedia": 		"get a wikipedia entry",
+			"search wikipedia for": 			"get a wikipedia entry",
+			"get the wikipedia entry about": 	"get a wikipedia entry",
+			"get the wikipedia entry for": 		"get a wikipedia entry",
+			"on wikipedia find": 				"get a wikipedia entry",
+			"on wikipedia look up": 			"get a wikipedia entry",
+
 			"get the headlines": 				"get the headlines",
 			"get todays headlines": 			"get the headlines",
 			"whats happening in the world": 	"get the headlines",
@@ -459,6 +470,11 @@
 			"change the topic": 				"ask reddit",
 			"change topic": 					"ask reddit",
 			"change subject": 					"ask reddit",
+
+			"get a reddit writing prompt": 		"get a reddit writing prompt",
+			"get a writing prompt": 			"get a reddit writing prompt",
+			"give me a writing prompt": 		"get a reddit writing prompt",
+			"fetch a writing prompt": 			"get a reddit writing prompt",
 	}
 
 /* action library */
@@ -1135,6 +1151,79 @@
 							}
 						})
 				} catch (error) {}
+			},
+			"get a wikipedia entry": function(remainder, callback) {
+				try {
+					// attempt counter
+						if (!window.CONTEXT_LIBRARY["wikipedia attempt counter"]) {
+							window.CONTEXT_LIBRARY["wikipedia attempt counter"] = 1
+						}
+
+					// options
+						var options = {
+							url: "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=" + remainder.replace(/[?!.,:;'"\/\(\)\$\%]/gi,"").trim()
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							if (!response || !response.query || !response.query.search || !response.query.search[0]) {
+								if (response.error && response.error.code == "cirrussearch-too-busy-error" && window.CONTEXT_LIBRARY["wikipedia attempt counter"] < 5) {
+									callback({icon: "&#x1f310;", message: "Wikipedia was too busy. Trying again.", html: "attempt #" + window.CONTEXT_LIBRARY["wikipedia attempt counter"] + " <b>" + remainder + "</b> on Wikipedia<br><br>Wikipedia was too busy. Trying again."})
+
+									window.CONTEXT_LIBRARY["wikipedia attempt counter"]++
+									window.ACTION_LIBRARY["get a wikipedia entry"](remainder, callback)
+								}
+								else {
+									callback({icon: "&#x1f310;", message: "I couldn't find " + remainder + " on Wikipedia.", html: "unable to find <b>" + remainder + "</b> on Wikipedia"})
+								}
+							}
+							else {
+								// options
+									var options = {
+										url: "https://en.wikipedia.org/w/api.php?action=parse&format=json&utf8=1&page=" + response.query.search[0].title
+									}
+
+								// proxy to server
+									window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+										try {
+											if (response.error && response.error.code == "cirrussearch-too-busy-error" && window.CONTEXT_LIBRARY["wikipedia attempt counter"] < 5) {
+												callback({icon: "&#x1f310;", message: "Wikipedia was too busy. Trying again.", html: "attempt #" + window.CONTEXT_LIBRARY["wikipedia attempt counter"] + " <b>" + remainder + "</b> on Wikipedia<br><br>Wikipedia was too busy. Trying again."})
+
+												window.CONTEXT_LIBRARY["wikipedia attempt counter"]++
+												window.ACTION_LIBRARY["get a wikipedia entry"](remainder, callback)
+											}
+											else {
+												// get text
+													var htmlContent = response.parse.text["*"]
+														htmlContent = htmlContent.split('id="References">References')[0]
+														htmlContent = htmlContent.split('id="See_also">See also')[0]
+
+													var textNode = document.createElement("div")
+														textNode.innerHTML = response.parse.text["*"]
+													var text = textNode.innerText
+														text = text.split("References[edit]")[0]
+														text = text.split("See also[edit]")[0]
+														text = text.replace(/\[[0-9]+\]/gi, "")
+														text = text.replace(/\[edit\]/gi,"")
+													
+												// message
+													var link = "<a target='_blank' href='https://en.wikipedia.org/?curid=" + response.parse.pageid + "'>" + response.parse.title + "</a>"
+													callback({icon: "&#x1f310;", message: text, html: "<h2>" + link + "</h2><br>" + htmlContent})
+
+												// reset counter
+													window.CONTEXT_LIBRARY["wikipedia attempt counter"] = 0
+											}
+										}
+										catch (error) {
+											console.log(error)
+											callback({icon: "&#x1f310;", message: "I couldn't find " + remainder + " on Wikipedia.", html: "unable to find <b>" + remainder + "</b> on Wikipedia"})
+										}
+									})
+							}
+						})
+
+					
+				} catch (error) { console.log(error) }
 			},
 			"get the headlines": function(remainder, callback) {
 				try {
@@ -1912,7 +2001,13 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["www.reddit.com"] || !window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token || !window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration || window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration < new Date().getTime()) {
-							callback({icon: "&#x2753;", message: "I'm not authorized to do that yet. Authorize Wink first.", html: "missing authorization: <b>www.reddit.com</b>"})
+							window.ACTION_LIBRARY["authorize platform"]("reddit", function(response) {
+								callback(response)
+								
+								if (window.CONFIGURATION_LIBRARY["www.reddit.com"] && window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration >= new Date().getTime()) {
+									window.ACTION_LIBRARY["ask reddit"](remainder, callback)
+								}
+							})
 							return
 						}
 
@@ -1936,6 +2031,45 @@
 							}
 							catch (error) {
 								callback({icon: "&#x1f4bb;", message: "I don't have any questions.", html: "unable to ask reddit"})
+							}
+						})
+				}
+				catch (error) {}
+			},
+			"get a reddit writing prompt": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["www.reddit.com"] || !window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token || !window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration || window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration < new Date().getTime()) {
+							window.ACTION_LIBRARY["authorize platform"]("reddit", function(response) {
+								callback(response)
+								
+								if (window.CONFIGURATION_LIBRARY["www.reddit.com"] && window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration >= new Date().getTime()) {
+									window.ACTION_LIBRARY["get a reddit writing prompt"](remainder, callback)
+								}
+							})
+							return
+						}
+
+					// options
+						var options = {
+							"User-Agent": "web:bluejay:v1 (by /u/quargy)",
+							Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token,
+							url: "https://oauth.reddit.com/r/writingprompts/"
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// select random question
+									var question = window.FUNCTION_LIBRARY.chooseRandom(response.data.children)
+
+								// construct response link
+									var redditLink = question.data.url
+									var redditText = question.data.title
+									callback({icon: "&#x1f4bb;", message: redditText, html: "<a target='_blank' href='" + redditLink + "'>" + redditText + "</a>"})
+							}
+							catch (error) {
+								callback({icon: "&#x1f4bb;", message: "I don't have any writing prompts.", html: "unable to query reddit"})
 							}
 						})
 				}

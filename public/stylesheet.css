@@ -7,7 +7,7 @@
 		width: 100%;
 		background-color: #dddddd;
 		color: #222222;
-		font-family: monospace;
+		font-family: 'Abel', sans-serif;
 		font-size: 0px;
 		padding: 0px;
 		margin: 0px;
@@ -149,7 +149,7 @@
 			border: 2px solid #222222;
 			background-color: #dddddd;
 			color: #222222;
-			font-family: monospace;
+			font-family: 'Abel', sans-serif;
 			font-size: 25px;
 			height: 30px;
 			width: calc(100% - 150px);
@@ -215,7 +215,7 @@
 			background-color: transparent;
 			border-radius: 100%;
 			color: #222222;
-			font-family: monospace;
+			font-family: 'Abel', sans-serif;
 			font-size: 30px;
 			padding: 8px;
 			cursor: pointer;
@@ -249,7 +249,7 @@
 		#inputs-advanced label {
 			display: inline-block;
 			font-size: 15px;
-			font-family: monospace;
+			font-family: 'Abel', sans-serif;
 			font-weight: bold;
 			color: #111111;
 			background-color: #aaaaaa;
@@ -279,7 +279,7 @@
 			border: 0px;
 			color: #111111;
 			font-size: 15px;
-			font-family: monospace;
+			font-family: 'Abel', sans-serif;
 			outline: none;
 			transition: 0.5s;
 			padding: 5px;
@@ -352,7 +352,7 @@
 			background-color: transparent;
 			padding: 0px;
 			font-size: 15px;
-			font-family: monospace;
+			font-family: 'Abel', sans-serif;
 			text-align: center;
 			height: auto;
 			width: 70%;
@@ -417,8 +417,8 @@
 		.stream-history-action-time {
 			float: left;
 			width: 75px;
-			height: 30px;
-			padding: 10px;
+			height: 16px;
+			padding: 17px 10px;
 			font-size: 15px;
 			background-color: #555555;
 		}
@@ -461,4 +461,9 @@
 			border-radius: 5px;
 			width: 100%;
 			min-height: 300px;
+		}
+
+		.stream-history img {
+			border-radius: 5px;
+			border: 2px solid #222222;
 		}
