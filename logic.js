@@ -512,6 +512,7 @@
 				// parse results
 					apiResponse.on("end", function() { 
 						try {
+							logStatus("proxy response:\n" + apiData)
 							var responseData = JSON.parse(apiData)
 							callback(responseData)
 						} catch (error) {

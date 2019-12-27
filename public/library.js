@@ -203,7 +203,9 @@
 			"be funny": 						"tell a joke",
 			"i could use a joke": 				"tell a joke",
 			"tell a joke": 						"tell a joke",
+			"tell us a joke": 					"tell a joke",
 			"make me laugh": 					"tell a joke",
+			"fetch a joke": 					"tell a joke",
 			"fetch me a joke": 					"tell a joke",
 			"tell me something funny": 			"tell a joke",
 
@@ -218,6 +220,8 @@
 			"inspire me": 						"get a quote",
 			"tell me a random quote": 			"get a quote",
 			"tell me a quote": 					"get a quote",
+			"fetch a quote": 					"get a quote",
+			"fetch me a quote": 				"get a quote",
 
 			"get the headlines": 				"get the headlines",
 			"get todays headlines": 			"get the headlines",
@@ -348,6 +352,7 @@
 			"play on youtube": 					"youtube",
 			"play this on youtube": 			"youtube",
 			"lets watch": 						"youtube",
+			"lets listen to": 					"youtube",
 			"on youtube put on": 				"youtube",
 			"on youtube open up": 				"youtube",
 			"on youtube open": 					"youtube",
@@ -361,7 +366,6 @@
 			"play more or less": 				"more or less",
 			"lets play more or less": 			"more or less",
 
-			"ask me a question": 				"true or false",
 			"quiz me": 							"true or false",
 			"tell me a fact": 					"true or false",
 			"tell me a fun fact": 				"true or false",
@@ -376,7 +380,7 @@
 
 		// SONOS
 
-		// WINK
+		// Wink
 			"on wink get devices": 				"get wink devices",
 			"on wink get my devices": 			"get wink devices",
 			"on wink get all devices": 			"get wink devices",
@@ -400,6 +404,19 @@
 			"on wink switch on": 				"turn on wink device",
 			"on wink flip on": 					"turn on wink device",
 			"on wink activate": 				"turn on wink device",
+
+		// Reddit
+			"ask reddit": 						"ask reddit",
+			"ask a question": 					"ask reddit",
+			"ask me a question": 				"ask reddit",
+			"ask us a question": 				"ask reddit",
+			"ask me something": 				"ask reddit",
+			"ask us something": 				"ask reddit",
+			"ask something": 					"ask reddit",
+			"change the subject": 				"ask reddit",
+			"change the topic": 				"ask reddit",
+			"change topic": 					"ask reddit",
+			"change subject": 					"ask reddit",
 	}
 
 /* action library */
@@ -470,12 +487,20 @@
 							"sonos": {
 								host: "api.sonos.com",
 								authPath: "/login/v3/oauth?response_type=code&scope=playback-control-all",
-								reauthPath: "/login/v3/oauth/access"
+								reauthPath: "/login/v3/oauth/access",
+								stateSecret: function(key, secret) { return btoa(key + ":" + secret) }
 							},
 							"wink": {
 								host: "api.wink.com",
 								authPath: "/oauth2/authorize?response_type=code",
-								reauthPath: "/oauth2/token"
+								reauthPath: "/oauth2/token",
+								stateSecret: function(key, secret) { return secret }
+							},
+							"reddit": {
+								host: "www.reddit.com",
+								authPath: "/api/v1/authorize/?response_type=code&duration=permanent&scope=read",
+								reauthPath: "/api/v1/access_token",
+								stateSecret: function(key, secret) { return btoa(key + ":" + secret) }
 							}
 						}
 
@@ -498,19 +523,16 @@
 										callback({message: "To connect to " + name + ", I need a key, a secret, and a redirect.", html: "unable to authorize: <b>" + remainder + "</b><br><br><b>required configurations:</b><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " redirect</li></ul>"})
 									}
 									else {
-										// special encoding for sonos only
-											if (name == "sonos") { secret = btoa(key + ":" + secret) }
-
-										var state = encodeURIComponent(window.location + ";;;" + secret)
+										var state = encodeURIComponent(window.location + ";;;" + platforms[name].stateSecret(key, secret))
 										var url = "https://" + host + platforms[name].authPath + "&client_id=" + key + "&state=" + state + "&redirect_uri=" + encodeURIComponent(redirect)
 										var popup = window.open(url, null, "height=500,width=500,status=yes,toolbar=no,menubar=no,location=no")
 
 										callback({message: "Complete the authorization flow for " + host, html: "activating <b>" + host + "</b> in external popup"})
 
 										window.FUNCTION_LIBRARY.fetchPeriodically("getAuthorization", host, function(data) {
-											var value = window.CONFIGURATION_LIBRARY[host]
+											var value = window.CONFIGURATION_LIBRARY[host] || {}
 												value.access_token = data.access_token
-												value.refresh_token = refresh_token
+												value.refresh_token = data.refresh_token
 												value.expiration = new Date().getTime() + (data.expires_in * 1000)
 											window.FUNCTION_LIBRARY.changeConfiguration({key: host, value: value})
 											callback({message: host + " is now authorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
@@ -718,9 +740,7 @@
 
 					// X dice with Y sides format
 						if (remainder.includes("side") || remainder.includes("face")) {
-							console.log(remainder.split(/ dice with | die with | dice having /gi)[0])
 							var count = Number(window.FUNCTION_LIBRARY.getDigits(remainder.split(/ dice with | die with | dice having /gi)[0])) || 1
-							console.log(remainder.split(/ dice with | die with | dice having /gi)[1])
 							var sides = Number(window.FUNCTION_LIBRARY.getDigits((remainder.split(/ dice with | die with | dice having /gi)[1] || "").replace(/sides/gi,"").replace(/faces/gi,"").replace(/side/gi,"").replace(/face/gi,"")))
 						}
 
@@ -1004,7 +1024,7 @@
 										var quoteLink   = response.quoteLink
 										var quoteText   = response.quoteText
 										var quoteAuthor = response.quoteAuthor
-										callback({message: quoteAuthor + " said " + quoteText, html: "<a target='_blank' href='" + quoteLink + "'>\"" + quoteText + "\" - " + quoteAuthor + "</a>"})
+										callback({message: quoteAuthor + " said... " + quoteText, html: "<a target='_blank' href='" + quoteLink + "'>\"" + quoteText + "\" - " + quoteAuthor + "</a>"})
 									}
 									else {
 										callback({message: "A wise man once said: the API didn't return any results.", html: "unable to access quotes"})
@@ -1479,7 +1499,7 @@
 							}
 						})
 				}
-				catch (error) { console.log(error) }
+				catch (error) {}
 			},
 
 		// games
@@ -1554,6 +1574,7 @@
 
 										// first question
 											var question = window.CONTEXT_LIBRARY["true or false"].questions[window.CONTEXT_LIBRARY["true or false"].index].question
+												question = question.replace(/(&#039;)/gi,"\'")
 											var questionNumber = window.CONTEXT_LIBRARY["true or false"].index + 1
 											callback({message: "True or False: " + question, html: "<b>True or False #" + questionNumber + "</b><br>" + question})
 									}
@@ -1615,6 +1636,8 @@
 				catch (error) {}
 			},
 	
+		// SONOS
+
 		// Wink
 			"get wink devices": function(remainder, callback) {
 				try {
@@ -1780,6 +1803,41 @@
 			"turn on wink device": function(remainder, callback) {
 				try {
 					window.ACTION_LIBRARY["set wink devices"](remainder + " to on", callback)
+				}
+				catch (error) {}
+			},
+
+		// Reddit
+			"ask reddit": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["www.reddit.com"] || !window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token || !window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration || window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration < new Date().getTime()) {
+							callback({message: "I'm not authorized to do that yet. Authorize Wink first.", html: "missing authorization: <b>www.reddit.com</b>"})
+							return
+						}
+
+					// options
+						var options = {
+							"User-Agent": "web:bluejay:v1 (by /u/quargy)",
+							Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token,
+							url: "https://oauth.reddit.com/r/askreddit/"
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// select random question
+									var question = response.data.children[Math.floor(Math.random() * response.data.children.length)]
+
+								// construct response link
+									var redditLink = question.data.url
+									var redditText = question.data.title
+									callback({message: redditText, html: "<a target='_blank' href='" + redditLink + "'>" + redditText + "</a>"})
+							}
+							catch (error) {
+								callback({message: "I don't have any questions.", html: "unable to ask reddit"})
+							}
+						})
 				}
 				catch (error) {}
 			},
