@@ -1,54 +1,61 @@
 /* phrase library */
 	window.PHRASE_LIBRARY = {
-		// settings
-			"change voice to": 					"change voice",
-			"change the voice to": 				"change voice",
-			"set voice to": 					"change voice",
-			"set the voice to": 				"change voice",
-			"set new voice": 					"change voice",
-			"switch voice to": 					"change voice",
-			"switch the voice to": 				"change voice",
+		// casual responses
+			"thank you": 						"receive gratitude",
+			"thanks": 							"receive gratitude",
+			"i appreciate": 					"receive gratitude",
+			"well thank you": 					"receive gratitude",
+			"well thanks": 						"receive gratitude",
+			"good job": 						"receive gratitude",
+			"excellent work": 					"receive gratitude",
+			"job well done": 					"receive gratitude",
+			"well done": 						"receive gratitude",
 
-			"change volume to": 				"change volume",
-			"change the volume to": 			"change volume",
-			"set volume to": 					"change volume",
-			"set the volume to": 				"change volume",
-			"set new volume": 					"change volume",
+			"im sorry": 						"receive apology",
+			"sorry": 							"receive apology",
+			"i am sorry": 						"receive apology",
+			"i apologize": 						"receive apology",
+			"my apologies": 					"receive apology",
+			"apologies": 						"receive apology",
+			"can you forgive": 					"receive apology",
+			"do you forgive": 					"receive apology",
+			"would you forgive": 				"receive apology",
 
-			"edit configuration": 				"edit configuration",
-			"edit configuration for": 			"edit configuration",
-			"set configuration": 				"edit configuration",
-			"set a configuration": 				"edit configuration",
-			"set this configuration": 			"edit configuration",
-			"set configuration for": 			"edit configuration",
-			"set a configuration for": 			"edit configuration",
-			"set the configuration for": 		"edit configuration",
-			"set my configuration for": 		"edit configuration",
-			"set new configuration": 			"edit configuration",
-			"set new configuration for": 		"edit configuration",
-			"set a new configuration": 			"edit configuration",
-			"set a new configuration for": 		"edit configuration",
-			"change a configuration": 			"edit configuration",
-			"change my configuration": 			"edit configuration",
-			"change my configuration for": 		"edit configuration",
-			"add to my profile": 				"edit configuration",
-			"add this to my profile": 			"edit configuration",
-			"edit my profile": 					"edit configuration",
-			"save my": 							"edit configuration",
-			"set my saved": 					"edit configuration",
-			"change my saved": 					"edit configuration",
-			"update my saved": 					"edit configuration",
-			"configure my": 					"edit configuration",
-			"configure": 						"edit configuration",
-
-			"authorize": 						"authorize",
-			"create authorization": 			"authorize",
-			"get authorization link": 			"authorize",
-			"activate": 						"authorize",
-			"create activation": 				"authorize",
-			"get activation link": 				"authorize",
+			"who is a good": 					"receive affirmation",
+			"whos a good": 						"receive affirmation",
+			"whose a good": 					"receive affirmation",
+			"who is my good": 					"receive affirmation",
+			"whos my good": 					"receive affirmation",
+			"whose my good": 					"receive affirmation",
+			"youre an excellent": 				"receive affirmation",
+			"you are an excellent": 			"receive affirmation",
+			"youre a good": 					"receive affirmation",
+			"you are a good": 					"receive affirmation",
+			"youre great": 						"receive affirmation",
+			"you are great": 					"receive affirmation",
+			"youre wonderful": 					"receive affirmation",
+			"you are wonderful": 				"receive affirmation",
+			"youre awesome": 					"receive affirmation",
+			"you are awesome": 					"receive affirmation",
+			"youre wonderful": 					"receive affirmation",
+			"you are wonderful": 				"receive affirmation",
+			"youre amazing": 					"receive affirmation",
+			"you are amazing": 					"receive affirmation",
 
 		// meta
+			"help": 							"list actions",
+			"get help": 						"list actions",
+			"what are your functions": 			"list actions",
+			"what can you do": 					"list actions",
+			"i need help": 						"list actions",
+			"what are your functions": 			"list actions",
+			"what can you do": 					"list actions",
+			"i need some help": 				"list actions",
+			"what can i say": 					"list actions",
+			"list functions": 					"list actions",
+			"list actions": 					"list actions",
+			"list commands": 					"list actions",
+
 			"repeat after me": 					"repeat this",
 			"repeat this": 						"repeat this",
 			"say what i say": 					"repeat this",
@@ -67,70 +74,83 @@
 			"can you repeat that": 				"repeat that",
 			"i didnt catch that": 				"repeat that",
 
-			"thank you": 						"gratitude",
-			"thanks": 							"gratitude",
-			"i appreciate": 					"gratitude",
-			"well thank you": 					"gratitude",
-			"well thanks": 						"gratitude",
-			"good job": 						"gratitude",
-			"excellent work": 					"gratitude",
-			"job well done": 					"gratitude",
-			"well done": 						"gratitude",
+		// settings
+			"change voice to": 					"change voice",
+			"change the voice to": 				"change voice",
+			"set voice to": 					"change voice",
+			"set the voice to": 				"change voice",
+			"set new voice": 					"change voice",
+			"switch voice to": 					"change voice",
+			"switch the voice to": 				"change voice",
 
-			"im sorry": 						"forgiveness",
-			"sorry": 							"forgiveness",
-			"i am sorry": 						"forgiveness",
-			"i apologize": 						"forgiveness",
-			"my apologies": 					"forgiveness",
-			"apologies": 						"forgiveness",
-			"can you forgive": 					"forgiveness",
-			"do you forgive": 					"forgiveness",
-			"would you forgive": 				"forgiveness",
+			"change volume to": 				"change volume",
+			"change the volume to": 			"change volume",
+			"set volume to": 					"change volume",
+			"set the volume to": 				"change volume",
+			"set new volume": 					"change volume",
 
-			"who is a good": 					"affirmation",
-			"whos a good": 						"affirmation",
-			"whose a good": 					"affirmation",
-			"who is my good": 					"affirmation",
-			"whos my good": 					"affirmation",
-			"whose my good": 					"affirmation",
-			"youre an excellent": 				"affirmation",
-			"you are an excellent": 			"affirmation",
-			"youre a good": 					"affirmation",
-			"you are a good": 					"affirmation",
-			"youre great": 						"affirmation",
-			"you are great": 					"affirmation",
-			"youre wonderful": 					"affirmation",
-			"you are wonderful": 				"affirmation",
-			"youre awesome": 					"affirmation",
-			"you are awesome": 					"affirmation",
-			"youre wonderful": 					"affirmation",
-			"you are wonderful": 				"affirmation",
-			"youre amazing": 					"affirmation",
-			"you are amazing": 					"affirmation",
+			"edit configuration": 				"change configuration",
+			"edit configuration for": 			"change configuration",
+			"set configuration": 				"change configuration",
+			"set a configuration": 				"change configuration",
+			"set this configuration": 			"change configuration",
+			"set configuration for": 			"change configuration",
+			"set a configuration for": 			"change configuration",
+			"set the configuration for": 		"change configuration",
+			"set my configuration for": 		"change configuration",
+			"set new configuration": 			"change configuration",
+			"set new configuration for": 		"change configuration",
+			"set a new configuration": 			"change configuration",
+			"set a new configuration for": 		"change configuration",
+			"change a configuration": 			"change configuration",
+			"change my configuration": 			"change configuration",
+			"change my configuration for": 		"change configuration",
+			"add to my profile": 				"change configuration",
+			"add this to my profile": 			"change configuration",
+			"edit my profile": 					"change configuration",
+			"save my": 							"change configuration",
+			"set my saved": 					"change configuration",
+			"change my saved": 					"change configuration",
+			"update my saved": 					"change configuration",
+			"configure my": 					"change configuration",
+			"configure": 						"change configuration",
+
+			"authorize": 						"authorize platform",
+			"create authorization": 			"authorize platform",
+			"get authorization link": 			"authorize platform",
+			"activate": 						"authorize platform",
+			"create activation": 				"authorize platform",
+			"get activation link": 				"authorize platform",
+			"authorize a platform": 			"authorize platform",
+			"authorize platform": 				"authorize platform",
 
 		// time
-			"what time is it": 					"what time is it",
-			"what is the time": 				"what time is it",
-			"whats the time": 					"what time is it",
-			"tell me the time": 				"what time is it",
+			"get the time": 					"get the time",
+			"what time is it": 					"get the time",
+			"what is the time": 				"get the time",
+			"whats the time": 					"get the time",
+			"tell me the time": 				"get the time",
 
-			"what day is it": 					"what day is it",
-			"what day is today": 				"what day is it",
-			"whats the day": 					"what day is it",
-			"whats today": 						"what day is it",
-			"tell me the day": 					"what day is it",
+			"get the day": 						"get the day",
+			"what day is it": 					"get the day",
+			"what day is today": 				"get the day",
+			"whats the day": 					"get the day",
+			"whats today": 						"get the day",
+			"tell me the day": 					"get the day",
 
-			"what month is it": 				"what month is it",
-			"what is the month": 				"what month is it",
-			"whats the month": 					"what month is it",
-			"tell me the month": 				"what month is it",
+			"get the month": 					"get the month",
+			"what month is it": 				"get the month",
+			"what is the month": 				"get the month",
+			"whats the month": 					"get the month",
+			"tell me the month": 				"get the month",
 
-			"what date is it": 					"what is the date",
-			"whats todays date": 				"what is the date",
-			"what is the date": 				"what is the date",
-			"what is todays date": 				"what is the date",
-			"whats the date": 					"what is the date",
-			"tell me the date": 				"what is the date",
+			"get the date": 					"get the date",
+			"what date is it": 					"get the date",
+			"whats todays date": 				"get the date",
+			"what is the date": 				"get the date",
+			"what is todays date": 				"get the date",
+			"whats the date": 					"get the date",
+			"tell me the date": 				"get the date",
 
 			"set a timer": 						"set alarm",
 			"set timer": 						"set alarm",
@@ -188,26 +208,30 @@
 			"synonym of": 						"find synonyms",
 			"what has the same meaning as": 	"find synonyms",
 
-			"define": 							"define",
-			"define the word": 					"define",
-			"look up the word": 				"define",
-			"provide a definition for": 		"define",
-			"what is the meaning of": 			"define",
-			"whats the meaning of": 			"define",
+			"find a definition for": 			"find definition",
+			"find definition for": 				"find definition",
+			"find the meaning of": 				"find definition",
+			"define": 							"find definition",
+			"define the word": 					"find definition",
+			"look up the word": 				"find definition",
+			"provide a definition for": 		"find definition",
+			"what is the meaning of": 			"find definition",
+			"whats the meaning of": 			"find definition",
 
 		// content api fetches
-			"tell me a joke": 					"tell a joke",
-			"know any jokes": 					"tell a joke",
-			"do you know any jokes": 			"tell a joke",
-			"say something funny": 				"tell a joke",
-			"be funny": 						"tell a joke",
-			"i could use a joke": 				"tell a joke",
-			"tell a joke": 						"tell a joke",
-			"tell us a joke": 					"tell a joke",
-			"make me laugh": 					"tell a joke",
-			"fetch a joke": 					"tell a joke",
-			"fetch me a joke": 					"tell a joke",
-			"tell me something funny": 			"tell a joke",
+			"get a joke": 						"get a joke",
+			"tell me a joke": 					"get a joke",
+			"know any jokes": 					"get a joke",
+			"do you know any jokes": 			"get a joke",
+			"say something funny": 				"get a joke",
+			"be funny": 						"get a joke",
+			"i could use a joke": 				"get a joke",
+			"tell a joke": 						"get a joke",
+			"tell us a joke": 					"get a joke",
+			"make me laugh": 					"get a joke",
+			"fetch a joke": 					"get a joke",
+			"fetch me a joke": 					"get a joke",
+			"tell me something funny": 			"get a joke",
 
 			"get a quote": 						"get a quote",
 			"get me a quote": 					"get a quote",
@@ -222,6 +246,21 @@
 			"tell me a quote": 					"get a quote",
 			"fetch a quote": 					"get a quote",
 			"fetch me a quote": 				"get a quote",
+
+			"get a fortune": 					"get a fortune",
+			"get me a fortune": 				"get a fortune",
+			"give me a fortune": 				"get a fortune",
+			"get a random fortune": 			"get a fortune",
+			"get me a random fortune": 			"get a fortune",
+			"give me a random fortune": 		"get a fortune",
+			"random fortune": 					"get a fortune",
+			"tell my fortune": 					"get a fortune",
+			"tell me my fortune": 				"get a fortune",
+			"read my fortune": 					"get a fortune",
+			"tell me a random fortune": 		"get a fortune",
+			"tell me a fortune": 				"get a fortune",
+			"fetch a fortune": 					"get a fortune",
+			"fetch me a fortune": 				"get a fortune",
 
 			"get the headlines": 				"get the headlines",
 			"get todays headlines": 			"get the headlines",
@@ -253,11 +292,11 @@
 			"will it snow": 					"get the weather",
 
 		// Google Apps Script
-			"add to wish list": 				"wish list",
-			"add to my wish list": 				"wish list",
-			"add this to my wish list": 		"wish list",
-			"include on my wish list": 			"wish list",
-			"edit my wish list to include": 	"wish list",
+			"add to wish list": 				"edit wish list",
+			"add to my wish list": 				"edit wish list",
+			"add this to my wish list": 		"edit wish list",
+			"include on my wish list": 			"edit wish list",
+			"edit my wish list to include": 	"edit wish list",
 
 			"what is my account balance for": 	"get balance",
 			"whats my account balance for": 	"get balance",
@@ -289,94 +328,97 @@
 			"log a purchase of": 				"log purchase",
 			"log my purchase of": 				"log purchase",
 
-			"fetch events": 					"fetch events",
-			"fetch my events": 					"fetch events",
-			"fetch upcoming events": 			"fetch events",
-			"fetch my upcoming events": 		"fetch events",
-			"fetch my calendar": 				"fetch events",
-			"what is on my calendar": 			"fetch events",
-			"whats on my calendar": 			"fetch events",
-			"what is on the calendar": 			"fetch events",
-			"whats on the calendar": 			"fetch events",
-			"what is happening": 				"fetch events",
-			"whats happening": 					"fetch events",
+			"fetch events": 					"fetch calendar",
+			"fetch my events": 					"fetch calendar",
+			"fetch upcoming events": 			"fetch calendar",
+			"fetch my upcoming events": 		"fetch calendar",
+			"fetch my calendar": 				"fetch calendar",
+			"what is on my calendar": 			"fetch calendar",
+			"whats on my calendar": 			"fetch calendar",
+			"what is on the calendar": 			"fetch calendar",
+			"whats on the calendar": 			"fetch calendar",
+			"what is happening": 				"fetch calendar",
+			"whats happening": 					"fetch calendar",
 
 		// Google APIs
-			"look this up on google": 			"google search",
-			"do a google search": 				"google search",
-			"do a google search for": 			"google search",
-			"google": 							"google search",
-			"do a search for": 					"google search",
-			"do a search": 						"google search",
-			"search": 							"google search",
-			"i wonder if": 						"google search",
-			"i wonder": 						"google search",
-			"i am curious": 					"google search",
-			"im curious": 						"google search",
+			"search google": 					"search google",
+			"look this up on google": 			"search google",
+			"do a google search": 				"search google",
+			"do a google search for": 			"search google",
+			"google": 							"search google",
+			"do a search for": 					"search google",
+			"do a search": 						"search google",
+			"search": 							"search google",
+			"i wonder if": 						"search google",
+			"i wonder": 						"search google",
+			"i am curious": 					"search google",
+			"im curious": 						"search google",
 
-			"how do i get": 					"google directions",
-			"how do i go": 						"google directions",
-			"tell me how to get": 				"google directions",
-			"tell me how to go": 				"google directions",
-			"get me directions": 				"google directions",
-			"get directions": 					"google directions",
-			"look up directions": 				"google directions",
-			"look up how to get": 				"google directions",
-			"look up how to go": 				"google directions",
-			"get a route": 						"google directions",
-			"route me": 						"google directions",
+			"search google directions": 		"search google directions",
+			"how do i get": 					"search google directions",
+			"how do i go": 						"search google directions",
+			"tell me how to get": 				"search google directions",
+			"tell me how to go": 				"search google directions",
+			"get me directions": 				"search google directions",
+			"get directions": 					"search google directions",
+			"look up directions": 				"search google directions",
+			"look up how to get": 				"search google directions",
+			"look up how to go": 				"search google directions",
+			"get a route": 						"search google directions",
+			"route me": 						"search google directions",
 
-			"find a place": 					"google places",
-			"find a place called": 				"google places",
-			"find a place named": 				"google places",
-			"find a place by the name": 		"google places",
-			"find me a place": 					"google places",
-			"find me a place called": 			"google places",
-			"find me a place named": 			"google places",
-			"find me a place by the name": 		"google places",
-			"look up a place": 					"google places",
-			"look up a place called": 			"google places",
-			"look up a place named": 			"google places",
-			"look up a place by the name": 		"google places",
-			"look for a place": 				"google places",
-			"look for a place called": 			"google places",
-			"look for a place named": 			"google places",
-			"look for a place by the name": 	"google places",
+			"search google places for": 		"search google places",
+			"find a place": 					"search google places",
+			"find a place called": 				"search google places",
+			"find a place named": 				"search google places",
+			"find a place by the name": 		"search google places",
+			"find me a place": 					"search google places",
+			"find me a place called": 			"search google places",
+			"find me a place named": 			"search google places",
+			"find me a place by the name": 		"search google places",
+			"look up a place": 					"search google places",
+			"look up a place called": 			"search google places",
+			"look up a place named": 			"search google places",
+			"look up a place by the name": 		"search google places",
+			"look for a place": 				"search google places",
+			"look for a place called": 			"search google places",
+			"look for a place named": 			"search google places",
+			"look for a place by the name": 	"search google places",
 
-			"search youtube for": 				"youtube",
-			"find on youtube": 					"youtube",
-			"on youtube find": 					"youtube",
-			"on youtube look for": 				"youtube",
-			"on youtube play": 					"youtube",
-			"on youtube try": 					"youtube",
-			"play on youtube": 					"youtube",
-			"play this on youtube": 			"youtube",
-			"lets watch": 						"youtube",
-			"lets listen to": 					"youtube",
-			"on youtube put on": 				"youtube",
-			"on youtube open up": 				"youtube",
-			"on youtube open": 					"youtube",
+			"search youtube for": 				"search youtube",
+			"find on youtube": 					"search youtube",
+			"on youtube find": 					"search youtube",
+			"on youtube look for": 				"search youtube",
+			"on youtube play": 					"search youtube",
+			"on youtube try": 					"search youtube",
+			"play on youtube": 					"search youtube",
+			"play this on youtube": 			"search youtube",
+			"lets watch": 						"search youtube",
+			"lets listen to": 					"search youtube",
+			"on youtube put on": 				"search youtube",
+			"on youtube open up": 				"search youtube",
+			"on youtube open": 					"search youtube",
 
 		// games
-			"lets play more or less": 			"more or less",
-			"lets play the more or less game": 	"more or less",
-			"think of a number": 				"more or less",
-			"pick a number": 					"more or less",
-			"i want to guess a number": 		"more or less",
-			"play more or less": 				"more or less",
-			"lets play more or less": 			"more or less",
+			"lets play more or less": 			"play more or less",
+			"lets play the more or less game": 	"play more or less",
+			"think of a number": 				"play more or less",
+			"pick a number": 					"play more or less",
+			"i want to guess a number": 		"play more or less",
+			"play more or less": 				"play more or less",
+			"lets play more or less": 			"play more or less",
 
-			"quiz me": 							"true or false",
-			"tell me a fact": 					"true or false",
-			"tell me a fun fact": 				"true or false",
-			"give me a fact": 					"true or false",
-			"give me a fun fact": 				"true or false",
-			"lets do trivia": 					"true or false",
-			"lets do some trivia": 				"true or false",
-			"lets play trivia": 				"true or false",
-			"lets play some trivia": 			"true or false",
-			"play true or false": 				"true or false",
-			"lets play true or false": 			"true or false",
+			"quiz me": 							"play true or false",
+			"tell me a fact": 					"play true or false",
+			"tell me a fun fact": 				"play true or false",
+			"give me a fact": 					"play true or false",
+			"give me a fun fact": 				"play true or false",
+			"lets do trivia": 					"play true or false",
+			"lets do some trivia": 				"play true or false",
+			"lets play trivia": 				"play true or false",
+			"lets play some trivia": 			"play true or false",
+			"play true or false": 				"play true or false",
+			"lets play true or false": 			"play true or false",
 
 		// SONOS
 
@@ -421,16 +463,64 @@
 
 /* action library */
 	window.ACTION_LIBRARY = {
+		// casual responses
+			"receive gratitude": function(remainder, callback) {
+				try {
+					var messages = ["You're welcome.", "Glad I could help.", "Any time.", "Don't mention it.", "No problem."]
+					var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
+					callback({icon: "&#x1f426;", message: message, html: message, followup: false})
+				} catch (error) {}
+			},
+			"receive apology": function(remainder, callback) {
+				try {
+					var messages = ["Don't worry about it.", "I forgive you.", "It's all right.", "No worries.", "Everything will be okay."]
+					var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
+					callback({icon: "&#x1f426;", message: message, html: message, followup: false})
+				} catch (error) {}
+			},
+			"receive affirmation": function(remainder, callback) {
+				try {
+					var messages = ["I am a good bird.", "Thank you. I try my hardest.", "That's kind of you to say.", "I'm glad you think so.", "I appreciate that."]
+					var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
+					callback({icon: "&#x1f426;", message: message, html: message, followup: false})
+				} catch (error) {}
+			},
+
+		// meta
+			"list actions": function(remainder, callback) {
+				try {
+					var keys = Object.keys(window.ACTION_LIBRARY)
+					
+					var list = "<b>Here are all my actions:</b><ul>"
+					for (var i in keys) {
+						list += ("<li>" + keys[i] + "</li>")
+					}
+					list += "</ul>"
+					
+					callback({icon: "&#x1f426;", message: "Here are all of the actions I know.", html: list})
+				} catch (error) {}
+			},
+			"repeat this": function(remainder, callback) {
+				try {
+					callback({icon: "&#x1f426;", message: remainder, html: remainder})
+				} catch (error) {}
+			},
+			"repeat that": function(remainder, callback) {
+				try {
+					callback({icon: "&#x1f426;", message: window.CONTEXT_LIBRARY.lastResponseMessage || "No previous response.", html: window.CONTEXT_LIBRARY.lastResponseHTML || "No previous response."})
+				} catch (error) {}
+			},
+
 		// settings
 			"change voice": function(remainder, callback) {
 				try {
 					var name = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
 					var success = window.FUNCTION_LIBRARY.changeVoice({name: name})
 					if (!success) {
-						callback({message: "I don't recognize that voice.", html: "voice not found: " + remainder})
+						callback({icon: "&#x1f50a;", message: "I don't recognize that voice.", html: "voice not found: " + remainder})
 					}
 					else {
-						callback({message: "Voice set to " + name, html: "voice: " + name})
+						callback({icon: "&#x1f50a;", message: "Voice set to " + name, html: "voice: " + name})
 					}
 				} catch (error) {}
 			},
@@ -441,19 +531,19 @@
 
 					var success = window.FUNCTION_LIBRARY.changeVoiceVolume({volume: volume})
 					if (!success) {
-						callback({message: "That's not a valid number.", html: "invalid volume: " + remainder})
+						callback({icon: "&#x1f50a;", message: "That's not a valid number.", html: "invalid volume: " + remainder})
 					}
 					else {
-						callback({message: "Volume set to " + volume, html: "volume: " + Math.round(Math.max(0, Math.min(100, Number(volume))))})
+						callback({icon: "&#x1f50a;", message: "Volume set to " + volume, html: "volume: " + Math.round(Math.max(0, Math.min(100, Number(volume))))})
 					}
 				} catch (error) {}
 			},
-			"edit configuration": function(remainder, callback) {
+			"change configuration": function(remainder, callback) {
 				try {
 					// get key and value
 						var pair = remainder.split(/ equal to | equals | to | is | as /gi)
 						if (pair[0] === undefined || pair[0] === null || pair[1] === undefined || pair[1] === null) {
-							callback({message: "The key or value is missing.", html: "invalid key or value"})
+							callback({icon: "&#x2699;", message: "The key or value is missing.", html: "invalid key or value"})
 							return
 						}
 						else {
@@ -469,14 +559,14 @@
 					// save and respond
 						var success = window.FUNCTION_LIBRARY.changeConfiguration({key: key, value: value})
 						if (!success) {
-							callback({message: "I couldn't set that configuration.", html: "invalid or missing key and value"})
+							callback({icon: "&#x2699;", message: "I couldn't set that configuration.", html: "invalid or missing key and value"})
 						}
 						else {
-							callback({message: key + " is now " + value, html: key + " = " + value})
+							callback({icon: "&#x2699;", message: key + " is now " + value, html: key + " = " + value})
 						}
 				} catch (error) {}
 			},
-			"authorize": function(remainder, callback) {
+			"authorize platform": function(remainder, callback) {
 				try {
 					// get credentials
 						var credentials = remainder.split(/\s/gi)
@@ -505,7 +595,7 @@
 						}
 
 						if (!name || !Object.keys(platforms).includes(name)) {
-							callback({message: "I couldn't identify that platform.", html: "unable to authorize: <b>" + remainder + "</b>"})
+							callback({icon: "&#x1f510;", message: "I couldn't identify that platform.", html: "unable to authorize: <b>" + remainder + "</b>"})
 						}
 
 					// credentials?
@@ -520,14 +610,14 @@
 									var redirect = credentials[2] || window.CONFIGURATION_LIBRARY[name + " redirect"] || ""
 
 									if (!key || !secret || !redirect) {
-										callback({message: "To connect to " + name + ", I need a key, a secret, and a redirect.", html: "unable to authorize: <b>" + remainder + "</b><br><br><b>required configurations:</b><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " redirect</li></ul>"})
+										callback({icon: "&#x1f510;", message: "To connect to " + name + ", I need a key, a secret, and a redirect.", html: "unable to authorize: <b>" + remainder + "</b><br><br><b>required configurations:</b><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " redirect</li></ul>"})
 									}
 									else {
 										var state = encodeURIComponent(window.location + ";;;" + platforms[name].stateSecret(key, secret))
 										var url = "https://" + host + platforms[name].authPath + "&client_id=" + key + "&state=" + state + "&redirect_uri=" + encodeURIComponent(redirect)
 										var popup = window.open(url, null, "height=500,width=500,status=yes,toolbar=no,menubar=no,location=no")
 
-										callback({message: "Complete the authorization flow for " + host, html: "activating <b>" + host + "</b> in external popup"})
+										callback({icon: "&#x1f510;", message: "Complete the authorization flow for " + host, html: "activating <b>" + host + "</b> in external popup"})
 
 										window.FUNCTION_LIBRARY.fetchPeriodically("getAuthorization", host, function(data) {
 											var value = window.CONFIGURATION_LIBRARY[host] || {}
@@ -535,7 +625,7 @@
 												value.refresh_token = data.refresh_token
 												value.expiration = new Date().getTime() + (data.expires_in * 1000)
 											window.FUNCTION_LIBRARY.changeConfiguration({key: host, value: value})
-											callback({message: host + " is now authorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
+											callback({icon: "&#x1f510;", message: host + " is now authorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
 										})
 									}
 
@@ -561,7 +651,7 @@
 									var refresh_token = window.CONFIGURATION_LIBRARY[host].refresh_token || ""
 
 									if (!key || !secret || !refresh_token) {
-										callback({message: "To reconnect to " + name + ", I need a key, a secret, and a refresh_token.", html: "unable to reauthorize: <b>" + remainder + "</b><br><br><b>required configurations:</b><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " refresh_token</li></ul>"})
+										callback({icon: "&#x1f510;", message: "To reconnect to " + name + ", I need a key, a secret, and a refresh_token.", html: "unable to reauthorize: <b>" + remainder + "</b><br><br><b>required configurations:</b><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " refresh_token</li></ul>"})
 									}
 									else {
 										var url = "https://" + host + platforms[name].reauthPath
@@ -584,10 +674,10 @@
 													value.refresh_token = refresh_token
 													value.expiration = new Date().getTime() + (data.expires_in * 1000)
 												window.FUNCTION_LIBRARY.changeConfiguration({key: host, value: value})
-												callback({message: host + " is now reauthorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
+												callback({icon: "&#x1f510;", message: host + " is now reauthorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
 											}
 											catch (error) {
-												callback({message: "I couldn't reauthorize " + host, html: "unable to reauthorize <b>" + host + "</b>"})
+												callback({icon: "&#x1f510;", message: "I couldn't reauthorize " + host, html: "unable to reauthorize <b>" + host + "</b>"})
 											}
 										})
 									}
@@ -595,68 +685,35 @@
 
 							// already authorized
 								else {
-									callback({message: host + " is already authorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
+									callback({icon: "&#x1f510;", message: host + " is already authorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
 								}
 						}
 				} catch (error) {}
 			},
 
-		// meta
-			"repeat this": function(remainder, callback) {
-				try {
-					callback({message: remainder, html: remainder})
-				} catch (error) {}
-			},
-			"repeat that": function(remainder, callback) {
-				try {
-					callback({message: window.CONTEXT_LIBRARY.lastResponseMessage || "No previous response.", html: window.CONTEXT_LIBRARY.lastResponseHTML || "No previous response."})
-				} catch (error) {}
-			},
-			"gratitude": function(remainder, callback) {
-				try {
-					var messages = ["You're welcome.", "Glad I could help.", "Any time.", "Don't mention it.", "No problem."]
-					var message = messages[Math.floor(Math.random() * messages.length)]
-					callback({message: message, html: message })
-				} catch (error) {}
-			},
-			"forgiveness": function(remainder, callback) {
-				try {
-					var messages = ["Don't worry about it.", "I forgive you.", "It's all right.", "No worries.", "Everything will be okay."]
-					var message = messages[Math.floor(Math.random() * messages.length)]
-					callback({message: message, html: message })
-				} catch (error) {}
-			},
-			"affirmation": function(remainder, callback) {
-				try {
-					var messages = ["I am a good bird.", "Thank you. I try my hardest.", "That's kind of you to say.", "I'm glad you think so.", "I appreciate that."]
-					var message = messages[Math.floor(Math.random() * messages.length)]
-					callback({message: message, html: message})
-				} catch (error) {}
-			},
-
 		// time
-			"what time is it": function(remainder, callback) {
+			"get the time": function(remainder, callback) {
 				try {
 					var response = new Date().toLocaleTimeString()
-					callback({message: response, html: "The time is " + response + "."})
+					callback({icon: "&#x1f553;", message: response, html: "The time is " + response + "."})
 				} catch (error) {}
 			},
-			"what day is it": function(remainder, callback) {
+			"get the day": function(remainder, callback) {
 				try {
 					var response = (["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()])
-					callback({message: response, html: "Today is " + response + "."})
+					callback({icon: "&#x1f4c5;", message: response, html: "Today is " + response + "."})
 				} catch (error) {}
 			},
-			"what month is it": function(remainder, callback) {
+			"get the month": function(remainder, callback) {
 				try {
 					var response = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()])
-					callback({message: response, html: "The month is " + response + "."})
+					callback({icon: "&#x1f4c5;", message: response, html: "The month is " + response + "."})
 				} catch (error) {}
 			},
-			"what is the date": function(remainder, callback) {
+			"get the date": function(remainder, callback) {
 				try {
 					var response = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + " " + new Date().getDate())
-					callback({message: response, html: "The date is " + response + "."})
+					callback({icon: "&#x1f4c5;", message: response, html: "The date is " + response + "."})
 				} catch (error) {}
 			},
 			"set alarm": function(remainder, callback) {
@@ -700,12 +757,12 @@
 							}
 
 							if (!duration) {
-								callback({message: "I was unable to set that timer.", html: "unable to set timer: " + response})
+								callback({icon: "&#x23f0;", message: "I was unable to set that timer.", html: "unable to set timer: " + response})
 							}
 							else {
 								var endTime = new Date().getTime() + duration
 								CONTEXT_LIBRARY.alarms.push(endTime)
-								callback({message: "Alarm set for " + new Date(endTime).toLocaleTimeString(), html: "&#128339; Alarm set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
+								callback({icon: "&#x23f0;", message: "Alarm set for " + new Date(endTime).toLocaleTimeString(), html: "&#128339; Alarm set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
 							}
 						}
 
@@ -716,7 +773,7 @@
 							var endTime = new Date(timePhrase).getTime() || new Date(new Date().toDateString() + " " + timePhrase).getTime()
 							
 							if (isNaN(endTime)) {
-								callback({message: "I was unable to set that alarm.", html: "unable to set alarm: " + response})
+								callback({icon: "&#x23f0;", message: "I was unable to set that alarm.", html: "unable to set alarm: " + response})
 							}
 							else {
 								if (endTime < new Date().getTime()) {
@@ -724,7 +781,7 @@
 								}
 
 								CONTEXT_LIBRARY.alarms.push(endTime)
-								callback({message: "Alarm set for " + new Date(endTime).toLocaleTimeString(), html: "&#128339; Alarm set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
+								callback({icon: "&#x23f0;", message: "Alarm set for " + new Date(endTime).toLocaleTimeString(), html: "&#128339; Alarm set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
 							}
 						}
 				} catch (error) {}
@@ -757,13 +814,13 @@
 						}
 
 					// return sum
-						callback({message: sum || "Unable to roll dice.", html: count + "d" + sides + ": " + (sum || "invalid dice")})
+						callback({icon: "&#x1f3b2;", message: sum || "Unable to roll dice.", html: count + "d" + sides + ": " + (sum || "invalid dice")})
 				} catch (error) {}
 			},
 			"flip a coin": function(remainder, callback) {
 				try {
-					var response = ["heads","tails"][Math.floor(Math.random() * 2)]
-					callback({message: response, html: "coin: " + response})
+					var response = window.FUNCTION_LIBRARY.chooseRandom(["heads","tails"])
+					callback({icon: "&#x1f3b2;", message: response, html: "coin: " + response})
 				} catch (error) {}
 			},
 		
@@ -775,7 +832,8 @@
 						for (var i = 0; i < terms.length; i++) {
 							if (isNaN(terms[i])) {
 								terms[i] = terms[i].toLowerCase()
-								if      (terms[i] == "by")      { terms[i] = "" }
+									 if (terms[i] == "that") 	{ terms[i] = Number(window.CONTEXT_LIBRARY.lastResponseNumber) || 0 }
+								else if (terms[i] == "by")      { terms[i] = "" }
 								else if (terms[i] == "of")      { terms[i] = "" }
 								else if (terms[i] == "plus")    { terms[i] = "+" }
 								else if (terms[i] == "minus")   { terms[i] = "-" }
@@ -800,41 +858,52 @@
 					// evaluate and return result
 						var result = eval(terms.join(" "))
 						if (isNaN(result)) {
-							callback({message: "Unable to calculate.", html: "invalid calculation: " + remainder})
+							callback({icon: "&#x00b1;", message: "Unable to calculate.", html: "invalid calculation: " + remainder})
 						}
 						else {
-							callback({message: Number(result), html: terms.join(" ") + " = " + result})
+							window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
+							callback({icon: "&#x00b1;", message: Number(result), html: terms.join(" ") + " = <b>" + result + "</b>"})
 						}
 				}
-				catch (error) { callback({message: "Unable to calculate.", html: "invalid calculation"}) }
+				catch (error) { callback({icon: "&#x00b1;", message: "Unable to calculate.", html: "invalid calculation"}) }
 			},
 			"double": function(remainder, callback) {
 				try {
 					var term = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"")
-						term = window.FUNCTION_LIBRARY.getDigits(term)
+						term = window.FUNCTION_LIBRARY.getDigits(term.toLowerCase().trim())
+					if (term == "that") {
+						term = Number(window.CONTEXT_LIBRARY.lastResponseNumber)
+					}
+
 					var result = 2 * Number(term)
 					if (isNaN(result)) {
-						callback({message: "Unable to calculate.", html: "invalid calculation"})
+						callback({icon: "&#x00b1;", message: "Unable to calculate.", html: "invalid calculation"})
 					}
 					else {
-						callback({message: Number(result), html: "2 * " + term + " = " + result})
+						window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
+						callback({icon: "&#x00b1;", message: Number(result), html: "2 * " + term + " = <b>" + result + "</b>"})
 					}
 				}
-				catch (error) { callback({message: "Unable to calculate.", html: "invalid calculation"}) }
+				catch (error) { callback({icon: "&#x00b1;", message: "Unable to calculate.", html: "invalid calculation"}) }
 			},
 			"triple": function(remainder, callback) {
 				try {
 					var term = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"")
-						term = window.FUNCTION_LIBRARY.getDigits(term)
+						term = window.FUNCTION_LIBRARY.getDigits(term.toLowerCase().trim())
+					if (term == "that") {
+						term = Number(window.CONTEXT_LIBRARY.lastResponseNumber)
+					}
+
 					var result = 3 * Number(term)
 					if (isNaN(result)) {
-						callback({message: "Unable to calculate.", html: "invalid calculation"})
+						callback({icon: "&#x00b1;", message: "Unable to calculate.", html: "invalid calculation"})
 					}
 					else {
-						callback({message: Number(result), html: "3 * " + term + " = " + result})
+						window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
+						callback({icon: "&#x00b1;", message: Number(result), html: "3 * " + term + " = <b>" + result + "</b>"})
 					}
 				}
-				catch (error) { callback({message: "Unable to calculate.", html: "invalid calculation"}) }
+				catch (error) { callback({icon: "&#x00b1;", message: "Unable to calculate.", html: "invalid calculation"}) }
 			},
 			"average": function(remainder, callback) {
 				try {
@@ -842,7 +911,11 @@
 						var terms = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").split(/\s/gi)
 						var numbers = []
 						for (var i = 0; i < terms.length; i++) {
-							terms[i] = window.FUNCTION_LIBRARY.getDigits(terms[i])
+							terms[i] = window.FUNCTION_LIBRARY.getDigits(terms[i].toLowerCase().trim())
+
+							if (terms[i] == "that") {
+								terms[i] = Number(window.CONTEXT_LIBRARY.lastResponseNumber)
+							}
 
 							if (!isNaN(terms[i])) {
 								numbers.push(Number(terms[i]))
@@ -855,13 +928,14 @@
 
 					// return result
 						if (isNaN(result)) {
-							callback({message: "Unable to calculate.", html: "invalid calculation"})
+							callback({icon: "&#x00b1;", message: "Unable to calculate.", html: "invalid calculation"})
 						}
 						else {
-							callback({message: Number(result), html: numbers.join(" + ") + " / " + numbers.length + " = " + result})
+							window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
+							callback({icon: "&#x00b1;", message: Number(result), html: numbers.join(" + ") + " / " + numbers.length + " = <b>" + result + "</b>"})
 						}
 				}
-				catch (error) { callback({message: "Unable to calculate.", html: "invalid calculation"}) }
+				catch (error) { callback({icon: "&#x00b1;", message: "Unable to calculate.", html: "invalid calculation"}) }
 			},
 			"count": function(remainder, callback) {
 				try {
@@ -869,11 +943,13 @@
 						var startNumber = (" " + remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"")).split(/ up from | down from | from | starting at | start at | between | for /gi)
 							startNumber = (startNumber[1] || startNumber[0]).split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)[0].toLowerCase().trim()
 							startNumber = window.FUNCTION_LIBRARY.getDigits(startNumber)
+						if (startNumber == "that") { startNumber = Number(window.CONTEXT_LIBRARY.lastResponseNumber) }
 						if (!startNumber || isNaN(startNumber)) { startNumber = 1 }
 
 						var endNumber = (" " + remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"")).split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)
 							endNumber = (endNumber[1] || endNumber[0]).split(/ up from | down from | starting at | start at | between | for /gi)[0].toLowerCase().trim()
 							endNumber = window.FUNCTION_LIBRARY.getDigits(endNumber)
+						if (endNumber == "that") { endNumber = Number(window.CONTEXT_LIBRARY.lastResponseNumber) }
 						if (!endNumber || isNaN(endNumber)) { endNumber = 100 }
 
 					// up or down
@@ -890,7 +966,7 @@
 						}
 
 					// message
-						callback({message: list.join("..."), html: "Counting from <b>" + String(startNumber) + "</b> to <b>" + String(endNumber) + "</b>."})
+						callback({icon: "&#x2673;", message: list.join("..."), html: "Counting from <b>" + String(startNumber) + "</b> to <b>" + String(endNumber) + "</b>."})
 
 				} catch (error) {}
 			},
@@ -917,10 +993,10 @@
 								// message, link, list
 									var message = "I found " + list.length + " rhyme" + (list.length == 1 ? "" : "s") + " for " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim() + "."
 									var link = "<a target='_blank' href='https://rhymezone.com/r/rhyme.cgi?typeofrhyme=perfect&Word=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'>" + message + "</a>"
-									callback({message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
+									callback({icon: "&#x1f4da;", message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
 							}
 							catch (error) {
-								callback({message: "I can't rhyme that.", html: "invalid word: " + remainder})
+								callback({icon: "&#x1f4da;", message: "I can't rhyme that.", html: "invalid word: " + remainder})
 							}
 						})
 				} catch (error) {}
@@ -946,15 +1022,15 @@
 								// message, link, list
 									var message = "I found " + list.length + " synonym" + (list.length == 1 ? "" : "s") + " for " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim() + "."
 									var link = "<a target='_blank' href='https://rhymezone.com/r/rhyme.cgi?typeofrhyme=syn&Word=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'>" + message + "</a>"
-									callback({message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
+									callback({icon: "&#x1f4da;", message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
 							}
 							catch (error) {
-								callback({message: "I don't know any synonyms for that.", html: "invalid word: " + remainder})
+								callback({icon: "&#x1f4da;", message: "I don't know any synonyms for that.", html: "invalid word: " + remainder})
 							}
 						})
 				} catch (error) {}
 			},
-			"define": function(remainder, callback) {
+			"find definition": function(remainder, callback) {
 				try {
 					// options
 						var options = {
@@ -978,17 +1054,17 @@
 								// message, link, list
 									var message = "I found " + list.length + " definition" + (list.length == 1 ? "" : "s") + " for " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim() + "."
 									var link = "<a target='_blank' href='http://wordnetweb.princeton.edu/perl/webwn?s=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'>" + message + "</a>"
-									callback({message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
+									callback({icon: "&#x1f4da;", message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
 							}
 							catch (error) {
-								callback({message: "I can't define that.", html: "invalid word: " + remainder})
+								callback({icon: "&#x1f4da;", message: "I can't define that.", html: "invalid word: " + remainder})
 							}
 						})
 				} catch (error) {}
 			},
 
 		// content api fetches
-			"tell a joke": function(remainder, callback) {
+			"get a joke": function(remainder, callback) {
 				try {
 					// options
 						var options = {
@@ -1001,10 +1077,10 @@
 								// construct response link
 									var jokeLink = "https://icanhazdadjoke.com"
 									var jokeText = response.attachments[0].text
-									callback({message: jokeText, html: "<a target='_blank' href='" + jokeLink + "'>" + jokeText + "</a>"})
+									callback({icon: "&#x1f0cf;", message: jokeText, html: "<a target='_blank' href='" + jokeLink + "'>" + jokeText + "</a>"})
 							}
 							catch (error) {
-								callback({message: "I don't know any jokes.", html: "unable to access jokes"})
+								callback({icon: "&#x1f0cf;", message: "I don't know any jokes.", html: "unable to access jokes"})
 							}
 						})
 				} catch (error) {}
@@ -1024,14 +1100,38 @@
 										var quoteLink   = response.quoteLink
 										var quoteText   = response.quoteText
 										var quoteAuthor = response.quoteAuthor
-										callback({message: quoteAuthor + " said... " + quoteText, html: "<a target='_blank' href='" + quoteLink + "'>\"" + quoteText + "\" - " + quoteAuthor + "</a>"})
+										callback({icon: "&#x1f399;", message: quoteAuthor + " said... " + quoteText, html: "<a target='_blank' href='" + quoteLink + "'>\"" + quoteText + "\" - " + quoteAuthor + "</a>"})
 									}
 									else {
-										callback({message: "A wise man once said: the API didn't return any results.", html: "unable to access quotes"})
+										callback({icon: "&#x1f399;", message: "A wise man once said: the API didn't return any results.", html: "unable to access quotes"})
 									}
 							}
 							catch (error) {
-								callback({message: "I don't know any quotes.", html: "unable to access quotes"})
+								callback({icon: "&#x1f399;", message: "I don't know any quotes.", html: "unable to access quotes"})
+							}
+						})
+				} catch (error) {}
+			},
+			"get a fortune": function(remainder, callback) {
+				try {
+					// options
+						var options = {
+							url: "https://fortunecookieapi.herokuapp.com/v1/fortunes?limit=1000&skip=0&page=1"
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// fortunes
+									var fortune = window.FUNCTION_LIBRARY.chooseRandom(response)
+
+								// construct response link
+									var fortuneLink = "https://fortunecookieapi.herokuapp.com/"
+									var fortuneText = fortune.message
+									callback({icon: "&#x1f4dc;", message: fortuneText, html: "<a target='_blank' href='" + fortuneLink + "'>" + fortuneText + "</a>"})
+							}
+							catch (error) {
+								callback({icon: "&#x1f4dc;", message: "I don't know any fortunes.", html: "unable to access fortunes"})
 							}
 						})
 				} catch (error) {}
@@ -1039,7 +1139,7 @@
 			"get the headlines": function(remainder, callback) {
 				try {
 					// initial callback
-						callback({message: "Let me fetch the latest news.", html: "querying the New York Times..."})
+						callback({icon: "&#x1f4f0;", message: "Let me fetch the latest news.", html: "querying the New York Times..."})
 
 					// options
 						var options = {
@@ -1060,10 +1160,10 @@
 
 								// message, link, list
 									var message = "I found " + stories.length + " stor" + (list.length == 1 ? "y" : "ies") + "."
-									callback({message: message + " " + stories.join("... "), html: message + "<ul>" + storyItems.join("") + "</ul>"})
+									callback({icon: "&#x1f4f0;", message: message + " " + stories.join("... "), html: message + "<ul>" + storyItems.join("") + "</ul>"})
 							}
 							catch (error) {
-								callback({message: "I can't get the news.", html: "unable to access headlines"})
+								callback({icon: "&#x1f4f0;", message: "I can't get the news.", html: "unable to access headlines"})
 							}
 						})
 				} catch (error) {}
@@ -1072,7 +1172,7 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["open weather api"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for open weather api.", html: "missing configuration: <b>open weather api</b>"})
+							callback({icon: "&#x26c8;", message: "I'm not authorized to do that yet. Set a configuration for open weather api.", html: "missing configuration: <b>open weather api</b>"})
 							return
 						}
 
@@ -1091,7 +1191,7 @@
 								locale: null
 							}
 
-							callback({message: "What city should I get the weather for?", html: "What <b>city</b> should I get the weather for?"})
+							callback({icon: "&#x26c8;", message: "What city should I get the weather for?", html: "What <b>city</b> should I get the weather for?"})
 						}
 
 					// yes locale
@@ -1106,7 +1206,7 @@
 									try {
 										// invalid response
 											if (!response || !response.city || !response.list) {
-												callback({message: "I was unable to get the weather.", html: "I was unable to get the weather."})
+												callback({icon: "&#x26c8;", message: "I was unable to get the weather.", html: "I was unable to get the weather."})
 											}
 
 										// valid response
@@ -1185,11 +1285,11 @@
 													var conditions = "Right now it's " + response.list[0].main.temp + " degrees and " + (response.list[0].weather ? response.list[0].weather[0].description : "clear")
 													var message = "Here's the weather for " + locale + "."
 													var link = "<b><a target='_blank' href='https://openweathermap.org/find?q=" + locale + "'>" + message + "</a></b>"
-													callback({message: message + " ... " + conditions, html: link + "<br>" + table})
+													callback({icon: "&#x26c8;", message: message + " ... " + conditions, html: link + "<br>" + table})
 											}
 									}
 									catch (error) {
-										callback({message: "I was unable to get the weather: " + remainder, html: "I was unable to get the weather: <b>" + remainder + "</b>."})
+										callback({icon: "&#x26c8;", message: "I was unable to get the weather: " + remainder, html: "I was unable to get the weather: <b>" + remainder + "</b>."})
 									}
 								})
 						}
@@ -1197,11 +1297,11 @@
 			},
 
 		// Google Apps Script
-			"wish list": function(remainder, callback) {
+			"edit wish list": function(remainder, callback) {
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: "&#x1f4d6;", message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
 							return
 						}
 
@@ -1224,7 +1324,7 @@
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							var responseHTML = "<ul><li><b>item: </b>" + response.item + "</li><li><b>cost: </b>" + response.cost + "</li><li><b>type: </b>" + response.type + "</li></ul>" 
-							callback({message: response.message, html: responseHTML})
+							callback({icon: "&#x1f4d6;", message: response.message, html: responseHTML})
 						})
 				} catch (error) {}
 			},
@@ -1232,7 +1332,7 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: "&#x1f4b5;", message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
 							return
 						}
 
@@ -1244,7 +1344,7 @@
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							var responseHTML = "<ul><li><b>account: </b>" + response.account + "</li><li><b>amount: </b>" + response.amount + "</li></ul>" 
-							callback({message: response.message, html: responseHTML})
+							callback({icon: "&#x1f4b5;", message: response.message, html: responseHTML})
 						})
 				} catch (error) {}
 			},
@@ -1252,7 +1352,7 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: "&#x1f4b5;", message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
 							return
 						}
 
@@ -1276,15 +1376,15 @@
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							var responseHTML = "<ul><li><b>description: </b>" + response.description + "</li><li><b>amount: </b>" + response.amount + "</li><li><b>category: </b>" + response.category + "</li></ul>" 
-							callback({message: response.message, html: responseHTML})
+							callback({icon: "&#x1f4b5;", message: response.message, html: responseHTML})
 						})
 				} catch (error) {}
 			},
-			"fetch events": function(remainder, callback) {
+			"fetch calendar": function(remainder, callback) {
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: "&#x1f4c5;", message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
 							return
 						}
 
@@ -1326,21 +1426,21 @@
 							// send response
 								var responseLink = "https://calendar.google.com"
 								var responseText = response.message
-								callback({message: response.message + " " + eventList.join("..."),html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a><ul>" + eventItems.join("") + "</ul>"})
+								callback({icon: "&#x1f4c5;", message: response.message + " " + eventList.join("..."),html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a><ul>" + eventItems.join("") + "</ul>"})
 						})
 				} catch (error) {}
 			},
 
 		// Google APIs
-			"google search": function(remainder, callback) {
+			"search google": function(remainder, callback) {
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google custom search"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google custom search.", html: "missing configuration: <b>google custom search</b>"})
+							callback({icon: "&#x1f50d;", message: "I'm not authorized to do that yet. Set a configuration for google custom search.", html: "missing configuration: <b>google custom search</b>"})
 							return
 						}
 						else if (!window.CONFIGURATION_LIBRARY["google api key"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
+							callback({icon: "&#x1f50d;", message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
 							return
 						}
 
@@ -1368,15 +1468,15 @@
 								}
 
 							// send response								
-								callback({message: responseText + " " + topResultText, html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a>" + topResult})
+								callback({icon: "&#x1f50d;", message: responseText + " " + topResultText, html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a>" + topResult})
 						})
 				} catch (error) {}
 			},
-			"google directions": function(remainder, callback) {
+			"search google directions": function(remainder, callback) {
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
+							callback({icon: "&#x1f5fa;", message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
 							return
 						}
 
@@ -1397,7 +1497,7 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							// no results?
 								if (!response || !response.routes || !response.routes[0] || !response.routes[0].legs || !response.routes[0].legs[0]) {
-									callback({message: "I couldn't find a route.", html: "unable to route from " + origin + " to " + destination})
+									callback({icon: "&#x1f5fa;", message: "I couldn't find a route.", html: "unable to route from " + origin + " to " + destination})
 								}
 
 							// format response
@@ -1410,16 +1510,16 @@
 
 									var message = origin + " to " + destination + " is " + distance + " for " + duration + "."
 									var link = "<a target='_blank' href='https://www.google.com/maps/dir/" + origin + "/" + destination + "'>" + message + "</a>"
-									callback({message: message, html: link + "<ol>" + steps.join("") + "</ol>"})
+									callback({icon: "&#x1f5fa;", message: message, html: link + "<ol>" + steps.join("") + "</ol>"})
 								}
 						})
 				} catch (error) {}
 			},
-			"google places": function(remainder, callback) {
+			"search google places": function(remainder, callback) {
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
+							callback({icon: "&#x1f5fa;", message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
 							return
 						}
 
@@ -1432,7 +1532,7 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							// no results?
 								if (!response || !response.candidates || !response.candidates[0] || !response.candidates[0].place_id) {
-									callback({message: "I couldn't find that place.", html: "unable to find " + remainder})
+									callback({icon: "&#x1f5fa;", message: "I couldn't find that place.", html: "unable to find " + remainder})
 								}
 
 							// second trip, with place_id
@@ -1445,7 +1545,7 @@
 									window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 										// no results?
 											if (!response || !response.result) {
-												callback({message: "I couldn't find that place.", html: "unable to find " + remainder})
+												callback({icon: "&#x1f5fa;", message: "I couldn't find that place.", html: "unable to find " + remainder})
 											}
 
 										// format response
@@ -1462,18 +1562,18 @@
 
 												var message = "I found " + place.name + " at " + (place.formatted_address || "an unknown address") + ". " + openNow
 												var infoBlock = "<b>" + place.name + "</b><ul><li><a target='_blank' href='" + place.url + "'>" + (place.formatted_address || "<i>no address found</i>") + "</a></li><li>" + (place.formatted_phone_number || "<i>no phone number found</i>") + "</li><li>" + (place.website ? ("<a target='_blank' href='" + place.website + "'>" + place.website + "</a>") : "<i>no website found</i>") + "<li>hours: " + (openHours || "<i>no hours found</i>") + "</li>" + "</ul>"
-												callback({message: message, html: infoBlock})
+												callback({icon: "&#x1f5fa;", message: message, html: infoBlock})
 											}
 									})
 								}
 						})
 				} catch (error) {}
 			},
-			"youtube": function(remainder, callback) {
+			"search youtube": function(remainder, callback) {
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
-							callback({message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
+							callback({icon: "&#x1f4fa;", message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
 							return
 						}
 
@@ -1485,7 +1585,7 @@
 					// proxy request
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							if (!response || !response.items || !response.items.length || !response.items[0].id || !response.items[0].id.videoId) {
-								callback({message: "I couldn't find " + remainder + " on Youtube.", html: "unable to find <b>" + remainder + "</b> on Youtube."})
+								callback({icon: "&#x1f4fa;", message: "I couldn't find " + remainder + " on Youtube.", html: "unable to find <b>" + remainder + "</b> on Youtube."})
 							}
 							else {
 								// turn off whistle-on
@@ -1495,7 +1595,7 @@
 
 								// response
 									var responseHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response.items[0].id.videoId + '?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-									callback({message: "Now playing " + remainder, html: responseHTML, followup: false})
+									callback({icon: "&#x1f4fa;", message: "Now playing " + remainder, html: responseHTML, followup: false})
 							}
 						})
 				}
@@ -1503,59 +1603,59 @@
 			},
 
 		// games
-			"more or less": function(remainder, callback) {
+			"play more or less": function(remainder, callback) {
 				try {					
 					// pick a number
-						if (window.CONTEXT_LIBRARY.flow !== "more or less") {
-							window.CONTEXT_LIBRARY.flow = "more or less"
-							window.CONTEXT_LIBRARY["more or less"] = {
+						if (window.CONTEXT_LIBRARY.flow !== "play more or less") {
+							window.CONTEXT_LIBRARY.flow = "play more or less"
+							window.CONTEXT_LIBRARY["play more or less"] = {
 								number: Math.floor(Math.random() * 100) + 1,
 								guesses: 0
 							}
 
-							callback({message: "Okay, I'm thinking of a number between 1 and 100.", html: "<b>I'm thinking of a number between 1 and 100.</b><br>Make a guess. I'll tell you if my number is more or less."})
+							callback({icon: "&#x265e;", message: "Okay, I'm thinking of a number between 1 and 100.", html: "<b>I'm thinking of a number between 1 and 100.</b><br>Make a guess. I'll tell you if my number is more or less."})
 						}
 
 					// interpret guess
 						else {
 							var guess = Number(window.FUNCTION_LIBRARY.getDigits(remainder))
 							if (isNaN(guess)) {
-								callback({message: "I don't know that number.", html: "not a number: " + remainder})
+								callback({icon: "&#x265e;", message: "I don't know that number.", html: "not a number: " + remainder})
 							}
 							else {
 								// increase guess count
-									window.CONTEXT_LIBRARY["more or less"].guesses++
+									window.CONTEXT_LIBRARY["play more or less"].guesses++
 
 								// correct
-									if (guess == window.CONTEXT_LIBRARY["more or less"].number) {
-										var message = "You took " + window.CONTEXT_LIBRARY["more or less"].guesses + " guess" + (window.CONTEXT_LIBRARY["more or less"].guesses == 1 ? "" : "es") + " to find my number: " + window.CONTEXT_LIBRARY["more or less"].number + "."
-										var messageBlock = "You took <b>" + window.CONTEXT_LIBRARY["more or less"].guesses + "</b> guess" + (window.CONTEXT_LIBRARY["more or less"].guesses == 1 ? "" : "es") + " to find my number: <b>" + window.CONTEXT_LIBRARY["more or less"].number + "</b>."
-										callback({message: message, html: messageBlock})
+									if (guess == window.CONTEXT_LIBRARY["play more or less"].number) {
+										var message = "You took " + window.CONTEXT_LIBRARY["play more or less"].guesses + " guess" + (window.CONTEXT_LIBRARY["play more or less"].guesses == 1 ? "" : "es") + " to find my number: " + window.CONTEXT_LIBRARY["play more or less"].number + "."
+										var messageBlock = "You took <b>" + window.CONTEXT_LIBRARY["play more or less"].guesses + "</b> guess" + (window.CONTEXT_LIBRARY["play more or less"].guesses == 1 ? "" : "es") + " to find my number: <b>" + window.CONTEXT_LIBRARY["play more or less"].number + "</b>."
+										callback({icon: "&#x265e;", message: message, html: messageBlock})
 
 										window.CONTEXT_LIBRARY.flow = null
-										delete window.CONTEXT_LIBRARY["more or less"]
+										delete window.CONTEXT_LIBRARY["play more or less"]
 									}
 
 								// more
-									else if (window.CONTEXT_LIBRARY["more or less"].number > guess) {
+									else if (window.CONTEXT_LIBRARY["play more or less"].number > guess) {
 										var message = "More than " + guess + "."
-										callback({message: message, html: "&uarr; " + message + " &uarr;"})
+										callback({icon: "&#x265e;", message: message, html: "&uarr; " + message + " &uarr;"})
 									}
 
 								// less
-									else if (window.CONTEXT_LIBRARY["more or less"].number < guess) {
+									else if (window.CONTEXT_LIBRARY["play more or less"].number < guess) {
 										var message = "Less than " + guess + "."
-										callback({message: message, html: "&darr; " + message + " &darr;"})
+										callback({icon: "&#x265e;", message: message, html: "&darr; " + message + " &darr;"})
 									}
 							}
 						}
 				}
 				catch (error) {}
 			},
-			"true or false": function(remainder, callback) {
+			"play true or false": function(remainder, callback) {
 				try {					
 					// pick a number
-						if (window.CONTEXT_LIBRARY.flow !== "true or false") {
+						if (window.CONTEXT_LIBRARY.flow !== "play true or false") {
 							// options
 								var options = {
 									url: "https://opentdb.com/api.php?amount=10&type=boolean"
@@ -1565,22 +1665,22 @@
 								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 									try {
 										// enter flow
-											window.CONTEXT_LIBRARY.flow = "true or false"
-											window.CONTEXT_LIBRARY["true or false"] = {
+											window.CONTEXT_LIBRARY.flow = "play true or false"
+											window.CONTEXT_LIBRARY["play true or false"] = {
 												score: 0,
 												index: 0,
 												questions: response.results
 											}
 
 										// first question
-											var question = window.CONTEXT_LIBRARY["true or false"].questions[window.CONTEXT_LIBRARY["true or false"].index].question
+											var question = window.CONTEXT_LIBRARY["play true or false"].questions[window.CONTEXT_LIBRARY["play true or false"].index].question
 												question = question.replace(/(&#039;)/gi,"\'")
-											var questionNumber = window.CONTEXT_LIBRARY["true or false"].index + 1
-											callback({message: "True or False: " + question, html: "<b>True or False #" + questionNumber + "</b><br>" + question})
+											var questionNumber = window.CONTEXT_LIBRARY["play true or false"].index + 1
+											callback({icon: "&#x265e;", message: "True or False: " + question, html: "<b>True or False #" + questionNumber + "</b><br>" + question})
 									}
 									catch (error) {
 										window.CONTEXT_LIBRARY.flow = null
-										callback({message: "I don't know any fun facts.", html: "unable to access trivia"})
+										callback({icon: "&#x265e;", message: "I don't know any fun facts.", html: "unable to access trivia"})
 									}
 								})
 						}
@@ -1596,14 +1696,14 @@
 									guess = "False"
 								}
 								else {
-									callback({message: "I only understand True and False.", html: "invalid guess: " + remainder})
+									callback({icon: "&#x265e;", message: "I only understand True and False.", html: "invalid guess: " + remainder})
 									return
 								}
 
 							// correct
-								var correctAnswer = window.CONTEXT_LIBRARY["true or false"].questions[window.CONTEXT_LIBRARY["true or false"].index].correct_answer
+								var correctAnswer = window.CONTEXT_LIBRARY["play true or false"].questions[window.CONTEXT_LIBRARY["play true or false"].index].correct_answer
 								if (guess == correctAnswer) {
-									window.CONTEXT_LIBRARY["true or false"].score++
+									window.CONTEXT_LIBRARY["play true or false"].score++
 									var message = guess.toUpperCase() + " is correct!"
 								}
 
@@ -1613,23 +1713,23 @@
 								}
 
 							// advance
-								if (window.CONTEXT_LIBRARY["true or false"].index + 1 < window.CONTEXT_LIBRARY["true or false"].questions.length) {
-									window.CONTEXT_LIBRARY["true or false"].index++
+								if (window.CONTEXT_LIBRARY["play true or false"].index + 1 < window.CONTEXT_LIBRARY["play true or false"].questions.length) {
+									window.CONTEXT_LIBRARY["play true or false"].index++
 
-									var nextQuestion = window.CONTEXT_LIBRARY["true or false"].questions[window.CONTEXT_LIBRARY["true or false"].index].question
-									var nextQuestionNumber = window.CONTEXT_LIBRARY["true or false"].index + 1
+									var nextQuestion = window.CONTEXT_LIBRARY["play true or false"].questions[window.CONTEXT_LIBRARY["play true or false"].index].question
+									var nextQuestionNumber = window.CONTEXT_LIBRARY["play true or false"].index + 1
 
-									callback({message: message + " ... " + "Question " + nextQuestionNumber + ": True or False: " + nextQuestion, html: message + "<br><br><b>True or False #" + nextQuestionNumber + "</b><br>" + nextQuestion})
+									callback({icon: "&#x265e;", message: message + " ... " + "Question " + nextQuestionNumber + ": True or False: " + nextQuestion, html: message + "<br><br><b>True or False #" + nextQuestionNumber + "</b><br>" + nextQuestion})
 								}
 
 							// done
 								else {
-									var finalScore = window.CONTEXT_LIBRARY["true or false"].score || 0
+									var finalScore = window.CONTEXT_LIBRARY["play true or false"].score || 0
 
 									window.CONTEXT_LIBRARY.flow = null
-									delete window.CONTEXT_LIBRARY["true or false"]
+									delete window.CONTEXT_LIBRARY["play true or false"]
 
-									callback({message: message + " ... " + "You got " + finalScore + " questions correct.", html: message + "<br><br><b>Final score: " + finalScore + "</b>"})
+									callback({icon: "&#x265e;", message: message + " ... " + "You got " + finalScore + " questions correct.", html: message + "<br><br><b>Final score: " + finalScore + "</b>"})
 								}
 						}
 				}
@@ -1643,7 +1743,7 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["api.wink.com"] || !window.CONFIGURATION_LIBRARY["api.wink.com"].access_token || !window.CONFIGURATION_LIBRARY["api.wink.com"].expiration || window.CONFIGURATION_LIBRARY["api.wink.com"].expiration < new Date().getTime()) {
-							callback({message: "I'm not authorized to do that yet. Authorize Wink first.", html: "missing authorization: <b>api.wink.com</b>"})
+							callback({icon: "&#x1f4a1;", message: "I'm not authorized to do that yet. Authorize Wink first.", html: "missing authorization: <b>api.wink.com</b>"})
 							return
 						}
 
@@ -1703,7 +1803,7 @@
 									responseHTML += "<li><b>" + devices[i].name + "</b><br>" + devices[i].model_name + "</li>"
 								}
 								responseHTML += "</ul>"
-								callback({message: "I detected " + Object.keys(devices).length + " devices on Wink.", html: responseHTML})
+								callback({icon: "&#x1f4a1;", message: "I detected " + Object.keys(devices).length + " devices on Wink.", html: responseHTML})
 						})
 				} catch (error) {}
 			},
@@ -1711,11 +1811,11 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["api.wink.com"] || !window.CONFIGURATION_LIBRARY["api.wink.com"].access_token || !window.CONFIGURATION_LIBRARY["api.wink.com"].expiration || window.CONFIGURATION_LIBRARY["api.wink.com"].expiration < new Date().getTime()) {
-							callback({message: "I'm not authorized to do that yet. Authorize Wink first.", html: "missing authorization: <b>api.wink.com</b>"})
+							callback({icon: "&#x1f4a1;", message: "I'm not authorized to do that yet. Authorize Wink first.", html: "missing authorization: <b>api.wink.com</b>"})
 							return
 						}
 						else if (!window.CONFIGURATION_LIBRARY["api.wink.com"].devices || !Object.keys(window.CONFIGURATION_LIBRARY["api.wink.com"].devices).length) {
-							callback({message: "I don't have any saved devices. Get devices first.", html: "missing devices: <b>api.wink.com</b>"})
+							callback({icon: "&#x1f4a1;", message: "I don't have any saved devices. Get devices first.", html: "missing devices: <b>api.wink.com</b>"})
 							return
 						}
 
@@ -1751,7 +1851,7 @@
 						}
 
 						if (!deviceIds.length) {
-							callback({message: "I couldn't identify that device.", html: "unable to find device: " + deviceName})
+							callback({icon: "&#x1f4a1;", message: "I couldn't identify that device.", html: "unable to find device: " + deviceName})
 							return
 						}
 
@@ -1763,7 +1863,7 @@
 							desiredState = {powered: false}
 						}
 						else {
-							callback({message: "I couldn't understand that desired state.", html: "unable to set state: " + desiredState})
+							callback({icon: "&#x1f4a1;", message: "I couldn't understand that desired state.", html: "unable to set state: " + desiredState})
 							return
 						}
 
@@ -1773,7 +1873,7 @@
 							responseHTML += "<li>" + window.CONFIGURATION_LIBRARY["api.wink.com"].devices[deviceIds[i]].name + ": " + JSON.stringify(desiredState) + "</li>"
 						}
 						responseHTML += "</ul>"
-						callback({message: "Okay, I set " + deviceName + " to " + (desiredState.powered ? "on" : "off"), html: responseHTML})
+						callback({icon: "&#x1f4a1;", message: "Okay, I set " + deviceName + " to " + (desiredState.powered ? "on" : "off"), html: responseHTML})
 
 					// loop through ids
 						for (var i in deviceIds) {
@@ -1792,7 +1892,7 @@
 									console.log(response)
 								})
 						}
-				} catch (error) { callback({message: "I couldn't identify that device.", html: "unable to find device: " + remainder}) }
+				} catch (error) { callback({icon: "&#x1f4a1;", message: "I couldn't identify that device.", html: "unable to find device: " + remainder}) }
 			},
 			"turn off wink device": function(remainder, callback) {
 				try {
@@ -1812,7 +1912,7 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["www.reddit.com"] || !window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token || !window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration || window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration < new Date().getTime()) {
-							callback({message: "I'm not authorized to do that yet. Authorize Wink first.", html: "missing authorization: <b>www.reddit.com</b>"})
+							callback({icon: "&#x2753;", message: "I'm not authorized to do that yet. Authorize Wink first.", html: "missing authorization: <b>www.reddit.com</b>"})
 							return
 						}
 
@@ -1827,15 +1927,15 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
 								// select random question
-									var question = response.data.children[Math.floor(Math.random() * response.data.children.length)]
+									var question = window.FUNCTION_LIBRARY.chooseRandom(response.data.children)
 
 								// construct response link
 									var redditLink = question.data.url
 									var redditText = question.data.title
-									callback({message: redditText, html: "<a target='_blank' href='" + redditLink + "'>" + redditText + "</a>"})
+									callback({icon: "&#x1f4bb;", message: redditText, html: "<a target='_blank' href='" + redditLink + "'>" + redditText + "</a>"})
 							}
 							catch (error) {
-								callback({message: "I don't have any questions.", html: "unable to ask reddit"})
+								callback({icon: "&#x1f4bb;", message: "I don't have any questions.", html: "unable to ask reddit"})
 							}
 						})
 				}

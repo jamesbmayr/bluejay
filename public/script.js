@@ -31,6 +31,7 @@ window.addEventListener("load", function() {
 				lastAction: null,
 				lastResponseMessage: null,
 				lastResponseHTML: null,
+				lastResponseNumber: null,
 				flow: null,
 				alarms: [],
 				loop: null
@@ -44,8 +45,6 @@ window.addEventListener("load", function() {
 				"noaction-responses": ["I'm not sure I follow.", "I don't understand.", "What does that mean?", "I don't know that one.", "I don't get it.", "I'm sorry, can you try that again?", "Can you repeat that?", "Please say that again.", "Wait, what was that?", "I'll need you to repeat that.", "What am I supposed to do?"],
 				"error-responses": ["Something went wrong.", "I couldn't do that.", "Let's try that again later.", "Sorry, I have failed you.", "I'm not sure what happened.", "I ran into an error.", "That's an error.", "That didn't go the way I expected.", "Sorry, I couldn't complete that action.", "I blame the developers for this failure."],
 			}
-			ERROR_LIBRARY["noaction-index"] = Math.floor(Math.random() * ERROR_LIBRARY["noaction-responses"].length)
-			ERROR_LIBRARY["error-index"]    = Math.floor(Math.random() * ERROR_LIBRARY["error-responses"].length)
 
 		/* configurations */
 			var CONFIGURATION_LIBRARY = window.CONFIGURATION_LIBRARY = {
@@ -100,6 +99,10 @@ window.addEventListener("load", function() {
 					// focus on input
 						ELEMENT_LIBRARY["inputs-text"].focus()
 
+					// preload errors
+						ERROR_LIBRARY["noaction-index"] = window.FUNCTION_LIBRARY.chooseRandom(ERROR_LIBRARY["noaction-responses"])
+						ERROR_LIBRARY["error-index"]    = window.FUNCTION_LIBRARY.chooseRandom(ERROR_LIBRARY["error-responses"])
+
 					// preload sounds
 						initializeSounds()
 
@@ -123,19 +126,23 @@ window.addEventListener("load", function() {
 		/* getAverage */
 			FUNCTION_LIBRARY.getAverage = getAverage
 			function getAverage(arr) {
-				if (!Array.isArray(arr)) {
-					return null
-				}
-				else {
-					var sum = 0
-					for (var i = 0; i < arr.length; i++) {
-						sum += arr[i]
+				try {
+					if (!Array.isArray(arr)) {
+						return null
 					}
-					return (sum / arr.length)
+					else {
+						var sum = 0
+						for (var i = 0; i < arr.length; i++) {
+							sum += arr[i]
+						}
+						return (sum / arr.length)
+					}
+				} catch (error) {
+					return null
 				}
 			}
 
-		/* getDigit */
+		/* getDigits */
 			FUNCTION_LIBRARY.getDigits = getDigits
 			function getDigits(numberWord) {
 				try {
@@ -186,6 +193,22 @@ window.addEventListener("load", function() {
 					return numberWord
 				}
 			}
+
+		/* chooseRandom */
+			FUNCTION_LIBRARY.chooseRandom = chooseRandom
+			function chooseRandom(options) {
+				try {
+					if (!Array.isArray(options)) {
+						return false
+					}
+					else {
+						return options[Math.floor(Math.random() * options.length)]
+					}
+				}
+				catch (error) {
+					return false
+				}
+		}
 
 	/*** settings ***/
 		/* initializeConfiguration */
@@ -645,7 +668,7 @@ window.addEventListener("load", function() {
 							VOICE_LIBRARY.synthesizer.pause()
 							VOICE_LIBRARY.synthesizer.cancel()
 
-						createHistory(phrase || "stop", action, {message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop", followup: false})
+						createHistory(phrase || "stop", action, {icon: "&#x1f507;", message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop", followup: false})
 					}
 
 				// stop-listening phrase
@@ -659,7 +682,7 @@ window.addEventListener("load", function() {
 							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
 							FUNCTION_LIBRARY.stopRecognizing(false)
 
-						createHistory(phrase || "stop listening", action, {message: "", html: "whistle detection turned off", followup: false})
+						createHistory(phrase || "stop listening", action, {icon: "&#x1f507;", message: "", html: "whistle detection turned off", followup: false})
 					}
 
 				// no action
@@ -668,7 +691,7 @@ window.addEventListener("load", function() {
 						var message = ERROR_LIBRARY["noaction-responses"][ERROR_LIBRARY["noaction-index"]]
 						ERROR_LIBRARY["noaction-index"] = (ERROR_LIBRARY["noaction-index"] == ERROR_LIBRARY["noaction-responses"].length - 1) ? 0 : (ERROR_LIBRARY["noaction-index"] + 1)
 
-						var response = {message: message, html: message, followup: followup}
+						var response = {icon: "&#x2753;", message: message, html: message, followup: followup}
 						createHistory(phrase, action, response)
 					}
 
@@ -715,17 +738,31 @@ window.addEventListener("load", function() {
 
 					var phraseBlock = document.createElement("div")
 						phraseBlock.className = "stream-history-phrase"
-						phraseBlock.innerText = phrase
+						phraseBlock.innerText = phrase || ""
 					historyBlock.appendChild(phraseBlock)
 
 					var actionBlock = document.createElement("div")
 						actionBlock.className = "stream-history-action"
-						actionBlock.innerText = action
 					historyBlock.appendChild(actionBlock)
+
+						var actionIconBlock = document.createElement("div")
+							actionIconBlock.className = "stream-history-action-icon"
+							actionIconBlock.innerHTML = response.icon || ""
+						actionBlock.appendChild(actionIconBlock)
+
+						var actionNameBlock = document.createElement("div")
+							actionNameBlock.className = "stream-history-action-name"
+							actionNameBlock.innerText = action || ""
+						actionBlock.appendChild(actionNameBlock)
+
+						var actionTimeBlock = document.createElement("div")
+							actionTimeBlock.className = "stream-history-action-time"
+							actionTimeBlock.innerText = new Date().toLocaleTimeString()
+						actionBlock.appendChild(actionTimeBlock)
 
 					var responseBlock = document.createElement("div")
 						responseBlock.className = "stream-history-response"
-						responseBlock.innerHTML = response.html
+						responseBlock.innerHTML = response.html || ""
 					historyBlock.appendChild(responseBlock)
 
 				// prepend to stream
@@ -751,7 +788,7 @@ window.addEventListener("load", function() {
 				// loop through timers to check (and send a message)
 					for (var i = 0; i < CONTEXT_LIBRARY.alarms.length; i++) {
 						if (CONTEXT_LIBRARY.alarms[i] <= timeNow) {
-							createHistory("-", "time's up", {message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "The time is now <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b>.", followup: false})
+							createHistory("-", "time's up", {icon: "&#x23F0;", message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "The time is now <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b>.", followup: false})
 							CONTEXT_LIBRARY.alarms.splice(i, 1)
 							i--
 						}

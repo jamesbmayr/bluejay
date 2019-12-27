@@ -349,8 +349,7 @@
 	/* history */
 		.stream-history {
 			float: left;
-			border-radius: 5px;
-			background-color: #cccccc;
+			background-color: transparent;
 			padding: 0px;
 			font-size: 15px;
 			font-family: monospace;
@@ -373,19 +372,64 @@
 			font-style: italic;
 			padding: 10px;
 			text-align: right;
+			margin: 0px 5px;
+			width: calc(100% - 30px);
+			background-color: #cccccc;
+			border-radius: 5px 5px 0px 0px;
 		}
 
 		.stream-history-action {
-			padding: 10px;
-			font-weight: bold;
-			font-size: 25px;
-			background-color: #aaaaaa;
+			padding: 0px;
 			text-align: center;
+			height: 50px;
+			width: 100%;
+			overflow: hidden;
+			line-height: 1.1;
+			color: #cccccc;
+			border-radius: 5px;
+		}
+
+		.stream-history-action-icon {
+			float: left;
+			width: 40px;
+			height: 40px;
+			padding: 5px;
+			font-size: 40px;
+			background-color: #222222;
+			user-select: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			-o-user-select: none;
+			line-height: 1.2;
+		}
+
+		.stream-history-action-name {
+			float: left;
+			width: calc(100% - 50px - 95px - 20px);
+			font-size: 25px;
+			font-weight: bold;
+			height: 30px;
+			padding: 10px;
+			background-color: #444444;
+		}
+
+		.stream-history-action-time {
+			float: left;
+			width: 75px;
+			height: 30px;
+			padding: 10px;
+			font-size: 15px;
+			background-color: #555555;
 		}
 
 		.stream-history-response {
 			padding: 10px;
 			text-align: left;
+			margin: 0px 5px;
+			width: calc(100% - 30px);
+			background-color: #cccccc;
+			border-radius: 0px 0px 5px 5px;
 		}
 
 	/* special types */
