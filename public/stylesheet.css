@@ -433,6 +433,16 @@
 		}
 
 	/* special types */
+		.stream-history a, .stream-history a:visited {
+			color: #0093c4;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		.stream-history a:focus, .stream-history a:hover {
+			text-shadow: 0px 0px 5px #0093c4;
+		}
+
 		.stream-history table {
 			border: 2px solid #222222;
 			border-radius: 5px;

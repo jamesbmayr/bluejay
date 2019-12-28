@@ -278,6 +278,13 @@
 			"on wikipedia find": 				"get a wikipedia entry",
 			"on wikipedia look up": 			"get a wikipedia entry",
 
+			"get this day in history": 			"get this day in history",
+			"what happened today in history": 	"get this day in history",
+			"get today in history": 			"get this day in history",
+			"tell me about today in history": 	"get this day in history",
+			"what went down in history today": 	"get this day in history",
+			"what happened on this date": 		"get this day in history",
+
 			"get the headlines": 				"get the headlines",
 			"get todays headlines": 			"get the headlines",
 			"whats happening in the world": 	"get the headlines",
@@ -1243,10 +1250,8 @@
 														htmlContent = htmlContent.split('id="See_also">See also')[0]
 
 													var textNode = document.createElement("div")
-														textNode.innerHTML = response.parse.text["*"]
+														textNode.innerHTML = htmlContent.replace(/<table[\s\S]*?>[\s\S]*?<\/table>/gi,"")
 													var text = textNode.innerText
-														text = text.split("References[edit]")[0]
-														text = text.split("See also[edit]")[0]
 														text = text.replace(/\[[0-9]+\]/gi, "")
 														text = text.replace(/\[edit\]/gi,"")
 													
@@ -1264,9 +1269,14 @@
 									})
 							}
 						})
-
-					
 				} catch (error) {}
+			},
+			"get this day in history": function(remainder, callback) {
+				try {
+					var today = ["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + "_" + new Date().getDate()
+					window.ACTION_LIBRARY["get a wikipedia entry"](today, callback)
+				}
+				catch (error) {}
 			},
 			"get the headlines": function(remainder, callback) {
 				try {
