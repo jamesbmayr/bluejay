@@ -191,6 +191,11 @@
 			"lets count": 						"count",
 			"give me a count": 					"count",
 
+			"convert": 							"convert",
+			"do a conversion": 					"convert",
+			"can you convert": 					"convert",
+			"lets convert": 					"convert",
+
 		// word api fetches
 			"what rhymes with": 				"find rhymes",
 			"find a rhyme for": 				"find rhymes",
@@ -986,6 +991,45 @@
 
 				} catch (error) {}
 			},
+			"convert": function(remainder, callback) {
+				try {
+					// parameters
+						remainder = " " + remainder
+
+						var toUnit = remainder.split(/ into | to /gi)
+							toUnit = (toUnit[1] || toUnit[0]).split(/ from /gi)[0].trim()
+
+						var fromUnit = remainder.split(/ from /gi)
+							fromUnit = (fromUnit[1] || fromUnit[0]).split(/ into | to /gi)[0].trim()
+						
+						var words = fromUnit.split(/\s/gi)
+							for (var i in words) {
+								words[i] = window.FUNCTION_LIBRARY.getDigits(words[i].trim())
+							}
+							words = words.join(" ")
+							fromUnit = words.replace(/[0-9]/gi,"").trim()
+						
+						var quantity = Number(words.replace(/[^0-9]/gi,"")) || 1
+
+					// options
+						var options = {
+							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/unitconverter?quantity=" + quantity + "&from=" + fromUnit + "&to=" + toUnit
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							if (!response.success) {
+								callback({icon: "&#9878;", message: "I was unable to convert from " + fromUnit + "to" + toUnit, html: quantity + " " + fromUnit + " = <b>???</b> " + toUnit})
+							}
+							else {
+								var outputQuantity = Number(response.output).toLocaleString("fullwide", {useGrouping: true, maximumSignificantDigits: 21})
+								var outputFromUnit = (response.parameters.from.prefix !== "_" ? response.parameters.from.prefix : "") + response.parameters.from.unit
+								var outputToUnit   = (response.parameters.to.prefix   !== "_" ? response.parameters.to.prefix   : "") + response.parameters.to.unit
+								callback({icon: "&#9878;", message: outputQuantity + " " + outputToUnit, html: response.parameters.quantity + " " + outputFromUnit + " = <b>" + outputQuantity + "</b> " + outputToUnit})
+							}
+						})
+				} catch (error) {}
+			},
 
 		// word api fetches
 			"find rhymes": function(remainder, callback) {
@@ -1215,7 +1259,6 @@
 											}
 										}
 										catch (error) {
-											console.log(error)
 											callback({icon: "&#x1f310;", message: "I couldn't find " + remainder + " on Wikipedia.", html: "unable to find <b>" + remainder + "</b> on Wikipedia"})
 										}
 									})
@@ -1223,7 +1266,7 @@
 						})
 
 					
-				} catch (error) { console.log(error) }
+				} catch (error) {}
 			},
 			"get the headlines": function(remainder, callback) {
 				try {
