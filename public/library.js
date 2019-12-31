@@ -450,6 +450,14 @@
 			"on wink get the devices": 			"get wink devices",
 			"on wink get all the devices": 		"get wink devices",
 			"on wink get all of the devices": 	"get wink devices",
+			"on wink get status": 				"get wink devices",
+			"on wink whats the situation": 		"get wink devices",
+			"on wink what is the situation": 	"get wink devices",
+			"on wink give me a status report": 	"get wink devices",
+			"on wink what is the temperature": 	"get wink devices",
+			"on wink tell me the temperature": 	"get wink devices",
+			"on wink report": 					"get wink devices",
+			"on wink tell me the situation": 	"get wink devices",
 
 			"on wink set": 						"set wink devices",
 			"on wink update": 					"set wink devices",
@@ -666,7 +674,7 @@
 								var host = platforms[name].host
 
 							// fresh
-								if (!window.CONFIGURATION_LIBRARY[host]) {
+								if (!window.CONFIGURATION_LIBRARY[host] || !window.CONFIGURATION_LIBRARY[host].refresh_token) {
 									var key = credentials[1] || window.CONFIGURATION_LIBRARY[name + " key"] || ""
 									var secret = credentials[2] || window.CONFIGURATION_LIBRARY[name + " secret"] || ""
 									var redirect = credentials[2] || window.CONFIGURATION_LIBRARY[name + " redirect"] || ""
@@ -1898,6 +1906,7 @@
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							console.log(response.data)
 							// devices
 								var devices = {}
 								for (var i in response.data) {
@@ -1905,34 +1914,45 @@
 										uuid: response.data[i].uuid,
 										name: response.data[i].name,
 										model_name: response.data[i].model_name,
+										current_state: null,
 										type: null
 									}
 									devices[device.uuid] = device
 
 									if (response.data[i].light_bulb_id) {
 										device.type = "light_bulb"
+										device.current_state = response.data[i].last_reading.connection ? (response.data[i].last_reading.powered ? "on" : "off") : "disconnected"
 									}
 									else if (response.data[i].smoke_detector_id) {
 										device.type = "smoke_detector"
+										device.current_state = response.data[i].last_reading.connection ? (response.data[i].last_reading.co_detected ? "CO!" : "no CO") + " & " + (response.data[i].last_reading.smoke_detected ? "smoke!" : "no smoke") : "disconnected"
 									}
 									else if (response.data[i].air_conditioner_id) {
 										device.type = "air_conditioner"
+										device.current_state = response.data[i].last_reading.connection ? ((response.data[i].last_reading.temperature * 9 / 5) + 32 + "°F") : "disconnected"
 									}
 									else if (response.data[i].thermostat_id) {
 										device.type = "thermostat"
+										device.current_state = response.data[i].last_reading.connection ? ((response.data[i].last_reading.temperature * 9 / 5) + 32 + "°F") : "disconnected"
 									}
 									else if (response.data[i].outlets) {
-										device.type = "power_strip"
+										device.type = "powerstrip"
+										device.current_state = response.data[i].last_reading.connection ? "connected" : "disconnected"
 
 										for (var j in response.data[i].outlets) {
 											var subdevice = {
 												uuid: response.data[i].outlets[j].uuid,
 												name: response.data[i].outlets[j].name,
 												model_name: device.model_name + " (outlet)",
-												type: "power_strip"
+												type: "outlet",
+												current_state: response.data[i].last_reading.connection ? (response.data[i].outlets[j].last_reading.powered ? "on" : "off") : "disconnected"
 											}
 											devices[subdevice.uuid] = subdevice
 										}
+									}
+									else {
+										device.type = "hub"
+										device.current_state = response.data[i].last_reading.connection ? "connected" : "disconnected"
 									}
 								}
 								
@@ -1943,7 +1963,7 @@
 							// response
 								var responseHTML = "Here are your Wink devices: <ul>"
 								for (var i in devices) {
-									responseHTML += "<li><b>" + devices[i].name + "</b><br>" + devices[i].model_name + "</li>"
+									responseHTML += "<li><b>" + devices[i].name + "</b> - [" + (devices[i].current_state || "") + "]<br>" + devices[i].model_name + "</li>"
 								}
 								responseHTML += "</ul>"
 								callback({icon: "&#x1f4a1;", message: "I detected " + Object.keys(devices).length + " devices on Wink.", html: responseHTML})
@@ -1976,8 +1996,8 @@
 
 					// split remainder
 						var components = remainder.split(/\sto\s|\sbecome\s|\sinto\s|\sat\s/gi)
-						var deviceName = components[0].toLowerCase().trim()
-						var desiredState = components[1].toLowerCase().trim()
+						var deviceName = components[0].toLowerCase().trim().replace(/the /gi,"")
+						var desiredState = window.FUNCTION_LIBRARY.getDigits(components[1].toLowerCase().trim())
 
 					// replace number words with numbers
 						deviceName = deviceName.split(/\s/gi)
@@ -1986,11 +2006,25 @@
 						}
 						deviceName = deviceName.join(" ")
 
+					// groups
+						var group = null
+						if (["all lights"].includes(deviceName)) {
+							group = "lights"
+						}
+						else if (["temperature", "thermostat", "heat", "air conditioner", "air conditioning", "fan"].includes(deviceName)) {
+							group = "temperature"
+						}
+
 					// identify devices
 						var deviceIds = []
-						if (deviceName == "all lights" || deviceName == "all the lights") {
+						if (group == "lights") {
 							deviceIds = Object.keys(window.CONFIGURATION_LIBRARY["api.wink.com"].devices).filter(function(d) {
 								return window.CONFIGURATION_LIBRARY["api.wink.com"].devices[d].type == "light_bulb"
+							}) || []
+						}
+						else if (group == "temperature") {
+							deviceIds = Object.keys(window.CONFIGURATION_LIBRARY["api.wink.com"].devices).filter(function(d) {
+								return ["air_conditioner", "thermostat"].includes(window.CONFIGURATION_LIBRARY["api.wink.com"].devices[d].type)
 							}) || []
 						}
 						else {
@@ -2017,6 +2051,11 @@
 						else if (desiredState == "off" || desiredState == "inactive" || desiredState == "unpowered") {
 							desiredState = {powered: false}
 						}
+						else if (!isNaN(desiredState) && group == "temperature") {
+							var farenheit = Number(desiredState) + " degrees"
+							var celsius = (desiredState - 32) * 5 / 9
+							desiredState = {max_set_point: celsius, min_set_point: celsius}
+						}
 						else {
 							callback({icon: "&#x1f4a1;", message: "I couldn't understand that desired state.", html: "unable to set state: " + desiredState})
 							return
@@ -2028,7 +2067,8 @@
 							responseHTML += "<li>" + window.CONFIGURATION_LIBRARY["api.wink.com"].devices[deviceIds[i]].name + ": " + JSON.stringify(desiredState) + "</li>"
 						}
 						responseHTML += "</ul>"
-						callback({icon: "&#x1f4a1;", message: "Okay, I set " + deviceName + " to " + (desiredState.powered ? "on" : "off"), html: responseHTML})
+						var messageState = (desiredState.powered === true) ? "on" : (desiredState.powered === false) ? "off" : (desiredState.max_set_point || desiredState.min_set_point) ? farenheit : "unknown"
+						callback({icon: "&#x1f4a1;", message: "Okay, I set " + deviceName + " to " + messageState, html: responseHTML})
 
 					// loop through ids
 						for (var i in deviceIds) {
@@ -2044,10 +2084,15 @@
 
 							// proxy
 								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-									console.log(response)
+									if (response.errors && response.errors.length) {
+										callback({icon: "&#x1f4a1;", message: "Wink says: " + response.errors.join("... "), html: "<b>Wink errors</b><li>" + response.errors.join("</li><li>") + "</li>"})
+									}
 								})
 						}
-				} catch (error) { callback({icon: "&#x1f4a1;", message: "I couldn't identify that device.", html: "unable to find device: " + remainder}) }
+				}
+				catch (error) {
+					callback({icon: "&#x1f4a1;", message: "I couldn't identify that device.", html: "unable to find device: " + remainder})
+				}
 			},
 			"turn off wink device": function(remainder, callback) {
 				try {
