@@ -14,10 +14,6 @@
 		overflow: hidden;
 	}
 
-	details summary::-webkit-details-marker {
-		display:none;
-	}
-
 	/* j-logo */
 		#j-logo {
 			position: absolute;
@@ -196,6 +192,10 @@
 		}
 
 	/* inputs advanced */
+		#inputs details summary::-webkit-details-marker {
+			display:none;
+		}
+
 		#inputs-advanced {
 			float: left;
 			padding: 10px;
@@ -476,4 +476,24 @@
 		.stream-history img {
 			border-radius: 5px;
 			border: 2px solid #222222;
+		}
+
+		.stream-history details {
+			padding: 0px 5px;
+			margin-bottom: 5px;
+		}
+
+		.stream-history details summary {
+			cursor: pointer;
+			outline: none;
+			background-color: #555555;
+			font-weight: bold;
+			padding: 5px;
+			border-radius: 5px;
+			color: #dddddd;
+			margin: 0px -5px 0px -5px;
+		}
+
+		.stream-history details summary:focus, .stream-history details summary:hover {
+			box-shadow: 0px 0px 10px #222222;
 		}

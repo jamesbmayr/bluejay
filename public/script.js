@@ -208,7 +208,7 @@ window.addEventListener("load", function() {
 				catch (error) {
 					return false
 				}
-		}
+			}
 
 	/*** settings ***/
 		/* initializeConfiguration */

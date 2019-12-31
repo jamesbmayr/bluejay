@@ -191,11 +191,6 @@
 			"lets count": 						"count",
 			"give me a count": 					"count",
 
-			"convert": 							"convert",
-			"do a conversion": 					"convert",
-			"can you convert": 					"convert",
-			"lets convert": 					"convert",
-
 		// word api fetches
 			"what rhymes with": 				"find rhymes",
 			"find a rhyme for": 				"find rhymes",
@@ -487,6 +482,42 @@
 			"get a writing prompt": 			"get a reddit writing prompt",
 			"give me a writing prompt": 		"get a reddit writing prompt",
 			"fetch a writing prompt": 			"get a reddit writing prompt",
+
+		// custom APIs
+			"convert": 							"convert",
+			"do a conversion": 					"convert",
+			"can you convert": 					"convert",
+			"lets convert": 					"convert",
+
+			"find factors": 					"find factors",
+			"find factors of": 					"find factors",
+			"find the factors of": 				"find factors",
+			"find factors for": 				"find factors",
+			"what are the factors of": 			"find factors",
+			"tell me about the number": 		"find factors",
+			"is this number prime": 			"find factors",
+			"is this number composite": 		"find factors",
+			"what are the prime factors of": 	"find factors",
+			"what numbers go into": 			"find factors",
+			"what are the divisors of": 		"find factors",
+			"get the factors of": 				"find factors",
+
+			"analyze chord": 					"analyze chord",
+			"tell me about the notes": 			"analyze chord",
+			"analyze the chord": 				"analyze chord",
+			"analyze this chord": 				"analyze chord",
+			"what chord are the notes": 		"analyze chord",
+			"make a chord from the notes": 		"analyze chord",
+			"make a chord from": 				"analyze chord",
+
+			"shuffle word": 					"shuffle word",
+			"shuffle the word": 				"shuffle word",
+			"shuffle this word": 				"shuffle word",
+			"what words can you make from": 	"shuffle word",
+			"what are some anagrams for": 		"shuffle word",
+			"make new words from": 				"shuffle word",
+			"find anagrams for": 				"shuffle word",
+			"find anagrams of": 				"shuffle word",
 	}
 
 /* action library */
@@ -996,45 +1027,6 @@
 					// message
 						callback({icon: "&#x2673;", message: list.join("..."), html: "Counting from <b>" + String(startNumber) + "</b> to <b>" + String(endNumber) + "</b>."})
 
-				} catch (error) {}
-			},
-			"convert": function(remainder, callback) {
-				try {
-					// parameters
-						remainder = " " + remainder
-
-						var toUnit = remainder.split(/ into | to /gi)
-							toUnit = (toUnit[1] || toUnit[0]).split(/ from /gi)[0].trim()
-
-						var fromUnit = remainder.split(/ from /gi)
-							fromUnit = (fromUnit[1] || fromUnit[0]).split(/ into | to /gi)[0].trim()
-						
-						var words = fromUnit.split(/\s/gi)
-							for (var i in words) {
-								words[i] = window.FUNCTION_LIBRARY.getDigits(words[i].trim())
-							}
-							words = words.join(" ")
-							fromUnit = words.replace(/[0-9]/gi,"").trim()
-						
-						var quantity = Number(words.replace(/[^0-9]/gi,"")) || 1
-
-					// options
-						var options = {
-							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/unitconverter?quantity=" + quantity + "&from=" + fromUnit + "&to=" + toUnit
-						}
-
-					// proxy to server
-						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							if (!response.success) {
-								callback({icon: "&#9878;", message: "I was unable to convert from " + fromUnit + "to" + toUnit, html: quantity + " " + fromUnit + " = <b>???</b> " + toUnit})
-							}
-							else {
-								var outputQuantity = Number(response.output).toLocaleString("fullwide", {useGrouping: true, maximumSignificantDigits: 21})
-								var outputFromUnit = (response.parameters.from.prefix !== "_" ? response.parameters.from.prefix : "") + response.parameters.from.unit
-								var outputToUnit   = (response.parameters.to.prefix   !== "_" ? response.parameters.to.prefix   : "") + response.parameters.to.unit
-								callback({icon: "&#9878;", message: outputQuantity + " " + outputToUnit, html: response.parameters.quantity + " " + outputFromUnit + " = <b>" + outputQuantity + "</b> " + outputToUnit})
-							}
-						})
 				} catch (error) {}
 			},
 
@@ -2123,6 +2115,131 @@
 							}
 							catch (error) {
 								callback({icon: "&#x1f4bb;", message: "I don't have any writing prompts.", html: "unable to query reddit"})
+							}
+						})
+				}
+				catch (error) {}
+			},
+
+		// custom APIs
+			"convert": function(remainder, callback) {
+				try {
+					// parameters
+						remainder = " " + remainder
+
+						var toUnit = remainder.split(/ into | to /gi)
+							toUnit = (toUnit[1] || toUnit[0]).split(/ from /gi)[0].trim()
+
+						var fromUnit = remainder.split(/ from /gi)
+							fromUnit = (fromUnit[1] || fromUnit[0]).split(/ into | to /gi)[0].trim()
+						
+						var words = fromUnit.split(/\s/gi)
+							for (var i in words) {
+								words[i] = window.FUNCTION_LIBRARY.getDigits(words[i].trim())
+							}
+							words = words.join(" ")
+							fromUnit = words.replace(/[0-9]/gi,"").trim()
+						
+						var quantity = Number(words.replace(/[^0-9]/gi,"")) || 1
+
+					// options
+						var options = {
+							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/unitconverter?quantity=" + quantity + "&from=" + fromUnit + "&to=" + toUnit
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							if (!response.success) {
+								callback({icon: "&#9878;", message: "I was unable to convert from " + fromUnit + "to" + toUnit, html: quantity + " " + fromUnit + " = <b>???</b> " + toUnit})
+							}
+							else {
+								var outputQuantity = Number(response.output).toLocaleString("fullwide", {useGrouping: true, maximumSignificantDigits: 21})
+								var outputFromUnit = (response.parameters.from.prefix !== "_" ? response.parameters.from.prefix : "") + response.parameters.from.unit
+								var outputToUnit   = (response.parameters.to.prefix   !== "_" ? response.parameters.to.prefix   : "") + response.parameters.to.unit
+								callback({icon: "&#9878;", message: outputQuantity + " " + outputToUnit, html: response.parameters.quantity + " " + outputFromUnit + " = <b>" + outputQuantity + "</b> " + outputToUnit})
+							}
+						})
+				} catch (error) {}
+			},
+			"find factors": function(remainder, callback) {
+				try {
+					// parameters
+						var input = window.FUNCTION_LIBRARY.getDigits(remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim())
+
+					// options
+						var options = {
+							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/factorfinder?number=" + input
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							if (!response.success) {
+								callback({icon: "&#2a37;", message: "I was unable to find the factors of " + remainder, html: "<h2>" + remainder + "</h2>unknown factors"})
+							}
+							else {
+								var message = response.qualities.map(function(q) {
+									return q.replace("<li>","").replace("</li>","").replace(/\<\/?br\>/gi," ")
+								}) || []
+									message[0] = message[0].replace(/x/gi, "times")
+									message = message.join("... ")
+								callback({icon: "&#x2a37;", message: "Here's what I found for " + input + ": " + message, html: "<h2>" + input + "</h2>" + response.html})
+							}
+						})
+				}
+				catch (error) {}
+			},
+			"analyze chord": function(remainder, callback) {
+				try {
+					// parameters
+						var input = remainder.replace(/[?!.:;'"_\-\/\(\)\$\%]/gi,"").trim().replace(/and/gi,"")
+							input = input.split(/,\s|,|\s/gi)
+						for (var i in input) {
+							input[i] = input[i].slice(0,1).toUpperCase() + input[i].slice(1,input[i].length)
+						}
+							input = input.join(",")
+
+					// options
+						var options = {
+							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/chordanalyzer?notes=" + encodeURIComponent(input)
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							if (!response.success) {
+								callback({icon: "&#x1f3b5;", message: "I was unable to do a chordal analysis of " + remainder, html: "<h2>" + remainder + "</h2>unknown chord"})
+							}
+							else {
+								callback({icon: "&#x1f3b5;", message: response.smallOutput.replace(/\#/gi," sharp").replace(/b/g, " flat"), html: response.chord.join(" - ") + "<h2>" + response.bigOutput + "</h2>" + response.smallOutput})
+							}
+						})
+				}
+				catch (error) {}
+			},
+			"shuffle word": function(remainder, callback) {
+				try {
+					// parameters
+						var input = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
+
+					// options
+						var options = {
+							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/wordshuffler?word=" + input
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							console.log(response)
+							if (!response.success) {
+								callback({icon: "&#x1f500;", message: "I was unable to shuffle the word " + remainder, html: "<h2>" + remainder + "</h2>unable to shuffle word"})
+							}
+							else {
+								var wordList = []
+								for (var i in response.results) {
+									for (var j in response.results[i]) {
+										wordList.push(response.results[i][j])
+									}
+								}
+								console.log(wordList)
+								callback({icon: "&#x1f500;", message: "I found " + wordList.length + " words within " + input + ": " + wordList.join(", "), html: "<h2>" + input + "</h2>" + response.html})
 							}
 						})
 				}
