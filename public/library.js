@@ -441,6 +441,9 @@
 		// SONOS
 
 		// Wink
+			"get wink devices": 				"get wink devices",
+			"get all wink devices": 			"get wink devices",
+			"get my wink devices": 				"get wink devices",
 			"on wink get devices": 				"get wink devices",
 			"on wink get my devices": 			"get wink devices",
 			"on wink get all devices": 			"get wink devices",
@@ -672,7 +675,7 @@
 										callback({icon: "&#x1f510;", message: "To connect to " + name + ", I need a key, a secret, and a redirect.", html: "unable to authorize: <b>" + remainder + "</b><br><br><b>required configurations:</b><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " redirect</li></ul>"})
 									}
 									else {
-										var state = encodeURIComponent(window.location + ";;;" + platforms[name].stateSecret(key, secret))
+										var state = encodeURIComponent((window.location.origin + window.location.pathname) + ";;;" + platforms[name].stateSecret(key, secret))
 										var url = "https://" + host + platforms[name].authPath + "&client_id=" + key + "&state=" + state + "&redirect_uri=" + encodeURIComponent(redirect)
 										var popup = window.open(url, null, "height=500,width=500,status=yes,toolbar=no,menubar=no,location=no")
 
@@ -704,7 +707,7 @@
 								}
 
 							// expired
-								else if (window.CONFIGURATION_LIBRARY[host] && (!window.CONFIGURATION_LIBRARY[host].expiration || window.CONFIGURATION_LIBRARY[host].expiration < new Date().getTime())) {
+								else if (window.CONFIGURATION_LIBRARY[host] && (!window.CONFIGURATION_LIBRARY[host].expiration || isNaN(window.CONFIGURATION_LIBRARY[host].expiration) || window.CONFIGURATION_LIBRARY[host].expiration < new Date().getTime())) {
 									var key = credentials[1] || window.CONFIGURATION_LIBRARY[name + " key"] || ""
 									var secret = credentials[2] || window.CONFIGURATION_LIBRARY[name + " secret"] || ""
 									var refresh_token = window.CONFIGURATION_LIBRARY[host].refresh_token || ""
@@ -713,27 +716,27 @@
 										callback({icon: "&#x1f510;", message: "To reconnect to " + name + ", I need a key, a secret, and a refresh_token.", html: "unable to reauthorize: <b>" + remainder + "</b><br><br><b>required configurations:</b><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " refresh_token</li></ul>"})
 									}
 									else {
-										var url = "https://" + host + platforms[name].reauthPath
+										var url = "https://" + host + platforms[name].reauthPath + "?grant_type=refresh_token&refresh_token=" + refresh_token
 										var options = {
 											method: "post",
 											url: url,
-											"Content-Type": "application/json",
-											body: {
-												"grant_type": "refresh_token",
-												"client_id": key,
-												"client_secret": secret,
-												"refresh_token": refresh_token
-											}
+											"Authorization": "Basic " + platforms[name].stateSecret(key, secret),
+      										"Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
 										}
 
 										window.FUNCTION_LIBRARY.proxyRequest(options, function(data) {
 											try {
-												var value = window.CONFIGURATION_LIBRARY[host]
-													value.access_token = data.access_token
-													value.refresh_token = refresh_token
-													value.expiration = new Date().getTime() + (data.expires_in * 1000)
-												window.FUNCTION_LIBRARY.changeConfiguration({key: host, value: value})
-												callback({icon: "&#x1f510;", message: host + " is now reauthorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
+												if (data.access_token) {
+													var value = window.CONFIGURATION_LIBRARY[host]
+														value.access_token = data.access_token
+														value.refresh_token = data.refresh_token
+														value.expiration = new Date().getTime() + (data.expires_in * 1000)
+													window.FUNCTION_LIBRARY.changeConfiguration({key: host, value: value})
+													callback({icon: "&#x1f510;", message: host + " is now reauthorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
+												}
+												else {
+													callback({icon: "&#x1f510;", message: "I couldn't reauthorize " + host, html: "unable to reauthorize <b>" + host + "</b>"})
+												}
 											}
 											catch (error) {
 												callback({icon: "&#x1f510;", message: "I couldn't reauthorize " + host, html: "unable to reauthorize <b>" + host + "</b>"})
@@ -1877,7 +1880,13 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["api.wink.com"] || !window.CONFIGURATION_LIBRARY["api.wink.com"].access_token || !window.CONFIGURATION_LIBRARY["api.wink.com"].expiration || window.CONFIGURATION_LIBRARY["api.wink.com"].expiration < new Date().getTime()) {
-							callback({icon: "&#x1f4a1;", message: "I'm not authorized to do that yet. Authorize Wink first.", html: "missing authorization: <b>api.wink.com</b>"})
+							window.ACTION_LIBRARY["authorize platform"]("wink", function(response) {
+								callback(response)
+								
+								if (window.CONFIGURATION_LIBRARY["api.wink.com"] && window.CONFIGURATION_LIBRARY["api.wink.com"].access_token && window.CONFIGURATION_LIBRARY["api.wink.com"].expiration && window.CONFIGURATION_LIBRARY["api.wink.com"].expiration >= new Date().getTime()) {
+									window.ACTION_LIBRARY["get wink devices"](remainder, callback)
+								}
+							})
 							return
 						}
 
@@ -1945,11 +1954,23 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["api.wink.com"] || !window.CONFIGURATION_LIBRARY["api.wink.com"].access_token || !window.CONFIGURATION_LIBRARY["api.wink.com"].expiration || window.CONFIGURATION_LIBRARY["api.wink.com"].expiration < new Date().getTime()) {
-							callback({icon: "&#x1f4a1;", message: "I'm not authorized to do that yet. Authorize Wink first.", html: "missing authorization: <b>api.wink.com</b>"})
+							window.ACTION_LIBRARY["authorize platform"]("wink", function(response) {
+								callback(response)
+								
+								if (window.CONFIGURATION_LIBRARY["api.wink.com"] && window.CONFIGURATION_LIBRARY["api.wink.com"].access_token && window.CONFIGURATION_LIBRARY["api.wink.com"].expiration && window.CONFIGURATION_LIBRARY["api.wink.com"].expiration >= new Date().getTime()) {
+									window.ACTION_LIBRARY["set wink devices"](remainder, callback)
+								}
+							})
 							return
 						}
 						else if (!window.CONFIGURATION_LIBRARY["api.wink.com"].devices || !Object.keys(window.CONFIGURATION_LIBRARY["api.wink.com"].devices).length) {
-							callback({icon: "&#x1f4a1;", message: "I don't have any saved devices. Get devices first.", html: "missing devices: <b>api.wink.com</b>"})
+							window.ACTION_LIBRARY["get wink devices"](null, function(response) {
+								callback(response)
+								
+								if (window.CONFIGURATION_LIBRARY["api.wink.com"].devices && Object.keys(window.CONFIGURATION_LIBRARY["api.wink.com"].devices).length) {
+									window.ACTION_LIBRARY["set wink devices"](remainder, callback)
+								}
+							})
 							return
 						}
 
@@ -2227,7 +2248,6 @@
 
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							console.log(response)
 							if (!response.success) {
 								callback({icon: "&#x1f500;", message: "I was unable to shuffle the word " + remainder, html: "<h2>" + remainder + "</h2>unable to shuffle word"})
 							}
@@ -2238,7 +2258,6 @@
 										wordList.push(response.results[i][j])
 									}
 								}
-								console.log(wordList)
 								callback({icon: "&#x1f500;", message: "I found " + wordList.length + " words within " + input + ": " + wordList.join(", "), html: "<h2>" + input + "</h2>" + response.html})
 							}
 						})
