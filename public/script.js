@@ -55,8 +55,8 @@ window.addEventListener("load", function() {
 					"whistle-frequency-minimum": 1000,
 					"whistle-frequency-maximum": 2000,
 					"whistle-energy-threshold": 0.5,
-					"whistle-ratio-minimum": 0.5,
-					"whistle-ratio-maximum": 2,
+					"whistle-interval-minimum": 1,
+					"whistle-interval-maximum": 5,
 					"recognition-interval": 50,
 					"recognition-duration": 10,
 					"voice": null,
@@ -330,8 +330,7 @@ window.addEventListener("load", function() {
 				// input
 					AUDIO_LIBRARY.input = {
 						bufferLength: AUDIO_LIBRARY.analyzer.frequencyBinCount,
-						lastFrequency: 0,
-						lastFrequencyCounter: 0,
+						pitches: [],
 						minimum: null,
 						maximum: null,
 						extremes: 0,
@@ -424,33 +423,43 @@ window.addEventListener("load", function() {
 						var complexity = Math.round(AUDIO_LIBRARY.input.wavelengths.length / AUDIO_LIBRARY.input.extremes)
 
 					// calculate the frequency & note (sample rate is usually 44100 Hz)
-						var newFrequency 	= AUDIO_LIBRARY.audio.sampleRate / FUNCTION_LIBRARY.getAverage(AUDIO_LIBRARY.input.wavelengths) / complexity
+						var frequency 	= AUDIO_LIBRARY.audio.sampleRate / FUNCTION_LIBRARY.getAverage(AUDIO_LIBRARY.input.wavelengths) / complexity
 
-					// if above 500Hz and enough energy
-						if (CONFIGURATION_LIBRARY.settings["whistle-frequency-minimum"] <= newFrequency && newFrequency <= CONFIGURATION_LIBRARY.settings["whistle-frequency-maximum"] && AUDIO_LIBRARY.input.maximum >= CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] && AUDIO_LIBRARY.input.minimum <= -CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"]) {
-							console.log(newFrequency.toFixed(4), AUDIO_LIBRARY.input.minimum.toFixed(4), AUDIO_LIBRARY.input.maximum.toFixed(4))
-							// no previous frequency
-								if (!AUDIO_LIBRARY.input.lastFrequency) {
-									AUDIO_LIBRARY.input.lastFrequency = newFrequency
-									AUDIO_LIBRARY.input.lastFrequencyCounter = 0
-								}
-
-							// compare frequencies
-								else {
-									var ratio = Math.round(newFrequency / AUDIO_LIBRARY.input.lastFrequency * 100) / 100
-									AUDIO_LIBRARY.input.lastFrequency = newFrequency
-									AUDIO_LIBRARY.input.lastFrequencyCounter = 0
-
-									if (CONFIGURATION_LIBRARY.settings["whistle-ratio-minimum"] < ratio && ratio < CONFIGURATION_LIBRARY.settings["whistle-ratio-maximum"]) {
-										FUNCTION_LIBRARY.startRecognizing({chirp: true})
-									}
-								}
+					// if within range and enough energy
+						if (CONFIGURATION_LIBRARY.settings["whistle-frequency-minimum"] <= frequency && frequency <= CONFIGURATION_LIBRARY.settings["whistle-frequency-maximum"]
+							&& AUDIO_LIBRARY.input.minimum <= -CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] && CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] <= AUDIO_LIBRARY.input.maximum) {
+							// convert frequency to pitch
+								var pitch = 69 + 12 * Math.log2(frequency / 440)
+						}
+						else {
+							var pitch = null
 						}
 
-					// otherwise, reset after 1 second
-						else if (AUDIO_LIBRARY.input.lastFrequencyCounter >= 1000) {
-							AUDIO_LIBRARY.input.lastFrequency = 0
-							AUDIO_LIBRARY.input.lastFrequencyCounter = 0
+					// update pitches array
+						AUDIO_LIBRARY.input.pitches.push(pitch)
+						var pitchCount = 1000 / CONFIGURATION_LIBRARY.settings["state-interval"] // store 1 second of pitches
+						while (AUDIO_LIBRARY.input.pitches.length > pitchCount) {
+							AUDIO_LIBRARY.input.pitches.shift()
+						}
+
+					// get difference
+						if (pitch) {
+							var biggest = -1000 // arbitrarily small
+							var smallest = 1000 // arbitrarily big
+							for (var i in AUDIO_LIBRARY.input.pitches) {
+								if (AUDIO_LIBRARY.input.pitches[i] > biggest) {
+									biggest = AUDIO_LIBRARY.input.pitches[i]
+								}
+								if (AUDIO_LIBRARY.input.pitches[i] < smallest) {
+									smallest = AUDIO_LIBRARY.input.pitches[i]
+								}
+							}
+
+							var difference = Math.abs(biggest - smallest)
+
+							if (CONFIGURATION_LIBRARY.settings["whistle-interval-minimum"] < difference && difference < CONFIGURATION_LIBRARY.settings["whistle-interval-maximum"]) {
+								FUNCTION_LIBRARY.startRecognizing({chirp: true})
+							}
 						}
 				}
 			}
