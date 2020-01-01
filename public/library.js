@@ -192,7 +192,7 @@
 			"lets count": 						"count",
 			"give me a count": 					"count",
 
-		// word api fetches
+		// word API fetches
 			"what rhymes with": 				"find rhymes",
 			"find a rhyme for": 				"find rhymes",
 			"find rhymes for": 					"find rhymes",
@@ -219,7 +219,7 @@
 			"what is the meaning of": 			"find definition",
 			"whats the meaning of": 			"find definition",
 
-		// content api fetches
+		// content API fetches
 			"get a joke": 						"get a joke",
 			"tell me a joke": 					"get a joke",
 			"know any jokes": 					"get a joke",
@@ -313,6 +313,44 @@
 			"will it rain": 					"get the weather",
 			"is it going to snow": 				"get the weather",
 			"will it snow": 					"get the weather",
+
+			"get nutrition facts": 				"get nutrition facts",
+			"get nutrition facts about": 		"get nutrition facts",
+			"get nutrition facts for": 			"get nutrition facts",
+			"tell me about the dish": 			"get nutrition facts",
+			"tell me about the dish called": 	"get nutrition facts",
+			"tell me about a dish": 			"get nutrition facts",
+			"tell me about a dish called": 		"get nutrition facts",
+			"look up the dish": 				"get nutrition facts",
+			"look up the dish called": 			"get nutrition facts",
+			"look up a dish": 					"get nutrition facts",
+			"look up a dish called": 			"get nutrition facts",
+			"tell me about the meal": 			"get nutrition facts",
+			"tell me about the meal called": 	"get nutrition facts",
+			"tell me about a meal": 			"get nutrition facts",
+			"tell me about a meal called": 		"get nutrition facts",
+			"look up the meal": 				"get nutrition facts",
+			"look up the meal called": 			"get nutrition facts",
+			"look up a meal": 					"get nutrition facts",
+			"look up a meal called": 			"get nutrition facts",
+			"tell me about the food": 			"get nutrition facts",
+			"tell me about the food called": 	"get nutrition facts",
+			"tell me about a food": 			"get nutrition facts",
+			"tell me about a food called": 		"get nutrition facts",
+			"look up the food": 				"get nutrition facts",
+			"look up the food called": 			"get nutrition facts",
+			"look up a food": 					"get nutrition facts",
+			"look up a food called": 			"get nutrition facts",
+
+			"get nutrition answer": 			"get nutrition answer",
+			"get nutrition answer about": 		"get nutrition answer",
+			"get nutrition answer for": 		"get nutrition answer",
+			"get a nutrition answer": 			"get nutrition answer",
+			"get a nutrition answer about": 	"get nutrition answer",
+			"get a nutrition answer for": 		"get nutrition answer",
+			"do a nutrition search": 			"get nutrition answer",
+			"do a nutrition search for": 		"get nutrition answer",
+			"do a nutrition search about": 		"get nutrition answer",
 
 		// Google Apps Script
 			"add to wish list": 				"edit wish list",
@@ -1055,7 +1093,7 @@
 				} catch (error) {}
 			},
 
-		// word api fetches
+		// word API fetches
 			"find rhymes": function(remainder, callback) {
 				try {
 					// options
@@ -1147,7 +1185,7 @@
 				} catch (error) {}
 			},
 
-		// content api fetches
+		// content API fetches
 			"get a joke": function(remainder, callback) {
 				try {
 					// options
@@ -1357,7 +1395,7 @@
 						else {
 							// options
 								var options = {
-									url: "https://api.openweathermap.org/data/2.5/forecast?appid=" + CONFIGURATION_LIBRARY["open weather api"] + (isNaN(locale) ? ("&q=" + locale) : "&zip=" + locale) + ",us&mode=json&units=imperial"
+									url: "https://api.openweathermap.org/data/2.5/forecast?appid=" + window.CONFIGURATION_LIBRARY["open weather api"] + (isNaN(locale) ? ("&q=" + locale) : "&zip=" + locale) + ",us&mode=json&units=imperial"
 								}
 
 							// proxy to server
@@ -1448,10 +1486,80 @@
 											}
 									}
 									catch (error) {
-										callback({icon: "&#x26c8;", message: "I was unable to get the weather: " + remainder, html: "I was unable to get the weather: <b>" + remainder + "</b>."})
+										callback({icon: "&#x26c8;", message: "I was unable to get the weather for " + remainder, html: "I was unable to get the weather: <b>" + remainder + "</b>."})
 									}
 								})
 						}
+				} catch (error) {}
+			},
+			"get nutrition facts": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["spoonacular api"]) {
+							callback({icon: "&#x1f34e;", message: "I'm not authorized to do that yet. Set a configuration for spoonacular api.", html: "missing configuration: <b>spoonacular api</b>"})
+							return
+						}
+
+					// options
+						remainder = remainder.toLowerCase().replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
+						var options = {
+							url: "https://api.spoonacular.com/recipes/guessNutrition?apiKey=" + window.CONFIGURATION_LIBRARY["spoonacular api"] + "&title=" + remainder
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								if (!response.calories) {
+									callback({icon: "&#x1f34e;", message: "I was unable to get nutrition facts for " + remainder, html: "I was unable to get nutrition facts: <b>" + remainder + "</b>."})
+								}
+								else {
+									var calories 	= response.calories.value 	+ " " + response.calories.unit
+									var carbs 		= response.carbs.value 		+ " " + response.carbs.unit
+									var fat 		= response.fat.value 		+ " " + response.fat.unit
+									var protein 	= response.protein.value 	+ " " + response.protein.unit
+
+									var message = "Here's what I found for " + remainder + "... " + calories + "; " + carbs + " of carbs; " + fat + " of fat; " + protein + " of protein"
+									var responseHTML = "<h2>" + remainder + "</h2>" + "<li><b>calories:</b> " + calories + "</li>" + "<li><b>carbs:</b> " + carbs + "</li>" + "<li><b>fat:</b> " + fat + "</li>" + "<li><b>protein:</b> " + protein + "</li>"
+
+									callback({icon: "&#x1f34e;", message: message, html: responseHTML})
+								}
+							}
+							catch (error) {
+								callback({icon: "&#x1f34e;", message: "I was unable to get nutrition facts for " + remainder, html: "I was unable to get nutrition facts: <b>" + remainder + "</b>."})
+							}
+						})
+
+				} catch (error) {}
+			},
+			"get nutrition answer": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["spoonacular api"]) {
+							callback({icon: "&#x1f34e;", message: "I'm not authorized to do that yet. Set a configuration for spoonacular api.", html: "missing configuration: <b>spoonacular api</b>"})
+							return
+						}
+
+					// options
+						remainder = remainder.toLowerCase().replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
+						var options = {
+							url: "https://api.spoonacular.com/recipes/quickAnswer?apiKey=" + window.CONFIGURATION_LIBRARY["spoonacular api"] + "&q=" + remainder
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								if (!response.answer) {
+									callback({icon: "&#x1f34e;", message: "I was unable to get a nutrition answer about " + remainder, html: "I was unable to get a nutrition answer: <b>" + remainder + "</b>."})
+								}
+								else {
+									callback({icon: "&#x1f34e;", message: response.answer, html: "<h2>" + remainder + "</h2>" + response.answer})
+								}
+							}
+							catch (error) {
+								callback({icon: "&#x1f34e;", message: "I was unable to get a nutrition answer about " + remainder, html: "I was unable to get a nutrition answer: <b>" + remainder + "</b>."})
+							}
+						})
+
 				} catch (error) {}
 			},
 
@@ -1995,7 +2103,7 @@
 									}
 								}
 								responseHTML += "</ul>"
-								
+
 								var message = (smoke ? "The smoke detector has detected a threat. " : "") +
 									"I detected " + Object.keys(devices).length + " devices on Wink. " +
 									"The temperature is " + temperature + " degrees. " +
