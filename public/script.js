@@ -51,10 +51,10 @@ window.addEventListener("load", function() {
 				settings: {
 					"state-interval": 100,
 					"whistle-on": true,
-					"whistle-fftsize": 256,
+					"whistle-fftsize": 512,
 					"whistle-frequency-minimum": 1000,
 					"whistle-frequency-maximum": 2000,
-					"whistle-energy-threshold": 0.5,
+					"whistle-energy-threshold": 0.01,
 					"whistle-interval-minimum": 1,
 					"whistle-interval-maximum": 5,
 					"recognition-interval": 50,
@@ -100,8 +100,8 @@ window.addEventListener("load", function() {
 						ELEMENT_LIBRARY["inputs-text"].focus()
 
 					// preload errors
-						ERROR_LIBRARY["noaction-index"] = window.FUNCTION_LIBRARY.chooseRandom(ERROR_LIBRARY["noaction-responses"])
-						ERROR_LIBRARY["error-index"]    = window.FUNCTION_LIBRARY.chooseRandom(ERROR_LIBRARY["error-responses"])
+						ERROR_LIBRARY["noaction-index"] = Math.floor(Math.random() * ERROR_LIBRARY["noaction-responses"].length)
+						ERROR_LIBRARY["error-index"]    = Math.floor(Math.random() * ERROR_LIBRARY["error-responses"].length)
 
 					// preload sounds
 						initializeSounds()
@@ -426,10 +426,11 @@ window.addEventListener("load", function() {
 						var frequency 	= AUDIO_LIBRARY.audio.sampleRate / FUNCTION_LIBRARY.getAverage(AUDIO_LIBRARY.input.wavelengths) / complexity
 
 					// if within range and enough energy
-						if (CONFIGURATION_LIBRARY.settings["whistle-frequency-minimum"] <= frequency && frequency <= CONFIGURATION_LIBRARY.settings["whistle-frequency-maximum"]
-							&& AUDIO_LIBRARY.input.minimum <= -CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] && CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] <= AUDIO_LIBRARY.input.maximum) {
-							// convert frequency to pitch
-								var pitch = 69 + 12 * Math.log2(frequency / 440)
+						if (complexity == 1 // simple waves are whistles
+							&& CONFIGURATION_LIBRARY.settings["whistle-frequency-minimum"] <= frequency && frequency <= CONFIGURATION_LIBRARY.settings["whistle-frequency-maximum"] // frequency within whistle range
+							&& AUDIO_LIBRARY.input.minimum <= -CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] && CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] <= AUDIO_LIBRARY.input.maximum) { // energy spikes above/below thresholds
+							// convert frequency to quantized pitch
+								var pitch = Math.round(69 + 12 * Math.log2(frequency / 440))
 						}
 						else {
 							var pitch = null
@@ -447,17 +448,19 @@ window.addEventListener("load", function() {
 							var biggest = -1000 // arbitrarily small
 							var smallest = 1000 // arbitrarily big
 							for (var i in AUDIO_LIBRARY.input.pitches) {
-								if (AUDIO_LIBRARY.input.pitches[i] > biggest) {
-									biggest = AUDIO_LIBRARY.input.pitches[i]
-								}
-								if (AUDIO_LIBRARY.input.pitches[i] < smallest) {
-									smallest = AUDIO_LIBRARY.input.pitches[i]
+								if (!AUDIO_LIBRARY.input.pitches[i]) {}
+								else {
+									if (AUDIO_LIBRARY.input.pitches[i] > biggest) {
+										biggest = AUDIO_LIBRARY.input.pitches[i]
+									}
+									if (AUDIO_LIBRARY.input.pitches[i] < smallest) {
+										smallest = AUDIO_LIBRARY.input.pitches[i]
+									}
 								}
 							}
-
 							var difference = Math.abs(biggest - smallest)
 
-							if (CONFIGURATION_LIBRARY.settings["whistle-interval-minimum"] < difference && difference < CONFIGURATION_LIBRARY.settings["whistle-interval-maximum"]) {
+							if (CONFIGURATION_LIBRARY.settings["whistle-interval-minimum"] <= difference && difference <= CONFIGURATION_LIBRARY.settings["whistle-interval-maximum"]) { // minor 2nd to perfect 4th
 								FUNCTION_LIBRARY.startRecognizing({chirp: true})
 							}
 						}
@@ -521,7 +524,7 @@ window.addEventListener("load", function() {
 
 					// chirp
 						var chirpDelay = 0
-						if (event.chirp && SOUND_LIBRARY.chirp) {
+						if (event && event.chirp && SOUND_LIBRARY.chirp) {
 							try {
 								SOUND_LIBRARY.chirp.pause()
 								SOUND_LIBRARY.chirp.currentTime = 0
@@ -698,8 +701,8 @@ window.addEventListener("load", function() {
 					else if (!action || !ACTION_LIBRARY[action]) {
 						action = ERROR_LIBRARY["noaction"]
 						var message = ERROR_LIBRARY["noaction-responses"][ERROR_LIBRARY["noaction-index"]]
-						ERROR_LIBRARY["noaction-index"] = (ERROR_LIBRARY["noaction-index"] == ERROR_LIBRARY["noaction-responses"].length - 1) ? 0 : (ERROR_LIBRARY["noaction-index"] + 1)
 
+						ERROR_LIBRARY["noaction-index"] = (ERROR_LIBRARY["noaction-index"] == ERROR_LIBRARY["noaction-responses"].length - 1) ? 0 : (ERROR_LIBRARY["noaction-index"] + 1)
 						var response = {icon: "&#x2753;", message: message, html: message, followup: followup}
 						createHistory(phrase, action, response)
 					}

@@ -7,6 +7,7 @@
 			"well thank you": 					"receive gratitude",
 			"well thanks": 						"receive gratitude",
 			"good job": 						"receive gratitude",
+			"excellent": 						"receive gratitude",
 			"excellent work": 					"receive gratitude",
 			"job well done": 					"receive gratitude",
 			"well done": 						"receive gratitude",
@@ -272,6 +273,10 @@
 			"get the wikipedia entry for": 		"get a wikipedia entry",
 			"on wikipedia find": 				"get a wikipedia entry",
 			"on wikipedia look up": 			"get a wikipedia entry",
+			"read the wikipedia page about": 	"get a wikipedia entry",
+			"read me the wikipedia page about": "get a wikipedia entry",
+			"read the wikipedia entry for": 	"get a wikipedia entry",
+			"read me the wikipedia entry for": 	"get a wikipedia entry",
 
 			"get this day in history": 			"get this day in history",
 			"what happened today in history": 	"get this day in history",
@@ -463,6 +468,7 @@
 			"on wink what is the situation": 	"get wink devices",
 			"on wink give me a status report": 	"get wink devices",
 			"on wink what is the temperature": 	"get wink devices",
+			"on wink whats the temperature": 	"get wink devices",
 			"on wink tell me the temperature": 	"get wink devices",
 			"on wink report": 					"get wink devices",
 			"on wink tell me the situation": 	"get wink devices",
@@ -1155,7 +1161,7 @@
 								// construct response link
 									var jokeLink = "https://icanhazdadjoke.com"
 									var jokeText = response.attachments[0].text
-									callback({icon: "&#x1f0cf;", message: jokeText, html: "<a target='_blank' href='" + jokeLink + "'>" + jokeText + "</a>"})
+									callback({icon: "&#x1f0cf;", message: jokeText, html: "<a target='_blank' href='" + jokeLink + "'><h2>" + jokeText + "</h2></a>"})
 							}
 							catch (error) {
 								callback({icon: "&#x1f0cf;", message: "I don't know any jokes.", html: "unable to access jokes"})
@@ -1178,7 +1184,7 @@
 										var quoteLink   = response.quoteLink
 										var quoteText   = response.quoteText
 										var quoteAuthor = response.quoteAuthor
-										callback({icon: "&#x1f399;", message: quoteAuthor + " said... " + quoteText, html: "<a target='_blank' href='" + quoteLink + "'>\"" + quoteText + "\" - " + quoteAuthor + "</a>"})
+										callback({icon: "&#x1f399;", message: quoteAuthor + " said... " + quoteText, html: "<a target='_blank' href='" + quoteLink + "'><h2>\"" + quoteText + "\" - " + quoteAuthor + "</h2></a>"})
 									}
 									else {
 										callback({icon: "&#x1f399;", message: "A wise man once said: the API didn't return any results.", html: "unable to access quotes"})
@@ -1206,7 +1212,7 @@
 								// construct response link
 									var fortuneLink = "https://fortunecookieapi.herokuapp.com/"
 									var fortuneText = fortune.message
-									callback({icon: "&#x1f4dc;", message: fortuneText, html: "<a target='_blank' href='" + fortuneLink + "'>" + fortuneText + "</a>"})
+									callback({icon: "&#x1f4dc;", message: fortuneText, html: "<a target='_blank' href='" + fortuneLink + "'><h2>" + fortuneText + "</h2></a>"})
 							}
 							catch (error) {
 								callback({icon: "&#x1f4dc;", message: "I don't know any fortunes.", html: "unable to access fortunes"})
@@ -1969,12 +1975,33 @@
 								window.FUNCTION_LIBRARY.changeConfiguration({key: "api.wink.com", value: value})
 
 							// response
+								var lightsOn = 0
+								var temperature = 0
+								var smoke = 0
+
 								var responseHTML = "Here are your Wink devices: <ul>"
 								for (var i in devices) {
 									responseHTML += "<li><b>" + devices[i].name + "</b> - [" + (devices[i].current_state || "") + "]<br>" + devices[i].model_name + "</li>"
+									if (devices[i].type == "light_bulb" && devices[i].current_state == "on") {
+										lightsOn++
+									}
+									else if (devices[i].type == "thermostat" && devices[i].current_state !== "disconnected") {
+										temperature = devices[i].current_state.replace("°F", "")
+									}
+									else if (devices[i].type == "smoke_detector" && devices[i].current_state !== "disconnected") {
+										if (devices[i].current_state.includes("smoke!") || devices[i].current_state.includes("CO!")) {
+											smoke = 1
+										}
+									}
 								}
 								responseHTML += "</ul>"
-								callback({icon: "&#x1f4a1;", message: "I detected " + Object.keys(devices).length + " devices on Wink.", html: responseHTML})
+								
+								var message = (smoke ? "The smoke detector has detected a threat. " : "") +
+									"I detected " + Object.keys(devices).length + " devices on Wink. " +
+									"The temperature is " + temperature + " degrees. " +
+									"There are " + lightsOn + " lights on."
+
+								callback({icon: "&#x1f4a1;", message: message, html: responseHTML})
 						})
 				} catch (error) {}
 			},
@@ -2146,7 +2173,7 @@
 								// construct response link
 									var redditLink = question.data.url
 									var redditText = question.data.title
-									callback({icon: "&#x1f4bb;", message: redditText, html: "<a target='_blank' href='" + redditLink + "'>" + redditText + "</a>"})
+									callback({icon: "&#x1f4bb;", message: redditText, html: "<a target='_blank' href='" + redditLink + "'><h2>" + redditText + "<h2></a>"})
 							}
 							catch (error) {
 								callback({icon: "&#x1f4bb;", message: "I don't have any questions.", html: "unable to ask reddit"})
@@ -2185,7 +2212,7 @@
 								// construct response link
 									var redditLink = question.data.url
 									var redditText = question.data.title
-									callback({icon: "&#x1f4bb;", message: redditText, html: "<a target='_blank' href='" + redditLink + "'>" + redditText + "</a>"})
+									callback({icon: "&#x1f4bb;", message: redditText, html: "<a target='_blank' href='" + redditLink + "'><h2>" + redditText + "</h2></a>"})
 							}
 							catch (error) {
 								callback({icon: "&#x1f4bb;", message: "I don't have any writing prompts.", html: "unable to query reddit"})
@@ -2248,7 +2275,7 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							if (!response.success) {
-								callback({icon: "&#2a37;", message: "I was unable to find the factors of " + remainder, html: "<h2>" + remainder + "</h2>unknown factors"})
+								callback({icon: "&#x2a37;", message: "I was unable to find the factors of " + remainder, html: "<h2>" + remainder + "</h2>" + response.message})
 							}
 							else {
 								var message = response.qualities.map(function(q) {
@@ -2280,7 +2307,7 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							if (!response.success) {
-								callback({icon: "&#x1f3b5;", message: "I was unable to do a chordal analysis of " + remainder, html: "<h2>" + remainder + "</h2>unknown chord"})
+								callback({icon: "&#x1f3b5;", message: "I was unable to do a chordal analysis of " + remainder, html: "<h2>" + remainder + "</h2>" + response.message})
 							}
 							else {
 								callback({icon: "&#x1f3b5;", message: response.smallOutput.replace(/\#/gi," sharp").replace(/b/g, " flat"), html: response.chord.join(" - ") + "<h2>" + response.bigOutput + "</h2>" + response.smallOutput})
@@ -2302,7 +2329,7 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							if (!response.success) {
-								callback({icon: "&#x1f500;", message: "I was unable to shuffle the word " + remainder, html: "<h2>" + remainder + "</h2>unable to shuffle word"})
+								callback({icon: "&#x1f500;", message: "I was unable to shuffle the word " + remainder, html: "<h2>" + remainder + "</h2>" + response.message})
 							}
 							else {
 								var wordList = []
