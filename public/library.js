@@ -317,6 +317,12 @@
 			"get nutrition facts": 				"get nutrition facts",
 			"get nutrition facts about": 		"get nutrition facts",
 			"get nutrition facts for": 			"get nutrition facts",
+			"get the nutrition facts": 			"get nutrition facts",
+			"get the nutrition facts about": 	"get nutrition facts",
+			"get the nutrition facts for": 		"get nutrition facts",
+			"give me the nutrition facts": 		"get nutrition facts",
+			"give me the nutrition facts about": "get nutrition facts",
+			"give me the nutrition facts for": 	"get nutrition facts",
 			"tell me about the dish": 			"get nutrition facts",
 			"tell me about the dish called": 	"get nutrition facts",
 			"tell me about a dish": 			"get nutrition facts",
@@ -351,6 +357,9 @@
 			"do a nutrition search": 			"get nutrition answer",
 			"do a nutrition search for": 		"get nutrition answer",
 			"do a nutrition search about": 		"get nutrition answer",
+			"i have a nutrition question": 		"get nutrition answer",
+			"let me ask a nutrition question": 	"get nutrition answer",
+			"heres a nutrition question": 		"get nutrition answer",
 
 		// Google Apps Script
 			"add to wish list": 				"edit wish list",
@@ -400,6 +409,28 @@
 			"whats on the calendar": 			"fetch calendar",
 			"what is happening": 				"fetch calendar",
 			"whats happening": 					"fetch calendar",
+
+			"log gratitude": 					"log gratitude",
+			"i feel grateful for": 				"log gratitude",
+			"i am grateful for": 				"log gratitude",
+			"i am feeling grateful for": 		"log gratitude",
+			"im grateful for": 					"log gratitude",
+			"im feeling grateful for": 			"log gratitude",
+			"today i feel grateful for": 		"log gratitude",
+			"today i am grateful for": 			"log gratitude",
+			"today i am feeling grateful for": 	"log gratitude",
+			"today im grateful for": 			"log gratitude",
+			"today im feeling grateful for": 	"log gratitude",
+			"i feel thankful for": 				"log gratitude",
+			"i am thankful for": 				"log gratitude",
+			"i am feeling thankful for": 		"log gratitude",
+			"im thankful for": 					"log gratitude",
+			"im feeling thankful for": 			"log gratitude",
+			"today i feel thankful for": 		"log gratitude",
+			"today i am thankful for": 			"log gratitude",
+			"today i am feeling thankful for": 	"log gratitude",
+			"today im thankful for": 			"log gratitude",
+			"today im feeling thankful for": 	"log gratitude",
 
 		// Google APIs
 			"search google": 					"search google",
@@ -1694,6 +1725,25 @@
 								var responseLink = "https://calendar.google.com"
 								var responseText = response.message
 								callback({icon: "&#x1f4c5;", message: response.message + " " + eventList.join("..."),html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a><ul>" + eventItems.join("") + "</ul>"})
+						})
+				} catch (error) {}
+			},
+			"log gratitude": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google apps script 2"]) {
+							callback({icon: "&#x1F33B;", message: "I'm not authorized to do that yet. Set a configuration for google apps script 2.", html: "missing configuration: <b>google apps script 2</b>"})
+							return
+						}
+
+					// build options
+						var options = {
+							url: window.CONFIGURATION_LIBRARY["google apps script 2"] + "&text=" + remainder.trim()
+						}
+						
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							callback({icon: "&#x1F33B;", message: response.message, html: response.message})
 						})
 				} catch (error) {}
 			},
