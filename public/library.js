@@ -169,6 +169,17 @@
 			"flip a coin": 						"flip a coin",
 			"heads or tails": 					"flip a coin",
 
+			"consult the magic 8 ball": 		"consult the magic 8 ball",
+			"shake the magic 8 ball": 			"consult the magic 8 ball",
+			"ask the magic 8 ball": 			"consult the magic 8 ball",
+			"magic 8 ball": 					"consult the magic 8 ball",
+			"consult the magic 8-ball": 		"consult the magic 8 ball",
+			"shake the magic 8-ball": 			"consult the magic 8 ball",
+			"ask the magic 8-ball": 			"consult the magic 8 ball",
+			"magic 8-ball": 					"consult the magic 8 ball",
+			"magic conch": 						"consult the magic 8 ball",
+			"read my future": 					"consult the magic 8 ball",
+
 		// math
 			"calculate": 						"calculate",
 			"lets do some math": 				"calculate",
@@ -192,7 +203,24 @@
 			"lets count": 						"count",
 			"give me a count": 					"count",
 
-		// word API fetches
+		// words
+			"spell word": 						"spell word",
+			"spell a word": 					"spell word",
+			"spell the word": 					"spell word",
+			"how do you spell": 				"spell word",
+			"how do you spell the word": 		"spell word",
+			"can you spell": 					"spell word",
+			"can you spell the word": 			"spell word",
+			"what is the spelling of": 			"spell word",
+			"whats the spelling of": 			"spell word",
+			"tell me how to spell": 			"spell word",
+			"tell me how to spell the word": 	"spell word",
+			"tell me the spelling of": 			"spell word",
+			"tell me the spelling for": 		"spell word",
+			"tell me the spelling of the word": "spell word",
+			"tell me the spelling for the word": "spell word",
+
+			"find rhymes": 						"find rhymes",
 			"what rhymes with": 				"find rhymes",
 			"find a rhyme for": 				"find rhymes",
 			"find rhymes for": 					"find rhymes",
@@ -201,6 +229,7 @@
 			"rhymes with": 						"find rhymes",
 			"something that rhymes with": 		"find rhymes",
 
+			"find synonyms": 					"find synonyms",
 			"what is a synonym for": 			"find synonyms",
 			"find a synonym for": 				"find synonyms",
 			"find synonyms for": 				"find synonyms",
@@ -209,6 +238,7 @@
 			"synonym of": 						"find synonyms",
 			"what has the same meaning as": 	"find synonyms",
 
+			"find definition": 					"find definition",
 			"find a definition for": 			"find definition",
 			"find definition for": 				"find definition",
 			"find the meaning of": 				"find definition",
@@ -262,6 +292,28 @@
 			"tell me a fortune": 				"get a fortune",
 			"fetch a fortune": 					"get a fortune",
 			"fetch me a fortune": 				"get a fortune",
+
+			"get an insult": 					"get an insult",
+			"insult me": 						"get an insult",
+			"disrespect me": 					"get an insult",
+			"dis me": 							"get an insult",
+			"diss me": 							"get an insult",
+			"your mother": 						"get an insult",
+			"your mothers": 					"get an insult",
+			"youre mother": 					"get an insult",
+			"youre mothers": 					"get an insult",
+			"your mom": 						"get an insult",
+			"your moms": 						"get an insult",
+			"youre mom": 						"get an insult",
+			"youre moms": 						"get an insult",
+			"your mama": 						"get an insult",
+			"your mamas": 						"get an insult",
+			"youre mama": 						"get an insult",
+			"youre mamas": 						"get an insult",
+			"yo mama": 							"get an insult",
+			"yo mamas": 						"get an insult",
+			"yo momma": 						"get an insult",
+			"yo mommas": 						"get an insult",
 
 			"get a wikipedia entry": 			"get a wikipedia entry",
 			"on wikipedia, look up": 			"get a wikipedia entry",
@@ -976,6 +1028,13 @@
 					callback({icon: "&#x1f3b2;", message: response, html: "coin: " + response})
 				} catch (error) {}
 			},
+			"consult the magic 8 ball": function(remainder, callback) {
+				try {
+					var options = ["It is certain", "It is decidedly so", "Without a doubt", "Yes - definitely", "You may rely on it", "As I see it, yes", "Most likely", "Outlook good", "Yes", "Signs point to yes", "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good", "Very doubtful", "Reply hazy, try again", "Ask again later", "Better not tell you now", "Cannot predict now", "Concentrate and ask again"]
+					var response = window.FUNCTION_LIBRARY.chooseRandom(options)
+					callback({icon: "&#x1f3b1;", message: response, html: remainder + "<h2>" + response + "</h2>"})
+				} catch (error) {}
+			},
 		
 		// math
 			"calculate": function(remainder, callback) {
@@ -1124,7 +1183,15 @@
 				} catch (error) {}
 			},
 
-		// word API fetches
+		// words
+			"spell word": function(remainder, callback) {
+				try {
+					var word = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim().toUpperCase()
+					var letters = word.split("")
+					callback({icon: "&#x1f4dd;", message: word + "... " + letters.join(", "), html: "<h2>" + letters.join(" - ") + "</h2>"})
+				}
+				catch (error) {}
+			},			
 			"find rhymes": function(remainder, callback) {
 				try {
 					// options
@@ -1288,6 +1355,20 @@
 							}
 						})
 				} catch (error) {}
+			},
+			"get an insult": function(remainder, callback) {
+				try {
+					// options
+						var options = {
+							url: "https://jokes.guyliangilsing.me/retrieveJokes.php?type=yomama"
+						}
+
+					// proxy request
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							callback({icon: "&#128293;", message: response.joke, html: "<h2>" + response.joke + "</h2>"})
+						})
+				}
+				catch (error) {}
 			},
 			"get a wikipedia entry": function(remainder, callback) {
 				try {
