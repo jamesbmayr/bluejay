@@ -170,10 +170,12 @@
 			"heads or tails": 					"flip a coin",
 
 			"consult the magic 8 ball": 		"consult the magic 8 ball",
+			"consult a magic 8 ball": 			"consult the magic 8 ball",
 			"shake the magic 8 ball": 			"consult the magic 8 ball",
 			"ask the magic 8 ball": 			"consult the magic 8 ball",
 			"magic 8 ball": 					"consult the magic 8 ball",
 			"consult the magic 8-ball": 		"consult the magic 8 ball",
+			"consult a magic 8-ball": 			"consult the magic 8 ball",
 			"shake the magic 8-ball": 			"consult the magic 8 ball",
 			"ask the magic 8-ball": 			"consult the magic 8 ball",
 			"magic 8-ball": 					"consult the magic 8 ball",
@@ -205,6 +207,7 @@
 
 		// words
 			"spell word": 						"spell word",
+			"spell": 							"spell word",
 			"spell a word": 					"spell word",
 			"spell the word": 					"spell word",
 			"how do you spell": 				"spell word",
@@ -292,6 +295,8 @@
 			"tell me a fortune": 				"get a fortune",
 			"fetch a fortune": 					"get a fortune",
 			"fetch me a fortune": 				"get a fortune",
+			"what is my fortune": 				"get a fortune",
+			"whats my fortune": 				"get a fortune",
 
 			"get an insult": 					"get an insult",
 			"insult me": 						"get an insult",
@@ -461,6 +466,151 @@
 			"whats on the calendar": 			"fetch calendar",
 			"what is happening": 				"fetch calendar",
 			"whats happening": 					"fetch calendar",
+
+			"get a list": 						"get a list",
+			"get my list": 						"get a list",
+			"get the list": 					"get a list",
+			"get a list named": 				"get a list",
+			"get my list named": 				"get a list",
+			"get the list named": 				"get a list",
+			"get a list called": 				"get a list",
+			"get my list called": 				"get a list",
+			"get the list called": 				"get a list",
+			"fetch a list": 					"get a list",
+			"fetch my list": 					"get a list",
+			"fetch the list": 					"get a list",
+			"fetch a list named": 				"get a list",
+			"fetch my list named": 				"get a list",
+			"fetch the list named": 			"get a list",
+			"fetch a list called": 				"get a list",
+			"fetch my list called": 			"get a list",
+			"fetch the list called": 			"get a list",
+
+			"add an item to a list": 			"add an item to a list",
+			"add an item to the": 				"add an item to a list",
+			"add an item to my": 				"add an item to a list",
+			"add an item to": 					"add an item to a list",
+			"add a task to a list": 			"add an item to a list",
+			"add a task to the": 				"add an item to a list",
+			"add a task to my": 				"add an item to a list",
+			"add a task to": 					"add an item to a list",
+			"add this to": 						"add an item to a list",
+			"add this to the": 					"add an item to a list",
+			"add this to my": 					"add an item to a list",
+			"add to my": 						"add an item to a list",
+			"add to": 							"add an item to a list",
+			"add something to": 				"add an item to a list",
+			"add something to the": 			"add an item to a list",
+			"add something to my": 				"add an item to a list",
+			"uncheck this on the": 				"add an item to a list",
+			"uncheck this on my": 				"add an item to a list",
+			"uncheck this on": 					"add an item to a list",
+			"uncheck this from the": 			"add an item to a list",
+			"uncheck this from my": 			"add an item to a list",
+			"uncheck this from": 				"add an item to a list",
+			"uncheck an item on the": 			"add an item to a list",
+			"uncheck an item on my": 			"add an item to a list",
+			"uncheck an item on": 				"add an item to a list",
+			"uncheck a task on the": 			"add an item to a list",
+			"uncheck a task on my": 			"add an item to a list",
+			"uncheck a task on": 				"add an item to a list",
+			"uncheck something from a list": 	"add an item to a list",
+			"log an item on": 					"add an item to a list",
+			"log an item on the": 				"add an item to a list",
+			"log a task on my": 				"add an item to a list",
+			"log a task on": 					"add an item to a list",
+			"log a task on the": 				"add an item to a list",
+			"log a task on my": 				"add an item to a list",
+
+			"get contacts": 					"get contacts",
+			"get contacts named": 				"get contacts",
+			"get contacts with the name": 		"get contacts",
+			"get contacts by the name": 		"get contacts",
+			"get a contact": 					"get contacts",
+			"get a named": 						"get contacts",
+			"get all contacts named": 			"get contacts",
+			"get all contacts with the name": 	"get contacts",
+			"search for contacts named": 		"get contacts",
+			"search for contacts with the name": "get contacts",
+			"search for contacts by the name": 	"get contacts",
+			"search for contacts called": 		"get contacts",
+			"look up a contact named": 			"get contacts",
+			"look up a contact with the name": 	"get contacts",
+			"look up contacts named": 			"get contacts",
+			"look up contacts with the name": 	"get contacts",
+			"look up contacts by the name": 	"get contacts",
+			"look up contacts containing": 		"get contacts",
+			"look up contacts whose names include": "get contacts",
+			"find contacts whose names include": "get contacts",
+			"find a contact": 					"get contacts",
+			"find a contact named": 			"get contacts",
+			"find a contact with the name": 	"get contacts",
+			"find contacts named": 				"get contacts",
+			"find contacts with the name": 		"get contacts",
+
+			"get birthday": 					"get birthday",
+			"get birthday for": 				"get birthday",
+			"get birthday of": 					"get birthday",
+			"get the birthday": 				"get birthday",
+			"get the birthday for": 			"get birthday",
+			"get the birthday of": 				"get birthday",
+			"look up the birthday": 			"get birthday",
+			"look up the birthday for": 		"get birthday",
+			"look up the birthday of": 			"get birthday",
+			"when is the birthday": 			"get birthday",
+			"when is the birthday for": 		"get birthday",
+			"when is the birthday of": 			"get birthday",
+
+			"get phone number": 				"get phone number",
+			"get phone number for": 			"get phone number",
+			"get phone number of": 				"get phone number",
+			"get the phone number": 			"get phone number",
+			"get the phone number for": 		"get phone number",
+			"get the phone number of": 			"get phone number",
+			"look up the phone number": 		"get phone number",
+			"look up the phone number for": 	"get phone number",
+			"look up the phone number of": 		"get phone number",
+			"when is the phone number": 		"get phone number",
+			"when is the phone number for": 	"get phone number",
+			"when is the phone number of": 		"get phone number",
+
+			"get email": 						"get email",
+			"get email for": 					"get email",
+			"get email of": 					"get email",
+			"get the email": 					"get email",
+			"get the email for": 				"get email",
+			"get the email of": 				"get email",
+			"look up the email": 				"get email",
+			"look up the email for": 			"get email",
+			"look up the email of": 			"get email",
+			"when is the email": 				"get email",
+			"when is the email for": 			"get email",
+			"when is the email of": 			"get email",
+			"get email address": 				"get email",
+			"get email address for": 			"get email",
+			"get email address of": 			"get email",
+			"get the email address": 			"get email",
+			"get the email address for": 		"get email",
+			"get the email address of": 		"get email",
+			"look up the email address": 		"get email",
+			"look up the email address for": 	"get email",
+			"look up the email address of": 	"get email",
+			"when is the email address": 		"get email",
+			"when is the email address for": 	"get email",
+			"when is the email address of": 	"get email",
+
+			"get address": 						"get address",
+			"get address for": 					"get address",
+			"get address of": 					"get address",
+			"get the address": 					"get address",
+			"get the address for": 				"get address",
+			"get the address of": 				"get address",
+			"look up the address": 				"get address",
+			"look up the address for": 			"get address",
+			"look up the address of": 			"get address",
+			"when is the address": 				"get address",
+			"when is the address for": 			"get address",
+			"when is the address of": 			"get address",
 
 			"log gratitude": 					"log gratitude",
 			"i feel grateful for": 				"log gratitude",
@@ -1680,7 +1830,7 @@
 				try {
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({icon: "&#x1f4d6;", message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: "&#x1f4dd;", message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
 							return
 						}
 
@@ -1703,7 +1853,7 @@
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							var responseHTML = "<ul><li><b>item: </b>" + response.item + "</li><li><b>cost: </b>" + response.cost + "</li><li><b>type: </b>" + response.type + "</li></ul>" 
-							callback({icon: "&#x1f4d6;", message: response.message, html: responseHTML})
+							callback({icon: "&#x1f4dd;", message: response.message, html: responseHTML})
 						})
 				} catch (error) {}
 			},
@@ -1808,6 +1958,575 @@
 								callback({icon: "&#x1f4c5;", message: response.message + " " + eventList.join("..."),html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a><ul>" + eventItems.join("") + "</ul>"})
 						})
 				} catch (error) {}
+			},
+			"get a list": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
+							callback({icon: "&#x1f4dd;", message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							return
+						}
+
+					// build options
+						var list = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").toLowerCase().trim() || null
+						var options = {
+							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getList" + (list ? ("&list=" + list) : "")
+						}
+						
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							// not successful?
+								if (!response.success) {
+									callback({icon: "&#x1f4dd;", message: "I was unable to get " + (list ? list : " your list"), html: "unable to get list: <b>" + remainder + "</b>"})
+									return
+								}
+
+							// create structured list
+								var structuredItems = {}
+								if (response.list) {
+									var i = 0
+									while (response.list.length) {
+										if (i == response.list.length) {
+											i = 0
+										}
+
+										var item = response.list[i]
+										if (!item.parent) {
+											structuredItems[item.id] = item
+											response.list.splice(i, 1)
+											i--
+										}
+										else if (structuredItems[item.parent]) {
+											if (!structuredItems[item.parent].children) {
+												structuredItems[item.parent].children = {}
+											}
+											structuredItems[item.parent].children[item.id] = item
+											response.list.splice(i, 1)
+											i--
+										}
+										else if (!response.list.find(function(x) { return x.id == item.parent })) {
+											structuredItems[item.id] = item
+											response.list.splice(i, 1)
+											i--
+										}
+										i++
+									}
+								}
+
+							// create 2-level html list
+								var structuredItemKeys = Object.keys(structuredItems)
+								structuredItemKeys = structuredItemKeys.sort(function(a, b) {
+									return Number(structuredItems[a].position) - Number(structuredItems[b].position)
+								})
+
+								var message = ""
+								var responseHTML = "<ul>"
+								for (var i in structuredItemKeys) {
+									var item = structuredItems[structuredItemKeys[i]]
+
+									responseHTML += "<li><b>" + item.title + "</b>"
+									message += item.title + " ... "
+
+									if (item.due) {
+										responseHTML += "<br>" + new Date(new Date(item.due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString()
+										message += new Date(new Date(item.due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString() + " ... "
+									}
+									if (item.notes) {
+										responseHTML += "<br>" + item.notes
+										message += item.notes + " ... "
+									}
+
+									if (item.children) {
+										responseHTML += "<ul>"
+										for (var j in item.children) {
+											responseHTML += "<li><b>" + item.children[j].title + "</b>"
+											message += item.children[j].title + " ... "
+
+											if (item.children[j].due) {
+												responseHTML += "<br>" + new Date(new Date(item.children[j].due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString()
+												message += new Date(new Date(item.children[j].due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString() + " ... "
+											}
+											if (item.children[j].notes) {
+												responseHTML += "<br>" + item.children[j].notes
+												message += item.children[j].notes + " ... "
+											}
+											responseHTML += "</li>"
+										}
+										responseHTML += "</ul>"
+									}
+
+									responseHTML += "</li>"
+								}
+								responseHTML += "<ul>"
+
+							// send response
+								callback({icon: "&#x1f4dd;", message: response.listName + " ... " + message, html: "<h2>" + response.listName + "</h2>" + responseHTML})
+						})
+				}
+				catch (error) {}
+			},
+			"add an item to a list": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
+							callback({icon: "&#x1f4dd;", message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							return
+						}
+
+					// split at keywords
+						remainder = " " + remainder
+						var components = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ list | list\: /gi)
+						var list = components[0].toLowerCase().trim() || ""
+						var task = components[1] ? components[1] : components[0]
+
+					// no task?
+						if (!task) {
+							callback({icon: "&#x1f4dd;", message: "I couldn't identify that item.", html: "missing or invalid item: <b>" + remainder + "</b>"})
+							return
+						}
+
+					// build options
+						var options = {
+							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=addTask" + (list ? "&list=" + list : "") + "&task=" + task
+						}
+						
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							// not successful?
+								if (!response.success) {
+									callback({icon: "&#x1f4dd;", message: "I was unable to add " + task + " to " + (list ? list : " your list"), html: "unable to add item to list: <b>" + remainder + "</b>"})
+									return
+								}
+
+							// create structured list
+								var structuredItems = {}
+								if (response.list) {
+									var i = 0
+									while (response.list.length) {
+										if (i == response.list.length) {
+											i = 0
+										}
+
+										var item = response.list[i]
+										if (!item.parent) {
+											structuredItems[item.id] = item
+											response.list.splice(i, 1)
+											i--
+										}
+										else if (structuredItems[item.parent]) {
+											if (!structuredItems[item.parent].children) {
+												structuredItems[item.parent].children = {}
+											}
+											structuredItems[item.parent].children[item.id] = item
+											response.list.splice(i, 1)
+											i--
+										}
+										else if (!response.list.find(function(x) { return x.id == item.parent })) {
+											structuredItems[item.id] = item
+											response.list.splice(i, 1)
+											i--
+										}
+										i++
+									}
+								}
+
+							// create 2-level html list
+								var structuredItemKeys = Object.keys(structuredItems)
+								structuredItemKeys = structuredItemKeys.sort(function(a, b) {
+									return Number(structuredItems[a].position) - Number(structuredItems[b].position)
+								})
+
+								var responseHTML = "<ul>"
+								for (var i in structuredItemKeys) {
+									var item = structuredItems[structuredItemKeys[i]]
+
+									responseHTML += "<li><b>" + item.title + "</b>"
+									if (item.due) {
+										responseHTML += "<br>" + new Date(new Date(item.due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString()
+									}
+									if (item.notes) {
+										responseHTML += "<br>" + item.notes
+									}
+
+									if (item.children) {
+										responseHTML += "<ul>"
+										for (var j in item.children) {
+											responseHTML += "<li><b>" + item.children[j].title + "</b>"
+											if (item.children[j].due) {
+												responseHTML += "<br>" + new Date(new Date(item.children[j].due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString()
+											}
+											if (item.children[j].notes) {
+												responseHTML += "<br>" + item.children[j].notes
+											}
+											responseHTML += "</li>"
+										}
+										responseHTML += "</ul>"
+									}
+
+									responseHTML += "</li>"
+								}
+								responseHTML += "<ul>"
+
+							// send response
+								callback({icon: "&#x1f4dd;", message: "I added " + task + " to " + response.listName, html: "<h2>" + response.listName + "</h2>" + responseHTML})
+						})
+				}
+				catch (error) {}
+			},
+			"get contacts": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
+							callback({icon: "&#x1f464;", message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							return
+						}
+
+					// no remainder?
+						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
+						if (!remainder) {
+							callback({icon: "&#x1f464;", message: "I need a name to search for.", html: "missing or invalid name: <b>" + remainder + "</b>"})
+							return	
+						}
+
+					// build options
+						var options = {
+							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getContacts&name=" + remainder
+						}
+
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							// not successful?
+								if (!response.success) {
+									callback({icon: "&#x1f464;", message: "I was unable to find " + remainder, html: "unable to find contact: <b>" + remainder + "</b>"})
+									return
+								}
+
+							// possibilities
+								var message = ""
+								var responseHTML = "<ul>"
+								for (var i in response.list) {
+									var contact = response.list[i]
+									var name = (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : "")
+									message += name + " ... "
+
+									responseHTML += "<li><b>" + name + "</b>"
+									
+									if (contact.emails && Array.isArray(contact.emails) && contact.emails.length) {
+										responseHTML += "<ul>"
+										for (var j in contact.emails) {
+											responseHTML += "<li><a target='_blank' href='mailto:" + contact.emails[j].value + "'>" + (contact.emails[j].label ? contact.emails[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.emails[j].value + "</a></li>"
+										}
+										responseHTML += "</ul>"
+									}
+
+									if (contact.phoneNumbers && Array.isArray(contact.phoneNumbers) && contact.phoneNumbers.length) {
+										responseHTML += "<ul>"
+										for (var j in contact.phoneNumbers) {
+											responseHTML += "<li><a target='_blank' href='tel:" + contact.phoneNumbers[j].value + "'>" + (contact.phoneNumbers[j].label ? contact.phoneNumbers[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.phoneNumbers[j].value + "</a></li>"
+										}
+										responseHTML += "</ul>"
+									}
+
+									if (contact.addresses && Array.isArray(contact.addresses) && contact.addresses.length) {
+										responseHTML += "<ul>"
+										for (var j in contact.addresses) {
+											responseHTML += "<li><a target='_blank' href='https://maps.google.com?q=" + contact.addresses[j].value + "'>" + (contact.addresses[j].label ? contact.addresses[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.addresses[j].value + "</a></li>"
+										}
+										responseHTML += "</ul>"
+									}
+
+									if (contact.dates && Array.isArray(contact.dates) && contact.dates.length) {
+										responseHTML += "<ul>"
+										for (var j in contact.dates) {
+											responseHTML += "<li>" + (contact.dates[j].label ? contact.dates[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.dates[j].value + "</li>"
+										}
+										responseHTML += "</ul>"
+									}
+
+									if (contact.urls && Array.isArray(contact.urls) && contact.urls.length) {
+										responseHTML += "<ul>"
+										for (var j in contact.urls) {
+											responseHTML += "<li><a target='_blank' href='" + contact.urls[j].value + "'>" + (contact.urls[j].label ? contact.urls[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.urls[j].value + "</a></li>"
+										}
+										responseHTML += "</ul>"
+									}
+									
+									responseHTML += "</li>"
+								}
+								responseHTML += "</ul>"
+
+							// send response
+								callback({icon: "&#x1f464;", message: "I found " + response.list.length + (response.list.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + "</h2>" + responseHTML})
+						})
+				}
+				catch (error) {}
+			},
+			"get birthday": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
+							callback({icon: "&#x1f464;", message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							return
+						}
+
+					// no remainder?
+						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
+						if (!remainder) {
+							callback({icon: "&#x1f464;", message: "I need a name to search for.", html: "missing or invalid name: <b>" + remainder + "</b>"})
+							return	
+						}
+
+					// build options
+						var options = {
+							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getContacts&name=" + remainder
+						}
+
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							// not successful?
+								if (!response.success) {
+									callback({icon: "&#x1f464;", message: "I was unable to find " + remainder, html: "unable to find contact: <b>" + remainder + "</b>"})
+									return
+								}
+
+							// extract birthdays
+								var people = []
+								for (var i in response.list) {
+									var contact = response.list[i]
+									people[i] = {
+										name: (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : ""),
+										birthday: "unknown"
+									}
+									if (contact.dates && Array.isArray(contact.dates) && contact.dates.length) {
+										for (var j in contact.dates) {
+											if (contact.dates[j].label.toLowerCase() == "birthday") {
+												people[i].birthday = contact.dates[j].value
+											}
+										}
+									}
+								}
+
+							// message
+								var message = ""
+								var responseHTML = "<ul>"
+								for (var i in people) {
+									message += people[i].name + "'s birthday is " + people[i].birthday + " ... "
+									responseHTML += "<li><b>" + people[i].name + "</b><br>birthday: " + people[i].birthday + "</li>"
+								}
+								responseHTML += "</ul>"
+
+							// send response
+								callback({icon: "&#x1f464;", message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " birthdays</h2>" + responseHTML})
+						})
+				}
+				catch (error) {}
+			},
+			"get phone number": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
+							callback({icon: "&#x1f464;", message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							return
+						}
+
+					// no remainder?
+						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
+						if (!remainder) {
+							callback({icon: "&#x1f464;", message: "I need a name to search for.", html: "missing or invalid name: <b>" + remainder + "</b>"})
+							return	
+						}
+
+					// build options
+						var options = {
+							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getContacts&name=" + remainder
+						}
+
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							// not successful?
+								if (!response.success) {
+									callback({icon: "&#x1f464;", message: "I was unable to find " + remainder, html: "unable to find contact: <b>" + remainder + "</b>"})
+									return
+								}
+
+							// extract birthdays
+								var people = []
+								for (var i in response.list) {
+									var contact = response.list[i]
+									people[i] = {
+										name: (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : ""),
+										phoneNumbers: []
+									}
+									if (contact.phoneNumbers && Array.isArray(contact.phoneNumbers) && contact.phoneNumbers.length) {
+										for (var j in contact.phoneNumbers) {
+											people[i].phoneNumbers[j] = {
+												value: contact.phoneNumbers[j].value,
+												label: contact.phoneNumbers[j].label ? contact.phoneNumbers[j].label.toLowerCase().replace(/\_/g, " ") : null
+											}
+										}
+									}
+								}
+
+							// message
+								var message = ""
+								var responseHTML = "<ul>"
+								for (var i in people) {
+									responseHTML += "<li><b>" + people[i].name + "</b><br>"
+									if (people[i].phoneNumbers.length) {
+										responseHTML += "<ul>"
+										for (var j in people[i].phoneNumbers) {
+											message += people[i].name + "'s " + (people[i].phoneNumbers[j].label ? people[i].phoneNumbers[j].label : "phone number") + " is " + people[i].phoneNumbers[j].value + " ... "
+											responseHTML += "<li><a target='_blank' href='tel:" + people[i].phoneNumbers[j].value + "'>" + (people[i].phoneNumbers[j].label ? (people[i].phoneNumbers[j].label + ": ") : "") + people[i].phoneNumbers[j].value + "</a></li>"
+										}
+										responseHTML += "</ul>"
+									}
+									responseHTML += "</li>"
+								}
+								responseHTML += "</ul>"
+
+							// send response
+								callback({icon: "&#x1f464;", message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " phone numbers</h2>" + responseHTML})
+						})
+				}
+				catch (error) {}
+			},
+			"get email": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
+							callback({icon: "&#x1f464;", message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							return
+						}
+
+					// no remainder?
+						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
+						if (!remainder) {
+							callback({icon: "&#x1f464;", message: "I need a name to search for.", html: "missing or invalid name: <b>" + remainder + "</b>"})
+							return	
+						}
+
+					// build options
+						var options = {
+							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getContacts&name=" + remainder
+						}
+
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							// not successful?
+								if (!response.success) {
+									callback({icon: "&#x1f464;", message: "I was unable to find " + remainder, html: "unable to find contact: <b>" + remainder + "</b>"})
+									return
+								}
+
+							// extract birthdays
+								var people = []
+								for (var i in response.list) {
+									var contact = response.list[i]
+									people[i] = {
+										name: (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : ""),
+										emails: []
+									}
+									if (contact.emails && Array.isArray(contact.emails) && contact.emails.length) {
+										for (var j in contact.emails) {
+											people[i].emails[j] = {
+												value: contact.emails[j].value,
+												label: contact.emails[j].label ? contact.emails[j].label.toLowerCase().replace(/\_/g, " ") : null
+											}
+										}
+									}
+								}
+
+							// message
+								var message = ""
+								var responseHTML = "<ul>"
+								for (var i in people) {
+									responseHTML += "<li><b>" + people[i].name + "</b><br>"
+									if (people[i].emails.length) {
+										responseHTML += "<ul>"
+										for (var j in people[i].emails) {
+											message += people[i].name + "'s " + (people[i].emails[j].label ? people[i].emails[j].label : "email") + " is " + people[i].emails[j].value + " ... "
+											responseHTML += "<li><a target='_blank' href='mailto:" + people[i].emails[j].value + "'>" + (people[i].emails[j].label ? (people[i].emails[j].label + ": ") : "") + people[i].emails[j].value + "</a></li>"
+										}
+										responseHTML += "</ul>"
+									}
+									responseHTML += "</li>"
+								}
+								responseHTML += "</ul>"
+
+							// send response
+								callback({icon: "&#x1f464;", message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " emails</h2>" + responseHTML})
+						})
+				}
+				catch (error) {}
+			},
+			"get address": function(remainder, callback) {
+				try {
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
+							callback({icon: "&#x1f464;", message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							return
+						}
+
+					// no remainder?
+						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
+						if (!remainder) {
+							callback({icon: "&#x1f464;", message: "I need a name to search for.", html: "missing or invalid name: <b>" + remainder + "</b>"})
+							return	
+						}
+
+					// build options
+						var options = {
+							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getContacts&name=" + remainder
+						}
+
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							// not successful?
+								if (!response.success) {
+									callback({icon: "&#x1f464;", message: "I was unable to find " + remainder, html: "unable to find contact: <b>" + remainder + "</b>"})
+									return
+								}
+
+							// extract birthdays
+								var people = []
+								for (var i in response.list) {
+									var contact = response.list[i]
+									people[i] = {
+										name: (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : ""),
+										addresses: []
+									}
+									if (contact.addresses && Array.isArray(contact.addresses) && contact.addresses.length) {
+										for (var j in contact.addresses) {
+											people[i].addresses[j] = {
+												value: contact.addresses[j].value,
+												label: contact.addresses[j].label ? contact.addresses[j].label.toLowerCase().replace(/\_/g, " ") : null
+											}
+										}
+									}
+								}
+
+							// message
+								var message = ""
+								var responseHTML = "<ul>"
+								for (var i in people) {
+									responseHTML += "<li><b>" + people[i].name + "</b><br>"
+									if (people[i].addresses.length) {
+										responseHTML += "<ul>"
+										for (var j in people[i].addresses) {
+											message += people[i].name + "'s " + (people[i].addresses[j].label ? people[i].addresses[j].label : "address") + " is " + people[i].addresses[j].value + " ... "
+											responseHTML += "<li><a target='_blank' href='https://maps.google.com/?q=" + people[i].addresses[j].value + "'>" + (people[i].addresses[j].label ? (people[i].addresses[j].label + ": ") : "") + people[i].addresses[j].value + "</a></li>"
+										}
+										responseHTML += "</ul>"
+									}
+									responseHTML += "</li>"
+								}
+								responseHTML += "</ul>"
+
+							// send response
+								callback({icon: "&#x1f464;", message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " addresses</h2>" + responseHTML})
+						})
+				}
+				catch (error) {}
 			},
 			"log gratitude": function(remainder, callback) {
 				try {
@@ -2159,7 +2878,6 @@
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							console.log(response.data)
 							// devices
 								var devices = {}
 								for (var i in response.data) {
