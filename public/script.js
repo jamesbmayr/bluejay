@@ -800,7 +800,7 @@ window.addEventListener("load", function() {
 				// loop through timers to check (and send a message)
 					for (var i = 0; i < CONTEXT_LIBRARY.alarms.length; i++) {
 						if (CONTEXT_LIBRARY.alarms[i] <= timeNow) {
-							createHistory("-", "time's up", {icon: "&#x23F0;", message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "The time is now <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b>.", followup: false})
+							createHistory("...", "time's up", {icon: "&#x23F0;", message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "The time is now <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b>.", followup: false})
 							CONTEXT_LIBRARY.alarms.splice(i, 1)
 							i--
 						}
