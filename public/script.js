@@ -946,8 +946,16 @@ window.addEventListener("load", function() {
 				// set action for server
 					options.action = "proxyRequest"
 
-				// create request object and send to server
-					sendPost(options, callback)
+				// set timeout
+					var timeout = setTimeout(function() {
+						FUNCTION_LIBRARY.createHistory("...", "API request", {icon: "&#x231b;", message: "I'm fetching that now.", html: "querying the API...", followup: false})
+					}, CONFIGURATION_LIBRARY.settings["fetch-interval"])
+
+				// create request object and send to server, then clear timeout on response
+					sendPost(options, function(response) {
+						if (timeout) { clearInterval(timeout) }
+						callback(response)
+					})
 			}
 
 		/* fetchPeriodically */

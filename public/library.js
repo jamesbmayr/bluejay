@@ -347,6 +347,7 @@
 			"whats happening in the world": 	"get the headlines",
 			"what is happening in the world": 	"get the headlines",
 			"get the top stories": 				"get the headlines",
+			"get the news": 					"get the headlines",
 			"get me the news": 					"get the headlines",
 			"give me the news": 				"get the headlines",
 			"fetch the news": 					"get the headlines",
@@ -1597,9 +1598,6 @@
 			},
 			"get the headlines": function(remainder, callback) {
 				try {
-					// initial callback
-						callback({icon: "&#x1f4f0;", message: "Let me fetch the latest news.", html: "querying the New York Times..."})
-
 					// options
 						var options = {
 							url: "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
