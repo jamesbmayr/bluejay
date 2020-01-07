@@ -76,6 +76,13 @@
 			"i didnt catch that": 				"repeat that",
 
 		// settings
+			"stop listening": 					"stop listening",
+			"stop listening to me": 			"stop listening",
+			"quit listening": 					"stop listening",
+			"quit listening to me": 			"stop listening",
+			"cease listening": 					"stop listening",
+			"cease listening to me": 			"stop listening",
+
 			"change voice to": 					"change voice",
 			"change the voice to": 				"change voice",
 			"set voice to": 					"change voice",
@@ -153,12 +160,65 @@
 			"whats the date": 					"get the date",
 			"tell me the date": 				"get the date",
 
+		// alarms
 			"set a timer": 						"set alarm",
 			"set timer": 						"set alarm",
 			"set an alarm": 					"set alarm",
 			"set alarm": 						"set alarm",
 			"wake me up": 						"set alarm",
 			"alert me": 						"set alarm",
+
+			"cancel alarm": 					"cancel alarm",
+			"turn off alarm": 					"cancel alarm",
+			"deactivate alarm": 				"cancel alarm",
+			"unset alarm": 						"cancel alarm",
+			"stop alarm": 						"cancel alarm",
+			"cancel my alarm": 					"cancel alarm",
+			"turn off my alarm": 				"cancel alarm",
+			"deactivate my alarm": 				"cancel alarm",
+			"unset my alarm": 					"cancel alarm",
+			"stop my alarm": 					"cancel alarm",
+			"cancel timer": 					"cancel alarm",
+			"turn off timer": 					"cancel alarm",
+			"deactivate timer": 				"cancel alarm",
+			"unset timer": 						"cancel alarm",
+			"stop timer": 						"cancel alarm",
+			"cancel my timer": 					"cancel alarm",
+			"turn off my timer": 				"cancel alarm",
+			"deactivate my timer": 				"cancel alarm",
+			"unset my timer": 					"cancel alarm",
+			"stop my timer": 					"cancel alarm",
+
+			"cancel all alarms": 				"cancel all alarms",
+			"turn off all alarms": 				"cancel all alarms",
+			"deactivate all alarms": 			"cancel all alarms",
+			"unset all alarms": 				"cancel all alarms",
+			"stop all alarms": 					"cancel all alarms",
+			"cancel all my alarms": 			"cancel all alarms",
+			"turn off all my alarms": 			"cancel all alarms",
+			"deactivate all my alarms": 		"cancel all alarms",
+			"unset all my alarms": 				"cancel all alarms",
+			"stop all my alarms": 				"cancel all alarms",
+			"cancel all of my alarms": 			"cancel all alarms",
+			"turn off all of my alarms": 		"cancel all alarms",
+			"deactivate all of my alarms": 		"cancel all alarms",
+			"unset all of my alarms": 			"cancel all alarms",
+			"stop all of my alarms": 			"cancel all alarms",
+			"cancel all timers": 				"cancel all alarms",
+			"turn off all timers": 				"cancel all alarms",
+			"deactivate all timers": 			"cancel all alarms",
+			"unset all timers": 				"cancel all alarms",
+			"stop all timers": 					"cancel all alarms",
+			"cancel all my timers": 			"cancel all alarms",
+			"turn off all my timers": 			"cancel all alarms",
+			"deactivate all my timers": 		"cancel all alarms",
+			"unset all my timers": 				"cancel all alarms",
+			"stop all my timers": 				"cancel all alarms",
+			"cancel all of my timers": 			"cancel all alarms",
+			"turn off all of my timers": 		"cancel all alarms",
+			"deactivate all of my timers": 		"cancel all alarms",
+			"unset all of my timers": 			"cancel all alarms",
+			"stop all of my timers": 			"cancel all alarms",
 
 		// rng
 			"roll": 							"roll dice",
@@ -880,6 +940,93 @@
 			},
 
 		// settings
+			"stop listening": function(remainder, callback) {
+				try {
+					var icon = "&#x1f507;"
+
+					// force whistling off
+						window.FUNCTION_LIBRARY.changeWhistleOn({forceOff: true})
+						var restartTime = null
+
+					// split into array
+						var words = remainder.split(/\s/gi) || []
+
+					// timer
+						if ((/second|minute|hour|day|for/gi).test(remainder)) {
+							var units = {
+								"second": 1000,
+								"minute": 1000 * 60,
+								"hour": 1000 * 60 * 60,
+								"day": 1000 * 60 * 60 * 24
+							}
+							var keys = Object.keys(units)
+
+							var amounts = []
+							for (var i in words) {
+								words[i] = window.FUNCTION_LIBRARY.getDigits(words[i])
+
+								if (!isNaN(words[i])) {
+									if (words[i + 1] && keys[words[i + 1].replace(/s$/gi,"").toLowerCase()]) {
+										amounts.push({
+											number: Number(words[i]),
+											unit: words[i + 1].replace(/s$/gi,"")
+										})
+									}
+									else {
+										amounts.push({
+											number: Number(words[i]),
+											unit: "minute"
+										})
+									}
+								}
+							}
+
+							var duration = 0
+							for (var i in amounts) {
+								duration += (amounts[i].number * units[amounts[i].unit])
+							}
+
+							if (duration) {
+								restartTime = new Date().getTime() + duration
+							}
+						}
+
+					// alarm
+						else if ((/until|till|til/gi).test(remainder)) {
+							var timePhrase = remainder.replace(/until|till|til/gi,"").toLowerCase().trim()
+								timePhrase = timePhrase.replace("p.m.", "PM").replace("pm", "PM").replace("a.m.", "AM").replace("am", "AM")
+							restartTime = new Date(timePhrase).getTime() || new Date(new Date().toDateString() + " " + timePhrase).getTime()
+							
+							if (!isNaN(restartTime)) {
+								if (!timePhrase.includes("PM") && !timePhrase.includes("AM") && new Date().getTime() < restartTime + (1000 * 60 * 60 * 12)) {
+									restartTime = restartTime + (1000 * 60 * 60 * 12)
+								}
+								else if (new Date().getTime() < restartTime + (1000 * 60 * 60 * 24)) {
+									restartTime = restartTime + (1000 * 60 * 60 * 24)
+								}
+							}
+						}
+
+					// restartTime?
+						if (restartTime && !isNaN(restartTime)) {
+							window.CONTEXT_LIBRARY.startListening = restartTime
+						}
+						else {
+							window.CONTEXT_LIBRARY.startListening = null
+						}
+
+					// get message
+						if (restartTime) {
+							var responseHTML = "Whistle detection turned off until <b>" + new Date(restartTime).toLocaleString() + "</b>."
+						}
+						else {
+							var responseHTML = "Whistle detection turned off."
+						}
+						
+					// response
+						callback({icon: icon, message: "", html: responseHTML, followup: false})
+				} catch (error) {}
+			},
 			"change voice": function(remainder, callback) {
 				try {
 					var icon = "&#x1f50a;"
@@ -1100,6 +1247,8 @@
 					callback({icon: icon, message: response, html: "The date is " + response + "."})
 				} catch (error) {}
 			},
+
+		// alarms
 			"set alarm": function(remainder, callback) {
 				try {
 					var icon = "&#x23f0;"
@@ -1147,29 +1296,73 @@
 							}
 							else {
 								var endTime = new Date().getTime() + duration
-								CONTEXT_LIBRARY.alarms.push(endTime)
-								callback({icon: icon, message: "Alarm set for " + new Date(endTime).toLocaleTimeString(), html: "&#128339; Alarm set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
+								window.CONTEXT_LIBRARY.alarms.push(endTime)
+								callback({icon: icon, message: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for " + new Date(endTime).toLocaleTimeString(), html: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
 							}
 						}
 
 					// alarm
 						else {
 							var timePhrase = remainder.replace(/in|at|for|after|before|around/gi,"").toLowerCase().trim()
-								timePhrase = timePhrase.replace("p.m.", "PM").replace("a.m.", "AM")
+								timePhrase = timePhrase.replace("p.m.", "PM").replace("pm", "PM").replace("a.m.", "AM").replace("am", "AM")
 							var endTime = new Date(timePhrase).getTime() || new Date(new Date().toDateString() + " " + timePhrase).getTime()
 							
 							if (isNaN(endTime)) {
-								callback({icon: icon, message: "I was unable to set that alarm.", html: "unable to set alarm: " + response})
+								callback({icon: icon, message: "I was unable to set that alarm.", html: "unable to set alarm: " + remainder})
 							}
 							else {
-								if (endTime < new Date().getTime()) {
-									var endTime = new Date(new Date(new Date().getTime() + (1000 * 60 * 60 * 24)).toDateString() + " " + timePhrase).getTime()
+								if (!timePhrase.includes("PM") && !timePhrase.includes("AM") && new Date().getTime() < endTime + (1000 * 60 * 60 * 12)) {
+									endTime = endTime + (1000 * 60 * 60 * 12)
+								}
+								else if (new Date().getTime() < endTime + (1000 * 60 * 60 * 24)) {
+									endTime = endTime + (1000 * 60 * 60 * 24)
 								}
 
-								CONTEXT_LIBRARY.alarms.push(endTime)
-								callback({icon: icon, message: "Alarm set for " + new Date(endTime).toLocaleTimeString(), html: "&#128339; Alarm set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
+								window.CONTEXT_LIBRARY.alarms.push(endTime)
+								callback({icon: icon, message: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for " + new Date(endTime).toLocaleTimeString(), html: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
 							}
 						}
+				} catch (error) {}
+			},
+			"cancel alarm": function(remainder, callback) {
+				try {
+					var icon = "&#x23f0;"
+
+					// split into array
+						var words = remainder.split(/\s/gi) || []
+
+					// index
+						var index = null
+						for (var i in words) {
+							words[i] = window.FUNCTION_LIBRARY.getDigits(words[i])
+							if (!isNaN(words[i])) {
+								index = Number(words[i])
+								break
+							}
+						}
+
+					// no index?
+						if (index === null) {
+							callback({icon: icon, message: "I was unable to find that alarm.", html: "Unable to cancel alarm: <b>" + remainder + "</b>."})
+						}
+
+					// valid index
+						else {
+							var time = new Date(window.CONTEXT_LIBRARY.alarms[index - 1]).toLocaleString()
+							callback({icon: icon, message: "I cancelled alarm #" + index + ", which was set for " + time + ".", html: "Cancelled alarm #" + index + ": <b>" + time + "</b>."})
+							window.CONTEXT_LIBRARY.alarms[index - 1] = null
+						}
+				} catch (error) {}
+			},
+			"cancel all alarms": function(remainder, callback) {
+				try {
+					var icon = "&#x23f0;"
+
+					// empty alarms array
+						window.CONTEXT_LIBRARY.alarms = []
+
+					// response
+						callback({icon: icon, message: "I turned off all alarms.", html: "All alarms cancelled.", followup: false})
 				} catch (error) {}
 			},
 

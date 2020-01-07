@@ -34,13 +34,13 @@ window.addEventListener("load", function() {
 				lastResponseNumber: null,
 				flow: null,
 				alarms: [],
+				startListening: null,
 				loop: null
 			}
 
 		/* error library */
 			var ERROR_LIBRARY = window.ERROR_LIBRARY = {
 				"stop-phrases": ["quit this game", "quit this", "quit", "abort this", "abort", "stop this", "stop", "stop talking", "stop speaking", "please stop", "shut up", "never mind", "forget it", "forget that"],
-				"stop-listening-phrases": ["quit listening", "quit listening to me", "stop listening", "stop listening to me", "cease listening", "cease listening to me"],
 				"noaction": "???",
 				"noaction-responses": ["I'm not sure I follow.", "I don't understand.", "What does that mean?", "I don't know that one.", "I don't get it.", "I'm sorry, can you try that again?", "Can you repeat that?", "Please say that again.", "Wait, what was your question?", "I'll need you to repeat that.", "What am I supposed to do?"],
 				"error-responses": ["Something went wrong.", "I couldn't do that.", "Let's try that again later.", "Sorry, I have failed you.", "I'm not sure what happened.", "I ran into an error.", "That's an error.", "That didn't go the way I expected.", "Sorry, I couldn't complete that action.", "I blame the developers for this failure."],
@@ -295,6 +295,9 @@ window.addEventListener("load", function() {
 				// analyze audio
 					FUNCTION_LIBRARY.analyzeAudio()
 
+				// check if we should restart listening
+					FUNCTION_LIBRARY.checkStartListening()
+
 				// update timers
 					FUNCTION_LIBRARY.checkAlarms()
 			}
@@ -356,9 +359,23 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.changeWhistleOn = changeWhistleOn
 			function changeWhistleOn(event) {
 				try {
-					// start / stop listening
-						CONFIGURATION_LIBRARY.settings["whistle-on"] = ELEMENT_LIBRARY["inputs-whistle-on"].checked || false
-						window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+					// stop-listening command
+						if (event.forceOff) {
+							CONFIGURATION_LIBRARY.settings["whistle-on"] = ELEMENT_LIBRARY["inputs-whistle-on"].checked = false
+							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+						}
+
+					// stop-listening timeout expires
+						if (event.forceOn) {
+							CONFIGURATION_LIBRARY.settings["whistle-on"] = ELEMENT_LIBRARY["inputs-whistle-on"].checked = true
+							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+						}
+
+					// toggle checkbox
+						else {
+							CONFIGURATION_LIBRARY.settings["whistle-on"] = ELEMENT_LIBRARY["inputs-whistle-on"].checked || false
+							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+						}
 
 					// actually stop listening
 						if (!CONFIGURATION_LIBRARY.settings["whistle-on"]) {
@@ -633,13 +650,6 @@ window.addEventListener("load", function() {
 						    followup = false
 					}
 
-				// match phrase to stop-listening command
-					else if (ERROR_LIBRARY["stop-listening-phrases"].includes(phrase.trim())) {
-						var action = "stop listening"
-						var remainder = []
-						    followup = false
-					}
-
 				// existing flow?
 					else if (CONTEXT_LIBRARY.flow) {
 						var action = CONTEXT_LIBRARY.flow
@@ -681,20 +691,6 @@ window.addEventListener("load", function() {
 							VOICE_LIBRARY.synthesizer.cancel()
 
 						createHistory(phrase || "stop", action, {icon: "&#x1f507;", message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop", followup: false})
-					}
-
-				// stop-listening phrase
-					else if (action == "stop listening") {
-						// stop speaking
-							VOICE_LIBRARY.synthesizer.pause()
-							VOICE_LIBRARY.synthesizer.cancel()
-
-						// turn off whistle-on
-							CONFIGURATION_LIBRARY.settings["whistle-on"] = ELEMENT_LIBRARY["inputs-whistle-on"].checked = false
-							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-							FUNCTION_LIBRARY.stopRecognizing(false)
-
-						createHistory(phrase || "stop listening", action, {icon: "&#x1f507;", message: "", html: "whistle detection turned off", followup: false})
 					}
 
 				// no action
@@ -799,11 +795,24 @@ window.addEventListener("load", function() {
 
 				// loop through timers to check (and send a message)
 					for (var i = 0; i < CONTEXT_LIBRARY.alarms.length; i++) {
-						if (CONTEXT_LIBRARY.alarms[i] <= timeNow) {
-							createHistory("...", "time's up", {icon: "&#x23F0;", message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "The time is now <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b>.", followup: false})
-							CONTEXT_LIBRARY.alarms.splice(i, 1)
-							i--
+						if (CONTEXT_LIBRARY.alarms[i] && CONTEXT_LIBRARY.alarms[i] <= timeNow) {
+							createHistory("...", "alarm", {icon: "&#x23F0;", message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "The time is now <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b>.", followup: false})
+							CONTEXT_LIBRARY.alarms[i] = null
 						}
+					}
+			}
+
+		/* checkStartListening */
+			FUNCTION_LIBRARY.checkStartListening = checkStartListening
+			function checkStartListening() {
+				// current time
+					var timeNow = new Date().getTime()
+
+				// check if startListening is set and in the past
+					if (CONTEXT_LIBRARY.startListening && CONTEXT_LIBRARY.startListening <= timeNow) {
+						FUNCTION_LIBRARY.changeWhistleOn({forceOn: true})
+						createHistory("...", "start listening", {icon: "&#x1f50a;", message: "", html: "Whistle detection turned on at <b>" + new Date(CONTEXT_LIBRARY.startListening).toLocaleString() + "</b>.", followup: false})
+						CONTEXT_LIBRARY.startListening = null
 					}
 			}
 
