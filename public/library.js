@@ -887,7 +887,10 @@
 					var messages = ["You're welcome.", "Glad I could help.", "Any time.", "Don't mention it.", "No problem."]
 					var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
 					callback({icon: icon, message: message, html: message, followup: false})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"receive apology": function(remainder, callback) {
 				try {
@@ -896,7 +899,10 @@
 					var messages = ["Don't worry about it.", "I forgive you.", "It's all right.", "No worries.", "Everything will be okay."]
 					var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
 					callback({icon: icon, message: message, html: message, followup: false})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"receive affirmation": function(remainder, callback) {
 				try {
@@ -905,7 +911,10 @@
 					var messages = ["I am a good bird.", "Thank you. I try my hardest.", "That's kind of you to say.", "I'm glad you think so.", "I appreciate that."]
 					var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
 					callback({icon: icon, message: message, html: message, followup: false})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 
 		// meta
@@ -922,21 +931,30 @@
 					list += "</ul>"
 					
 					callback({icon: icon, message: "Here are all of the actions I know.", html: list})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"repeat this": function(remainder, callback) {
 				try {
 					var icon = "&#x1f426;"
 
 					callback({icon: icon, message: remainder, html: remainder})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"repeat that": function(remainder, callback) {
 				try {
 					var icon = "&#x1f426;"
 
 					callback({icon: icon, message: window.CONTEXT_LIBRARY.lastResponseMessage || "No previous response.", html: window.CONTEXT_LIBRARY.lastResponseHTML || "No previous response."})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 
 		// settings
@@ -1025,7 +1043,10 @@
 						
 					// response
 						callback({icon: icon, message: "", html: responseHTML, followup: false})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"change voice": function(remainder, callback) {
 				try {
@@ -1034,12 +1055,15 @@
 					var name = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
 					var success = window.FUNCTION_LIBRARY.changeVoice({name: name})
 					if (!success) {
-						callback({icon: icon, message: "I don't recognize that voice.", html: "voice not found: " + remainder})
+						callback({icon: icon, error: true, message: "I don't recognize that voice.", html: "<h2>Error: voice not found:</h2>" + remainder})
 					}
 					else {
 						callback({icon: icon, message: "Voice set to " + name, html: "voice: " + name})
 					}
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"change volume": function(remainder, callback) {
 				try {
@@ -1050,12 +1074,15 @@
 
 					var success = window.FUNCTION_LIBRARY.changeVoiceVolume({volume: volume})
 					if (!success) {
-						callback({icon: icon, message: "That's not a valid number.", html: "invalid volume: " + remainder})
+						callback({icon: icon, error: true, message: "I don't know that number.", html: "<h2>Error: invalid volume:</h2>" + remainder})
 					}
 					else {
 						callback({icon: icon, message: "Volume set to " + volume, html: "volume: " + Math.round(Math.max(0, Math.min(100, Number(volume))))})
 					}
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"change configuration": function(remainder, callback) {
 				try {
@@ -1064,7 +1091,7 @@
 					// get key and value
 						var pair = remainder.split(/ equal to | equals | to | is | as /gi)
 						if (pair[0] === undefined || pair[0] === null || pair[1] === undefined || pair[1] === null) {
-							callback({icon: icon, message: "The key or value is missing.", html: "invalid key or value"})
+							callback({icon: icon, error: true, message: "I'm missing a key or value.", html: "<h2>Error: invalid key or value</h2>"})
 							return
 						}
 						else {
@@ -1080,12 +1107,15 @@
 					// save and respond
 						var success = window.FUNCTION_LIBRARY.changeConfiguration({key: key, value: value})
 						if (!success) {
-							callback({icon: icon, message: "I couldn't set that configuration.", html: "invalid or missing key and value"})
+							callback({icon: icon, error: true, message: "I couldn't set that configuration.", html: "<h2>Error: invalid or missing key and value</h2>"})
 						}
 						else {
 							callback({icon: icon, message: key + " is now " + value, html: key + " = " + value})
 						}
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"authorize platform": function(remainder, callback) {
 				try {
@@ -1118,7 +1148,7 @@
 						}
 
 						if (!name || !Object.keys(platforms).includes(name)) {
-							callback({icon: icon, message: "I couldn't identify that platform.", html: "unable to authorize: <b>" + remainder + "</b>"})
+							callback({icon: icon, error: true, message: "I couldn't identify that platform.", html: "<h2>Error: unable to authorize:</h2>" + remainder})
 						}
 
 					// credentials?
@@ -1133,7 +1163,7 @@
 									var redirect = credentials[2] || window.CONFIGURATION_LIBRARY[name + " redirect"] || ""
 
 									if (!key || !secret || !redirect) {
-										callback({icon: icon, message: "To connect to " + name + ", I need a key, a secret, and a redirect.", html: "unable to authorize: <b>" + remainder + "</b><br><br><b>required configurations:</b><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " redirect</li></ul>"})
+										callback({icon: icon, error: true, message: "I need a key, a secret, and a redirect to connect to " + name + ".", html: "<h2>Error: missing configurations:</h2>" + remainder + "<br><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " redirect</li></ul>"})
 									}
 									else {
 										var state = encodeURIComponent((window.location.origin + window.location.pathname) + ";;;" + platforms[name].stateSecret(key, secret))
@@ -1174,7 +1204,7 @@
 									var refresh_token = window.CONFIGURATION_LIBRARY[host].refresh_token || ""
 
 									if (!key || !secret || !refresh_token) {
-										callback({icon: icon, message: "To reconnect to " + name + ", I need a key, a secret, and a refresh_token.", html: "unable to reauthorize: <b>" + remainder + "</b><br><br><b>required configurations:</b><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " refresh_token</li></ul>"})
+										callback({icon: icon, error: true, message: "I need a key, a secret, and a refresh token to reconnect to " + name + ".", html: "<h2>Error: unable to reauthorize:</h2>" + remainder + "<br><br><b>required configurations:</b><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " refresh_token</li></ul>"})
 									}
 									else {
 										var url = "https://" + host + platforms[name].reauthPath + "?grant_type=refresh_token&refresh_token=" + refresh_token
@@ -1196,11 +1226,11 @@
 													callback({icon: icon, message: host + " is now reauthorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
 												}
 												else {
-													callback({icon: icon, message: "I couldn't reauthorize " + host, html: "unable to reauthorize <b>" + host + "</b>"})
+													callback({icon: icon, error: true, message: "I couldn't reauthorize " + host, html: "<h2>Error: unable to reauthorize:</h2>" + host})
 												}
 											}
 											catch (error) {
-												callback({icon: icon, message: "I couldn't reauthorize " + host, html: "unable to reauthorize <b>" + host + "</b>"})
+												callback({icon: icon, error: true, message: "I couldn't reauthorize " + host, html: "<h2>Error: unable to reauthorize:</h2>" + host})
 											}
 										})
 									}
@@ -1211,7 +1241,10 @@
 									callback({icon: icon, message: host + " is already authorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
 								}
 						}
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 
 		// time
@@ -1221,7 +1254,10 @@
 
 					var response = new Date().toLocaleTimeString()
 					callback({icon: icon, message: response, html: "The time is " + response + "."})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get the day": function(remainder, callback) {
 				try {
@@ -1229,7 +1265,10 @@
 
 					var response = (["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()])
 					callback({icon: icon, message: response, html: "Today is " + response + "."})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get the month": function(remainder, callback) {
 				try {
@@ -1237,7 +1276,10 @@
 
 					var response = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()])
 					callback({icon: icon, message: response, html: "The month is " + response + "."})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get the date": function(remainder, callback) {
 				try {
@@ -1245,7 +1287,10 @@
 
 					var response = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + " " + new Date().getDate())
 					callback({icon: icon, message: response, html: "The date is " + response + "."})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 
 		// alarms
@@ -1292,7 +1337,7 @@
 							}
 
 							if (!duration) {
-								callback({icon: icon, message: "I was unable to set that timer.", html: "unable to set timer: " + response})
+								callback({icon: icon, error: true, message: "I was unable to set that timer.", html: "<h2>Error: unable to set timer:</h2>" + response})
 							}
 							else {
 								var endTime = new Date().getTime() + duration
@@ -1308,7 +1353,7 @@
 							var endTime = new Date(timePhrase).getTime() || new Date(new Date().toDateString() + " " + timePhrase).getTime()
 							
 							if (isNaN(endTime)) {
-								callback({icon: icon, message: "I was unable to set that alarm.", html: "unable to set alarm: " + remainder})
+								callback({icon: icon, error: true, message: "I was unable to set that alarm.", html: "<h2>Error: unable to set alarm:</h2>" + remainder})
 							}
 							else {
 								if (!timePhrase.includes("PM") && !timePhrase.includes("AM") && new Date().getTime() < endTime + (1000 * 60 * 60 * 12)) {
@@ -1322,7 +1367,10 @@
 								callback({icon: icon, message: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for " + new Date(endTime).toLocaleTimeString(), html: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
 							}
 						}
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"cancel alarm": function(remainder, callback) {
 				try {
@@ -1343,7 +1391,7 @@
 
 					// no index?
 						if (index === null) {
-							callback({icon: icon, message: "I was unable to find that alarm.", html: "Unable to cancel alarm: <b>" + remainder + "</b>."})
+							callback({icon: icon, error: true, message: "I was unable to find that alarm.", html: "<h2>Error: unable to cancel alarm:</h2>" + remainder})
 						}
 
 					// valid index
@@ -1352,7 +1400,10 @@
 							callback({icon: icon, message: "I cancelled alarm #" + index + ", which was set for " + time + ".", html: "Cancelled alarm #" + index + ": <b>" + time + "</b>."})
 							window.CONTEXT_LIBRARY.alarms[index - 1] = null
 						}
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"cancel all alarms": function(remainder, callback) {
 				try {
@@ -1363,7 +1414,10 @@
 
 					// response
 						callback({icon: icon, message: "I turned off all alarms.", html: "All alarms cancelled.", followup: false})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 
 		// rng
@@ -1394,9 +1448,19 @@
 							sum += Math.floor(Math.random() * sides) + 1
 						}
 
+					// no sum?
+						if (!sum || isNaN(sum)) {
+							callback({icon: icon, error: true, message: "I couldn't roll those dice.", html: "<h2>Error: invalid dice:</h2>" + remainder})
+						}
+
 					// return sum
-						callback({icon: icon, message: sum || "Unable to roll dice.", html: count + "d" + sides + ": " + (sum || "invalid dice")})
-				} catch (error) {}
+						else {
+							callback({icon: icon, message: sum, html: count + "d" + sides + ": " + sum})
+						}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"flip a coin": function(remainder, callback) {
 				try {
@@ -1404,7 +1468,10 @@
 
 					var response = window.FUNCTION_LIBRARY.chooseRandom(["heads","tails"])
 					callback({icon: icon, message: response, html: "coin: " + response})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"consult the magic 8 ball": function(remainder, callback) {
 				try {
@@ -1413,7 +1480,10 @@
 					var options = ["It is certain", "It is decidedly so", "Without a doubt", "Yes - definitely", "You may rely on it", "As I see it, yes", "Most likely", "Outlook good", "Yes", "Signs point to yes", "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good", "Very doubtful", "Reply hazy, try again", "Ask again later", "Better not tell you now", "Cannot predict now", "Concentrate and ask again"]
 					var response = window.FUNCTION_LIBRARY.chooseRandom(options)
 					callback({icon: icon, message: response, html: remainder + "<h2>" + response + "</h2>"})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 		
 		// math
@@ -1442,6 +1512,9 @@
 								else if (terms[i] == "(" || terms[i] == ")") {}
 								else {
 									terms[i] = window.FUNCTION_LIBRARY.getDigits(terms[i])
+									if (isNaN(terms[i])) {
+										terms[i] = "'" + terms[i] + "'"
+									}
 								}
 							}
 							else {
@@ -1452,14 +1525,16 @@
 					// evaluate and return result
 						var result = eval(terms.join(" "))
 						if (isNaN(result)) {
-							callback({icon: icon, message: "Unable to calculate.", html: "invalid calculation: " + remainder})
+							callback({icon: icon, error: true, message: "I couldn't perform that calculation.", html: "<h2>Error: invalid calculation:</h2>" + remainder})
 						}
 						else {
 							window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
 							callback({icon: icon, message: Number(result), html: terms.join(" ") + " = <b>" + result + "</b>"})
 						}
 				}
-				catch (error) { callback({icon: icon, message: "Unable to calculate.", html: "invalid calculation"}) }
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"double": function(remainder, callback) {
 				try {
@@ -1473,14 +1548,16 @@
 
 					var result = 2 * Number(term)
 					if (isNaN(result)) {
-						callback({icon: icon, message: "Unable to calculate.", html: "invalid calculation"})
+						callback({icon: icon, error: true, message: "I couldn't double that number.", html: "<h2>Error: invalid multiplier</h2>"})
 					}
 					else {
 						window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
 						callback({icon: icon, message: Number(result), html: "2 * " + term + " = <b>" + result + "</b>"})
 					}
 				}
-				catch (error) { callback({icon: icon, message: "Unable to calculate.", html: "invalid calculation"}) }
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"triple": function(remainder, callback) {
 				try {
@@ -1494,14 +1571,16 @@
 
 					var result = 3 * Number(term)
 					if (isNaN(result)) {
-						callback({icon: icon, message: "Unable to calculate.", html: "invalid calculation"})
+						callback({icon: icon, error: true, message: "I couldn't triple that number.", html: "<h2>Error: invalid multiplier</h2>"})
 					}
 					else {
 						window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
 						callback({icon: icon, message: Number(result), html: "3 * " + term + " = <b>" + result + "</b>"})
 					}
 				}
-				catch (error) { callback({icon: icon, message: "Unable to calculate.", html: "invalid calculation"}) }
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"average": function(remainder, callback) {
 				try {
@@ -1528,14 +1607,16 @@
 
 					// return result
 						if (isNaN(result)) {
-							callback({icon: icon, message: "Unable to calculate.", html: "invalid calculation"})
+							callback({icon: icon, error: true, message: "I couldn't find the average.", html: "<h2>Error: invalid calculation</h2>"})
 						}
 						else {
 							window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
 							callback({icon: icon, message: Number(result), html: numbers.join(" + ") + " / " + numbers.length + " = <b>" + result + "</b>"})
 						}
 				}
-				catch (error) { callback({icon: icon, message: "Unable to calculate.", html: "invalid calculation"}) }
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"count": function(remainder, callback) {
 				try {
@@ -1569,8 +1650,10 @@
 
 					// message
 						callback({icon: icon, message: list.join("... "), html: "Counting from <b>" + String(startNumber) + "</b> to <b>" + String(endNumber) + "</b>."})
-
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 
 		// words
@@ -1582,7 +1665,9 @@
 					var letters = word.split("")
 					callback({icon: icon, message: word + "... " + letters.join(", "), html: "<h2>" + letters.join(" - ") + "</h2>"})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},			
 			"find rhymes": function(remainder, callback) {
 				try {
@@ -1610,10 +1695,13 @@
 									callback({icon: icon, message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
 							}
 							catch (error) {
-								callback({icon: icon, message: "I can't rhyme that.", html: "invalid word: " + remainder})
+								callback({icon: icon, error: true, message: "I couldn't rhyme that.", html: "<h2>Error: unable to access rhymes</h2>"})
 							}
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"find synonyms": function(remainder, callback) {
 				try {
@@ -1641,10 +1729,13 @@
 									callback({icon: icon, message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
 							}
 							catch (error) {
-								callback({icon: icon, message: "I don't know any synonyms for that.", html: "invalid word: " + remainder})
+								callback({icon: icon, error: true, message: "I don't know any synonyms for that.", html: "<h2>Error: unable to access synonyms</h2>"})
 							}
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"find definition": function(remainder, callback) {
 				try {
@@ -1675,10 +1766,13 @@
 									callback({icon: icon, message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
 							}
 							catch (error) {
-								callback({icon: icon, message: "I can't define that.", html: "invalid word: " + remainder})
+								callback({icon: icon, error: true, message: "I couldn't define that.", html: "<h2>Error: unable to access definitions</h2>"})
 							}
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 
 		// content API fetches
@@ -1700,10 +1794,13 @@
 									callback({icon: icon, message: jokeText, html: "<a target='_blank' href='" + jokeLink + "'><h2>" + jokeText + "</h2></a>"})
 							}
 							catch (error) {
-								callback({icon: icon, message: "I don't know any jokes.", html: "unable to access jokes"})
+								callback({icon: icon, error: true, message: "I don't know any jokes.", html: "<h2>Error: unable to access jokes</h2>"})
 							}
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get a quote": function(remainder, callback) {
 				try {
@@ -1725,14 +1822,17 @@
 										callback({icon: icon, message: quoteAuthor + " said... " + quoteText, html: "<a target='_blank' href='" + quoteLink + "'><h2>\"" + quoteText + "\" - " + quoteAuthor + "</h2></a>"})
 									}
 									else {
-										callback({icon: icon, message: "A wise man once said: the API didn't return any results.", html: "unable to access quotes"})
+										callback({icon: icon, error: true, message: "I was unable to get any quotes.", html: "<h2>Error: unable to access quotes</h2>"})
 									}
 							}
 							catch (error) {
 								callback({icon: icon, message: "I don't know any quotes.", html: "unable to access quotes"})
 							}
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get a fortune": function(remainder, callback) {
 				try {
@@ -1755,10 +1855,13 @@
 									callback({icon: icon, message: fortuneText, html: "<a target='_blank' href='" + fortuneLink + "'><h2>" + fortuneText + "</h2></a>"})
 							}
 							catch (error) {
-								callback({icon: icon, message: "I don't know any fortunes.", html: "unable to access fortunes"})
+								callback({icon: icon, error: true, message: "I don't know any fortunes.", html: "<h2>Error: unable to access fortunes</h2>"})
 							}
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get an insult": function(remainder, callback) {
 				try {
@@ -1771,10 +1874,17 @@
 
 					// proxy request
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							callback({icon: icon, message: response.joke, html: "<h2>" + response.joke + "</h2>"})
+							try {
+								callback({icon: icon, message: response.joke, html: "<h2>" + response.joke + "</h2>"})
+							}
+							catch (error) {
+								callback({icon, icon, error: true, message: "I don't know any insults.", html: "<h2>Error: unable to access insults</h2>"})
+							}
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get a wikipedia entry": function(remainder, callback) {
 				try {
@@ -1800,7 +1910,7 @@
 									window.ACTION_LIBRARY["get a wikipedia entry"](remainder, callback)
 								}
 								else {
-									callback({icon: icon, message: "I couldn't find " + remainder + " on Wikipedia.", html: "unable to find <b>" + remainder + "</b> on Wikipedia"})
+									callback({icon: icon, error: true, message: "I couldn't find " + remainder + " on Wikipedia.", html: "<h2>Error: unable to access Wikipedia</h2>"})
 								}
 							}
 							else {
@@ -1839,19 +1949,24 @@
 											}
 										}
 										catch (error) {
-											callback({icon: icon, message: "I couldn't find " + remainder + " on Wikipedia.", html: "unable to find <b>" + remainder + "</b> on Wikipedia"})
+											callback({icon: icon, error: true, message: "I couldn't find " + remainder + " on Wikipedia.", html: "<h2>Error: unable to access Wikipedia</h2>"})
 										}
 									})
 							}
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get this day in history": function(remainder, callback) {
 				try {
 					var today = ["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + "_" + new Date().getDate()
 					window.ACTION_LIBRARY["get a wikipedia entry"](today, callback)
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get the headlines": function(remainder, callback) {
 				try {
@@ -1875,14 +1990,17 @@
 									}
 
 								// message, link, list
-									var message = "I found " + stories.length + " stor" + (list.length == 1 ? "y" : "ies") + "."
+									var message = "I found " + stories.length + " stor" + (list.length == 1 ? "y" : "ies") + " on the New York Times."
 									callback({icon: icon, message: message + " " + stories.join("... "), html: message + "<ul>" + storyItems.join("") + "</ul>"})
 							}
 							catch (error) {
-								callback({icon: icon, message: "I can't get the news.", html: "unable to access headlines"})
+								callback({icon: icon, error: true, message: "I can't get the news.", html: "<h2>Error: unable to access the New York Times</h2>"})
 							}
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get the weather": function(remainder, callback) {
 				try {
@@ -1890,7 +2008,7 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["open weather api"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for open weather api.", html: "missing configuration: <b>open weather api</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for open weather api.", html: "<h2>Error: missing configuration:</h2><li>open weather api</li>"})
 							return
 						}
 
@@ -1924,7 +2042,7 @@
 									try {
 										// invalid response
 											if (!response || !response.city || !response.list) {
-												callback({icon: icon, message: "I was unable to get the weather.", html: "I was unable to get the weather."})
+												callback({icon: icon, error: true, message: "I was unable to get the weather.", html: "<h2>Error: unable to access weather</h2>"})
 											}
 
 										// valid response
@@ -2007,11 +2125,14 @@
 											}
 									}
 									catch (error) {
-										callback({icon: icon, message: "I was unable to get the weather for " + remainder, html: "I was unable to get the weather: <b>" + remainder + "</b>."})
+										callback({icon: icon, error: true, message: "I was unable to get the weather for " + remainder, html: "<h2>Error: unable to access the weather for that location:</h2>" + remainder})
 									}
 								})
 						}
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get nutrition facts": function(remainder, callback) {
 				try {
@@ -2019,7 +2140,7 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["spoonacular api"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for spoonacular api.", html: "missing configuration: <b>spoonacular api</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for spoonacular api.", html: "<h2>Error: missing configuration:</h2><li>spoonacular api</li>"})
 							return
 						}
 
@@ -2033,7 +2154,7 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
 								if (!response.calories) {
-									callback({icon: icon, message: "I was unable to get nutrition facts for " + remainder, html: "I was unable to get nutrition facts: <b>" + remainder + "</b>."})
+									callback({icon: icon, error: true, message: "I was unable to get nutrition facts for " + remainder, html: "<h2>Error: unable to get nutrition facts:</h2>" + remainder})
 								}
 								else {
 									var calories 	= response.calories.value 	+ " " + response.calories.unit
@@ -2048,11 +2169,13 @@
 								}
 							}
 							catch (error) {
-								callback({icon: icon, message: "I was unable to get nutrition facts for " + remainder, html: "I was unable to get nutrition facts: <b>" + remainder + "</b>."})
+								callback({icon: icon, error: true, message: "I was unable to get nutrition facts for " + remainder, html: "<h2>Error: unable to get nutrition facts:" + remainder})
 							}
 						})
-
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get nutrition answer": function(remainder, callback) {
 				try {
@@ -2060,7 +2183,7 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["spoonacular api"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for spoonacular api.", html: "missing configuration: <b>spoonacular api</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for spoonacular api.", html: "<h2>Error: missing configuration:</h2><li>spoonacular api</li>"})
 							return
 						}
 
@@ -2074,18 +2197,20 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
 								if (!response.answer) {
-									callback({icon: icon, message: "I was unable to get a nutrition answer about " + remainder, html: "I was unable to get a nutrition answer: <b>" + remainder + "</b>."})
+									callback({icon: icon, error: true, message: "I was unable to get a nutrition answer about " + remainder, html: "<h2>Error: unable to get a nutrition answer:</h2>" + remainder})
 								}
 								else {
 									callback({icon: icon, message: response.answer, html: "<h2>" + remainder + "</h2>" + response.answer})
 								}
 							}
 							catch (error) {
-								callback({icon: icon, message: "I was unable to get a nutrition answer about " + remainder, html: "I was unable to get a nutrition answer: <b>" + remainder + "</b>."})
+								callback({icon: icon, error: true, message: "I was unable to get a nutrition answer about " + remainder, html: "<h2>Error: unable to get a nutrition answer:</h2>" + remainder})
 							}
 						})
-
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 
 		// Google Apps Script
@@ -2095,7 +2220,7 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
 							return
 						}
 
@@ -2120,7 +2245,10 @@
 							var responseHTML = "<ul><li><b>item: </b>" + response.item + "</li><li><b>cost: </b>" + response.cost + "</li><li><b>type: </b>" + response.type + "</li></ul>" 
 							callback({icon: icon, message: response.message, html: responseHTML})
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get balance": function(remainder, callback) {
 				try {
@@ -2128,7 +2256,7 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
 							return
 						}
 
@@ -2142,7 +2270,10 @@
 							var responseHTML = "<ul><li><b>account: </b>" + response.account + "</li><li><b>amount: </b>" + response.amount + "</li></ul>" 
 							callback({icon: icon, message: response.message, html: responseHTML})
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"log purchase": function(remainder, callback) {
 				try {
@@ -2150,7 +2281,7 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
 							return
 						}
 
@@ -2176,7 +2307,10 @@
 							var responseHTML = "<ul><li><b>description: </b>" + response.description + "</li><li><b>amount: </b>" + response.amount + "</li><li><b>category: </b>" + response.category + "</li></ul>" 
 							callback({icon: icon, message: response.message, html: responseHTML})
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"fetch calendar": function(remainder, callback) {
 				try {
@@ -2184,7 +2318,7 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
 							return
 						}
 
@@ -2226,9 +2360,12 @@
 							// send response
 								var responseLink = "https://calendar.google.com"
 								var responseText = response.message
-								callback({icon: icon, message: response.message + " " + eventList.join("..."),html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a><ul>" + eventItems.join("") + "</ul>"})
+								callback({icon: icon, message: response.message + " " + eventList.join(" ... "),html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a><ul>" + eventItems.join("") + "</ul>"})
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get a list": function(remainder, callback) {
 				try {
@@ -2236,7 +2373,7 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
 							return
 						}
 
@@ -2250,7 +2387,7 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							// not successful?
 								if (!response.success) {
-									callback({icon: icon, message: "I was unable to get " + (list ? list : " your list"), html: "unable to get list: <b>" + remainder + "</b>"})
+									callback({icon: icon, error: true, message: "I was unable to get " + (list ? list : " your list"), html: "<h2>Error: unable to get list:</h2>" + remainder})
 									return
 								}
 
@@ -2336,7 +2473,9 @@
 								callback({icon: icon, message: response.listName + " ... " + message, html: "<h2>" + response.listName + "</h2>" + responseHTML})
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"add an item to a list": function(remainder, callback) {
 				try {
@@ -2344,7 +2483,7 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
 							return
 						}
 
@@ -2356,7 +2495,7 @@
 
 					// no task?
 						if (!task) {
-							callback({icon: icon, message: "I couldn't identify that item.", html: "missing or invalid item: <b>" + remainder + "</b>"})
+							callback({icon: icon, error: true, message: "I couldn't identify that item.", html: "<h2>Error: missing or invalid item:</h2>" + remainder})
 							return
 						}
 
@@ -2369,7 +2508,7 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							// not successful?
 								if (!response.success) {
-									callback({icon: icon, message: "I was unable to add " + task + " to " + (list ? list : " your list"), html: "unable to add item to list: <b>" + remainder + "</b>"})
+									callback({icon: icon, error: true, message: "I was unable to add " + task + " to " + (list ? list : " your list"), html: "<h2>Error: unable to add item to list:</h2>" + remainder})
 									return
 								}
 
@@ -2446,7 +2585,9 @@
 								callback({icon: icon, message: "I added " + task + " to " + response.listName, html: "<h2>" + response.listName + "</h2>" + responseHTML})
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get contacts": function(remainder, callback) {
 				try {
@@ -2454,14 +2595,14 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
 							return
 						}
 
 					// no remainder?
 						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
 						if (!remainder) {
-							callback({icon: icon, message: "I need a name to search for.", html: "missing or invalid name: <b>" + remainder + "</b>"})
+							callback({icon: icon, error: true, message: "I need a name to search for.", html: "<h2>Error: missing or invalid name:</h2>" + remainder})
 							return	
 						}
 
@@ -2474,7 +2615,7 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							// not successful?
 								if (!response.success) {
-									callback({icon: icon, message: "I was unable to find " + remainder, html: "unable to find contact: <b>" + remainder + "</b>"})
+									callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
 									return
 								}
 
@@ -2536,7 +2677,9 @@
 								callback({icon: icon, message: "I found " + response.list.length + (response.list.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + "</h2>" + responseHTML})
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get birthday": function(remainder, callback) {
 				try {
@@ -2544,14 +2687,14 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
 							return
 						}
 
 					// no remainder?
 						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
 						if (!remainder) {
-							callback({icon: icon, message: "I need a name to search for.", html: "missing or invalid name: <b>" + remainder + "</b>"})
+							callback({icon: icon, error: true, message: "I need a name to search for.", html: "<h2>Error: missing or invalid name:</h2>" + remainder})
 							return	
 						}
 
@@ -2564,7 +2707,7 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							// not successful?
 								if (!response.success) {
-									callback({icon: icon, message: "I was unable to find " + remainder, html: "unable to find contact: <b>" + remainder + "</b>"})
+									callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
 									return
 								}
 
@@ -2598,7 +2741,9 @@
 								callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " birthdays</h2>" + responseHTML})
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get phone number": function(remainder, callback) {
 				try {
@@ -2606,14 +2751,14 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
 							return
 						}
 
 					// no remainder?
 						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
 						if (!remainder) {
-							callback({icon: icon, message: "I need a name to search for.", html: "missing or invalid name: <b>" + remainder + "</b>"})
+							callback({icon: icon, error: true, message: "I need a name to search for.", html: "<h2>Error: missing or invalid name:</h2>" + remainder})
 							return	
 						}
 
@@ -2626,7 +2771,7 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							// not successful?
 								if (!response.success) {
-									callback({icon: icon, message: "I was unable to find " + remainder, html: "unable to find contact: <b>" + remainder + "</b>"})
+									callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
 									return
 								}
 
@@ -2669,7 +2814,9 @@
 								callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " phone numbers</h2>" + responseHTML})
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get email": function(remainder, callback) {
 				try {
@@ -2677,14 +2824,14 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
 							return
 						}
 
 					// no remainder?
 						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
 						if (!remainder) {
-							callback({icon: icon, message: "I need a name to search for.", html: "missing or invalid name: <b>" + remainder + "</b>"})
+							callback({icon: icon, error: true, message: "I need a name to search for.", html: "<h2>Error: missing or invalid name:</h2>" + remainder})
 							return	
 						}
 
@@ -2697,7 +2844,7 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							// not successful?
 								if (!response.success) {
-									callback({icon: icon, message: "I was unable to find " + remainder, html: "unable to find contact: <b>" + remainder + "</b>"})
+									callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
 									return
 								}
 
@@ -2740,7 +2887,9 @@
 								callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " emails</h2>" + responseHTML})
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get address": function(remainder, callback) {
 				try {
@@ -2748,14 +2897,14 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "missing configuration: <b>google apps script</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
 							return
 						}
 
 					// no remainder?
 						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
 						if (!remainder) {
-							callback({icon: icon, message: "I need a name to search for.", html: "missing or invalid name: <b>" + remainder + "</b>"})
+							callback({icon: icon, error: true, message: "I need a name to search for.", html: "<h2>Error: missing or invalid name:</h2>" + remainder})
 							return	
 						}
 
@@ -2768,7 +2917,7 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							// not successful?
 								if (!response.success) {
-									callback({icon: icon, message: "I was unable to find " + remainder, html: "unable to find contact: <b>" + remainder + "</b>"})
+									callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
 									return
 								}
 
@@ -2811,7 +2960,9 @@
 								callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " addresses</h2>" + responseHTML})
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"log gratitude": function(remainder, callback) {
 				try {
@@ -2819,7 +2970,7 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script 2"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google apps script 2.", html: "missing configuration: <b>google apps script 2</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script 2.", html: "<h2>Error: missing configuration:</h2><li>google apps script 2</li>"})
 							return
 						}
 
@@ -2832,7 +2983,10 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							callback({icon: icon, message: response.message, html: response.message})
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 
 		// Google APIs
@@ -2842,11 +2996,11 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google custom search"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google custom search.", html: "missing configuration: <b>google custom search</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google custom search.", html: "<h2>Error: missing configuration:</h2><li>google custom search</li>"})
 							return
 						}
 						else if (!window.CONFIGURATION_LIBRARY["google api key"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "<h2>Error: missing configuration:</h2></li>google api key</li>"})
 							return
 						}
 
@@ -2876,7 +3030,10 @@
 							// send response								
 								callback({icon: icon, message: responseText + " " + topResultText, html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a>" + topResult})
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"search google directions": function(remainder, callback) {
 				try {
@@ -2884,7 +3041,7 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "<h2>Error: missing configuration:</h2><li>google api key</li>"})
 							return
 						}
 
@@ -2905,7 +3062,7 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							// no results?
 								if (!response || !response.routes || !response.routes[0] || !response.routes[0].legs || !response.routes[0].legs[0]) {
-									callback({icon: icon, message: "I couldn't find a route.", html: "unable to route from " + origin + " to " + destination})
+									callback({icon: icon, error: true, message: "I couldn't find a route.", html: "<h2>Error: unable to find a route:</h2><li>from: " + origin + "</li><li>to: " + destination + "</li>"})
 								}
 
 							// format response
@@ -2921,7 +3078,10 @@
 									callback({icon: icon, message: message, html: link + "<ol>" + steps.join("") + "</ol>"})
 								}
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"search google places": function(remainder, callback) {
 				try {
@@ -2929,7 +3089,7 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "<h2>Error: missing configuration:</h2><li>google api key</li>"})
 							return
 						}
 
@@ -2942,7 +3102,7 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							// no results?
 								if (!response || !response.candidates || !response.candidates[0] || !response.candidates[0].place_id) {
-									callback({icon: icon, message: "I couldn't find that place.", html: "unable to find " + remainder})
+									callback({icon: icon, error: true, message: "I couldn't find that place.", html: "<h2>Error: unable to find place:</h2>" + remainder})
 								}
 
 							// second trip, with place_id
@@ -2955,7 +3115,7 @@
 									window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 										// no results?
 											if (!response || !response.result) {
-												callback({icon: icon, message: "I couldn't find that place.", html: "unable to find " + remainder})
+												callback({icon: icon, error: true, message: "I couldn't find that place.", html: "<h2>Error: unable to find place:</h2>" + remainder})
 											}
 
 										// format response
@@ -2977,7 +3137,10 @@
 									})
 								}
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"search youtube": function(remainder, callback) {
 				try {
@@ -2985,7 +3148,7 @@
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
-							callback({icon: icon, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "missing configuration: <b>google api key</b>"})
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "<h2>Error: missing configuration:</h2><li>google api key</li>"})
 							return
 						}
 
@@ -2997,13 +3160,11 @@
 					// proxy request
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							if (!response || !response.items || !response.items.length || !response.items[0].id || !response.items[0].id.videoId) {
-								callback({icon: icon, message: "I couldn't find " + remainder + " on Youtube.", html: "unable to find <b>" + remainder + "</b> on Youtube."})
+								callback({icon: icon, error: true, message: "I couldn't find " + remainder + " on Youtube.", html: "<h2>Error: unable to find Youtube video:</h2>" + remainder})
 							}
 							else {
 								// turn off whistle-on
-									CONFIGURATION_LIBRARY.settings["whistle-on"] = ELEMENT_LIBRARY["inputs-whistle-on"].checked = false
-									window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-									FUNCTION_LIBRARY.stopRecognizing(false)
+									window.FUNCTION_LIBRARY.changeWhistleOn({forceOff: true})
 
 								// response
 									var responseHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response.items[0].id.videoId + '?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
@@ -3011,7 +3172,9 @@
 							}
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 
 		// games
@@ -3034,7 +3197,7 @@
 						else {
 							var guess = Number(window.FUNCTION_LIBRARY.getDigits(remainder))
 							if (isNaN(guess)) {
-								callback({icon: icon, message: "I don't know that number.", html: "not a number: " + remainder})
+								callback({icon: icon, error: true, message: "I don't know that number.", html: "<h2>Error: invalid number:</h2>" + remainder})
 							}
 							else {
 								// increase guess count
@@ -3064,7 +3227,9 @@
 							}
 						}
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"play true or false": function(remainder, callback) {
 				try {
@@ -3096,7 +3261,7 @@
 									}
 									catch (error) {
 										window.CONTEXT_LIBRARY.flow = null
-										callback({icon: icon, message: "I don't know any fun facts.", html: "unable to access trivia"})
+										callback({icon: icon, error: true, message: "I don't know any fun facts.", html: "<h2>Error: unable to access trivia</h2>"})
 									}
 								})
 						}
@@ -3112,7 +3277,7 @@
 									guess = "False"
 								}
 								else {
-									callback({icon: icon, message: "I only understand True and False.", html: "invalid guess: " + remainder})
+									callback({icon: icon, error: true, message: "I only understand True and False.", html: "<h2>Error: invalid guess:</h2>" + remainder})
 									return
 								}
 
@@ -3149,7 +3314,9 @@
 								}
 						}
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 	
 		// SONOS
@@ -3261,7 +3428,10 @@
 
 								callback({icon: icon, message: message, html: responseHTML})
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"set wink devices": function(remainder, callback) {
 				try {
@@ -3335,7 +3505,7 @@
 						}
 
 						if (!deviceIds.length) {
-							callback({icon: icon, message: "I couldn't identify that device.", html: "unable to find device: " + deviceName})
+							callback({icon: icon, error: true, message: "I couldn't identify that device.", html: "<h2>Error: unable to identify device:</h2>" + deviceName})
 							return
 						}
 
@@ -3352,7 +3522,7 @@
 							desiredState = {max_set_point: celsius, min_set_point: celsius}
 						}
 						else {
-							callback({icon: icon, message: "I couldn't understand that desired state.", html: "unable to set state: " + desiredState})
+							callback({icon: icon, error: true, message: "I couldn't understand that desired state.", html: "<h2>Error: unable to set state:</h2>" + desiredState})
 							return
 						}
 
@@ -3380,26 +3550,30 @@
 							// proxy
 								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 									if (response.errors && response.errors.length) {
-										callback({icon: icon, message: "Wink says: " + response.errors.join("... "), html: "<b>Wink errors</b><li>" + response.errors.join("</li><li>") + "</li>"})
+										callback({icon: icon, error: true, message: "I was unable to update a device.", html: "<h2>Error: Wink responded with these errors:</h2><li>" + response.errors.join("</li><li>") + "</li>"})
 									}
 								})
 						}
 				}
 				catch (error) {
-					callback({icon: icon, message: "I couldn't identify that device.", html: "unable to find device: " + remainder})
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
 			"turn off wink device": function(remainder, callback) {
 				try {
 					window.ACTION_LIBRARY["set wink devices"](remainder + " to off", callback)
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"turn on wink device": function(remainder, callback) {
 				try {
 					window.ACTION_LIBRARY["set wink devices"](remainder + " to on", callback)
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 
 		// Reddit
@@ -3438,11 +3612,13 @@
 									callback({icon: icon, message: redditText, html: "<a target='_blank' href='" + redditLink + "'><h2>" + redditText + "<h2></a>"})
 							}
 							catch (error) {
-								callback({icon: icon, message: "I don't have any questions.", html: "unable to ask reddit"})
+								callback({icon: icon, error: true, message: "I don't have any questions.", html: "<h2>Error: unable to access reddit</h2>"})
 							}
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"get a reddit writing prompt": function(remainder, callback) {
 				try {
@@ -3479,11 +3655,13 @@
 									callback({icon: icon, message: redditText, html: "<a target='_blank' href='" + redditLink + "'><h2>" + redditText + "</h2></a>"})
 							}
 							catch (error) {
-								callback({icon: icon, message: "I don't have any writing prompts.", html: "unable to query reddit"})
+								callback({icon: icon, error: true, message: "I don't have any writing prompts.", html: "<h2>Error: unable to access reddit</h2>"})
 							}
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 
 		// custom APIs
@@ -3517,7 +3695,7 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							if (!response.success) {
-								callback({icon: icon, message: "I was unable to convert from " + fromUnit + "to" + toUnit, html: quantity + " " + fromUnit + " = <b>???</b> " + toUnit})
+								callback({icon: icon, error: true, message: "I was unable to convert from " + fromUnit + "to" + toUnit, html: "<h2>Error: unable to convert:</h2>" + response.message + "<br></br>" + quantity + " " + fromUnit + " = <b>???</b> " + toUnit})
 							}
 							else {
 								var outputQuantity = Number(response.output).toLocaleString("fullwide", {useGrouping: true, maximumSignificantDigits: 21})
@@ -3526,7 +3704,10 @@
 								callback({icon: icon, message: outputQuantity + " " + outputToUnit, html: response.parameters.quantity + " " + outputFromUnit + " = <b>" + outputQuantity + "</b> " + outputToUnit})
 							}
 						})
-				} catch (error) {}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"find factors": function(remainder, callback) {
 				try {
@@ -3543,7 +3724,7 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							if (!response.success) {
-								callback({icon: icon, message: "I was unable to find the factors of " + remainder, html: "<h2>" + remainder + "</h2>" + response.message})
+								callback({icon: icon, error: true, message: "I was unable to find the factors of " + remainder, html: "<h2>Error: unable to find factors:</h2>" + response.message})
 							}
 							else {
 								var message = response.qualities.map(function(q) {
@@ -3555,7 +3736,9 @@
 							}
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"analyze chord": function(remainder, callback) {
 				try {
@@ -3577,14 +3760,16 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							if (!response.success) {
-								callback({icon: icon, message: "I was unable to do a chordal analysis of " + remainder, html: "<h2>" + remainder + "</h2>" + response.message})
+								callback({icon: icon, error: true, message: "I was unable to do a chordal analysis of " + remainder, html: "<h2>Error: unable to analyze chord:</h2>" + response.message})
 							}
 							else {
 								callback({icon: icon, message: response.smallOutput.replace(/\#/gi," sharp").replace(/b/g, " flat"), html: response.chord.join(" - ") + "<h2>" + response.bigOutput + "</h2>" + response.smallOutput})
 							}
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 			"shuffle word": function(remainder, callback) {
 				try {
@@ -3601,7 +3786,7 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							if (!response.success) {
-								callback({icon: icon, message: "I was unable to shuffle the word " + remainder, html: "<h2>" + remainder + "</h2>" + response.message})
+								callback({icon: icon, error: true, message: "I was unable to shuffle the word " + remainder, html: "<h2>Error: unable to shuffle word:</h2>" + response.message})
 							}
 							else {
 								var wordList = []
@@ -3614,6 +3799,8 @@
 							}
 						})
 				}
-				catch (error) {}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
 			},
 	}

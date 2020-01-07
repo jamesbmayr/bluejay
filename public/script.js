@@ -284,7 +284,7 @@ window.addEventListener("load", function() {
 								for (var i in data) {
 									changeConfiguration({key: i, value: data[i]})
 								}
-							} catch (error) { }
+							} catch (error) {}
 					}
 				}
 			}
@@ -699,7 +699,7 @@ window.addEventListener("load", function() {
 						var message = ERROR_LIBRARY["noaction-responses"][ERROR_LIBRARY["noaction-index"]]
 
 						ERROR_LIBRARY["noaction-index"] = (ERROR_LIBRARY["noaction-index"] == ERROR_LIBRARY["noaction-responses"].length - 1) ? 0 : (ERROR_LIBRARY["noaction-index"] + 1)
-						var response = {icon: "&#x2753;", message: message, html: message, followup: followup}
+						var response = {icon: "&#x2753;", error: true, message: message, html: message, followup: followup}
 						createHistory(phrase, action, response)
 					}
 
@@ -742,7 +742,7 @@ window.addEventListener("load", function() {
 
 				// visuals
 					var historyBlock = document.createElement("div")
-						historyBlock.className = "stream-history"
+						historyBlock.className = "stream-history" + (response.error ? " stream-history-error" : "")
 
 					var phraseBlock = document.createElement("div")
 						phraseBlock.className = "stream-history-phrase"
