@@ -212,6 +212,27 @@ window.addEventListener("load", function() {
 				}
 			}
 
+		/* sortRandom */
+			FUNCTION_LIBRARY.sortRandom = sortRandom
+			function sortRandom(array) {
+				try {
+					var output = JSON.parse(JSON.stringify(array))
+
+					var x = output.length
+					while (x > 0) {
+						var y = Math.floor(Math.random() * x)
+						x = x - 1
+						var temp = output[x]
+						output[x] = output[y]
+						output[y] = temp
+					}
+					return output
+				}
+				catch (error) {
+					return null
+				}
+			}
+
 	/*** settings ***/
 		/* initializeConfiguration */
 			FUNCTION_LIBRARY.initializeConfiguration = initializeConfiguration

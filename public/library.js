@@ -822,6 +822,15 @@
 			"play true or false": 				"play true or false",
 			"lets play true or false": 			"play true or false",
 
+			"play blackjack": 					"play blackjack",
+			"lets play blackjack": 				"play blackjack",
+			"play 21": 							"play blackjack",
+			"lets play 21": 					"play blackjack",
+			"hit me": 							"play blackjack",
+			"deal me in": 						"play blackjack",
+			"deal me cards": 					"play blackjack",
+			"deal me some cards": 				"play blackjack",
+
 		// SONOS
 
 		// Wink
@@ -3766,6 +3775,356 @@
 									// response
 										callback({icon: icon, message: message + " ... " + "You got " + finalScore + " questions correct.", html: message + "<br><br><b>Final score: " + finalScore + "</b>"})
 								}
+						}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"play blackjack": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f0a1;"
+
+					// initialize
+						if (window.CONTEXT_LIBRARY.flow !== "play blackjack") {
+							// enter flow
+								window.CONTEXT_LIBRARY.flow = "play blackjack"
+
+							// create game state
+								var gameState = window.CONTEXT_LIBRARY["play blackjack"] = {
+									playable: false,
+									roundWinner: null,
+									turnLoop: null,
+									deck: [],
+									discard: [
+										{symbol: "&spades;", suit: "spades",   value: 1, name: "Ace"}, {symbol: "&spades;", suit: "spades",   value: 2, name: 2}, {symbol: "&spades;", suit: "spades",   value: 3, name: 3}, {symbol: "&spades;", suit: "spades",   value: 4, name: 4}, {symbol: "&spades;", suit: "spades",   value: 5, name: 5}, {symbol: "&spades;", suit: "spades",   value: 6, name: 6}, {symbol: "&spades;", suit: "spades",   value: 7, name: 7}, {symbol: "&spades;", suit: "spades",   value: 8, name: 8}, {symbol: "&spades;", suit: "spades",   value: 9, name: 9}, {symbol: "&spades;", suit: "spades",   value: 10, name: 10}, {symbol: "&spades;", suit: "spades",   value: 10, name: "Jack"}, {symbol: "&spades;", suit: "spades",   value: 10, name: "Queen"}, {symbol: "&spades;", suit: "spades",   value: 10, name: "King"},
+										{symbol: "&hearts;", suit: "hearts",   value: 1, name: "Ace"}, {symbol: "&hearts;", suit: "hearts",   value: 2, name: 2}, {symbol: "&hearts;", suit: "hearts",   value: 3, name: 3}, {symbol: "&hearts;", suit: "hearts",   value: 4, name: 4}, {symbol: "&hearts;", suit: "hearts",   value: 5, name: 5}, {symbol: "&hearts;", suit: "hearts",   value: 6, name: 6}, {symbol: "&hearts;", suit: "hearts",   value: 7, name: 7}, {symbol: "&hearts;", suit: "hearts",   value: 8, name: 8}, {symbol: "&hearts;", suit: "hearts",   value: 9, name: 9}, {symbol: "&hearts;", suit: "hearts",   value: 10, name: 10}, {symbol: "&hearts;", suit: "hearts",   value: 10, name: "Jack"}, {symbol: "&hearts;", suit: "hearts",   value: 10, name: "Queen"}, {symbol: "&hearts;", suit: "hearts",   value: 10, name: "King"},
+										{symbol: "&clubs;",  suit: "clubs",    value: 1, name: "Ace"}, {symbol: "&clubs;",  suit: "clubs",    value: 2, name: 2}, {symbol: "&clubs;",  suit: "clubs",    value: 3, name: 3}, {symbol: "&clubs;",  suit: "clubs",    value: 4, name: 4}, {symbol: "&clubs;",  suit: "clubs",    value: 5, name: 5}, {symbol: "&clubs;",  suit: "clubs",    value: 6, name: 6}, {symbol: "&clubs;",  suit: "clubs",    value: 7, name: 7}, {symbol: "&clubs;",  suit: "clubs",    value: 8, name: 8}, {symbol: "&clubs;",  suit: "clubs",    value: 9, name: 9}, {symbol: "&clubs;",  suit: "clubs",    value: 10, name: 10}, {symbol: "&clubs;",  suit: "clubs",    value: 10, name: "Jack"}, {symbol: "&clubs;",  suit: "clubs",    value: 10, name: "Queen"}, {symbol: "&clubs;",  suit: "clubs",    value: 10, name: "King"},
+										{symbol: "&diams;",  suit: "diamonds", value: 1, name: "Ace"}, {symbol: "&diams;",  suit: "diamonds", value: 2, name: 2}, {symbol: "&diams;",  suit: "diamonds", value: 3, name: 3}, {symbol: "&diams;",  suit: "diamonds", value: 4, name: 4}, {symbol: "&diams;",  suit: "diamonds", value: 5, name: 5}, {symbol: "&diams;",  suit: "diamonds", value: 6, name: 6}, {symbol: "&diams;",  suit: "diamonds", value: 7, name: 7}, {symbol: "&diams;",  suit: "diamonds", value: 8, name: 8}, {symbol: "&diams;",  suit: "diamonds", value: 9, name: 9}, {symbol: "&diams;",  suit: "diamonds", value: 10, name: 10}, {symbol: "&diams;",  suit: "diamonds", value: 10, name: "Jack"}, {symbol: "&diams;",  suit: "diamonds", value: 10, name: "Queen"}, {symbol: "&diams;",  suit: "diamonds", value: 10, name: "King"}
+									],
+									pot: 0,
+									player: {
+										chips: 10,
+										bust: false,
+										facedown: [],
+										faceup: []
+									},
+									dealer: {
+										chips: 10,
+										bust: false,
+										facedown: [],
+										faceup: []
+									}
+								}
+
+							// start
+								callback({icon: icon, message: "Okay, let me shuffle the deck.", html: "<h2>dealer: $" + gameState.dealer.chips + "</h2>" + "<h2>player: $" + gameState.player.chips + "</h2>", followup: false})
+
+							// new round
+								setTimeout(function() {
+									startBlackjackRound()
+								}, 3000)
+						}
+
+					// human turn
+						else if (window.CONTEXT_LIBRARY["play blackjack"].playable) {
+							// game state
+								var gameState = window.CONTEXT_LIBRARY["play blackjack"]
+
+							// hit
+								if (remainder.includes("hit")) {
+									// deal card
+										dealBlackjackCard("player", "faceup")
+
+									// display state
+										displayBlackjackState()
+
+									// 5-cards? dealer's turn
+										var count = 1 + gameState.player.faceup.length
+										if (count == 5) {
+											gameState.playable = false
+										}
+
+									// bust? dealer's turn
+										var bestSum = getBestBlackjackSum("player")
+										if (!bestSum) {
+											gameState.player.bust = true
+											gameState.playable = false
+										}
+										else if (bestSum == 21) {
+											gameState.playable = false	
+										}
+								}
+
+							// stay
+								else if (remainder.includes("stay")) {
+									// response
+										callback({icon: icon, message: "Okay, my turn.", html: "<h2>Dealer's turn.</h2>", followup: false})
+
+									// switch to dealer's turn
+										gameState.playable = false
+								}
+
+							// player is done
+								if (!gameState.playable) {
+									// player busted?
+										if (gameState.player.bust) {
+											compareBlackjackHands()
+										}
+
+									// dealer's turn
+										else {
+											gameState.turnLoop = setInterval(function() {
+												// get count
+													var count = 1 + gameState.dealer.faceup.length
+
+												// bust? compare
+													var bestSum = getBestBlackjackSum("dealer")
+													if (!bestSum) {
+														gameState.dealer.bust = true
+														compareBlackjackHands()
+													}
+
+												// continue
+													else {
+														// dealer hits on 16
+															var playableSum = getBestBlackjackSum("dealer", 16)
+
+															if (count < 5 && playableSum) {
+																// deal card
+																	dealBlackjackCard("dealer", "faceup")
+
+																// display state
+																	displayBlackjackState()
+															}
+														
+														// compare hands
+															else {
+																compareBlackjackHands()
+															}
+													}
+											}, 3000)
+										}
+								}
+						}
+
+					// deal card
+						function dealBlackjackCard(who, how) {
+							// gameState
+								var gameState = window.CONTEXT_LIBRARY["play blackjack"]
+
+							// no cards? shuffle discard
+								if (!gameState.deck.length) {
+									gameState.deck = window.FUNCTION_LIBRARY.sortRandom(gameState.discard)
+									gameState.discard = []
+								}
+
+							// select a random card
+								var index = Math.floor(Math.random() * gameState.deck.length)
+								var card = gameState.deck[index]
+
+							// pull it from the deck
+								gameState.deck.splice(index, 1)
+
+							// add it to the person's hand
+								gameState[who][how].push(card)
+						}
+
+					// compareBlackjackHands
+						function compareBlackjackHands() {
+							// gameState
+								var gameState = window.CONTEXT_LIBRARY["play blackjack"]
+
+							// stop loop
+								clearInterval(gameState.turnLoop)
+								gameState.turnLoop = null
+
+							// player busted?
+								if (gameState.player.bust) {
+									gameState.roundWinner = "dealer"
+								}
+
+							// dealer busted?
+								else if (gameState.dealer.bust) {
+									gameState.roundWinner = "player"
+								}
+
+							// both 21 and under
+								else {
+									// player sum
+										var bestPlayerSum = getBestBlackjackSum("player")
+										
+									// dealer sum
+										var bestDealerSum = getBestBlackjackSum("dealer")
+
+									// winner
+										if (bestPlayerSum > bestDealerSum) {
+											gameState.roundWinner = "player"
+										}
+										else {
+											gameState.roundWinner = "dealer"
+										}
+								}
+
+							// chips
+								gameState.pot -= 2
+								gameState[gameState.roundWinner].chips += 2
+
+							// display
+								displayBlackjackState()
+
+							// say "next round"
+								if (gameState.player.chips && gameState.dealer.chips) {
+									setTimeout(function() {
+										callback({icon: icon, message: "Okay, next round.", html: "<h2>Next round.</h2>", followup: false})
+									}, 2000)
+								}
+
+							// next round
+								setTimeout(function() {
+									startBlackjackRound()
+								}, 4000)
+						}
+
+					// startBlackjackRound
+						function startBlackjackRound() {
+							// gameState
+								var gameState = window.CONTEXT_LIBRARY["play blackjack"]
+
+							// game over?
+								if (gameState.player.chips == 0) {
+									// response
+										callback({icon: icon, message: "The dealer wins the game.", html: "<h2>Dealer wins.</h2>", followup: false})
+
+									// end flow
+										window.CONTEXT_LIBRARY.flow = null
+										delete window.CONTEXT_LIBRARY["play blackjack"]
+								}
+								else if (gameState.dealer.chips == 0) {
+									// response
+										callback({icon: icon, message: "You win the game.", html: "<h2>Player wins.</h2>", followup: false})
+
+									// end flow
+										window.CONTEXT_LIBRARY.flow = null
+										delete window.CONTEXT_LIBRARY["play blackjack"]
+								}
+
+							// next round
+								else {
+									// discard player cards
+										for (var i in gameState.player.facedown) {
+											var card = gameState.player.facedown[i]
+											gameState.discard.push(JSON.parse(JSON.stringify(card)))
+										}
+										for (var i in gameState.player.faceup) {
+											var card = gameState.player.faceup[i]
+											gameState.discard.push(JSON.parse(JSON.stringify(card)))
+										}
+										gameState.player.facedown = []
+										gameState.player.faceup = []
+
+									// discard dealer cards
+										for (var i in gameState.dealer.facedown) {
+											var card = gameState.dealer.facedown[i]
+											gameState.discard.push(JSON.parse(JSON.stringify(card)))
+										}
+										for (var i in gameState.dealer.faceup) {
+											var card = gameState.dealer.faceup[i]
+											gameState.discard.push(JSON.parse(JSON.stringify(card)))
+										}
+										gameState.dealer.facedown = []
+										gameState.dealer.faceup = []
+
+									// deal cards (first deal includes shuffling)
+										dealBlackjackCard("player", "facedown")
+										dealBlackjackCard("player", "faceup")
+										dealBlackjackCard("dealer", "facedown")
+										dealBlackjackCard("dealer", "faceup")
+
+									// chips
+										gameState.player.chips -= 1
+										gameState.dealer.chips -= 1
+										gameState.pot += 2
+
+									// reset bust
+										gameState.player.bust = false
+										gameState.dealer.bust = false
+
+									// player's turn
+										gameState.roundWinner = null
+										gameState.playable = true
+
+									// display
+										displayBlackjackState()
+								}
+						}
+
+					// getBestBlackjackSum
+						function getBestBlackjackSum(who, limit, secret) {
+							// gameState
+								var gameState = window.CONTEXT_LIBRARY["play blackjack"]
+
+							// limit
+								var limit = limit || 21
+
+							// possible sums
+								var possibleSums = [((secret ?  0 : gameState[who].facedown[0].value) + gameState[who].faceup.map(function(card) { return card.value }).reduce(function(total, value) { return total + value }))]
+								var aces = (secret ? 0 : (gameState[who].facedown[0].value == 1 ? 1 : 0))
+								for (var i in gameState[who].faceup) {
+									if (gameState[who].faceup[i].value == 1) {
+										aces += 1
+									}
+								}
+								for (var i = 0; i < aces; i++) {
+									possibleSums.push(possibleSums[possibleSums.length - 1] + 10)
+								}
+
+
+							// sort sums
+								possibleSums = possibleSums.sort(function(a,b) { return a - b })
+
+							// get best sum
+								var bestSum = 0
+								for (var i in possibleSums) {
+									if (bestSum < possibleSums[i] && possibleSums[i] <= limit) {
+										bestSum = possibleSums[i]
+									}
+								}
+
+							// return
+								return bestSum
+						}
+
+					// displayBlackjackState
+						function displayBlackjackState() {
+							// gameState
+								var gameState = window.CONTEXT_LIBRARY["play blackjack"]
+
+							// sums
+								var dealerSum = getBestBlackjackSum("dealer", null, gameState.roundWinner ? false : true)
+								var playerSum = getBestBlackjackSum("player")
+
+							// html
+								var dealerHTML = gameState.roundWinner ? ("<li>[" + gameState.dealer.facedown[0].name + gameState.dealer.facedown[0].symbol  + "]</li>" ): "<li>???</li>"
+								for (var i in gameState.dealer.faceup) {
+									dealerHTML += "<li>[" + gameState.dealer.faceup[i].name + gameState.dealer.faceup[i].symbol + "]</li>"
+								}
+
+								var playerHTML = "<li>[" + gameState.player.facedown[0].name + gameState.player.facedown[0].symbol + "]</li>"
+								for (var i in gameState.player.faceup) {
+									playerHTML += "<li>[" + gameState.player.faceup[i].name + gameState.player.faceup[i].symbol + "]</li>"
+								}
+
+							// response
+								callback({
+									icon: icon,
+									message: (gameState.dealer.bust || !dealerSum ? "Dealer busts. " : ("Dealer shows " + dealerSum + ". ")) +
+										(gameState.player.bust || !playerSum ? "You bust. " : ("You have " + playerSum + ". ") + (gameState.playable ? "Hit or stay? " : "")) +
+										(gameState.roundWinner ? (gameState.roundWinner + " wins. ") : ""),
+									html: (gameState.pot ? ("<h2>pot: $" + gameState.pot + "</h2>") : "") + ("<h2>dealer: $" + gameState.dealer.chips + "</h2>" + dealerHTML) + ("<h2>player: $" + gameState.player.chips + "</h2>" + playerHTML),
+									followup: gameState.playable ? true : false
+								})
 						}
 				}
 				catch (error) {
