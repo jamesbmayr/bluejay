@@ -921,11 +921,15 @@
 		// casual responses
 			"receive gratitude": function(remainder, callback) {
 				try {
-					var icon = "&#x1f426;"
+					// icon
+						var icon = "&#x1f426;"
 
-					var messages = ["You're welcome.", "Glad I could help.", "Any time.", "Don't mention it.", "No problem."]
-					var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
-					callback({icon: icon, message: message, html: message, followup: false})
+					// possible messages
+						var messages = ["You're welcome.", "Glad I could help.", "Any time.", "Don't mention it.", "No problem."]
+
+					// send random message
+						var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
+						callback({icon: icon, message: message, html: message, followup: false})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -933,11 +937,15 @@
 			},
 			"receive apology": function(remainder, callback) {
 				try {
-					var icon = "&#x1f426;"
+					// icon
+						var icon = "&#x1f426;"
 
-					var messages = ["Don't worry about it.", "I forgive you.", "It's all right.", "No worries.", "Everything will be okay."]
-					var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
-					callback({icon: icon, message: message, html: message, followup: false})
+					// possible messages
+						var messages = ["Don't worry about it.", "I forgive you.", "It's all right.", "No worries.", "Everything will be okay."]
+
+					// send random message
+						var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
+						callback({icon: icon, message: message, html: message, followup: false})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -945,11 +953,15 @@
 			},
 			"receive affirmation": function(remainder, callback) {
 				try {
-					var icon = "&#x1f426;"
+					// icon
+						var icon = "&#x1f426;"
 
-					var messages = ["I am a good bird.", "Thank you. I try my hardest.", "That's kind of you to say.", "I'm glad you think so.", "I appreciate that."]
-					var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
-					callback({icon: icon, message: message, html: message, followup: false})
+					// possible messages
+						var messages = ["I am a good bird.", "Thank you. I try my hardest.", "That's kind of you to say.", "I'm glad you think so.", "I appreciate that."]
+
+					// send random message
+						var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
+						callback({icon: icon, message: message, html: message, followup: false})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -957,7 +969,8 @@
 			},
 			"receive greeting": function(remainder, callback) {
 				try {
-					var icon = "&#x1f44b;"
+					// icon
+						var icon = "&#x1f44b;"
 
 					// clean up remainder
 						remainder = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
@@ -1000,17 +1013,21 @@
 		// meta
 			"list actions": function(remainder, callback) {
 				try {
-					var icon = "&#x1f426;"
+					// icon
+						var icon = "&#x1f426;"
 
-					var keys = Object.keys(window.ACTION_LIBRARY)
+					// get all functions
+						var keys = Object.keys(window.ACTION_LIBRARY)
 					
-					var list = "<b>Here are all my actions:</b><ul>"
-					for (var i in keys) {
-						list += ("<li>" + keys[i] + "</li>")
-					}
-					list += "</ul>"
+					// generate html list
+						var list = "<b>Here are all my actions:</b><ul>"
+						for (var i in keys) {
+							list += ("<li>" + keys[i] + "</li>")
+						}
+						list += "</ul>"
 					
-					callback({icon: icon, message: "Here are all of the actions I know.", html: list})
+					// send response
+						callback({icon: icon, message: "Here are all of the actions I know.", html: list})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1018,9 +1035,11 @@
 			},
 			"repeat this": function(remainder, callback) {
 				try {
-					var icon = "&#x1f426;"
+					// icon
+						var icon = "&#x1f426;"
 
-					callback({icon: icon, message: remainder, html: remainder})
+					// send response
+						callback({icon: icon, message: remainder, html: remainder})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1028,9 +1047,11 @@
 			},
 			"repeat that": function(remainder, callback) {
 				try {
-					var icon = "&#x1f426;"
+					// icon
+						var icon = "&#x1f426;"
 
-					callback({icon: icon, message: window.CONTEXT_LIBRARY.lastResponseMessage || "No previous response.", html: window.CONTEXT_LIBRARY.lastResponseHTML || "No previous response."})
+					// send response
+						callback({icon: icon, message: window.CONTEXT_LIBRARY.lastResponseMessage || "No previous response.", html: window.CONTEXT_LIBRARY.lastResponseHTML || "No previous response."})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1040,7 +1061,8 @@
 		// settings
 			"stop listening": function(remainder, callback) {
 				try {
-					var icon = "&#x1f507;"
+					// icon
+						var icon = "&#x1f507;"
 
 					// force whistling off
 						window.FUNCTION_LIBRARY.changeWhistleOn({forceOff: true})
@@ -1129,7 +1151,8 @@
 			},
 			"change voice": function(remainder, callback) {
 				try {
-					var icon = "&#x1f50a;"
+					// icon
+						var icon = "&#x1f50a;"
 
 					// change voice
 						var name = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
@@ -1138,12 +1161,11 @@
 					// failure
 						if (voice === false) {
 							callback({icon: icon, error: true, message: "I don't recognize that voice.", html: "<h2>Error: voice not found:</h2>" + remainder})
+							return
 						}
 
 					// success
-						else {
-							callback({icon: icon, message: "Voice set to " + voice, html: "voice: " + voice})
-						}
+						callback({icon: icon, message: "Voice set to " + voice, html: "voice: " + voice})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1151,7 +1173,8 @@
 			},
 			"change volume": function(remainder, callback) {
 				try {
-					var icon = "&#x1f50a;"
+					// icon
+						var icon = "&#x1f50a;"
 
 					// change volume
 						var volume = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
@@ -1161,12 +1184,11 @@
 					// failure
 						if (newVolume === false) {
 							callback({icon: icon, error: true, message: "I don't know that number.", html: "<h2>Error: invalid volume:</h2>" + remainder})
+							return
 						}
 
 					// success
-						else {
-							callback({icon: icon, message: "Volume set to " + newVolume + " percent", html: "volume: " + newVolume + "%"})
-						}
+						callback({icon: icon, message: "Volume set to " + newVolume + " percent", html: "volume: " + newVolume + "%"})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1174,7 +1196,8 @@
 			},
 			"change listening duration": function(remainder, callback) {
 				try {
-					var icon = "&#x1f399;"
+					// icon
+						var icon = "&#x1f399;"
 
 					// get duration
 						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
@@ -1191,23 +1214,20 @@
 					// no duration
 						if (duration === null) {
 							callback({icon: icon, error: true, message: "I don't know that number.", html: "<h2>Error: invalid duration:</h2>" + remainder})
+							return
 						}
 
-					// some duration
-						else {
-							// change duration
-								var newDuration = window.FUNCTION_LIBRARY.changeRecognitionDuration({duration: duration})
+					// change duration
+						var newDuration = window.FUNCTION_LIBRARY.changeRecognitionDuration({duration: duration})
 
-							// failure
-								if (newDuration === false) {
-									callback({icon: icon, error: true, message: "I don't know that number.", html: "<h2>Error: invalid duration:</h2>" + remainder})
-								}
-
-							// success
-								else {
-									callback({icon: icon, message: "Listening duration set to " + newDuration + (newDuration == 1 ? " second" : " seconds"), html: "listening duration: " + newDuration + (newDuration == 1 ? " second" : " seconds")})
-								}
+					// failure
+						if (newDuration === false) {
+							callback({icon: icon, error: true, message: "I don't know that number.", html: "<h2>Error: invalid duration:</h2>" + remainder})
+							return
 						}
+
+					// success
+						callback({icon: icon, message: "Listening duration set to " + newDuration + (newDuration == 1 ? " second" : " seconds"), html: "listening duration: " + newDuration + (newDuration == 1 ? " second" : " seconds")})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1215,7 +1235,8 @@
 			},
 			"change configuration": function(remainder, callback) {
 				try {
-					var icon = "&#x2699;"
+					// icon
+						var icon = "&#x2699;"
 
 					// get key and value
 						var pair = remainder.split(/ equal to | equals | to | is | as /gi)
@@ -1223,24 +1244,26 @@
 							callback({icon: icon, error: true, message: "I'm missing a key or value.", html: "<h2>Error: invalid key or value</h2>"})
 							return
 						}
-						else {
-							var key = String(pair[0]).toLowerCase()
-							var value = String(pair[1])
-						}
+						
+						var key = String(pair[0]).toLowerCase()
+						var value = String(pair[1])
 
 					// try converting to number
 						if (!isNaN(Number(value))) {
 							value = Number(value)
 						}
 
-					// save and respond
+					// save configuration
 						var success = window.FUNCTION_LIBRARY.changeConfiguration({key: key, value: value})
+
+					// failure
 						if (!success) {
 							callback({icon: icon, error: true, message: "I couldn't set that configuration.", html: "<h2>Error: invalid or missing key and value</h2>"})
+							return
 						}
-						else {
-							callback({icon: icon, message: key + " is now " + value, html: key + " = " + value})
-						}
+					
+					// success
+						callback({icon: icon, message: key + " is now " + value, html: key + " = " + value})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1248,7 +1271,8 @@
 			},
 			"authorize platform": function(remainder, callback) {
 				try {
-					var icon = "&#x1f510;"
+					// icon
+						var icon = "&#x1f510;"
 
 					// get credentials
 						var credentials = remainder.split(/\s/gi)
@@ -1276,99 +1300,112 @@
 							}
 						}
 
+					// failure
 						if (!name || !Object.keys(platforms).includes(name)) {
 							callback({icon: icon, error: true, message: "I couldn't identify that platform.", html: "<h2>Error: unable to authorize:</h2>" + remainder})
+							return
 						}
 
-					// credentials?
-						else {
-							// host
-								var host = platforms[name].host
+					// host
+						var host = platforms[name].host
 
-							// fresh
-								if (!window.CONFIGURATION_LIBRARY[host] || !window.CONFIGURATION_LIBRARY[host].refresh_token) {
-									var key = credentials[1] || window.CONFIGURATION_LIBRARY[name + " key"] || ""
-									var secret = credentials[2] || window.CONFIGURATION_LIBRARY[name + " secret"] || ""
-									var redirect = credentials[2] || window.CONFIGURATION_LIBRARY[name + " redirect"] || ""
+					// fresh
+						if (!window.CONFIGURATION_LIBRARY[host] || !window.CONFIGURATION_LIBRARY[host].refresh_token) {
+							// key, secret, redirect
+								var key = credentials[1] || window.CONFIGURATION_LIBRARY[name + " key"] || ""
+								var secret = credentials[2] || window.CONFIGURATION_LIBRARY[name + " secret"] || ""
+								var redirect = credentials[2] || window.CONFIGURATION_LIBRARY[name + " redirect"] || ""
 
-									if (!key || !secret || !redirect) {
-										callback({icon: icon, error: true, message: "I need a key, a secret, and a redirect to connect to " + name + ".", html: "<h2>Error: missing configurations:</h2>" + remainder + "<br><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " redirect</li></ul>"})
+							// missing credentials
+								if (!key || !secret || !redirect) {
+									callback({icon: icon, error: true, message: "I need a key, a secret, and a redirect to connect to " + name + ".", html: "<h2>Error: missing configurations:</h2>" + remainder + "<br><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " redirect</li></ul>"})
+									return
+								}
+							
+							// generate popup
+								var state = encodeURIComponent((window.location.origin + window.location.pathname) + ";;;" + platforms[name].stateSecret(key, secret))
+								var url = "https://" + host + platforms[name].authPath + "&client_id=" + key + "&state=" + state + "&redirect_uri=" + encodeURIComponent(redirect)
+								var popup = window.open(url, null, "height=500,width=500,status=yes,toolbar=no,menubar=no,location=no")
+
+							// response
+								callback({icon: icon, message: "Complete the authorization flow for " + host, html: "activating <b>" + host + "</b> in external popup"})
+
+							// periodically attempt to fetch authorization from the server
+								window.FUNCTION_LIBRARY.fetchPeriodically("getAuthorization", host, function(data) {
+									try {
+										var value = window.CONFIGURATION_LIBRARY[host] || {}
+											value.access_token = data.access_token
+											value.refresh_token = data.refresh_token
+											value.expiration = new Date().getTime() + (data.expires_in * 1000)
+										window.FUNCTION_LIBRARY.changeConfiguration({key: host, value: value})
+										callback({icon: icon, message: host + " is now authorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
 									}
-									else {
-										var state = encodeURIComponent((window.location.origin + window.location.pathname) + ";;;" + platforms[name].stateSecret(key, secret))
-										var url = "https://" + host + platforms[name].authPath + "&client_id=" + key + "&state=" + state + "&redirect_uri=" + encodeURIComponent(redirect)
-										var popup = window.open(url, null, "height=500,width=500,status=yes,toolbar=no,menubar=no,location=no")
+									catch (error) {}
+								})
 
-										callback({icon: icon, message: "Complete the authorization flow for " + host, html: "activating <b>" + host + "</b> in external popup"})
+							// THE BLUEJAY-OAUTH FLOW
+								// 1: parse the user response or look in the CONFIGURATION_LIBRARY for the platform's key, secret, and redirect
+								// 2: create a popup to the platform's auth screen; the "state" query param includes bluejay url and platform API key and/or secret
+								// 3: user goes through and completes the auth flow
+								// 4: external platform redirects the popup based the redirect param (currently a Google Apps Script); auth code is a param of this page
+								// 5: Google Apps Script logs this and uses the "state" param and the new auth code to generate a bluejay link to /authorization
+								// 6: the page auto-redirects to the /authorization url, with an embeddedPost parameter
+								// 7: bluejay server interprets this param and sends an API request to external platform with the auth code
+								// 8: platform responds with the actual access token (and refresh token)
+								// 9: bluejay server saves the results of this to the db, specifically under the user's session id
+								// 10: the main window had been requesting this data the whole time, and now it gets a success response
+								// 11: bluejay saves these values to CONFIGURATION_LIBRARY and localStorage
+								// 12: subsequent Sonos API calls can include the access_token
+						}
 
-										window.FUNCTION_LIBRARY.fetchPeriodically("getAuthorization", host, function(data) {
-											var value = window.CONFIGURATION_LIBRARY[host] || {}
+					// expired
+						else if (window.CONFIGURATION_LIBRARY[host] && (!window.CONFIGURATION_LIBRARY[host].expiration || isNaN(window.CONFIGURATION_LIBRARY[host].expiration) || window.CONFIGURATION_LIBRARY[host].expiration < new Date().getTime())) {
+							// key, secret, redirect
+								var key = credentials[1] || window.CONFIGURATION_LIBRARY[name + " key"] || ""
+								var secret = credentials[2] || window.CONFIGURATION_LIBRARY[name + " secret"] || ""
+								var refresh_token = window.CONFIGURATION_LIBRARY[host].refresh_token || ""
+
+							// missing credentials
+								if (!key || !secret || !refresh_token) {
+									callback({icon: icon, error: true, message: "I need a key, a secret, and a refresh token to reconnect to " + name + ".", html: "<h2>Error: unable to reauthorize:</h2>" + remainder + "<br><br><b>required configurations:</b><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " refresh_token</li></ul>"})
+									return
+								}
+							
+							// options
+								var url = "https://" + host + platforms[name].reauthPath + "?grant_type=refresh_token&refresh_token=" + refresh_token
+								var options = {
+									method: "post",
+									url: url,
+									"Authorization": "Basic " + platforms[name].stateSecret(key, secret),
+										"Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+								}
+
+							// proxy request
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(data) {
+									try {
+										// invaild response
+											if (!data.access_token) {
+												callback({icon: icon, error: true, message: "I couldn't reauthorize " + host, html: "<h2>Error: unable to reauthorize:</h2>" + host})
+												return
+											}
+
+										// authorization successful
+											var value = window.CONFIGURATION_LIBRARY[host]
 												value.access_token = data.access_token
 												value.refresh_token = data.refresh_token
 												value.expiration = new Date().getTime() + (data.expires_in * 1000)
 											window.FUNCTION_LIBRARY.changeConfiguration({key: host, value: value})
-											callback({icon: icon, message: host + " is now authorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
-										})
+											callback({icon: icon, message: host + " is now reauthorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
 									}
-
-									// THE BLUEJAY-OAUTH FLOW
-										// 1: parse the user response or look in the CONFIGURATION_LIBRARY for the platform's key, secret, and redirect
-										// 2: create a popup to the platform's auth screen; the "state" query param includes bluejay url and platform API key and/or secret
-										// 3: user goes through and completes the auth flow
-										// 4: external platform redirects the popup based the redirect param (currently a Google Apps Script); auth code is a param of this page
-										// 5: Google Apps Script logs this and uses the "state" param and the new auth code to generate a bluejay link to /authorization
-										// 6: the page auto-redirects to the /authorization url, with an embeddedPost parameter
-										// 7: bluejay server interprets this param and sends an API request to external platform with the auth code
-										// 8: platform responds with the actual access token (and refresh token)
-										// 9: bluejay server saves the results of this to the db, specifically under the user's session id
-										// 10: the main window had been requesting this data the whole time, and now it gets a success response
-										// 11: bluejay saves these values to CONFIGURATION_LIBRARY and localStorage
-										// 12: subsequent Sonos API calls can include the access_token
-								}
-
-							// expired
-								else if (window.CONFIGURATION_LIBRARY[host] && (!window.CONFIGURATION_LIBRARY[host].expiration || isNaN(window.CONFIGURATION_LIBRARY[host].expiration) || window.CONFIGURATION_LIBRARY[host].expiration < new Date().getTime())) {
-									var key = credentials[1] || window.CONFIGURATION_LIBRARY[name + " key"] || ""
-									var secret = credentials[2] || window.CONFIGURATION_LIBRARY[name + " secret"] || ""
-									var refresh_token = window.CONFIGURATION_LIBRARY[host].refresh_token || ""
-
-									if (!key || !secret || !refresh_token) {
-										callback({icon: icon, error: true, message: "I need a key, a secret, and a refresh token to reconnect to " + name + ".", html: "<h2>Error: unable to reauthorize:</h2>" + remainder + "<br><br><b>required configurations:</b><ul><li>" + name + " key</li><li>" + name + " secret</li><li>" + name + " refresh_token</li></ul>"})
+									catch (error) {
+										callback({icon: icon, error: true, message: "I couldn't reauthorize " + host, html: "<h2>Error: unable to reauthorize:</h2>" + host})
 									}
-									else {
-										var url = "https://" + host + platforms[name].reauthPath + "?grant_type=refresh_token&refresh_token=" + refresh_token
-										var options = {
-											method: "post",
-											url: url,
-											"Authorization": "Basic " + platforms[name].stateSecret(key, secret),
-      										"Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
-										}
+								})
+						}
 
-										window.FUNCTION_LIBRARY.proxyRequest(options, function(data) {
-											try {
-												if (data.access_token) {
-													var value = window.CONFIGURATION_LIBRARY[host]
-														value.access_token = data.access_token
-														value.refresh_token = data.refresh_token
-														value.expiration = new Date().getTime() + (data.expires_in * 1000)
-													window.FUNCTION_LIBRARY.changeConfiguration({key: host, value: value})
-													callback({icon: icon, message: host + " is now reauthorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
-												}
-												else {
-													callback({icon: icon, error: true, message: "I couldn't reauthorize " + host, html: "<h2>Error: unable to reauthorize:</h2>" + host})
-												}
-											}
-											catch (error) {
-												callback({icon: icon, error: true, message: "I couldn't reauthorize " + host, html: "<h2>Error: unable to reauthorize:</h2>" + host})
-											}
-										})
-									}
-								}
-
-							// already authorized
-								else {
-									callback({icon: icon, message: host + " is already authorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
-								}
+					// already authorized
+						else {
+							callback({icon: icon, message: host + " is already authorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
 						}
 				}
 				catch (error) {
@@ -1379,10 +1416,12 @@
 		// time
 			"get the time": function(remainder, callback) {
 				try {
-					var icon = "&#x1f553;"
+					// icon
+						var icon = "&#x1f553;"
 
-					var response = new Date().toLocaleTimeString()
-					callback({icon: icon, message: response, html: "The time is " + response + "."})
+					// response
+						var response = new Date().toLocaleTimeString()
+						callback({icon: icon, message: response, html: "The time is " + response + "."})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1390,10 +1429,12 @@
 			},
 			"get the day": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4c5;"
+					// icon
+						var icon = "&#x1f4c5;"
 
-					var response = (["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()])
-					callback({icon: icon, message: response, html: "Today is " + response + "."})
+					// response
+						var response = (["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()])
+						callback({icon: icon, message: response, html: "Today is " + response + "."})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1401,10 +1442,12 @@
 			},
 			"get the month": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4c5;"
+					// icon
+						var icon = "&#x1f4c5;"
 
-					var response = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()])
-					callback({icon: icon, message: response, html: "The month is " + response + "."})
+					// response
+						var response = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()])
+						callback({icon: icon, message: response, html: "The month is " + response + "."})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1412,10 +1455,12 @@
 			},
 			"get the date": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4c5;"
+					// icon
+						var icon = "&#x1f4c5;"
 
-					var response = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + " " + new Date().getDate())
-					callback({icon: icon, message: response, html: "The date is " + response + "."})
+					// response
+						var response = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + " " + new Date().getDate())
+						callback({icon: icon, message: response, html: "The date is " + response + "."})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1425,75 +1470,91 @@
 		// alarms
 			"set alarm": function(remainder, callback) {
 				try {
-					var icon = "&#x23f0;"
+					// icon
+						var icon = "&#x23f0;"
 
 					// split into array
 						var words = remainder.split(/\s/gi) || []
 
 					// timer
 						if ((/second|minute|hour|day|in/gi).test(remainder)) {
-							var units = {
-								"second": 1000,
-								"minute": 1000 * 60,
-								"hour": 1000 * 60 * 60,
-								"day": 1000 * 60 * 60 * 24
-							}
+							// possible units
+								var units = {
+									"second": 1000,
+									"minute": 1000 * 60,
+									"hour": 1000 * 60 * 60,
+									"day": 1000 * 60 * 60 * 24
+								}
 
-							var amounts = []
-							for (var i = 0; i < words.length; i++) {
-								words[i] = window.FUNCTION_LIBRARY.getDigits(words[i])
+							// identify amounts
+								var amounts = []
+								for (var i = 0; i < words.length; i++) {
+									words[i] = window.FUNCTION_LIBRARY.getDigits(words[i])
 
-								if (!isNaN(words[i])) {
-									if (words[i + 1] && units[words[i + 1].replace(/s$/gi,"").toLowerCase()]) {
-										amounts.push({
-											number: Number(words[i]),
-											unit: words[i + 1].replace(/s$/gi,"")
-										})
-									}
-									else {
-										amounts.push({
-											number: Number(words[i]),
-											unit: "minute"
-										})
+									if (!isNaN(words[i])) {
+										if (words[i + 1] && units[words[i + 1].replace(/s$/gi,"").toLowerCase()]) {
+											amounts.push({
+												number: Number(words[i]),
+												unit: words[i + 1].replace(/s$/gi,"")
+											})
+										}
+										else {
+											amounts.push({
+												number: Number(words[i]),
+												unit: "minute"
+											})
+										}
 									}
 								}
-							}
 
-							var duration = 0
-							for (var i in amounts) {
-								duration += (amounts[i].number * units[amounts[i].unit])
-							}
+							// sum amounts
+								var duration = 0
+								for (var i in amounts) {
+									duration += (amounts[i].number * units[amounts[i].unit])
+								}
 
-							if (!duration) {
-								callback({icon: icon, error: true, message: "I was unable to set that timer.", html: "<h2>Error: unable to set timer:</h2>" + response})
-							}
-							else {
+							// no duration
+								if (!duration) {
+									callback({icon: icon, error: true, message: "I was unable to set that timer.", html: "<h2>Error: unable to set timer:</h2>" + response})
+									return
+								}
+							
+							// create alarm
 								var endTime = new Date().getTime() + duration
 								window.CONTEXT_LIBRARY.alarms.push(endTime)
+
+							// response
 								callback({icon: icon, message: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for " + new Date(endTime).toLocaleTimeString(), html: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
-							}
 						}
 
 					// alarm
 						else {
-							var timePhrase = remainder.replace(/in|at|for|after|before|around/gi,"").toLowerCase().trim()
-								timePhrase = timePhrase.replace("p.m.", "PM").replace("pm", "PM").replace("a.m.", "AM").replace("am", "AM")
-							var endTime = new Date(timePhrase).getTime() || new Date(new Date().toDateString() + " " + timePhrase).getTime()
+							// identify endtime
+								var timePhrase = remainder.replace(/in|at|for|after|before|around/gi,"").toLowerCase().trim()
+									timePhrase = timePhrase.replace("p.m.", "PM").replace("pm", "PM").replace("a.m.", "AM").replace("am", "AM")
+								var endTime = new Date(timePhrase).getTime() || new Date(new Date().toDateString() + " " + timePhrase).getTime()
 							
-							if (isNaN(endTime)) {
-								callback({icon: icon, error: true, message: "I was unable to set that alarm.", html: "<h2>Error: unable to set alarm:</h2>" + remainder})
-							}
-							else {
+							// invalid endTime
+								if (isNaN(endTime)) {
+									callback({icon: icon, error: true, message: "I was unable to set that alarm.", html: "<h2>Error: unable to set alarm:</h2>" + remainder})
+									return
+								}
+							
+							// in the past? 12 hours ahead
 								if (!timePhrase.includes("PM") && !timePhrase.includes("AM") && new Date().getTime() < endTime + (1000 * 60 * 60 * 12)) {
 									endTime = endTime + (1000 * 60 * 60 * 12)
 								}
+
+							// in the past & am/pm specified? 24 hours ahead
 								else if (new Date().getTime() < endTime + (1000 * 60 * 60 * 24)) {
 									endTime = endTime + (1000 * 60 * 60 * 24)
 								}
 
+							// add alarm
 								window.CONTEXT_LIBRARY.alarms.push(endTime)
+
+							// response
 								callback({icon: icon, message: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for " + new Date(endTime).toLocaleTimeString(), html: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
-							}
 						}
 				}
 				catch (error) {
@@ -1502,7 +1563,8 @@
 			},
 			"cancel alarm": function(remainder, callback) {
 				try {
-					var icon = "&#x23f0;"
+					// icon
+						var icon = "&#x23f0;"
 
 					// split into array
 						var words = remainder.split(/\s/gi) || []
@@ -1520,14 +1582,15 @@
 					// no index?
 						if (index === null) {
 							callback({icon: icon, error: true, message: "I was unable to find that alarm.", html: "<h2>Error: unable to cancel alarm:</h2>" + remainder})
+							return
 						}
 
-					// valid index
-						else {
-							var time = new Date(window.CONTEXT_LIBRARY.alarms[index - 1]).toLocaleString()
-							callback({icon: icon, message: "I cancelled alarm #" + index + ", which was set for " + time + ".", html: "Cancelled alarm #" + index + ": <b>" + time + "</b>."})
-							window.CONTEXT_LIBRARY.alarms[index - 1] = null
-						}
+					// cancel alarm
+						var time = new Date(window.CONTEXT_LIBRARY.alarms[index - 1]).toLocaleString()
+						window.CONTEXT_LIBRARY.alarms[index - 1] = null
+
+					// response
+						callback({icon: icon, message: "I cancelled alarm #" + index + ", which was set for " + time + ".", html: "Cancelled alarm #" + index + ": <b>" + time + "</b>."})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1535,13 +1598,14 @@
 			},
 			"cancel all alarms": function(remainder, callback) {
 				try {
-					var icon = "&#x23f0;"
+					// icon
+						var icon = "&#x23f0;"
 
 					// empty alarms array
 						window.CONTEXT_LIBRARY.alarms = []
 
 					// response
-						callback({icon: icon, message: "I turned off all alarms.", html: "All alarms cancelled.", followup: false})
+						callback({icon: icon, message: "I turned off all alarms.", html: "All alarms cancelled."})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1551,7 +1615,8 @@
 		// rng
 			"roll dice": function(remainder, callback) {
 				try {
-					var icon = "&#x1f3b2;"
+					// icon
+						var icon = "&#x1f3b2;"
 
 					// defaults
 						var count = 1
@@ -1579,12 +1644,11 @@
 					// no sum?
 						if (!sum || isNaN(sum)) {
 							callback({icon: icon, error: true, message: "I couldn't roll those dice.", html: "<h2>Error: invalid dice:</h2>" + remainder})
+							return
 						}
 
 					// return sum
-						else {
-							callback({icon: icon, message: sum, html: count + "d" + sides + ": " + sum})
-						}
+						callback({icon: icon, message: sum, html: count + "d" + sides + ": " + sum})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1592,10 +1656,12 @@
 			},
 			"flip a coin": function(remainder, callback) {
 				try {
-					var icon = "&#x1f3b2;"
+					// icon
+						var icon = "&#x1f3b2;"
 
-					var response = window.FUNCTION_LIBRARY.chooseRandom(["heads","tails"])
-					callback({icon: icon, message: response, html: "coin: " + response})
+					// response
+						var response = window.FUNCTION_LIBRARY.chooseRandom(["heads","tails"])
+						callback({icon: icon, message: response, html: "coin: " + response})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1603,11 +1669,15 @@
 			},
 			"consult the magic 8 ball": function(remainder, callback) {
 				try {
-					var icon = "&#x1f3b1;"
+					// icon
+						var icon = "&#x1f3b1;"
 
-					var options = ["It is certain", "It is decidedly so", "Without a doubt", "Yes - definitely", "You may rely on it", "As I see it, yes", "Most likely", "Outlook good", "Yes", "Signs point to yes", "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good", "Very doubtful", "Reply hazy, try again", "Ask again later", "Better not tell you now", "Cannot predict now", "Concentrate and ask again"]
-					var response = window.FUNCTION_LIBRARY.chooseRandom(options)
-					callback({icon: icon, message: response, html: remainder + "<h2>" + response + "</h2>"})
+					// possible options
+						var options = ["It is certain", "It is decidedly so", "Without a doubt", "Yes - definitely", "You may rely on it", "As I see it, yes", "Most likely", "Outlook good", "Yes", "Signs point to yes", "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good", "Very doubtful", "Reply hazy, try again", "Ask again later", "Better not tell you now", "Cannot predict now", "Concentrate and ask again"]
+
+					// response
+						var response = window.FUNCTION_LIBRARY.chooseRandom(options)
+						callback({icon: icon, message: response, html: remainder + "<h2>" + response + "</h2>"})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1617,7 +1687,8 @@
 		// math
 			"calculate": function(remainder, callback) {
 				try {
-					var icon = "&#x00b1;"
+					// icon
+						var icon = "&#x00b1;"
 
 					// loop through and identify terms
 						var terms = remainder.split(/\s/gi)
@@ -1650,15 +1721,18 @@
 							}
 						}
 
-					// evaluate and return result
+					// evaluate
 						var result = eval(terms.join(" "))
+
+					// not a number?
 						if (isNaN(result)) {
 							callback({icon: icon, error: true, message: "I couldn't perform that calculation.", html: "<h2>Error: invalid calculation:</h2>" + remainder})
+							return
 						}
-						else {
-							window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
-							callback({icon: icon, message: Number(result), html: terms.join(" ") + " = <b>" + result + "</b>"})
-						}
+					
+					// response
+						window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
+						callback({icon: icon, message: Number(result), html: terms.join(" ") + " = <b>" + result + "</b>"})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1666,22 +1740,28 @@
 			},
 			"double": function(remainder, callback) {
 				try {
-					var icon = "&#x00b1;"
+					// icon
+						var icon = "&#x00b1;"
 
-					var term = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"")
-						term = window.FUNCTION_LIBRARY.getDigits(term.toLowerCase().trim())
-					if (term == "that") {
-						term = Number(window.CONTEXT_LIBRARY.lastResponseNumber)
-					}
+					// identify multiplier
+						var term = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"")
+							term = window.FUNCTION_LIBRARY.getDigits(term.toLowerCase().trim())
+						if (term == "that") {
+							term = Number(window.CONTEXT_LIBRARY.lastResponseNumber)
+						}
 
-					var result = 2 * Number(term)
-					if (isNaN(result)) {
-						callback({icon: icon, error: true, message: "I couldn't double that number.", html: "<h2>Error: invalid multiplier</h2>"})
-					}
-					else {
+					// multiply
+						var result = 2 * Number(term)
+
+					// not a number?
+						if (isNaN(result)) {
+							callback({icon: icon, error: true, message: "I couldn't double that number.", html: "<h2>Error: invalid multiplier</h2>"})
+							return
+						}
+					
+					// response
 						window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
 						callback({icon: icon, message: Number(result), html: "2 * " + term + " = <b>" + result + "</b>"})
-					}
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1689,22 +1769,28 @@
 			},
 			"triple": function(remainder, callback) {
 				try {
-					var icon = "&#x00b1;"
+					// icon
+						var icon = "&#x00b1;"
 
-					var term = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"")
-						term = window.FUNCTION_LIBRARY.getDigits(term.toLowerCase().trim())
-					if (term == "that") {
-						term = Number(window.CONTEXT_LIBRARY.lastResponseNumber)
-					}
+					// identify multiplier
+						var term = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"")
+							term = window.FUNCTION_LIBRARY.getDigits(term.toLowerCase().trim())
+						if (term == "that") {
+							term = Number(window.CONTEXT_LIBRARY.lastResponseNumber)
+						}
 
-					var result = 3 * Number(term)
-					if (isNaN(result)) {
-						callback({icon: icon, error: true, message: "I couldn't triple that number.", html: "<h2>Error: invalid multiplier</h2>"})
-					}
-					else {
+					// multiply
+						var result = 3 * Number(term)
+
+					// not a number?
+						if (isNaN(result)) {
+							callback({icon: icon, error: true, message: "I couldn't triple that number.", html: "<h2>Error: invalid multiplier</h2>"})
+							return
+						}
+					
+					// response
 						window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
 						callback({icon: icon, message: Number(result), html: "3 * " + term + " = <b>" + result + "</b>"})
-					}
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1712,9 +1798,10 @@
 			},
 			"average": function(remainder, callback) {
 				try {
-					var icon = "&#x00b1;"
+					// icon
+						var icon = "&#x00b1;"
 
-					// loop through and aggregate terms
+					// loop through to identify terms
 						var terms = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").split(/\s/gi)
 						var numbers = []
 						for (var i = 0; i < terms.length; i++) {
@@ -1729,18 +1816,20 @@
 							}
 						}
 
+					// sum terms, then divide
 						var result = numbers.reduce(function(total, term) {
 							return (total + term)
 						}) / (numbers.length || 1)
 
-					// return result
+					// not a number?
 						if (isNaN(result)) {
 							callback({icon: icon, error: true, message: "I couldn't find the average.", html: "<h2>Error: invalid calculation</h2>"})
+							return
 						}
-						else {
-							window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
-							callback({icon: icon, message: Number(result), html: numbers.join(" + ") + " / " + numbers.length + " = <b>" + result + "</b>"})
-						}
+					
+					// response
+						window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
+						callback({icon: icon, message: Number(result), html: numbers.join(" + ") + " / " + numbers.length + " = <b>" + result + "</b>"})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1748,15 +1837,17 @@
 			},
 			"count": function(remainder, callback) {
 				try {
-					var icon = "&#x2673;"
+					// icon
+						var icon = "&#x2673;"
 
-					// numbers
+					// start number
 						var startNumber = (" " + remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"")).split(/ up from | down from | from | starting at | start at | between | for /gi)
 							startNumber = (startNumber[1] || startNumber[0]).split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)[0].toLowerCase().trim()
 							startNumber = window.FUNCTION_LIBRARY.getDigits(startNumber)
 						if (startNumber == "that") { startNumber = Number(window.CONTEXT_LIBRARY.lastResponseNumber) }
 						if (!startNumber || isNaN(startNumber)) { startNumber = 1 }
 
+					// end number
 						var endNumber = (" " + remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"")).split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)
 							endNumber = (endNumber[1] || endNumber[0]).split(/ up from | down from | starting at | start at | between | for /gi)[0].toLowerCase().trim()
 							endNumber = window.FUNCTION_LIBRARY.getDigits(endNumber)
@@ -1787,11 +1878,15 @@
 		// words
 			"spell word": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4dd;"
+					// icon
+						var icon = "&#x1f4dd;"
 
-					var word = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim().toUpperCase()
-					var letters = word.split("")
-					callback({icon: icon, message: word + "... " + letters.join(", "), html: "<h2>" + letters.join(" - ") + "</h2>"})
+					// get letters
+						var word = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim().toUpperCase()
+						var letters = word.split("")
+
+					// response
+						callback({icon: icon, message: word + "... " + letters.join(", "), html: "<h2>" + letters.join(" - ") + "</h2>"})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1799,7 +1894,8 @@
 			},			
 			"find rhymes": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4da;"
+					// icon
+						var icon = "&#x1f4da;"
 
 					// options
 						var options = {
@@ -1817,9 +1913,11 @@
 										listItems[i] = "<li>" + list[i] + "</li>"
 									}
 
-								// message, link, list
+								// message & link
 									var message = "I found " + list.length + " rhyme" + (list.length == 1 ? "" : "s") + " for " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim() + "."
 									var link = "<a target='_blank' href='https://rhymezone.com/r/rhyme.cgi?typeofrhyme=perfect&Word=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'>" + message + "</a>"
+
+								// response
 									callback({icon: icon, message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
 							}
 							catch (error) {
@@ -1833,7 +1931,8 @@
 			},
 			"find synonyms": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4da;"
+					// icon
+						var icon = "&#x1f4da;"
 
 					// options
 						var options = {
@@ -1851,9 +1950,11 @@
 										listItems[i] = "<li>" + list[i] + "</li>"
 									}
 
-								// message, link, list
+								// message & link
 									var message = "I found " + list.length + " synonym" + (list.length == 1 ? "" : "s") + " for " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim() + "."
 									var link = "<a target='_blank' href='https://rhymezone.com/r/rhyme.cgi?typeofrhyme=syn&Word=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'>" + message + "</a>"
+
+								// response
 									callback({icon: icon, message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
 							}
 							catch (error) {
@@ -1867,7 +1968,8 @@
 			},
 			"find definition": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4da;"
+					// icon
+						var icon = "&#x1f4da;"
 
 					// options
 						var options = {
@@ -1888,9 +1990,11 @@
 										listItems[i] = "<li>" + word.defs[i] + "</li>"
 									}
 
-								// message, link, list
+								// message & link
 									var message = "I found " + list.length + " definition" + (list.length == 1 ? "" : "s") + " for " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim() + "."
 									var link = "<a target='_blank' href='http://wordnetweb.princeton.edu/perl/webwn?s=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'>" + message + "</a>"
+
+								// response
 									callback({icon: icon, message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
 							}
 							catch (error) {
@@ -1906,7 +2010,8 @@
 		// content API fetches
 			"get a joke": function(remainder, callback) {
 				try {
-					var icon = "&#x1f0cf;"
+					// icon
+						var icon = "&#x1f0cf;"
 
 					// options
 						var options = {
@@ -1916,9 +2021,11 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								// construct response link
+								// message & link
 									var jokeLink = "https://icanhazdadjoke.com"
 									var jokeText = response.attachments[0].text
+
+								// response
 									callback({icon: icon, message: jokeText, html: "<a target='_blank' href='" + jokeLink + "'><h2>" + jokeText + "</h2></a>"})
 							}
 							catch (error) {
@@ -1932,7 +2039,8 @@
 			},
 			"get a quote": function(remainder, callback) {
 				try {
-					var icon = "&#x1f399;"
+					// icon
+						var icon = "&#x1f399;"
 
 					// options
 						var options = {
@@ -1942,16 +2050,19 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								// construct response link
-									if (response.quoteText && response.quoteAuthor) {
-										var quoteLink   = response.quoteLink
-										var quoteText   = response.quoteText
-										var quoteAuthor = response.quoteAuthor
-										callback({icon: icon, message: quoteAuthor + " said... " + quoteText, html: "<a target='_blank' href='" + quoteLink + "'><h2>\"" + quoteText + "\" - " + quoteAuthor + "</h2></a>"})
-									}
-									else {
+								// missing quote or author
+									if (!response.quoteText || !response.quoteAuthor) {
 										callback({icon: icon, error: true, message: "I was unable to get any quotes.", html: "<h2>Error: unable to access quotes</h2>"})
+										return
 									}
+
+								// quote link, text, author
+									var quoteLink   = response.quoteLink
+									var quoteText   = response.quoteText
+									var quoteAuthor = response.quoteAuthor
+
+								// response
+									callback({icon: icon, message: quoteAuthor + " said... " + quoteText, html: "<a target='_blank' href='" + quoteLink + "'><h2>\"" + quoteText + "\" - " + quoteAuthor + "</h2></a>"})
 							}
 							catch (error) {
 								callback({icon: icon, message: "I don't know any quotes.", html: "unable to access quotes"})
@@ -1964,7 +2075,8 @@
 			},
 			"get a fortune": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4dc;"
+					// icon
+						var icon = "&#x1f4dc;"
 
 					// options
 						var options = {
@@ -1980,6 +2092,8 @@
 								// construct response link
 									var fortuneLink = "https://fortunecookieapi.herokuapp.com/"
 									var fortuneText = fortune.message
+
+								// response
 									callback({icon: icon, message: fortuneText, html: "<a target='_blank' href='" + fortuneLink + "'><h2>" + fortuneText + "</h2></a>"})
 							}
 							catch (error) {
@@ -1993,7 +2107,8 @@
 			},
 			"get an insult": function(remainder, callback) {
 				try {
-					var icon = "&#128293;"
+					// icon
+						var icon = "&#128293;"
 
 					// options
 						var options = {
@@ -2003,7 +2118,8 @@
 					// proxy request
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								callback({icon: icon, message: response.joke, html: "<h2>" + response.joke + "</h2>"})
+								// response
+									callback({icon: icon, message: response.joke, html: "<h2>" + response.joke + "</h2>"})
 							}
 							catch (error) {
 								callback({icon, icon, error: true, message: "I don't know any insults.", html: "<h2>Error: unable to access insults</h2>"})
@@ -2016,7 +2132,8 @@
 			},
 			"get a wikipedia entry": function(remainder, callback) {
 				try {
-					var icon = "&#x1f310;"
+					// icon
+						var icon = "&#x1f310;"
 
 					// attempt counter
 						if (!window.CONTEXT_LIBRARY["wikipedia attempt counter"]) {
@@ -2028,61 +2145,67 @@
 							url: "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=" + remainder.replace(/[?!.,:;'"\/\(\)\$\%]/gi,"").trim()
 						}
 
-					// proxy to server
+					// proxy to server --> search
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							if (!response || !response.query || !response.query.search || !response.query.search[0]) {
-								if (response.error && response.error.code == "cirrussearch-too-busy-error" && window.CONTEXT_LIBRARY["wikipedia attempt counter"] < 5) {
-									callback({icon: icon, message: "Wikipedia was too busy. Trying again.", html: "attempt #" + window.CONTEXT_LIBRARY["wikipedia attempt counter"] + " <b>" + remainder + "</b> on Wikipedia<br><br>Wikipedia was too busy. Trying again."})
+							// invalid response
+								if (!response || !response.query || !response.query.search || !response.query.search[0]) {
+									// too busy (fewer than 5 attempts)
+										if (response.error && response.error.code == "cirrussearch-too-busy-error" && window.CONTEXT_LIBRARY["wikipedia attempt counter"] < 5) {
+											callback({icon: icon, message: "Wikipedia was too busy. Trying again.", html: "attempt #" + window.CONTEXT_LIBRARY["wikipedia attempt counter"] + " <b>" + remainder + "</b> on Wikipedia<br><br>Wikipedia was too busy. Trying again."})
 
-									window.CONTEXT_LIBRARY["wikipedia attempt counter"]++
-									window.ACTION_LIBRARY["get a wikipedia entry"](remainder, callback)
-								}
-								else {
-									callback({icon: icon, error: true, message: "I couldn't find " + remainder + " on Wikipedia.", html: "<h2>Error: unable to access Wikipedia</h2>"})
-								}
-							}
-							else {
-								// options
-									var options = {
-										url: "https://en.wikipedia.org/w/api.php?action=parse&format=json&utf8=1&page=" + response.query.search[0].title
-									}
+											window.CONTEXT_LIBRARY["wikipedia attempt counter"]++
+											window.ACTION_LIBRARY["get a wikipedia entry"](remainder, callback)
 
-								// proxy to server
-									window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-										try {
+											return
+										}
+
+									// other error
+										callback({icon: icon, error: true, message: "I couldn't find " + remainder + " on Wikipedia.", html: "<h2>Error: unable to access Wikipedia</h2>"})
+										return
+								}
+							
+							// options
+								var options = {
+									url: "https://en.wikipedia.org/w/api.php?action=parse&format=json&utf8=1&page=" + response.query.search[0].title
+								}
+
+							// proxy to server --> display full page
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										// too busy (fewer than 5 attempts)
 											if (response.error && response.error.code == "cirrussearch-too-busy-error" && window.CONTEXT_LIBRARY["wikipedia attempt counter"] < 5) {
 												callback({icon: icon, message: "Wikipedia was too busy. Trying again.", html: "attempt #" + window.CONTEXT_LIBRARY["wikipedia attempt counter"] + " <b>" + remainder + "</b> on Wikipedia<br><br>Wikipedia was too busy. Trying again."})
 
 												window.CONTEXT_LIBRARY["wikipedia attempt counter"]++
 												window.ACTION_LIBRARY["get a wikipedia entry"](remainder, callback)
-											}
-											else {
-												// get text
-													var htmlContent = response.parse.text["*"]
-														htmlContent = htmlContent.split('id="References">References')[0]
-														htmlContent = htmlContent.split('id="See_also">See also')[0]
-														htmlContent = htmlContent.replace(/\<a href='\//gi, "<a target='_blank' href='https://en.wikipedia.org/")
-														htmlContent = htmlContent.replace(/\<a href="\//gi, '<a target="_blank" href="https://en.wikipedia.org/')
 
-													var textNode = document.createElement("div")
-														textNode.innerHTML = htmlContent.replace(/<table[\s\S]*?>[\s\S]*?<\/table>/gi,"")
-													var text = textNode.innerText
-														text = text.replace(/\[[0-9]+\]/gi, "")
-														text = text.replace(/\[edit\]/gi,"")
-													
-												// message
-													var link = "<a target='_blank' href='https://en.wikipedia.org/?curid=" + response.parse.pageid + "'>" + response.parse.title + "</a>"
-													callback({icon: icon, message: text, html: "<h2>" + link + "</h2><br>" + htmlContent})
-
-												// reset counter
-													window.CONTEXT_LIBRARY["wikipedia attempt counter"] = 0
+												return
 											}
-										}
-										catch (error) {
-											callback({icon: icon, error: true, message: "I couldn't find " + remainder + " on Wikipedia.", html: "<h2>Error: unable to access Wikipedia</h2>"})
-										}
-									})
-							}
+									
+										// get text
+											var htmlContent = response.parse.text["*"]
+												htmlContent = htmlContent.split('id="References">References')[0]
+												htmlContent = htmlContent.split('id="See_also">See also')[0]
+												htmlContent = htmlContent.replace(/\<a href='\//gi, "<a target='_blank' href='https://en.wikipedia.org/")
+												htmlContent = htmlContent.replace(/\<a href="\//gi, '<a target="_blank" href="https://en.wikipedia.org/')
+
+											var textNode = document.createElement("div")
+												textNode.innerHTML = htmlContent.replace(/<table[\s\S]*?>[\s\S]*?<\/table>/gi,"")
+											var text = textNode.innerText
+												text = text.replace(/\[[0-9]+\]/gi, "")
+												text = text.replace(/\[edit\]/gi,"")
+											
+										// message
+											var link = "<a target='_blank' href='https://en.wikipedia.org/?curid=" + response.parse.pageid + "'>" + response.parse.title + "</a>"
+											callback({icon: icon, message: text, html: "<h2>" + link + "</h2><br>" + htmlContent})
+
+										// reset counter
+											window.CONTEXT_LIBRARY["wikipedia attempt counter"] = 0
+									}
+									catch (error) {
+										callback({icon: icon, error: true, message: "I couldn't find " + remainder + " on Wikipedia.", html: "<h2>Error: unable to access Wikipedia</h2>"})
+									}
+								})
 						})
 				}
 				catch (error) {
@@ -2091,8 +2214,11 @@
 			},
 			"get this day in history": function(remainder, callback) {
 				try {
-					var today = ["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + "_" + new Date().getDate()
-					window.ACTION_LIBRARY["get a wikipedia entry"](today, callback)
+					// get day
+						var today = ["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + "_" + new Date().getDate()
+
+					// proxy to wikipedia action
+						window.ACTION_LIBRARY["get a wikipedia entry"](today, callback)
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2100,7 +2226,8 @@
 			},
 			"get the headlines": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4f0;"
+					// icon
+						var icon = "&#x1f4f0;"
 
 					// options
 						var options = {
@@ -2119,8 +2246,10 @@
 										storyItems.push("<li><a target='_blank' href='" + list[i].link + "'><b>" + list[i].title + "</b></a><p>" + list[i].description + "</p></li>")
 									}
 
-								// message, link, list
+								// message
 									var message = "I found " + stories.length + " stor" + (list.length == 1 ? "y" : "ies") + " on the New York Times."
+
+								// response
 									callback({icon: icon, message: message + " " + stories.join("... "), html: message + "<ul>" + storyItems.join("") + "</ul>"})
 							}
 							catch (error) {
@@ -2134,7 +2263,8 @@
 			},
 			"get the weather": function(remainder, callback) {
 				try {
-					var icon = "&#x26c8;"
+					// icon
+						var icon = "&#x26c8;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["open weather api"]) {
@@ -2158,107 +2288,106 @@
 							}
 
 							callback({icon: icon, message: "What city should I get the weather for?", html: "What <b>city</b> should I get the weather for?"})
+							return
 						}
 
-					// yes locale
-						else {
-							// options
-								var options = {
-									url: "https://api.openweathermap.org/data/2.5/forecast?appid=" + window.CONFIGURATION_LIBRARY["open weather api"] + (isNaN(locale) ? ("&q=" + locale) : "&zip=" + locale) + ",us&mode=json&units=imperial"
-								}
-
-							// proxy to server
-								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-									try {
-										// invalid response
-											if (!response || !response.city || !response.list) {
-												callback({icon: icon, error: true, message: "I was unable to get the weather.", html: "<h2>Error: unable to access weather</h2>"})
-											}
-
-										// valid response
-											else {
-												// days of the week
-													var allDays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-
-												// axes
-													var dayColumns = []
-													var timeRows = []
-													for (var l in response.list) {
-														var segment = response.list[l]
-														var date = new Date(response.list[l].dt_txt + " UTC")
-														
-														segment.day = allDays[new Date(date).getDay()]
-														if (dayColumns[dayColumns.length - 1] !== segment.day) {
-															dayColumns.push(segment.day)
-														}
-														
-														segment.time = date.toLocaleTimeString()
-														if (!timeRows.includes(segment.time)) {
-															timeRows.push(segment.time)
-														}
-
-														segment.cell = "<td>" + segment.main.temp + "°F<br><br>" + (segment.weather ? segment.weather[0].description : "clear") + "</td>"
-													}
-
-												// sort times
-													timeRows.sort(function(a,b) {
-														a = a.replace(/\:/g,"")
-														b = b.replace(/\:/g,"")
-														if (a.toLowerCase().includes("pm")) { a = Number(a.replace(/pm/gi,"")) % 120000 + 120000 } else { a = Number(a.replace(/am/gi, "")) % 120000 }
-														if (b.toLowerCase().includes("pm")) { b = Number(b.replace(/pm/gi,"")) % 120000 + 120000 } else { b = Number(b.replace(/am/gi,"")) % 120000 }
-														return a - b
-													})
-
-												// grid
-													var grid = {}
-													for (var t in timeRows) {
-														grid[timeRows[t]] = {}
-														grid[timeRows[t]].time = "<td>" + timeRows[t] + "</td>"
-														for (var d in dayColumns) {
-															grid[timeRows[t]][dayColumns[d]] = "<td> - </td>"
-														}
-													}
-
-													for (var l in response.list) {
-														var data = response.list[l]
-														grid[data.time][data.day] = data.cell
-													}
-
-												// draw table
-													var heading = "<tr><th>&#128339;</th>"
-													for (var d in dayColumns) {
-														heading += ("<th>" + dayColumns[d] + "</th>")
-													}
-													heading += "</tr>"
-
-													var table = "<table><tbody>" + heading
-													for (var y in grid) {
-														var row = "<tr>"
-														for (var x in grid[y]) {
-															row += grid[y][x]
-														}
-														row += "</tr>"
-														table += row
-													}
-													table += "</tbody></table>"
-
-												// current weather
-													var currentTemperature = "unknown"
-													var currentWeather = "unknown"
-
-												// send response
-													var locale = response.city.name + ", " + response.city.country
-													var conditions = "Right now it's " + response.list[0].main.temp + " degrees and " + (response.list[0].weather ? response.list[0].weather[0].description : "clear")
-													var message = "Here's the weather for " + locale + "."
-													var link = "<b><a target='_blank' href='https://openweathermap.org/find?q=" + locale + "'>" + message + "</a></b>"
-													callback({icon: icon, message: message + " ... " + conditions, html: link + "<br>" + table})
-											}
-									}
-									catch (error) {
-										callback({icon: icon, error: true, message: "I was unable to get the weather for " + remainder, html: "<h2>Error: unable to access the weather for that location:</h2>" + remainder})
-									}
-								})
+					
+					// options
+						var options = {
+							url: "https://api.openweathermap.org/data/2.5/forecast?appid=" + window.CONFIGURATION_LIBRARY["open weather api"] + (isNaN(locale) ? ("&q=" + locale) : "&zip=" + locale) + ",us&mode=json&units=imperial"
 						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// invalid response
+									if (!response || !response.city || !response.list) {
+										callback({icon: icon, error: true, message: "I was unable to get the weather.", html: "<h2>Error: unable to access weather</h2>"})
+										return
+									}
+
+								// days of the week
+									var allDays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+
+								// axes
+									var dayColumns = []
+									var timeRows = []
+									for (var l in response.list) {
+										var segment = response.list[l]
+										var date = new Date(response.list[l].dt_txt + " UTC")
+										
+										segment.day = allDays[new Date(date).getDay()]
+										if (dayColumns[dayColumns.length - 1] !== segment.day) {
+											dayColumns.push(segment.day)
+										}
+										
+										segment.time = date.toLocaleTimeString()
+										if (!timeRows.includes(segment.time)) {
+											timeRows.push(segment.time)
+										}
+
+										segment.cell = "<td>" + segment.main.temp + "°F<br><br>" + (segment.weather ? segment.weather[0].description : "clear") + "</td>"
+									}
+
+								// sort times
+									timeRows.sort(function(a,b) {
+										a = a.replace(/\:/g,"")
+										b = b.replace(/\:/g,"")
+										if (a.toLowerCase().includes("pm")) { a = Number(a.replace(/pm/gi,"")) % 120000 + 120000 } else { a = Number(a.replace(/am/gi, "")) % 120000 }
+										if (b.toLowerCase().includes("pm")) { b = Number(b.replace(/pm/gi,"")) % 120000 + 120000 } else { b = Number(b.replace(/am/gi,"")) % 120000 }
+										return a - b
+									})
+
+								// grid
+									var grid = {}
+									for (var t in timeRows) {
+										grid[timeRows[t]] = {}
+										grid[timeRows[t]].time = "<td>" + timeRows[t] + "</td>"
+										for (var d in dayColumns) {
+											grid[timeRows[t]][dayColumns[d]] = "<td> - </td>"
+										}
+									}
+
+									for (var l in response.list) {
+										var data = response.list[l]
+										grid[data.time][data.day] = data.cell
+									}
+
+								// draw table
+									var heading = "<tr><th>&#128339;</th>"
+									for (var d in dayColumns) {
+										heading += ("<th>" + dayColumns[d] + "</th>")
+									}
+									heading += "</tr>"
+
+									var table = "<table><tbody>" + heading
+									for (var y in grid) {
+										var row = "<tr>"
+										for (var x in grid[y]) {
+											row += grid[y][x]
+										}
+										row += "</tr>"
+										table += row
+									}
+									table += "</tbody></table>"
+
+								// current weather
+									var currentTemperature = "unknown"
+									var currentWeather = "unknown"
+
+								// get locale, conditions, message, link
+									var locale = response.city.name + ", " + response.city.country
+									var conditions = "Right now it's " + response.list[0].main.temp + " degrees and " + (response.list[0].weather ? response.list[0].weather[0].description : "clear")
+									var message = "Here's the weather for " + locale + "."
+									var link = "<b><a target='_blank' href='https://openweathermap.org/find?q=" + locale + "'>" + message + "</a></b>"
+
+								// response
+									callback({icon: icon, message: message + " ... " + conditions, html: link + "<br>" + table})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get the weather for " + remainder, html: "<h2>Error: unable to access the weather for that location:</h2>" + remainder})
+							}
+						})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2266,7 +2395,8 @@
 			},
 			"get nutrition facts": function(remainder, callback) {
 				try {
-					var icon = "&#x1f34e;"
+					// icon
+						var icon = "&#x1f34e;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["spoonacular api"]) {
@@ -2283,20 +2413,24 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								if (!response.calories) {
-									callback({icon: icon, error: true, message: "I was unable to get nutrition facts for " + remainder, html: "<h2>Error: unable to get nutrition facts:</h2>" + remainder})
-								}
-								else {
+								// invalid response
+									if (!response.calories) {
+										callback({icon: icon, error: true, message: "I was unable to get nutrition facts for " + remainder, html: "<h2>Error: unable to get nutrition facts:</h2>" + remainder})
+										return
+									}
+
+								// get nutrition info
 									var calories 	= response.calories.value 	+ " " + response.calories.unit
 									var carbs 		= response.carbs.value 		+ " " + response.carbs.unit
 									var fat 		= response.fat.value 		+ " " + response.fat.unit
 									var protein 	= response.protein.value 	+ " " + response.protein.unit
 
+								// construct response
 									var message = "Here's what I found for " + remainder + "... " + calories + "; " + carbs + " of carbs; " + fat + " of fat; " + protein + " of protein"
 									var responseHTML = "<h2>" + remainder + "</h2>" + "<li><b>calories:</b> " + calories + "</li>" + "<li><b>carbs:</b> " + carbs + "</li>" + "<li><b>fat:</b> " + fat + "</li>" + "<li><b>protein:</b> " + protein + "</li>"
 
+								// send response
 									callback({icon: icon, message: message, html: responseHTML})
-								}
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get nutrition facts for " + remainder, html: "<h2>Error: unable to get nutrition facts:" + remainder})
@@ -2309,7 +2443,8 @@
 			},
 			"get nutrition answer": function(remainder, callback) {
 				try {
-					var icon = "&#x1f34e;"
+					// icon
+						var icon = "&#x1f34e;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["spoonacular api"]) {
@@ -2326,12 +2461,14 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								if (!response.answer) {
-									callback({icon: icon, error: true, message: "I was unable to get a nutrition answer about " + remainder, html: "<h2>Error: unable to get a nutrition answer:</h2>" + remainder})
-								}
-								else {
+								// invalid answer
+									if (!response.answer) {
+										callback({icon: icon, error: true, message: "I was unable to get a nutrition answer about " + remainder, html: "<h2>Error: unable to get a nutrition answer:</h2>" + remainder})
+										return
+									}
+								
+								// respond with answer
 									callback({icon: icon, message: response.answer, html: "<h2>" + remainder + "</h2>" + response.answer})
-								}
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get a nutrition answer about " + remainder, html: "<h2>Error: unable to get a nutrition answer:</h2>" + remainder})
@@ -2346,7 +2483,8 @@
 		// Google Apps Script
 			"edit wish list": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4dd;"
+					// icon
+						var icon = "&#x1f4dd;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
@@ -2372,8 +2510,16 @@
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							var responseHTML = "<ul><li><b>item: </b>" + response.item + "</li><li><b>cost: </b>" + response.cost + "</li><li><b>type: </b>" + response.type + "</li></ul>" 
-							callback({icon: icon, message: response.message, html: responseHTML})
+							try {
+								// generate list
+									var responseHTML = "<ul><li><b>item: </b>" + response.item + "</li><li><b>cost: </b>" + response.cost + "</li><li><b>type: </b>" + response.type + "</li></ul>" 
+
+								// response
+									callback({icon: icon, message: response.message, html: responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to edit your wish list.", html: "<h2>Error: unable to edit wish list:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -2382,7 +2528,8 @@
 			},
 			"get balance": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4b5;"
+					// icon
+						var icon = "&#x1f4b5;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
@@ -2397,8 +2544,16 @@
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							var responseHTML = "<ul><li><b>account: </b>" + response.account + "</li><li><b>amount: </b>" + response.amount + "</li></ul>" 
-							callback({icon: icon, message: response.message, html: responseHTML})
+							try {
+								// construct response html
+									var responseHTML = "<ul><li><b>account: </b>" + response.account + "</li><li><b>amount: </b>" + response.amount + "</li></ul>" 
+
+								// response
+									callback({icon: icon, message: response.message, html: responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get your balance.", html: "<h2>Error: unable to get balance:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -2407,7 +2562,8 @@
 			},
 			"log purchase": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4b5;"
+					// icon
+						var icon = "&#x1f4b5;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
@@ -2434,8 +2590,16 @@
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							var responseHTML = "<ul><li><b>description: </b>" + response.description + "</li><li><b>amount: </b>" + response.amount + "</li><li><b>category: </b>" + response.category + "</li></ul>" 
-							callback({icon: icon, message: response.message, html: responseHTML})
+							try {
+								// construct response html
+									var responseHTML = "<ul><li><b>description: </b>" + response.description + "</li><li><b>amount: </b>" + response.amount + "</li><li><b>category: </b>" + response.category + "</li></ul>" 
+
+								// response
+									callback({icon: icon, message: response.message, html: responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to log your purchase.", html: "<h2>Error: unable to log purchase:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -2444,7 +2608,8 @@
 			},
 			"fetch calendar": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4c5;"
+					// icon
+						var icon = "&#x1f4c5;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
@@ -2473,24 +2638,31 @@
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							// create list
-								var eventList = []
-								var eventItems = []
-								if (response.events) {
-									for (var i = 0; i < response.events.length; i++) {
-										var event = response.events[i]
-										var startTime = new Date(event.startTime).toLocaleString()
-										var endTime = new Date(event.endTime).toLocaleString()
+							try {
+								// create list
+									var eventList = []
+									var eventItems = []
+									if (response.events) {
+										for (var i = 0; i < response.events.length; i++) {
+											var event = response.events[i]
+											var startTime = new Date(event.startTime).toLocaleString()
+											var endTime = new Date(event.endTime).toLocaleString()
 
-										eventList.push(event.title + " from " + startTime + " until " + endTime + " at " + (event.location || "unknown location"))
-										eventItems.push("<li><b>" + event.title + "</b><p>" + startTime + " - " + endTime + "<br><a target='_blank' href='https://www.google.com/maps/?q=" + event.location + "'>" + event.location + "</a><br>" + event.description + "</p></li>")
+											eventList.push(event.title + " from " + startTime + " until " + endTime + " at " + (event.location || "unknown location"))
+											eventItems.push("<li><b>" + event.title + "</b><p>" + startTime + " - " + endTime + "<br><a target='_blank' href='https://www.google.com/maps/?q=" + event.location + "'>" + event.location + "</a><br>" + event.description + "</p></li>")
+										}
 									}
-								}
 
-							// send response
-								var responseLink = "https://calendar.google.com"
-								var responseText = response.message
-								callback({icon: icon, message: response.message + " " + eventList.join(" ... "),html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a><ul>" + eventItems.join("") + "</ul>"})
+								// link & message
+									var responseLink = "https://calendar.google.com"
+									var responseText = response.message
+
+								// response
+									callback({icon: icon, message: response.message + " " + eventList.join(" ... "),html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a><ul>" + eventItems.join("") + "</ul>"})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to fetch your calendar.", html: "<h2>Error: unable to fetch calendar:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -2499,7 +2671,8 @@
 			},
 			"get a list": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4dd;"
+					// icon
+						var icon = "&#x1f4dd;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
@@ -2515,92 +2688,118 @@
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							// not successful?
-								if (!response.success) {
-									callback({icon: icon, error: true, message: "I was unable to get " + (list ? list : " your list"), html: "<h2>Error: unable to get list:</h2>" + remainder})
-									return
-								}
+							try {
+								// not successful?
+									if (!response.success || !response.list) {
+										callback({icon: icon, error: true, message: "I was unable to get " + (list ? list : " your list"), html: "<h2>Error: unable to get list:</h2>" + remainder})
+										return
+									}
 
-							// create structured list
-								var structuredItems = {}
-								if (response.list) {
+								// create structured list
+									var structuredItems = {}
 									var i = 0
+
+								// loop through response list
 									while (response.list.length) {
-										if (i == response.list.length) {
-											i = 0
-										}
-
-										var item = response.list[i]
-										if (!item.parent) {
-											structuredItems[item.id] = item
-											response.list.splice(i, 1)
-											i--
-										}
-										else if (structuredItems[item.parent]) {
-											if (!structuredItems[item.parent].children) {
-												structuredItems[item.parent].children = {}
+										// wrap back to the beginning of the list
+											if (i == response.list.length) {
+												i = 0
 											}
-											structuredItems[item.parent].children[item.id] = item
-											response.list.splice(i, 1)
-											i--
-										}
-										else if (!response.list.find(function(x) { return x.id == item.parent })) {
-											structuredItems[item.id] = item
-											response.list.splice(i, 1)
-											i--
-										}
-										i++
-									}
-								}
 
-							// create 2-level html list
-								var structuredItemKeys = Object.keys(structuredItems)
-								structuredItemKeys = structuredItemKeys.sort(function(a, b) {
-									return Number(structuredItems[a].position) - Number(structuredItems[b].position)
-								})
+										// get the item
+											var item = response.list[i]
 
-								var message = ""
-								var responseHTML = "<ul>"
-								for (var i in structuredItemKeys) {
-									var item = structuredItems[structuredItemKeys[i]]
-
-									responseHTML += "<li><b>" + item.title + "</b>"
-									message += item.title + " ... "
-
-									if (item.due) {
-										responseHTML += "<br>" + new Date(new Date(item.due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString()
-										message += new Date(new Date(item.due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString() + " ... "
-									}
-									if (item.notes) {
-										responseHTML += "<br>" + item.notes
-										message += item.notes + " ... "
-									}
-
-									if (item.children) {
-										responseHTML += "<ul>"
-										for (var j in item.children) {
-											responseHTML += "<li><b>" + item.children[j].title + "</b>"
-											message += item.children[j].title + " ... "
-
-											if (item.children[j].due) {
-												responseHTML += "<br>" + new Date(new Date(item.children[j].due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString()
-												message += new Date(new Date(item.children[j].due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString() + " ... "
+										// top-level?
+											if (!item.parent) {
+												structuredItems[item.id] = item
+												response.list.splice(i, 1)
+												i--
 											}
-											if (item.children[j].notes) {
-												responseHTML += "<br>" + item.children[j].notes
-												message += item.children[j].notes + " ... "
+
+										// subtask?
+											else if (structuredItems[item.parent]) {
+												if (!structuredItems[item.parent].children) {
+													structuredItems[item.parent].children = {}
+												}
+												structuredItems[item.parent].children[item.id] = item
+												response.list.splice(i, 1)
+												i--
 											}
-											responseHTML += "</li>"
-										}
-										responseHTML += "</ul>"
+
+										// sub-subtask? --> force top-level
+											else if (!response.list.find(function(x) { return x.id == item.parent })) {
+												structuredItems[item.id] = item
+												response.list.splice(i, 1)
+												i--
+											}
+
+										// increment
+											i++
 									}
 
-									responseHTML += "</li>"
-								}
-								responseHTML += "<ul>"
+								// sort list item keys by position
+									var structuredItemKeys = Object.keys(structuredItems)
+									structuredItemKeys = structuredItemKeys.sort(function(a, b) {
+										return Number(structuredItems[a].position) - Number(structuredItems[b].position)
+									})
 
-							// send response
-								callback({icon: icon, message: response.listName + " ... " + message, html: "<h2>" + response.listName + "</h2>" + responseHTML})
+								// empty message / html
+									var message = ""
+									var responseHTML = "<ul>"
+
+								// loop through list item keys
+									for (var i in structuredItemKeys) {
+										var item = structuredItems[structuredItemKeys[i]]
+
+										responseHTML += "<li><b>" + item.title + "</b>"
+										message += item.title + " ... "
+
+										// due date
+											if (item.due) {
+												responseHTML += "<br>" + new Date(new Date(item.due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString()
+												message += new Date(new Date(item.due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString() + " ... "
+											}
+
+										// notes
+											if (item.notes) {
+												responseHTML += "<br>" + item.notes
+												message += item.notes + " ... "
+											}
+
+										// subtasks
+											if (item.children) {
+												responseHTML += "<ul>"
+												for (var j in item.children) {
+													responseHTML += "<li><b>" + item.children[j].title + "</b>"
+													message += item.children[j].title + " ... "
+
+													// due date
+														if (item.children[j].due) {
+															responseHTML += "<br>" + new Date(new Date(item.children[j].due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString()
+															message += new Date(new Date(item.children[j].due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString() + " ... "
+														}
+
+													// notes
+														if (item.children[j].notes) {
+															responseHTML += "<br>" + item.children[j].notes
+															message += item.children[j].notes + " ... "
+														}
+
+													responseHTML += "</li>"
+												}
+												responseHTML += "</ul>"
+											}
+
+										responseHTML += "</li>"
+									}
+									responseHTML += "<ul>"
+
+								// send response
+									callback({icon: icon, message: response.listName + " ... " + message, html: "<h2>" + response.listName + "</h2>" + responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get your list.", html: "<h2>Error: unable to get list:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -2609,7 +2808,8 @@
 			},
 			"add an item to a list": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4dd;"
+					// icon
+						var icon = "&#x1f4dd;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
@@ -2636,83 +2836,111 @@
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							// not successful?
-								if (!response.success) {
-									callback({icon: icon, error: true, message: "I was unable to add " + task + " to " + (list ? list : " your list"), html: "<h2>Error: unable to add item to list:</h2>" + remainder})
-									return
-								}
+							try {
+								// not successful?
+									if (!response.success || !response.list) {
+										callback({icon: icon, error: true, message: "I was unable to add " + task + " to " + (list ? list : " your list"), html: "<h2>Error: unable to add item to list:</h2>" + remainder})
+										return
+									}
 
-							// create structured list
-								var structuredItems = {}
-								if (response.list) {
+								// create structured list
+									var structuredItems = {}
 									var i = 0
+
+								// loop through response list
 									while (response.list.length) {
-										if (i == response.list.length) {
-											i = 0
-										}
-
-										var item = response.list[i]
-										if (!item.parent) {
-											structuredItems[item.id] = item
-											response.list.splice(i, 1)
-											i--
-										}
-										else if (structuredItems[item.parent]) {
-											if (!structuredItems[item.parent].children) {
-												structuredItems[item.parent].children = {}
+										// wrap back to the beginning of the list
+											if (i == response.list.length) {
+												i = 0
 											}
-											structuredItems[item.parent].children[item.id] = item
-											response.list.splice(i, 1)
-											i--
-										}
-										else if (!response.list.find(function(x) { return x.id == item.parent })) {
-											structuredItems[item.id] = item
-											response.list.splice(i, 1)
-											i--
-										}
-										i++
-									}
-								}
 
-							// create 2-level html list
-								var structuredItemKeys = Object.keys(structuredItems)
-								structuredItemKeys = structuredItemKeys.sort(function(a, b) {
-									return Number(structuredItems[a].position) - Number(structuredItems[b].position)
-								})
+										// get the item
+											var item = response.list[i]
 
-								var responseHTML = "<ul>"
-								for (var i in structuredItemKeys) {
-									var item = structuredItems[structuredItemKeys[i]]
-
-									responseHTML += "<li><b>" + item.title + "</b>"
-									if (item.due) {
-										responseHTML += "<br>" + new Date(new Date(item.due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString()
-									}
-									if (item.notes) {
-										responseHTML += "<br>" + item.notes
-									}
-
-									if (item.children) {
-										responseHTML += "<ul>"
-										for (var j in item.children) {
-											responseHTML += "<li><b>" + item.children[j].title + "</b>"
-											if (item.children[j].due) {
-												responseHTML += "<br>" + new Date(new Date(item.children[j].due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString()
+										// top-level?
+											if (!item.parent) {
+												structuredItems[item.id] = item
+												response.list.splice(i, 1)
+												i--
 											}
-											if (item.children[j].notes) {
-												responseHTML += "<br>" + item.children[j].notes
+
+										// subtask?
+											else if (structuredItems[item.parent]) {
+												if (!structuredItems[item.parent].children) {
+													structuredItems[item.parent].children = {}
+												}
+												structuredItems[item.parent].children[item.id] = item
+												response.list.splice(i, 1)
+												i--
 											}
-											responseHTML += "</li>"
-										}
-										responseHTML += "</ul>"
+
+										// sub-subtask? --> force top-level
+											else if (!response.list.find(function(x) { return x.id == item.parent })) {
+												structuredItems[item.id] = item
+												response.list.splice(i, 1)
+												i--
+											}
+
+										// increment
+											i++
 									}
 
-									responseHTML += "</li>"
-								}
-								responseHTML += "<ul>"
+								// sort list item keys by position
+									var structuredItemKeys = Object.keys(structuredItems)
+									structuredItemKeys = structuredItemKeys.sort(function(a, b) {
+										return Number(structuredItems[a].position) - Number(structuredItems[b].position)
+									})
 
-							// send response
-								callback({icon: icon, message: "I added " + task + " to " + response.listName, html: "<h2>" + response.listName + "</h2>" + responseHTML})
+								// empty html
+									var responseHTML = "<ul>"
+
+								// loop through list item keys
+									for (var i in structuredItemKeys) {
+										var item = structuredItems[structuredItemKeys[i]]
+
+										responseHTML += "<li><b>" + item.title + "</b>"
+
+										// due date
+											if (item.due) {
+												responseHTML += "<br>" + new Date(new Date(item.due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString()
+											}
+
+										// notes
+											if (item.notes) {
+												responseHTML += "<br>" + item.notes
+											}
+
+										// subtasks
+											if (item.children) {
+												responseHTML += "<ul>"
+												for (var j in item.children) {
+													responseHTML += "<li><b>" + item.children[j].title + "</b>"
+
+													// due date
+														if (item.children[j].due) {
+															responseHTML += "<br>" + new Date(new Date(item.children[j].due).getTime() + (1000 * 60 * 60 * 5)).toLocaleDateString()
+														}
+
+													// notes
+														if (item.children[j].notes) {
+															responseHTML += "<br>" + item.children[j].notes
+														}
+
+													responseHTML += "</li>"
+												}
+												responseHTML += "</ul>"
+											}
+
+										responseHTML += "</li>"
+									}
+									responseHTML += "<ul>"
+
+								// send response
+									callback({icon: icon, message: "I added " + task + " to " + response.listName, html: "<h2>" + response.listName + "</h2>" + responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to add to your list.", html: "<h2>Error: unable to add to list:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -2721,7 +2949,8 @@
 			},
 			"get contacts": function(remainder, callback) {
 				try {
-					var icon = "&#x1f464;"
+					// icon
+						var icon = "&#x1f464;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
@@ -2743,68 +2972,79 @@
 
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							// not successful?
-								if (!response.success) {
-									callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
-									return
-								}
-
-							// possibilities
-								var message = ""
-								var responseHTML = "<ul>"
-								for (var i in response.list) {
-									var contact = response.list[i]
-									var name = (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : "")
-									message += name + " ... "
-
-									responseHTML += "<li><b>" + name + "</b>"
-									
-									if (contact.emails && Array.isArray(contact.emails) && contact.emails.length) {
-										responseHTML += "<ul>"
-										for (var j in contact.emails) {
-											responseHTML += "<li><a target='_blank' href='mailto:" + contact.emails[j].value + "'>" + (contact.emails[j].label ? contact.emails[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.emails[j].value + "</a></li>"
-										}
-										responseHTML += "</ul>"
+							try {
+								// not successful?
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
+										return
 									}
 
-									if (contact.phoneNumbers && Array.isArray(contact.phoneNumbers) && contact.phoneNumbers.length) {
-										responseHTML += "<ul>"
-										for (var j in contact.phoneNumbers) {
-											responseHTML += "<li><a target='_blank' href='tel:" + contact.phoneNumbers[j].value + "'>" + (contact.phoneNumbers[j].label ? contact.phoneNumbers[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.phoneNumbers[j].value + "</a></li>"
-										}
-										responseHTML += "</ul>"
-									}
+								// possibilities
+									var message = ""
+									var responseHTML = "<ul>"
+									for (var i in response.list) {
+										var contact = response.list[i]
 
-									if (contact.addresses && Array.isArray(contact.addresses) && contact.addresses.length) {
-										responseHTML += "<ul>"
-										for (var j in contact.addresses) {
-											responseHTML += "<li><a target='_blank' href='https://maps.google.com?q=" + contact.addresses[j].value + "'>" + (contact.addresses[j].label ? contact.addresses[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.addresses[j].value + "</a></li>"
-										}
-										responseHTML += "</ul>"
-									}
+										// name
+											var name = (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : "")
+											message += name + " ... "
+											responseHTML += "<li><b>" + name + "</b>"
+										
+										// emails
+											if (contact.emails && Array.isArray(contact.emails) && contact.emails.length) {
+												responseHTML += "<ul>"
+												for (var j in contact.emails) {
+													responseHTML += "<li><a target='_blank' href='mailto:" + contact.emails[j].value + "'>" + (contact.emails[j].label ? contact.emails[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.emails[j].value + "</a></li>"
+												}
+												responseHTML += "</ul>"
+											}
 
-									if (contact.dates && Array.isArray(contact.dates) && contact.dates.length) {
-										responseHTML += "<ul>"
-										for (var j in contact.dates) {
-											responseHTML += "<li>" + (contact.dates[j].label ? contact.dates[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.dates[j].value + "</li>"
-										}
-										responseHTML += "</ul>"
-									}
+										// phone numbers
+											if (contact.phoneNumbers && Array.isArray(contact.phoneNumbers) && contact.phoneNumbers.length) {
+												responseHTML += "<ul>"
+												for (var j in contact.phoneNumbers) {
+													responseHTML += "<li><a target='_blank' href='tel:" + contact.phoneNumbers[j].value + "'>" + (contact.phoneNumbers[j].label ? contact.phoneNumbers[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.phoneNumbers[j].value + "</a></li>"
+												}
+												responseHTML += "</ul>"
+											}
 
-									if (contact.urls && Array.isArray(contact.urls) && contact.urls.length) {
-										responseHTML += "<ul>"
-										for (var j in contact.urls) {
-											responseHTML += "<li><a target='_blank' href='" + contact.urls[j].value + "'>" + (contact.urls[j].label ? contact.urls[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.urls[j].value + "</a></li>"
-										}
-										responseHTML += "</ul>"
-									}
-									
-									responseHTML += "</li>"
-								}
-								responseHTML += "</ul>"
+										// addresses
+											if (contact.addresses && Array.isArray(contact.addresses) && contact.addresses.length) {
+												responseHTML += "<ul>"
+												for (var j in contact.addresses) {
+													responseHTML += "<li><a target='_blank' href='https://maps.google.com?q=" + contact.addresses[j].value + "'>" + (contact.addresses[j].label ? contact.addresses[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.addresses[j].value + "</a></li>"
+												}
+												responseHTML += "</ul>"
+											}
 
-							// send response
-								callback({icon: icon, message: "I found " + response.list.length + (response.list.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + "</h2>" + responseHTML})
+										// dates
+											if (contact.dates && Array.isArray(contact.dates) && contact.dates.length) {
+												responseHTML += "<ul>"
+												for (var j in contact.dates) {
+													responseHTML += "<li>" + (contact.dates[j].label ? contact.dates[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.dates[j].value + "</li>"
+												}
+												responseHTML += "</ul>"
+											}
+
+										// urls
+											if (contact.urls && Array.isArray(contact.urls) && contact.urls.length) {
+												responseHTML += "<ul>"
+												for (var j in contact.urls) {
+													responseHTML += "<li><a target='_blank' href='" + contact.urls[j].value + "'>" + (contact.urls[j].label ? contact.urls[j].label.toLowerCase().replace(/\_/g, " ") + ": " : "") + contact.urls[j].value + "</a></li>"
+												}
+												responseHTML += "</ul>"
+											}
+										
+										responseHTML += "</li>"
+									}
+									responseHTML += "</ul>"
+
+								// send response
+									callback({icon: icon, message: "I found " + response.list.length + (response.list.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + "</h2>" + responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -2813,7 +3053,8 @@
 			},
 			"get birthday": function(remainder, callback) {
 				try {
-					var icon = "&#x1f464;"
+					// icon
+						var icon = "&#x1f464;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
@@ -2835,40 +3076,45 @@
 
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							// not successful?
-								if (!response.success) {
-									callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
-									return
-								}
-
-							// extract birthdays
-								var people = []
-								for (var i in response.list) {
-									var contact = response.list[i]
-									people[i] = {
-										name: (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : ""),
-										birthday: "unknown"
+							try {
+								// not successful?
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
+										return
 									}
-									if (contact.dates && Array.isArray(contact.dates) && contact.dates.length) {
-										for (var j in contact.dates) {
-											if (contact.dates[j].label.toLowerCase() == "birthday") {
-												people[i].birthday = contact.dates[j].value
+
+								// extract birthdays
+									var people = []
+									for (var i in response.list) {
+										var contact = response.list[i]
+										people[i] = {
+											name: (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : ""),
+											birthday: "unknown"
+										}
+										if (contact.dates && Array.isArray(contact.dates) && contact.dates.length) {
+											for (var j in contact.dates) {
+												if (contact.dates[j].label.toLowerCase() == "birthday") {
+													people[i].birthday = contact.dates[j].value
+												}
 											}
 										}
 									}
-								}
 
-							// message
-								var message = ""
-								var responseHTML = "<ul>"
-								for (var i in people) {
-									message += people[i].name + "'s birthday is " + people[i].birthday + " ... "
-									responseHTML += "<li><b>" + people[i].name + "</b><br>birthday: " + people[i].birthday + "</li>"
-								}
-								responseHTML += "</ul>"
+								// message (list people/birthday)
+									var message = ""
+									var responseHTML = "<ul>"
+									for (var i in people) {
+										message += people[i].name + "'s birthday is " + people[i].birthday + " ... "
+										responseHTML += "<li><b>" + people[i].name + "</b><br>birthday: " + people[i].birthday + "</li>"
+									}
+									responseHTML += "</ul>"
 
-							// send response
-								callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " birthdays</h2>" + responseHTML})
+								// send response
+									callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " birthdays</h2>" + responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -2877,7 +3123,8 @@
 			},
 			"get phone number": function(remainder, callback) {
 				try {
-					var icon = "&#x1f464;"
+					// icon
+						var icon = "&#x1f464;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
@@ -2899,49 +3146,54 @@
 
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							// not successful?
-								if (!response.success) {
-									callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
-									return
-								}
-
-							// extract birthdays
-								var people = []
-								for (var i in response.list) {
-									var contact = response.list[i]
-									people[i] = {
-										name: (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : ""),
-										phoneNumbers: []
+							try {
+								// not successful?
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
+										return
 									}
-									if (contact.phoneNumbers && Array.isArray(contact.phoneNumbers) && contact.phoneNumbers.length) {
-										for (var j in contact.phoneNumbers) {
-											people[i].phoneNumbers[j] = {
-												value: contact.phoneNumbers[j].value,
-												label: contact.phoneNumbers[j].label ? contact.phoneNumbers[j].label.toLowerCase().replace(/\_/g, " ") : null
+
+								// extract phone numbers
+									var people = []
+									for (var i in response.list) {
+										var contact = response.list[i]
+										people[i] = {
+											name: (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : ""),
+											phoneNumbers: []
+										}
+										if (contact.phoneNumbers && Array.isArray(contact.phoneNumbers) && contact.phoneNumbers.length) {
+											for (var j in contact.phoneNumbers) {
+												people[i].phoneNumbers[j] = {
+													value: contact.phoneNumbers[j].value,
+													label: contact.phoneNumbers[j].label ? contact.phoneNumbers[j].label.toLowerCase().replace(/\_/g, " ") : null
+												}
 											}
 										}
 									}
-								}
 
-							// message
-								var message = ""
-								var responseHTML = "<ul>"
-								for (var i in people) {
-									responseHTML += "<li><b>" + people[i].name + "</b><br>"
-									if (people[i].phoneNumbers.length) {
-										responseHTML += "<ul>"
-										for (var j in people[i].phoneNumbers) {
-											message += people[i].name + "'s " + (people[i].phoneNumbers[j].label ? people[i].phoneNumbers[j].label : "phone number") + " is " + people[i].phoneNumbers[j].value + " ... "
-											responseHTML += "<li><a target='_blank' href='tel:" + people[i].phoneNumbers[j].value + "'>" + (people[i].phoneNumbers[j].label ? (people[i].phoneNumbers[j].label + ": ") : "") + people[i].phoneNumbers[j].value + "</a></li>"
+								// message (list people > list phone numbers)
+									var message = ""
+									var responseHTML = "<ul>"
+									for (var i in people) {
+										responseHTML += "<li><b>" + people[i].name + "</b><br>"
+										if (people[i].phoneNumbers.length) {
+											responseHTML += "<ul>"
+											for (var j in people[i].phoneNumbers) {
+												message += people[i].name + "'s " + (people[i].phoneNumbers[j].label ? people[i].phoneNumbers[j].label : "phone number") + " is " + people[i].phoneNumbers[j].value + " ... "
+												responseHTML += "<li><a target='_blank' href='tel:" + people[i].phoneNumbers[j].value + "'>" + (people[i].phoneNumbers[j].label ? (people[i].phoneNumbers[j].label + ": ") : "") + people[i].phoneNumbers[j].value + "</a></li>"
+											}
+											responseHTML += "</ul>"
 										}
-										responseHTML += "</ul>"
+										responseHTML += "</li>"
 									}
-									responseHTML += "</li>"
-								}
-								responseHTML += "</ul>"
+									responseHTML += "</ul>"
 
-							// send response
-								callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " phone numbers</h2>" + responseHTML})
+								// send response
+									callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " phone numbers</h2>" + responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -2950,7 +3202,8 @@
 			},
 			"get email": function(remainder, callback) {
 				try {
-					var icon = "&#x1f464;"
+					// icon
+						var icon = "&#x1f464;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
@@ -2972,49 +3225,54 @@
 
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							// not successful?
-								if (!response.success) {
-									callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
-									return
-								}
-
-							// extract birthdays
-								var people = []
-								for (var i in response.list) {
-									var contact = response.list[i]
-									people[i] = {
-										name: (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : ""),
-										emails: []
+							try {
+								// not successful?
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
+										return
 									}
-									if (contact.emails && Array.isArray(contact.emails) && contact.emails.length) {
-										for (var j in contact.emails) {
-											people[i].emails[j] = {
-												value: contact.emails[j].value,
-												label: contact.emails[j].label ? contact.emails[j].label.toLowerCase().replace(/\_/g, " ") : null
+
+								// extract emails
+									var people = []
+									for (var i in response.list) {
+										var contact = response.list[i]
+										people[i] = {
+											name: (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : ""),
+											emails: []
+										}
+										if (contact.emails && Array.isArray(contact.emails) && contact.emails.length) {
+											for (var j in contact.emails) {
+												people[i].emails[j] = {
+													value: contact.emails[j].value,
+													label: contact.emails[j].label ? contact.emails[j].label.toLowerCase().replace(/\_/g, " ") : null
+												}
 											}
 										}
 									}
-								}
 
-							// message
-								var message = ""
-								var responseHTML = "<ul>"
-								for (var i in people) {
-									responseHTML += "<li><b>" + people[i].name + "</b><br>"
-									if (people[i].emails.length) {
-										responseHTML += "<ul>"
-										for (var j in people[i].emails) {
-											message += people[i].name + "'s " + (people[i].emails[j].label ? people[i].emails[j].label : "email") + " is " + people[i].emails[j].value + " ... "
-											responseHTML += "<li><a target='_blank' href='mailto:" + people[i].emails[j].value + "'>" + (people[i].emails[j].label ? (people[i].emails[j].label + ": ") : "") + people[i].emails[j].value + "</a></li>"
+								// message (list people > list emails)
+									var message = ""
+									var responseHTML = "<ul>"
+									for (var i in people) {
+										responseHTML += "<li><b>" + people[i].name + "</b><br>"
+										if (people[i].emails.length) {
+											responseHTML += "<ul>"
+											for (var j in people[i].emails) {
+												message += people[i].name + "'s " + (people[i].emails[j].label ? people[i].emails[j].label : "email") + " is " + people[i].emails[j].value + " ... "
+												responseHTML += "<li><a target='_blank' href='mailto:" + people[i].emails[j].value + "'>" + (people[i].emails[j].label ? (people[i].emails[j].label + ": ") : "") + people[i].emails[j].value + "</a></li>"
+											}
+											responseHTML += "</ul>"
 										}
-										responseHTML += "</ul>"
+										responseHTML += "</li>"
 									}
-									responseHTML += "</li>"
-								}
-								responseHTML += "</ul>"
+									responseHTML += "</ul>"
 
-							// send response
-								callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " emails</h2>" + responseHTML})
+								// send response
+									callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " emails</h2>" + responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -3023,7 +3281,8 @@
 			},
 			"get address": function(remainder, callback) {
 				try {
-					var icon = "&#x1f464;"
+					// icon
+						var icon = "&#x1f464;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
@@ -3045,49 +3304,54 @@
 
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							// not successful?
-								if (!response.success) {
-									callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
-									return
-								}
-
-							// extract birthdays
-								var people = []
-								for (var i in response.list) {
-									var contact = response.list[i]
-									people[i] = {
-										name: (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : ""),
-										addresses: []
+							try {
+								// not successful?
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to find " + remainder, html: "<h2>Error: unable to find contact:</h2>" + remainder})
+										return
 									}
-									if (contact.addresses && Array.isArray(contact.addresses) && contact.addresses.length) {
-										for (var j in contact.addresses) {
-											people[i].addresses[j] = {
-												value: contact.addresses[j].value,
-												label: contact.addresses[j].label ? contact.addresses[j].label.toLowerCase().replace(/\_/g, " ") : null
+
+								// extract addresses
+									var people = []
+									for (var i in response.list) {
+										var contact = response.list[i]
+										people[i] = {
+											name: (contact.firstName ? contact.firstName + " " : "") + (contact.middleName ? contact.middleName + " " : "") + (contact.lastName ? contact.lastName : ""),
+											addresses: []
+										}
+										if (contact.addresses && Array.isArray(contact.addresses) && contact.addresses.length) {
+											for (var j in contact.addresses) {
+												people[i].addresses[j] = {
+													value: contact.addresses[j].value,
+													label: contact.addresses[j].label ? contact.addresses[j].label.toLowerCase().replace(/\_/g, " ") : null
+												}
 											}
 										}
 									}
-								}
 
-							// message
-								var message = ""
-								var responseHTML = "<ul>"
-								for (var i in people) {
-									responseHTML += "<li><b>" + people[i].name + "</b><br>"
-									if (people[i].addresses.length) {
-										responseHTML += "<ul>"
-										for (var j in people[i].addresses) {
-											message += people[i].name + "'s " + (people[i].addresses[j].label ? people[i].addresses[j].label : "address") + " is " + people[i].addresses[j].value + " ... "
-											responseHTML += "<li><a target='_blank' href='https://maps.google.com/?q=" + people[i].addresses[j].value + "'>" + (people[i].addresses[j].label ? (people[i].addresses[j].label + ": ") : "") + people[i].addresses[j].value + "</a></li>"
+								// message (list people > list addresses)
+									var message = ""
+									var responseHTML = "<ul>"
+									for (var i in people) {
+										responseHTML += "<li><b>" + people[i].name + "</b><br>"
+										if (people[i].addresses.length) {
+											responseHTML += "<ul>"
+											for (var j in people[i].addresses) {
+												message += people[i].name + "'s " + (people[i].addresses[j].label ? people[i].addresses[j].label : "address") + " is " + people[i].addresses[j].value + " ... "
+												responseHTML += "<li><a target='_blank' href='https://maps.google.com/?q=" + people[i].addresses[j].value + "'>" + (people[i].addresses[j].label ? (people[i].addresses[j].label + ": ") : "") + people[i].addresses[j].value + "</a></li>"
+											}
+											responseHTML += "</ul>"
 										}
-										responseHTML += "</ul>"
+										responseHTML += "</li>"
 									}
-									responseHTML += "</li>"
-								}
-								responseHTML += "</ul>"
+									responseHTML += "</ul>"
 
-							// send response
-								callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " addresses</h2>" + responseHTML})
+								// send response
+									callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " addresses</h2>" + responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -3096,7 +3360,8 @@
 			},
 			"log gratitude": function(remainder, callback) {
 				try {
-					var icon = "&#x1f33b;"
+					// icon
+						var icon = "&#x1f33b;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google apps script 2"]) {
@@ -3111,7 +3376,12 @@
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							callback({icon: icon, message: response.message, html: response.message})
+							try {
+								callback({icon: icon, message: response.message, html: response.message})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to log gratitude.", html: "<h2>Error: unable to log gratitude:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -3122,7 +3392,8 @@
 		// Google APIs
 			"search google": function(remainder, callback) {
 				try {
-					var icon = "&#x1f50d;"
+					// icon
+						var icon = "&#x1f50d;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google custom search"]) {
@@ -3141,24 +3412,25 @@
 
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							// no results?
-								if (!response.items || !response.items.length) {
-									var responseLink = "https://www.google.com?q=" + remainder
-									var responseText = "No results found."
-									var topResultText = ""
-									var topResult = ""
-								}
+							try {
+								// no results?
+									if (!response.items || !response.items.length) {
+										callback({icon: icon, error: true, message: "I found no results for " + remainder, html: "<h2>Error: no results:</h2>" + remainder})
+										return
+									}
 
-							// 1+ results
-								else {
+								// top result
 									var responseLink = "https://www.google.com?q=" + remainder
 									var responseText = "Top result:"
 									var topResultText = response.items[0].title + " " + response.items[0].snippet
 									var topResult = "<p><a target='_blank' href='" + response.items[0].link + "'><b>" + response.items[0].title + "</b></a><br>" + response.items[0].snippet + "</p>"
-								}
 
-							// send response								
-								callback({icon: icon, message: responseText + " " + topResultText, html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a>" + topResult})
+								// send response
+									callback({icon: icon, message: responseText + " " + topResultText, html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a>" + topResult})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -3167,7 +3439,8 @@
 			},
 			"search google directions": function(remainder, callback) {
 				try {
-					var icon = "&#x1f5fa;"
+					// icon
+						var icon = "&#x1f5fa;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
@@ -3190,23 +3463,30 @@
 
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							// no results?
-								if (!response || !response.routes || !response.routes[0] || !response.routes[0].legs || !response.routes[0].legs[0]) {
-									callback({icon: icon, error: true, message: "I couldn't find a route.", html: "<h2>Error: unable to find a route:</h2><li>from: " + origin + "</li><li>to: " + destination + "</li>"})
-								}
+							try {
+								// no results?
+									if (!response || !response.routes || !response.routes[0] || !response.routes[0].legs || !response.routes[0].legs[0]) {
+										callback({icon: icon, error: true, message: "I couldn't find a route.", html: "<h2>Error: unable to find a route:</h2><li>from: " + origin + "</li><li>to: " + destination + "</li>"})
+										return
+									}
 
-							// format response
-								else {
+								// format response
 									var distance = response.routes[0].legs[0].distance.text
 									var duration = response.routes[0].legs[0].duration.text
 									var steps = response.routes[0].legs[0].steps.map(function(step) {
 										return "<li><b>" + step.distance.text + " (" + step.duration.text + ")" + "</b><br>" + step.html_instructions + "</li>"
 									}) || []
 
+								// message & link
 									var message = origin + " to " + destination + " is " + distance + " for " + duration + "."
 									var link = "<a target='_blank' href='https://www.google.com/maps/dir/" + origin + "/" + destination + "'>" + message + "</a>"
+
+								// response
 									callback({icon: icon, message: message, html: link + "<ol>" + steps.join("") + "</ol>"})
-								}
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -3215,7 +3495,8 @@
 			},
 			"search google places": function(remainder, callback) {
 				try {
-					var icon = "&#x1f5fa;"
+					// icon
+						var icon = "&#x1f5fa;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
@@ -3230,26 +3511,28 @@
 
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							// no results?
-								if (!response || !response.candidates || !response.candidates[0] || !response.candidates[0].place_id) {
-									callback({icon: icon, error: true, message: "I couldn't find that place.", html: "<h2>Error: unable to find place:</h2>" + remainder})
-								}
+							try {
+								// no results?
+									if (!response || !response.candidates || !response.candidates[0] || !response.candidates[0].place_id) {
+										callback({icon: icon, error: true, message: "I couldn't find that place.", html: "<h2>Error: unable to find place:</h2>" + remainder})
+										return
+									}
 
-							// second trip, with place_id
-								else {
+								// second trip, with place_id
 									var place_id = response.candidates[0].place_id
 									var options = {
 										url: "https://maps.googleapis.com/maps/api/place/details/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&inputtype=textquery&fields=name,photo,url,website,formatted_phone_number,formatted_address,geometry,opening_hours&place_id=" + place_id
 									}
 
 									window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-										// no results?
-											if (!response || !response.result) {
-												callback({icon: icon, error: true, message: "I couldn't find that place.", html: "<h2>Error: unable to find place:</h2>" + remainder})
-											}
+										try {
+											// no results?
+												if (!response || !response.result) {
+													callback({icon: icon, error: true, message: "I couldn't find that place.", html: "<h2>Error: unable to find place:</h2>" + remainder})
+													return
+												}
 
-										// format response
-											else {
+											// get open now / hours
 												var place = response.result
 												if (place.opening_hours) {
 													var openNow = "It's currently " + (place.opening_hours.open_now ? " open." : "closed.")
@@ -3260,12 +3543,21 @@
 													var openHours = ""
 												}
 
+											// message & html
 												var message = "I found " + place.name + " at " + (place.formatted_address || "an unknown address") + ". " + openNow
 												var infoBlock = "<b>" + place.name + "</b><ul><li><a target='_blank' href='" + place.url + "'>" + (place.formatted_address || "<i>no address found</i>") + "</a></li><li>" + (place.formatted_phone_number || "<i>no phone number found</i>") + "</li><li>" + (place.website ? ("<a target='_blank' href='" + place.website + "'>" + place.website + "</a>") : "<i>no website found</i>") + "<li>hours: " + (openHours || "<i>no hours found</i>") + "</li>" + "</ul>"
+
+											// response
 												callback({icon: icon, message: message, html: infoBlock})
-											}
+										}
+										catch (error) {
+											callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
+										}
 									})
-								}
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -3274,7 +3566,8 @@
 			},
 			"search youtube": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4fa;"
+					// icon
+						var icon = "&#x1f4fa;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
@@ -3289,16 +3582,22 @@
 
 					// proxy request
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							if (!response || !response.items || !response.items.length || !response.items[0].id || !response.items[0].id.videoId) {
-								callback({icon: icon, error: true, message: "I couldn't find " + remainder + " on Youtube.", html: "<h2>Error: unable to find Youtube video:</h2>" + remainder})
-							}
-							else {
+							try {
+								// no results
+									if (!response || !response.items || !response.items.length || !response.items[0].id || !response.items[0].id.videoId) {
+										callback({icon: icon, error: true, message: "I couldn't find " + remainder + " on Youtube.", html: "<h2>Error: unable to find Youtube video:</h2>" + remainder})
+										return
+									}
+
 								// turn off whistle-on
 									window.FUNCTION_LIBRARY.changeWhistleOn({forceOff: true})
 
 								// response
 									var responseHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response.items[0].id.videoId + '?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
 									callback({icon: icon, message: "Now playing " + remainder, html: responseHTML, followup: false})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
 							}
 						})
 				}
@@ -3310,7 +3609,8 @@
 		// games
 			"play more or less": function(remainder, callback) {
 				try {
-					var icon = "&#x265e;"
+					// icon
+						var icon = "&#x265e;"
 
 					// pick a number
 						if (window.CONTEXT_LIBRARY.flow !== "play more or less") {
@@ -3325,36 +3625,49 @@
 
 					// interpret guess
 						else {
-							var guess = Number(window.FUNCTION_LIBRARY.getDigits(remainder))
-							if (isNaN(guess)) {
-								callback({icon: icon, error: true, message: "I don't know that number.", html: "<h2>Error: invalid number:</h2>" + remainder})
-							}
-							else {
-								// increase guess count
-									window.CONTEXT_LIBRARY["play more or less"].guesses++
+							// get guess
+								var guess = Number(window.FUNCTION_LIBRARY.getDigits(remainder))
 
-								// correct
-									if (guess == window.CONTEXT_LIBRARY["play more or less"].number) {
+							// not a number
+								if (isNaN(guess)) {
+									callback({icon: icon, error: true, message: "I don't know that number.", html: "<h2>Error: invalid number:</h2>" + remainder})
+									return
+								}
+							
+							// increase guess count
+								window.CONTEXT_LIBRARY["play more or less"].guesses++
+
+							// correct
+								if (guess == window.CONTEXT_LIBRARY["play more or less"].number) {
+									// message
 										var message = "You took " + window.CONTEXT_LIBRARY["play more or less"].guesses + " guess" + (window.CONTEXT_LIBRARY["play more or less"].guesses == 1 ? "" : "es") + " to find my number: " + window.CONTEXT_LIBRARY["play more or less"].number + "."
 										var messageBlock = "You took <b>" + window.CONTEXT_LIBRARY["play more or less"].guesses + "</b> guess" + (window.CONTEXT_LIBRARY["play more or less"].guesses == 1 ? "" : "es") + " to find my number: <b>" + window.CONTEXT_LIBRARY["play more or less"].number + "</b>."
+
+									// response
 										callback({icon: icon, message: message, html: messageBlock})
 
+									// end flow
 										window.CONTEXT_LIBRARY.flow = null
 										delete window.CONTEXT_LIBRARY["play more or less"]
-									}
+								}
 
-								// more
-									else if (window.CONTEXT_LIBRARY["play more or less"].number > guess) {
+							// more
+								else if (window.CONTEXT_LIBRARY["play more or less"].number > guess) {
+									// message
 										var message = "More than " + guess + "."
-										callback({icon: icon, message: message, html: "&uarr; " + message + " &uarr;"})
-									}
 
-								// less
-									else if (window.CONTEXT_LIBRARY["play more or less"].number < guess) {
+									// response
+										callback({icon: icon, message: message, html: "&uarr; " + message + " &uarr;"})
+								}
+
+							// less
+								else if (window.CONTEXT_LIBRARY["play more or less"].number < guess) {
+									// message
 										var message = "Less than " + guess + "."
+
+									// response
 										callback({icon: icon, message: message, html: "&darr; " + message + " &darr;"})
-									}
-							}
+								}
 						}
 				}
 				catch (error) {
@@ -3363,7 +3676,8 @@
 			},
 			"play true or false": function(remainder, callback) {
 				try {
-					var icon = "&#x265e;"
+					// icon
+						var icon = "&#x265e;"
 
 					// pick a number
 						if (window.CONTEXT_LIBRARY.flow !== "play true or false") {
@@ -3387,6 +3701,8 @@
 											var question = window.CONTEXT_LIBRARY["play true or false"].questions[window.CONTEXT_LIBRARY["play true or false"].index].question
 												question = question.replace(/(&#039;)/gi,"\'")
 											var questionNumber = window.CONTEXT_LIBRARY["play true or false"].index + 1
+
+										// response
 											callback({icon: icon, message: "True or False: " + question, html: "<b>True or False #" + questionNumber + "</b><br>" + question})
 									}
 									catch (error) {
@@ -3400,12 +3716,16 @@
 						else {
 							// validate
 								var guess = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
+
+							// true / false
 								if (guess.includes("true")) {
 									guess = "True"
 								}
 								else if (guess.includes("false")) {
 									guess = "False"
 								}
+
+							// other
 								else {
 									callback({icon: icon, error: true, message: "I only understand True and False.", html: "<h2>Error: invalid guess:</h2>" + remainder})
 									return
@@ -3425,22 +3745,26 @@
 
 							// advance
 								if (window.CONTEXT_LIBRARY["play true or false"].index + 1 < window.CONTEXT_LIBRARY["play true or false"].questions.length) {
-									window.CONTEXT_LIBRARY["play true or false"].index++
+									// next question
+										window.CONTEXT_LIBRARY["play true or false"].index++
+										var nextQuestion = window.CONTEXT_LIBRARY["play true or false"].questions[window.CONTEXT_LIBRARY["play true or false"].index].question
+										var nextQuestionNumber = window.CONTEXT_LIBRARY["play true or false"].index + 1
 
-									var nextQuestion = window.CONTEXT_LIBRARY["play true or false"].questions[window.CONTEXT_LIBRARY["play true or false"].index].question
-									var nextQuestionNumber = window.CONTEXT_LIBRARY["play true or false"].index + 1
-
-									callback({icon: icon, message: message + " ... " + "Question " + nextQuestionNumber + ": True or False: " + nextQuestion, html: message + "<br><br><b>True or False #" + nextQuestionNumber + "</b><br>" + nextQuestion})
+									// response
+										callback({icon: icon, message: message + " ... " + "Question " + nextQuestionNumber + ": True or False: " + nextQuestion, html: message + "<br><br><b>True or False #" + nextQuestionNumber + "</b><br>" + nextQuestion})
 								}
 
 							// done
 								else {
-									var finalScore = window.CONTEXT_LIBRARY["play true or false"].score || 0
+									// final score
+										var finalScore = window.CONTEXT_LIBRARY["play true or false"].score || 0
 
-									window.CONTEXT_LIBRARY.flow = null
-									delete window.CONTEXT_LIBRARY["play true or false"]
+									// end flow
+										window.CONTEXT_LIBRARY.flow = null
+										delete window.CONTEXT_LIBRARY["play true or false"]
 
-									callback({icon: icon, message: message + " ... " + "You got " + finalScore + " questions correct.", html: message + "<br><br><b>Final score: " + finalScore + "</b>"})
+									// response
+										callback({icon: icon, message: message + " ... " + "You got " + finalScore + " questions correct.", html: message + "<br><br><b>Final score: " + finalScore + "</b>"})
 								}
 						}
 				}
@@ -3454,18 +3778,21 @@
 		// Wink
 			"get wink devices": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4a1;"
+					// icon
+						var icon = "&#x1f4a1;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["api.wink.com"] || !window.CONFIGURATION_LIBRARY["api.wink.com"].access_token || !window.CONFIGURATION_LIBRARY["api.wink.com"].expiration || window.CONFIGURATION_LIBRARY["api.wink.com"].expiration < new Date().getTime()) {
-							window.ACTION_LIBRARY["authorize platform"]("wink", function(response) {
-								callback(response)
-								
-								if (window.CONFIGURATION_LIBRARY["api.wink.com"] && window.CONFIGURATION_LIBRARY["api.wink.com"].access_token && window.CONFIGURATION_LIBRARY["api.wink.com"].expiration && window.CONFIGURATION_LIBRARY["api.wink.com"].expiration >= new Date().getTime()) {
-									window.ACTION_LIBRARY["get wink devices"](remainder, callback)
-								}
-							})
-							return
+							// attempt to reauthorize
+								window.ACTION_LIBRARY["authorize platform"]("wink", function(response) {
+									callback(response)
+									
+									// now authorized? re-run this function
+										if (window.CONFIGURATION_LIBRARY["api.wink.com"] && window.CONFIGURATION_LIBRARY["api.wink.com"].access_token && window.CONFIGURATION_LIBRARY["api.wink.com"].expiration && window.CONFIGURATION_LIBRARY["api.wink.com"].expiration >= new Date().getTime()) {
+											window.ACTION_LIBRARY["get wink devices"](remainder, callback)
+										}
+								})
+								return
 						}
 
 					// build options
@@ -3476,87 +3803,104 @@
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							// devices
-								var devices = {}
-								for (var i in response.data) {
-									var device = {
-										uuid: response.data[i].uuid,
-										name: response.data[i].name,
-										model_name: response.data[i].model_name,
-										current_state: null,
-										type: null
-									}
-									devices[device.uuid] = device
-
-									if (response.data[i].light_bulb_id) {
-										device.type = "light_bulb"
-										device.current_state = response.data[i].last_reading.connection ? (response.data[i].last_reading.powered ? "on" : "off") : "disconnected"
-									}
-									else if (response.data[i].smoke_detector_id) {
-										device.type = "smoke_detector"
-										device.current_state = response.data[i].last_reading.connection ? (response.data[i].last_reading.co_detected ? "CO!" : "no CO") + " & " + (response.data[i].last_reading.smoke_detected ? "smoke!" : "no smoke") : "disconnected"
-									}
-									else if (response.data[i].air_conditioner_id) {
-										device.type = "air_conditioner"
-										device.current_state = response.data[i].last_reading.connection ? ((response.data[i].last_reading.temperature * 9 / 5) + 32 + "°F") : "disconnected"
-									}
-									else if (response.data[i].thermostat_id) {
-										device.type = "thermostat"
-										device.current_state = response.data[i].last_reading.connection ? ((response.data[i].last_reading.temperature * 9 / 5) + 32 + "°F") : "disconnected"
-									}
-									else if (response.data[i].outlets) {
-										device.type = "powerstrip"
-										device.current_state = response.data[i].last_reading.connection ? "connected" : "disconnected"
-
-										for (var j in response.data[i].outlets) {
-											var subdevice = {
-												uuid: response.data[i].outlets[j].uuid,
-												name: response.data[i].outlets[j].name,
-												model_name: device.model_name + " (outlet)",
-												type: "outlet",
-												current_state: response.data[i].last_reading.connection ? (response.data[i].outlets[j].last_reading.powered ? "on" : "off") : "disconnected"
+							try {
+								// loop through response data to build out devices
+									var devices = {}
+									for (var i in response.data) {
+										// get device info & save to device
+											var device = {
+												uuid: response.data[i].uuid,
+												name: response.data[i].name,
+												model_name: response.data[i].model_name,
+												current_state: null,
+												type: null
 											}
-											devices[subdevice.uuid] = subdevice
-										}
+											devices[device.uuid] = device
+
+										// get device type & current state
+											if (response.data[i].light_bulb_id) {
+												device.type = "light_bulb"
+												device.current_state = response.data[i].last_reading.connection ? (response.data[i].last_reading.powered ? "on" : "off") : "disconnected"
+											}
+											else if (response.data[i].smoke_detector_id) {
+												device.type = "smoke_detector"
+												device.current_state = response.data[i].last_reading.connection ? (response.data[i].last_reading.co_detected ? "CO!" : "no CO") + " & " + (response.data[i].last_reading.smoke_detected ? "smoke!" : "no smoke") : "disconnected"
+											}
+											else if (response.data[i].air_conditioner_id) {
+												device.type = "air_conditioner"
+												device.current_state = response.data[i].last_reading.connection ? ((response.data[i].last_reading.temperature * 9 / 5) + 32 + "°F") : "disconnected"
+											}
+											else if (response.data[i].thermostat_id) {
+												device.type = "thermostat"
+												device.current_state = response.data[i].last_reading.connection ? ((response.data[i].last_reading.temperature * 9 / 5) + 32 + "°F") : "disconnected"
+											}
+											else if (response.data[i].outlets) {
+												device.type = "powerstrip"
+												device.current_state = response.data[i].last_reading.connection ? "connected" : "disconnected"
+
+												for (var j in response.data[i].outlets) {
+													var subdevice = {
+														uuid: response.data[i].outlets[j].uuid,
+														name: response.data[i].outlets[j].name,
+														model_name: device.model_name + " (outlet)",
+														type: "outlet",
+														current_state: response.data[i].last_reading.connection ? (response.data[i].outlets[j].last_reading.powered ? "on" : "off") : "disconnected"
+													}
+													devices[subdevice.uuid] = subdevice
+												}
+											}
+											else {
+												device.type = "hub"
+												device.current_state = response.data[i].last_reading.connection ? "connected" : "disconnected"
+											}
 									}
-									else {
-										device.type = "hub"
-										device.current_state = response.data[i].last_reading.connection ? "connected" : "disconnected"
-									}
-								}
 								
-								var value = window.CONFIGURATION_LIBRARY["api.wink.com"]
-									value.devices = devices
-								window.FUNCTION_LIBRARY.changeConfiguration({key: "api.wink.com", value: value})
+								// save devices to configuration library
+									var value = window.CONFIGURATION_LIBRARY["api.wink.com"]
+										value.devices = devices
+									window.FUNCTION_LIBRARY.changeConfiguration({key: "api.wink.com", value: value})
 
-							// response
-								var lightsOn = 0
-								var temperature = 0
-								var smoke = 0
+								// assume no lights, no temperature, no smoke
+									var lightsOn = 0
+									var temperature = 0
+									var smoke = 0
+									var responseHTML = "Here are your Wink devices: <ul>"
 
-								var responseHTML = "Here are your Wink devices: <ul>"
-								for (var i in devices) {
-									responseHTML += "<li><b>" + devices[i].name + "</b> - [" + (devices[i].current_state || "") + "]<br>" + devices[i].model_name + "</li>"
-									if (devices[i].type == "light_bulb" && devices[i].current_state == "on") {
-										lightsOn++
+								// loop through devices
+									for (var i in devices) {
+										responseHTML += "<li><b>" + devices[i].name + "</b> - [" + (devices[i].current_state || "") + "]<br>" + devices[i].model_name + "</li>"
+
+										// lights
+											if (devices[i].type == "light_bulb" && devices[i].current_state == "on") {
+												lightsOn++
+											}
+
+										// temperature
+											else if (devices[i].type == "thermostat" && devices[i].current_state !== "disconnected") {
+												temperature = devices[i].current_state.replace("°F", "")
+											}
+
+										// smoke
+											else if (devices[i].type == "smoke_detector" && devices[i].current_state !== "disconnected") {
+												if (devices[i].current_state.includes("smoke!") || devices[i].current_state.includes("CO!")) {
+													smoke = 1
+												}
+											}
 									}
-									else if (devices[i].type == "thermostat" && devices[i].current_state !== "disconnected") {
-										temperature = devices[i].current_state.replace("°F", "")
-									}
-									else if (devices[i].type == "smoke_detector" && devices[i].current_state !== "disconnected") {
-										if (devices[i].current_state.includes("smoke!") || devices[i].current_state.includes("CO!")) {
-											smoke = 1
-										}
-									}
-								}
-								responseHTML += "</ul>"
+									responseHTML += "</ul>"
 
-								var message = (smoke ? "The smoke detector has detected a threat. " : "") +
-									"I detected " + Object.keys(devices).length + " devices on Wink. " +
-									"The temperature is " + temperature + " degrees. " +
-									"There are " + lightsOn + " lights on."
+								// messages
+									var message = (smoke ? "The smoke detector has detected a threat. " : "") +
+										"I detected " + Object.keys(devices).length + " devices on Wink. " +
+										"The temperature is " + temperature + " degrees. " +
+										"There are " + lightsOn + " lights on."
 
-								callback({icon: icon, message: message, html: responseHTML})
+								// response
+									callback({icon: icon, message: message, html: responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get wink devices.", html: "<h2>Error: unable to get Wink devices:</h2>" + error})
+							}
 						})
 				}
 				catch (error) {
@@ -3565,28 +3909,35 @@
 			},
 			"set wink devices": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4a1;"
+					// icon
+						var icon = "&#x1f4a1;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["api.wink.com"] || !window.CONFIGURATION_LIBRARY["api.wink.com"].access_token || !window.CONFIGURATION_LIBRARY["api.wink.com"].expiration || window.CONFIGURATION_LIBRARY["api.wink.com"].expiration < new Date().getTime()) {
-							window.ACTION_LIBRARY["authorize platform"]("wink", function(response) {
-								callback(response)
-								
-								if (window.CONFIGURATION_LIBRARY["api.wink.com"] && window.CONFIGURATION_LIBRARY["api.wink.com"].access_token && window.CONFIGURATION_LIBRARY["api.wink.com"].expiration && window.CONFIGURATION_LIBRARY["api.wink.com"].expiration >= new Date().getTime()) {
-									window.ACTION_LIBRARY["set wink devices"](remainder, callback)
-								}
-							})
-							return
+							// attempt to reauthorize
+								window.ACTION_LIBRARY["authorize platform"]("wink", function(response) {
+									callback(response)
+									
+									// now authorized? re-run this function
+										if (window.CONFIGURATION_LIBRARY["api.wink.com"] && window.CONFIGURATION_LIBRARY["api.wink.com"].access_token && window.CONFIGURATION_LIBRARY["api.wink.com"].expiration && window.CONFIGURATION_LIBRARY["api.wink.com"].expiration >= new Date().getTime()) {
+											window.ACTION_LIBRARY["set wink devices"](remainder, callback)
+										}
+								})
+								return
 						}
+
+					// missing devices?
 						else if (!window.CONFIGURATION_LIBRARY["api.wink.com"].devices || !Object.keys(window.CONFIGURATION_LIBRARY["api.wink.com"].devices).length) {
-							window.ACTION_LIBRARY["get wink devices"](null, function(response) {
-								callback(response)
-								
-								if (window.CONFIGURATION_LIBRARY["api.wink.com"].devices && Object.keys(window.CONFIGURATION_LIBRARY["api.wink.com"].devices).length) {
-									window.ACTION_LIBRARY["set wink devices"](remainder, callback)
-								}
-							})
-							return
+							// get devices first
+								window.ACTION_LIBRARY["get wink devices"](null, function(response) {
+									callback(response)
+									
+									// devices set? re-run this function
+										if (window.CONFIGURATION_LIBRARY["api.wink.com"].devices && Object.keys(window.CONFIGURATION_LIBRARY["api.wink.com"].devices).length) {
+											window.ACTION_LIBRARY["set wink devices"](remainder, callback)
+										}
+								})
+								return
 						}
 
 					// split remainder
@@ -3634,6 +3985,7 @@
 							}
 						}
 
+					// no devices?
 						if (!deviceIds.length) {
 							callback({icon: icon, error: true, message: "I couldn't identify that device.", html: "<h2>Error: unable to identify device:</h2>" + deviceName})
 							return
@@ -3656,16 +4008,18 @@
 							return
 						}
 
-					// output response
+					// generate message & html
 						var responseHTML = "Wink devices updated: <ul>"
 						for (var i in deviceIds) {
 							responseHTML += "<li>" + window.CONFIGURATION_LIBRARY["api.wink.com"].devices[deviceIds[i]].name + ": " + JSON.stringify(desiredState) + "</li>"
 						}
 						responseHTML += "</ul>"
 						var messageState = (desiredState.powered === true) ? "on" : (desiredState.powered === false) ? "off" : (desiredState.max_set_point || desiredState.min_set_point) ? farenheit : "unknown"
+
+					// response
 						callback({icon: icon, message: "Okay, I set " + deviceName + " to " + messageState, html: responseHTML})
 
-					// loop through ids
+					// actually attempt to set the desiredState for each device
 						for (var i in deviceIds) {
 							// build options
 								var options = {
@@ -3679,8 +4033,13 @@
 
 							// proxy
 								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-									if (response.errors && response.errors.length) {
-										callback({icon: icon, error: true, message: "I was unable to update a device.", html: "<h2>Error: Wink responded with these errors:</h2><li>" + response.errors.join("</li><li>") + "</li>"})
+									try {
+										if (response.errors && response.errors.length) {
+											callback({icon: icon, error: true, message: "I was unable to update a device.", html: "<h2>Error: Wink responded with these errors:</h2><li>" + response.errors.join("</li><li>") + "</li>"})
+										}
+									}
+									catch (error) {
+										callback({icon: icon, error: true, message: "I was unable to update a device.", html: "<h2>Error: Wink responded with these errors:</h2><li>" + error + "</li>"})
 									}
 								})
 						}
@@ -3691,7 +4050,8 @@
 			},
 			"turn off wink device": function(remainder, callback) {
 				try {
-					window.ACTION_LIBRARY["set wink devices"](remainder + " to off", callback)
+					// proxy to set wink devices
+						window.ACTION_LIBRARY["set wink devices"](remainder + " to off", callback)
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -3699,7 +4059,8 @@
 			},
 			"turn on wink device": function(remainder, callback) {
 				try {
-					window.ACTION_LIBRARY["set wink devices"](remainder + " to on", callback)
+					// proxy to set wink devices
+						window.ACTION_LIBRARY["set wink devices"](remainder + " to on", callback)
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -3709,18 +4070,21 @@
 		// Reddit
 			"ask reddit": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4bb;"
+					// icon
+						var icon = "&#x1f4bb;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["www.reddit.com"] || !window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token || !window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration || window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration < new Date().getTime()) {
-							window.ACTION_LIBRARY["authorize platform"]("reddit", function(response) {
-								callback(response)
-								
-								if (window.CONFIGURATION_LIBRARY["www.reddit.com"] && window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration >= new Date().getTime()) {
-									window.ACTION_LIBRARY["ask reddit"](remainder, callback)
-								}
-							})
-							return
+							// attempt to reauthorize
+								window.ACTION_LIBRARY["authorize platform"]("reddit", function(response) {
+									callback(response)
+									
+									// now authorized? re-run this function
+										if (window.CONFIGURATION_LIBRARY["www.reddit.com"] && window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration >= new Date().getTime()) {
+											window.ACTION_LIBRARY["ask reddit"](remainder, callback)
+										}
+								})
+								return
 						}
 
 					// options
@@ -3739,6 +4103,8 @@
 								// construct response link
 									var redditLink = question.data.url
 									var redditText = question.data.title
+
+								// response
 									callback({icon: icon, message: redditText, html: "<a target='_blank' href='" + redditLink + "'><h2>" + redditText + "<h2></a>"})
 							}
 							catch (error) {
@@ -3752,18 +4118,21 @@
 			},
 			"get a reddit writing prompt": function(remainder, callback) {
 				try {
-					var icon = "&#x1f4bb;"
+					// icon
+						var icon = "&#x1f4bb;"
 
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["www.reddit.com"] || !window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token || !window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration || window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration < new Date().getTime()) {
-							window.ACTION_LIBRARY["authorize platform"]("reddit", function(response) {
-								callback(response)
-								
-								if (window.CONFIGURATION_LIBRARY["www.reddit.com"] && window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration >= new Date().getTime()) {
-									window.ACTION_LIBRARY["get a reddit writing prompt"](remainder, callback)
-								}
-							})
-							return
+							// attempt to reuathorize
+								window.ACTION_LIBRARY["authorize platform"]("reddit", function(response) {
+									callback(response)
+									
+									// now authorized? re-run this function
+										if (window.CONFIGURATION_LIBRARY["www.reddit.com"] && window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration >= new Date().getTime()) {
+											window.ACTION_LIBRARY["get a reddit writing prompt"](remainder, callback)
+										}
+								})
+								return
 						}
 
 					// options
@@ -3782,6 +4151,8 @@
 								// construct response link
 									var redditLink = question.data.url
 									var redditText = question.data.title
+
+								// response
 									callback({icon: icon, message: redditText, html: "<a target='_blank' href='" + redditLink + "'><h2>" + redditText + "</h2></a>"})
 							}
 							catch (error) {
@@ -3797,7 +4168,8 @@
 		// custom APIs
 			"convert": function(remainder, callback) {
 				try {
-					var icon = "&#9878;"
+					// icon
+						var icon = "&#9878;"
 
 					// parameters
 						remainder = " " + remainder
@@ -3824,14 +4196,23 @@
 
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							if (!response.success) {
-								callback({icon: icon, error: true, message: "I was unable to convert from " + fromUnit + "to" + toUnit, html: "<h2>Error: unable to convert:</h2>" + response.message + "<br></br>" + quantity + " " + fromUnit + " = <b>???</b> " + toUnit})
+							try {
+								// failure
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to convert from " + fromUnit + "to" + toUnit, html: "<h2>Error: unable to convert:</h2>" + response.message + "<br></br>" + quantity + " " + fromUnit + " = <b>???</b> " + toUnit})
+										return
+									}
+								
+								// get output
+									var outputQuantity = Number(response.output).toLocaleString("fullwide", {useGrouping: true, maximumSignificantDigits: 21})
+									var outputFromUnit = (response.parameters.from.prefix !== "_" ? response.parameters.from.prefix : "") + response.parameters.from.unit
+									var outputToUnit   = (response.parameters.to.prefix   !== "_" ? response.parameters.to.prefix   : "") + response.parameters.to.unit
+
+								// response
+									callback({icon: icon, message: outputQuantity + " " + outputToUnit, html: response.parameters.quantity + " " + outputFromUnit + " = <b>" + outputQuantity + "</b> " + outputToUnit})
 							}
-							else {
-								var outputQuantity = Number(response.output).toLocaleString("fullwide", {useGrouping: true, maximumSignificantDigits: 21})
-								var outputFromUnit = (response.parameters.from.prefix !== "_" ? response.parameters.from.prefix : "") + response.parameters.from.unit
-								var outputToUnit   = (response.parameters.to.prefix   !== "_" ? response.parameters.to.prefix   : "") + response.parameters.to.unit
-								callback({icon: icon, message: outputQuantity + " " + outputToUnit, html: response.parameters.quantity + " " + outputFromUnit + " = <b>" + outputQuantity + "</b> " + outputToUnit})
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to convert.", html: "<h2>Error: unable to access unitConverter</h2>"})
 							}
 						})
 				}
@@ -3841,7 +4222,8 @@
 			},
 			"find factors": function(remainder, callback) {
 				try {
-					var icon = "&#x2a37;"
+					// icon
+						var icon = "&#x2a37;"
 
 					// parameters
 						var input = window.FUNCTION_LIBRARY.getDigits(remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim())
@@ -3853,16 +4235,25 @@
 
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							if (!response.success) {
-								callback({icon: icon, error: true, message: "I was unable to find the factors of " + remainder, html: "<h2>Error: unable to find factors:</h2>" + response.message})
+							try {
+								// failure
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to find the factors of " + remainder, html: "<h2>Error: unable to find factors:</h2>" + response.message})
+										return
+									}
+								
+								// generate message
+									var message = response.qualities.map(function(q) {
+										return q.replace("<li>","").replace("</li>","").replace(/\<\/?br\>/gi," ")
+									}) || []
+										message[0] = message[0].replace(/x/gi, "times")
+										message = message.join("... ")
+
+								// response
+									callback({icon: icon, message: "Here's what I found for " + input + ": " + message, html: "<h2>" + input + "</h2>" + response.html})
 							}
-							else {
-								var message = response.qualities.map(function(q) {
-									return q.replace("<li>","").replace("</li>","").replace(/\<\/?br\>/gi," ")
-								}) || []
-									message[0] = message[0].replace(/x/gi, "times")
-									message = message.join("... ")
-								callback({icon: icon, message: "Here's what I found for " + input + ": " + message, html: "<h2>" + input + "</h2>" + response.html})
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to fetch that number.", html: "<h2>Error: unable to access factorFinder</h2>"})
 							}
 						})
 				}
@@ -3872,7 +4263,8 @@
 			},
 			"analyze chord": function(remainder, callback) {
 				try {
-					var icon = "&#x1f3b5;"
+					// icon
+						var icon = "&#x1f3b5;"
 
 					// parameters
 						var input = remainder.replace(/[?!.:;'"_\-\/\(\)\$\%]/gi,"").trim().replace(/and/gi,"")
@@ -3889,11 +4281,18 @@
 
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							if (!response.success) {
-								callback({icon: icon, error: true, message: "I was unable to do a chordal analysis of " + remainder, html: "<h2>Error: unable to analyze chord:</h2>" + response.message})
+							try {
+								// failure
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to do a chordal analysis of " + remainder, html: "<h2>Error: unable to analyze chord:</h2>" + response.message})
+										return
+									}
+								
+								// response
+									callback({icon: icon, message: response.smallOutput.replace(/\#/gi," sharp").replace(/b/g, " flat"), html: response.chord.join(" - ") + "<h2>" + response.bigOutput + "</h2>" + response.smallOutput})
 							}
-							else {
-								callback({icon: icon, message: response.smallOutput.replace(/\#/gi," sharp").replace(/b/g, " flat"), html: response.chord.join(" - ") + "<h2>" + response.bigOutput + "</h2>" + response.smallOutput})
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to analyze that chord.", html: "<h2>Error: unable to access chordAnalyzer</h2>"})
 							}
 						})
 				}
@@ -3903,7 +4302,8 @@
 			},
 			"shuffle word": function(remainder, callback) {
 				try {
-					var icon = "&#x1f500;"
+					// icon
+						var icon = "&#x1f500;"
 
 					// parameters
 						var input = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
@@ -3915,17 +4315,26 @@
 
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							if (!response.success) {
-								callback({icon: icon, error: true, message: "I was unable to shuffle the word " + remainder, html: "<h2>Error: unable to shuffle word:</h2>" + response.message})
-							}
-							else {
-								var wordList = []
-								for (var i in response.results) {
-									for (var j in response.results[i]) {
-										wordList.push(response.results[i][j])
+							try {
+								// failure
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to shuffle the word " + remainder, html: "<h2>Error: unable to shuffle word:</h2>" + response.message})
+										return
 									}
-								}
-								callback({icon: icon, message: "I found " + wordList.length + " words within " + input + ": " + wordList.join(", "), html: "<h2>" + input + "</h2>" + response.html})
+							
+								// get word list
+									var wordList = []
+									for (var i in response.results) {
+										for (var j in response.results[i]) {
+											wordList.push(response.results[i][j])
+										}
+									}
+
+								// response
+									callback({icon: icon, message: "I found " + wordList.length + " words within " + input + ": " + wordList.join(", "), html: "<h2>" + input + "</h2>" + response.html})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to shuffle that word.", html: "<h2>Error: unable to access wordShuffler</h2>"})
 							}
 						})
 				}
