@@ -152,6 +152,8 @@ window.addEventListener("load", function() {
 					else {
 						numberWord = numberWord.toLowerCase().trim()
 						     if (numberWord == "zero") 		{ return 0 }
+						else if (numberWord == "a") 		{ return 1 }
+						else if (numberWord == "an") 		{ return 1 }
 						else if (numberWord == "one") 		{ return 1 }
 						else if (numberWord == "two") 		{ return 2 }
 						else if (numberWord == "three") 	{ return 3 }
@@ -504,9 +506,34 @@ window.addEventListener("load", function() {
 			ELEMENT_LIBRARY["inputs-recognition-duration"].addEventListener("change", changeRecognitionDuration)
 			FUNCTION_LIBRARY.changeRecognitionDuration = changeRecognitionDuration
 			function changeRecognitionDuration(event) {
-				// set duration
-					CONFIGURATION_LIBRARY.settings["recognition-duration"] = Math.max(0, Math.min(60, Number(ELEMENT_LIBRARY["inputs-recognition-duration"].value)))
-					window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+				// via input
+					if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-recognition-duration"].id) {
+						// set duration
+							CONFIGURATION_LIBRARY.settings["recognition-duration"] = Math.max(1, Math.min(60, Number(ELEMENT_LIBRARY["inputs-recognition-duration"].value)))
+							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+					}
+
+				// via action
+					else if (event.duration !== undefined) {
+						// if not a number
+							if (isNaN(Number(event.duration))) {
+								return false
+							}
+
+						// otherwise
+							else {
+								var newDuration = Math.round(Math.max(1, Math.min(60, Number(event.duration))))
+								ELEMENT_LIBRARY["inputs-recognition-duration"].value = newDuration
+								CONFIGURATION_LIBRARY.settings["recognition-duration"] = newDuration
+								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+								return newDuration
+							}
+					}
+
+				// otherwise
+					else {
+						return false
+					}
 			}
 
 		/* changeRecognizing */
@@ -872,7 +899,7 @@ window.addEventListener("load", function() {
 								CONFIGURATION_LIBRARY.settings["voice"] = event.name
 								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
 								ELEMENT_LIBRARY["inputs-voice"].value = event.name
-								return true
+								return event.name
 							}
 
 						// otherwise
@@ -894,7 +921,7 @@ window.addEventListener("load", function() {
 					}
 
 				// via action
-					else if (event.volume) {
+					else if (event.volume !== undefined) {
 						// if not a number
 							if (isNaN(Number(event.volume))) {
 								return false
@@ -906,8 +933,13 @@ window.addEventListener("load", function() {
 								ELEMENT_LIBRARY["inputs-voice-volume"].value = newVolume
 								CONFIGURATION_LIBRARY.settings["voice-volume"] = newVolume
 								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-								return true
+								return newVolume
 							}
+					}
+
+				// otherwise
+					else {
+						return false
 					}
 			}
 

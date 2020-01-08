@@ -461,6 +461,8 @@
 			border-spacing: 2px;
 			table-layout: fixed;
 			font-size: 12px;
+			width: auto !important;
+			max-width: inherit !important;
 		}
 
 		.stream-history th {

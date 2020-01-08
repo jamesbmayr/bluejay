@@ -43,6 +43,20 @@
 			"youre amazing": 					"receive affirmation",
 			"you are amazing": 					"receive affirmation",
 
+			"happy": 							"receive greeting",
+			"good": 							"receive greeting",
+			"merry": 							"receive greeting",
+			"i hope you have a happy": 			"receive greeting",
+			"i hope you have a good": 			"receive greeting",
+			"i hope you have a great": 			"receive greeting",
+			"i hope you have a merry": 			"receive greeting",
+			"i hope youre enjoying": 			"receive greeting",
+			"i hope youre enjoying your": 		"receive greeting",
+			"i hope youre enjoying this": 		"receive greeting",
+			"i hope you are enjoying": 			"receive greeting",
+			"i hope you are enjoying your": 	"receive greeting",
+			"i hope you are enjoying this": 	"receive greeting",
+
 		// meta
 			"help": 							"list actions",
 			"get help": 						"list actions",
@@ -83,6 +97,7 @@
 			"cease listening": 					"stop listening",
 			"cease listening to me": 			"stop listening",
 
+			"change voice": 					"change voice",
 			"change voice to": 					"change voice",
 			"change the voice to": 				"change voice",
 			"set voice to": 					"change voice",
@@ -91,12 +106,30 @@
 			"switch voice to": 					"change voice",
 			"switch the voice to": 				"change voice",
 
+			"change volume": 					"change volume",
 			"change volume to": 				"change volume",
 			"change the volume to": 			"change volume",
 			"set volume to": 					"change volume",
 			"set the volume to": 				"change volume",
 			"set new volume": 					"change volume",
+			"set new volume at": 				"change volume",
 
+			"change listening duration": 		"change listening duration",
+			"change listening duration to": 	"change listening duration",
+			"change the listening duration to": "change listening duration",
+			"set listening duration to": 		"change listening duration",
+			"set the listening duration to": 	"change listening duration",
+			"set new listening duration": 		"change listening duration",
+			"set new listening duration at": 	"change listening duration",
+			"change recognition duration": 		"change listening duration",
+			"change recognition duration to": 	"change listening duration",
+			"change the recognition duration to": "change listening duration",
+			"set recognition duration to": 		"change listening duration",
+			"set the recognition duration to": 	"change listening duration",
+			"set new recognition duration": 	"change listening duration",
+			"set new recognition duration at": 	"change listening duration",
+
+			"change configuration": 			"change configuration",
 			"edit configuration": 				"change configuration",
 			"edit configuration for": 			"change configuration",
 			"set configuration": 				"change configuration",
@@ -394,6 +427,12 @@
 			"read me the wikipedia page about": "get a wikipedia entry",
 			"read the wikipedia entry for": 	"get a wikipedia entry",
 			"read me the wikipedia entry for": 	"get a wikipedia entry",
+			"get the wikipedia page for": 		"get a wikipedia entry",
+			"give me the wikipedia page for": 	"get a wikipedia entry",
+			"get me the wikipedia page for": 	"get a wikipedia entry",
+			"do a wikipedia search for": 		"get a wikipedia entry",
+			"get the wikipedia article for": 	"get a wikipedia entry",
+			"get the wikipedia article about": 	"get a wikipedia entry",
 
 			"get this day in history": 			"get this day in history",
 			"what happened today in history": 	"get this day in history",
@@ -916,6 +955,47 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
+			"receive greeting": function(remainder, callback) {
+				try {
+					var icon = "&#x1f44b;"
+
+					// clean up remainder
+						remainder = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
+						var words = remainder.split(/\s/gi)
+						var message = ""
+
+					// time of day
+						if (words.includes("morning")) {
+							message = "Good morning to you too!"
+						}
+						else if (words.includes("day")) {
+							message = "I hope you have a great day too!"
+						}
+						else if (words.includes("afternoon") ) {
+							message = "Good afternoon to you too!"
+						}
+						else if (words.includes("evening")) {
+							message = "Good evening to you too!"
+						}
+						else if (words.includes("night")) {
+							message = "I hope you have a good night too!"
+						}
+
+					// holidays
+						else if (words.includes("christmas")) {
+							message = "Merry Christmas to you too!"
+						}
+						else {
+							message = "Happy " + remainder + " to you too!"
+						}
+
+					// response
+						callback({icon: icon, message: message, html: "<h2>" + message + "</h2>"})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
 
 		// meta
 			"list actions": function(remainder, callback) {
@@ -977,14 +1057,13 @@
 								"hour": 1000 * 60 * 60,
 								"day": 1000 * 60 * 60 * 24
 							}
-							var keys = Object.keys(units)
 
 							var amounts = []
-							for (var i in words) {
+							for (var i = 0; i < words.length; i++) {
 								words[i] = window.FUNCTION_LIBRARY.getDigits(words[i])
 
 								if (!isNaN(words[i])) {
-									if (words[i + 1] && keys[words[i + 1].replace(/s$/gi,"").toLowerCase()]) {
+									if (words[i + 1] && units[words[i + 1].replace(/s$/gi,"").toLowerCase()]) {
 										amounts.push({
 											number: Number(words[i]),
 											unit: words[i + 1].replace(/s$/gi,"")
@@ -1052,14 +1131,19 @@
 				try {
 					var icon = "&#x1f50a;"
 
-					var name = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
-					var success = window.FUNCTION_LIBRARY.changeVoice({name: name})
-					if (!success) {
-						callback({icon: icon, error: true, message: "I don't recognize that voice.", html: "<h2>Error: voice not found:</h2>" + remainder})
-					}
-					else {
-						callback({icon: icon, message: "Voice set to " + name, html: "voice: " + name})
-					}
+					// change voice
+						var name = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
+						var voice = window.FUNCTION_LIBRARY.changeVoice({name: name})
+
+					// failure
+						if (voice === false) {
+							callback({icon: icon, error: true, message: "I don't recognize that voice.", html: "<h2>Error: voice not found:</h2>" + remainder})
+						}
+
+					// success
+						else {
+							callback({icon: icon, message: "Voice set to " + voice, html: "voice: " + voice})
+						}
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1069,16 +1153,61 @@
 				try {
 					var icon = "&#x1f50a;"
 
-					var volume = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
-						volume = window.FUNCTION_LIBRARY.getDigits(volume)
+					// change volume
+						var volume = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
+							volume = window.FUNCTION_LIBRARY.getDigits(volume)
+						var newVolume = window.FUNCTION_LIBRARY.changeVoiceVolume({volume: volume})
 
-					var success = window.FUNCTION_LIBRARY.changeVoiceVolume({volume: volume})
-					if (!success) {
-						callback({icon: icon, error: true, message: "I don't know that number.", html: "<h2>Error: invalid volume:</h2>" + remainder})
-					}
-					else {
-						callback({icon: icon, message: "Volume set to " + volume, html: "volume: " + Math.round(Math.max(0, Math.min(100, Number(volume))))})
-					}
+					// failure
+						if (newVolume === false) {
+							callback({icon: icon, error: true, message: "I don't know that number.", html: "<h2>Error: invalid volume:</h2>" + remainder})
+						}
+
+					// success
+						else {
+							callback({icon: icon, message: "Volume set to " + newVolume + " percent", html: "volume: " + newVolume + "%"})
+						}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"change listening duration": function(remainder, callback) {
+				try {
+					var icon = "&#x1f399;"
+
+					// get duration
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
+						var words = remainder.split(/\s/gi)
+						var duration = null
+						for (var i in words) {
+							words[i] = window.FUNCTION_LIBRARY.getDigits(words[i])
+							if (!isNaN(words[i])) {
+								duration = Number(words[i])
+								break
+							}
+						}
+
+					// no duration
+						if (duration === null) {
+							callback({icon: icon, error: true, message: "I don't know that number.", html: "<h2>Error: invalid duration:</h2>" + remainder})
+						}
+
+					// some duration
+						else {
+							// change duration
+								var newDuration = window.FUNCTION_LIBRARY.changeRecognitionDuration({duration: duration})
+
+							// failure
+								if (newDuration === false) {
+									callback({icon: icon, error: true, message: "I don't know that number.", html: "<h2>Error: invalid duration:</h2>" + remainder})
+								}
+
+							// success
+								else {
+									callback({icon: icon, message: "Listening duration set to " + newDuration + (newDuration == 1 ? " second" : " seconds"), html: "listening duration: " + newDuration + (newDuration == 1 ? " second" : " seconds")})
+								}
+						}
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1309,14 +1438,13 @@
 								"hour": 1000 * 60 * 60,
 								"day": 1000 * 60 * 60 * 24
 							}
-							var keys = Object.keys(units)
 
 							var amounts = []
-							for (var i in words) {
+							for (var i = 0; i < words.length; i++) {
 								words[i] = window.FUNCTION_LIBRARY.getDigits(words[i])
 
 								if (!isNaN(words[i])) {
-									if (words[i + 1] && keys[words[i + 1].replace(/s$/gi,"").toLowerCase()]) {
+									if (words[i + 1] && units[words[i + 1].replace(/s$/gi,"").toLowerCase()]) {
 										amounts.push({
 											number: Number(words[i]),
 											unit: words[i + 1].replace(/s$/gi,"")
@@ -1933,6 +2061,8 @@
 													var htmlContent = response.parse.text["*"]
 														htmlContent = htmlContent.split('id="References">References')[0]
 														htmlContent = htmlContent.split('id="See_also">See also')[0]
+														htmlContent = htmlContent.replace(/\<a href='\//gi, "<a target='_blank' href='https://en.wikipedia.org/")
+														htmlContent = htmlContent.replace(/\<a href="\//gi, '<a target="_blank" href="https://en.wikipedia.org/')
 
 													var textNode = document.createElement("div")
 														textNode.innerHTML = htmlContent.replace(/<table[\s\S]*?>[\s\S]*?<\/table>/gi,"")
