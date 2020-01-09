@@ -863,14 +863,15 @@
 			"how to say": 						"google translate",
 
 		// games
+			"play more or less": 				"play more or less",
 			"lets play more or less": 			"play more or less",
 			"lets play the more or less game": 	"play more or less",
 			"think of a number": 				"play more or less",
 			"pick a number": 					"play more or less",
 			"i want to guess a number": 		"play more or less",
-			"play more or less": 				"play more or less",
 			"lets play more or less": 			"play more or less",
 
+			"play true or false": 				"play true or false",
 			"quiz me": 							"play true or false",
 			"tell me a fact": 					"play true or false",
 			"tell me a fun fact": 				"play true or false",
@@ -880,17 +881,26 @@
 			"lets do some trivia": 				"play true or false",
 			"lets play trivia": 				"play true or false",
 			"lets play some trivia": 			"play true or false",
-			"play true or false": 				"play true or false",
 			"lets play true or false": 			"play true or false",
 
 			"play blackjack": 					"play blackjack",
 			"lets play blackjack": 				"play blackjack",
 			"play 21": 							"play blackjack",
 			"lets play 21": 					"play blackjack",
-			"hit me": 							"play blackjack",
 			"deal me in": 						"play blackjack",
 			"deal me cards": 					"play blackjack",
 			"deal me some cards": 				"play blackjack",
+
+			"play hangman": 					"play hangman",
+			"lets play hangman": 				"play hangman",
+			"play guess the word": 				"play hangman",
+			"lets play guess the word": 		"play hangman",
+			"play guess that word": 			"play hangman",
+			"lets play guess that word": 		"play hangman",
+			"think of a word": 					"play hangman",
+			"think of a random word": 			"play hangman",
+			"i want to guess a word": 			"play hangman",
+			"i want to guess your word": 		"play hangman",
 
 		// SONOS
 
@@ -3863,7 +3873,7 @@
 			"play more or less": function(remainder, callback) {
 				try {
 					// icon
-						var icon = "&#x265e;"
+						var icon = "&#x1f4af;"
 
 					// pick a number
 						if (window.CONTEXT_LIBRARY.flow !== "play more or less") {
@@ -3930,9 +3940,9 @@
 			"play true or false": function(remainder, callback) {
 				try {
 					// icon
-						var icon = "&#x265e;"
+						var icon = "&#x1f4cb;"
 
-					// pick a number
+					// initialize game
 						if (window.CONTEXT_LIBRARY.flow !== "play true or false") {
 							// options
 								var options = {
@@ -4369,6 +4379,287 @@
 									html: (gameState.pot ? ("<h2>pot: $" + gameState.pot + "</h2>") : "") + ("<h2>dealer: $" + gameState.dealer.chips + "</h2>" + dealerHTML) + ("<h2>player: $" + gameState.player.chips + "</h2>" + playerHTML),
 									followup: gameState.playable && !gameState.player.bust && playerSum ? true : false
 								})
+						}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"play hangman": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f3dc;"
+
+					// drawings
+						var drawings = [
+							"        \n" +
+							"        \n" +
+							"        \n" +
+							"        \n" +
+							"        \n" +
+							"        \n",
+
+							"        \n" +
+							"        \n" +
+							"        \n" +
+							"      | \n" +
+							"      | \n" +
+							"  ____|_\n",
+
+							"  ____  \n" +
+							"  |   | \n" +
+							"      | \n" +
+							"      | \n" +
+							"      | \n" +
+							"  ____|_\n",
+
+							"  ____  \n" +
+							"  |   | \n" +
+							"  O   | \n" +
+							"      | \n" +
+							"      | \n" +
+							"  ____|_\n",
+
+							"  ____  \n" +
+							"  |   | \n" +
+							"  O   | \n" +
+							"  |   | \n" +
+							"      | \n" +
+							"  ____|_\n",
+
+							"  ____  \n" +
+							"  |   | \n" +
+							"  O   | \n" +
+							" -|   | \n" +
+							"      | \n" +
+							"  ____|_\n",
+
+							"  ____  \n" +
+							"  |   | \n" +
+							"  O   | \n" +
+							" -|-  | \n" +
+							"      | \n" +
+							"  ____|_\n",
+
+							"  ____  \n" +
+							"  |   | \n" +
+							"  O   | \n" +
+							" -|-  | \n" +
+							" /    | \n" +
+							"  ____|_\n",
+
+							"  ____  \n" +
+							"  |   | \n" +
+							"  O   | \n" +
+							" -|-  | \n" +
+							" / \\  | \n" +
+							"  ____|_\n"
+						]
+
+					// homophones
+						var homophones = {
+							"eh": "a",
+							"hey": "a",
+							"bee": "b",
+							"sea": "c",
+							"see": "c",
+							"dee": "d",
+							"he": "e",
+							"app": "f",
+							"gee": "g",
+							"chi": "g",
+							"each": "h",
+							"eye": "i",
+							"hi": "i",
+							"jay": "j",
+							"kay": "k",
+							"hell": "l",
+							"al": "l",
+							"elf": "l",
+							"um": "m",
+							"and": "n",
+							"end": "n",
+							"oh": "o",
+							"owe": "o",
+							"pea": "p",
+							"pee": "p",
+							"cue": "q",
+							"queue": "q",
+							"are": "r",
+							"our": "r",
+							"as": "s",
+							"tea": "t",
+							"tee": "t",
+							"ewe": "u",
+							"you": "u",
+							"via": "v",
+							"vis": "v",
+							"viz": "v",
+							"double": "w",
+							"ax": "x",
+							"axe": "x",
+							"ex": "x",
+							"why": "y",
+							"while": "y",
+							"the": "z",
+							"zed": "z"
+						}
+
+					// initialize game
+						if (window.CONTEXT_LIBRARY.flow !== "play hangman") {
+							// get a random key
+								var options = {
+									url: "http://random-word-api.herokuapp.com/key"
+								}
+
+							// proxy to server
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										// options
+											var options = {
+												url: "http://random-word-api.herokuapp.com/word?key=" + String(response.data) + "&number=100"
+											}
+
+										// proxy to server
+											window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+												try {
+													// get words between 6 and 12 letters long
+														if (!Array.isArray(response)) {
+															response = Array.from(response)
+														}
+														var words = response.filter(function(word) {
+															return 5 < word.length && word.length < 13
+														})
+
+													// pick a random word
+														var word = window.FUNCTION_LIBRARY.chooseRandom(words).toLowerCase().trim()
+														var visibleLetters = []
+														while (visibleLetters.length < word.length) {
+															visibleLetters.push("_")
+														}
+
+													// start the flow
+														window.CONTEXT_LIBRARY.flow = "play hangman"
+														window.CONTEXT_LIBRARY["play hangman"] = {
+															word: word,
+															visibleLetters: visibleLetters,
+															guessedLetters: [],
+															wrongGuesses: 0,
+														}
+
+													// message
+														var message = "The word is " + window.CONTEXT_LIBRARY["play hangman"].word.length + " letters long. Guess a letter."
+														var responseHTML = "<h2>" + window.CONTEXT_LIBRARY["play hangman"].visibleLetters.join(" ") + "</h2><pre>" + drawings[window.CONTEXT_LIBRARY["play hangman"].wrongGuesses] + "</pre>guesses: [" + window.CONTEXT_LIBRARY["play hangman"].guessedLetters.join(" ") + "]"
+
+													// response
+														callback({icon: icon, message: message, html: responseHTML})
+												}
+												catch (error) {
+													window.CONTEXT_LIBRARY.flow = null
+													callback({icon: icon, error: true, message: "I couldn't access the random word API.", html: "<h2>Error: unable to access random word API</h2>"})
+												}
+											})
+									}
+									catch (error) {
+										window.CONTEXT_LIBRARY.flow = null
+										callback({icon: icon, error: true, message: "I couldn't access the random word API.", html: "<h2>Error: unable to access random word API</h2>"})
+									}
+								})
+						}
+
+					// guess a letter
+						else {
+							// identify letter
+								var letter = null
+								var phraseWords = remainder.toLowerCase().split(/\s/gi)
+								for (var i in phraseWords) {
+									if ((/^[a-z]{1}$/).test(phraseWords[i])) {
+										letter = phraseWords[i]
+										break
+									}
+									else if (homophones[phraseWords[i]]) {
+										letter = homophones[phraseWords[i]]
+										break
+									}
+								}
+
+							// no letter
+								if (!letter) {
+									callback({icon: icon, error: true, message: "I couldn't identify that letter.", html: "<h2>Error: invalid guess:</h2>" + remainder})
+									return
+								}
+
+							// already guessed?
+								else if (window.CONTEXT_LIBRARY["play hangman"].guessedLetters.includes(letter)) {
+									callback({icon: icon, error: true, message: "You already guessed the letter '" + letter + "'.", html: "<h2>Error: duplicate guess:</h2>" + letter})
+									return
+								}
+
+							// log guess
+								window.CONTEXT_LIBRARY["play hangman"].guessedLetters.push(letter)
+
+							// in word
+								if (window.CONTEXT_LIBRARY["play hangman"].word.includes(letter)) {
+									// update visible letters
+										var count = 0
+										var blanksCount = 0
+										for (var i = 0; i < window.CONTEXT_LIBRARY["play hangman"].word.length; i++) {
+											if (window.CONTEXT_LIBRARY["play hangman"].word[i] == letter) {
+												count++
+												window.CONTEXT_LIBRARY["play hangman"].visibleLetters[i] = letter
+											}
+											else if (window.CONTEXT_LIBRARY["play hangman"].visibleLetters[i] == "_") {
+												blanksCount++
+											}
+										}
+
+									// still more blanks?
+										if (blanksCount) {
+											// message
+												var message = "The letter '" + letter + "' appears " + count + (count == 1 ? " time. " : "times. ") + "The word is now " + window.CONTEXT_LIBRARY["play hangman"].visibleLetters.map(function(l) { return l.replace("_", "blank").toUpperCase() }).join(", ")
+												var responseHTML = "<h2>" + window.CONTEXT_LIBRARY["play hangman"].visibleLetters.join(" ") + "</h2><pre>" + drawings[window.CONTEXT_LIBRARY["play hangman"].wrongGuesses] + "</pre>guesses: [" + window.CONTEXT_LIBRARY["play hangman"].guessedLetters.join(" ") + "]"
+
+											// response
+												callback({icon: icon, message: message, html: responseHTML})
+										}
+
+									// game over (victory)
+										else {
+											// message
+												window.CONTEXT_LIBRARY["play hangman"].visibleLetters = window.CONTEXT_LIBRARY["play hangman"].word.split("")
+												var message = "You win. The word was " + window.CONTEXT_LIBRARY["play hangman"].word
+												var responseHTML = "<h2>" + window.CONTEXT_LIBRARY["play hangman"].visibleLetters.join(" ") + "</h2><pre>" + drawings[window.CONTEXT_LIBRARY["play hangman"].wrongGuesses] + "</pre>guesses: [" + window.CONTEXT_LIBRARY["play hangman"].guessedLetters.join(" ") + "]"
+
+											// response
+												callback({icon: icon, message: message, html: responseHTML})
+
+											// end flow
+												window.CONTEXT_LIBRARY.flow = null
+												delete window.CONTEXT_LIBRARY["play hangman"]
+										}
+								}
+
+							// not in word
+								else {
+									// increment wrong guesses
+										window.CONTEXT_LIBRARY["play hangman"].wrongGuesses++
+
+									// game continues
+										if (window.CONTEXT_LIBRARY["play hangman"].wrongGuesses < 8) {
+											callback({icon: icon, message: "The word does not contain the letter '" + letter + "'.", html: "<h2>" + window.CONTEXT_LIBRARY["play hangman"].visibleLetters.join(" ") + "</h2><pre>" + drawings[window.CONTEXT_LIBRARY["play hangman"].wrongGuesses] + "</pre>guesses: [" + window.CONTEXT_LIBRARY["play hangman"].guessedLetters.join(" ") + "]"})
+										}
+
+									// game over (loss)
+										else {
+											// response
+												window.CONTEXT_LIBRARY["play hangman"].visibleLetters = window.CONTEXT_LIBRARY["play hangman"].word.split("")
+												callback({icon: icon, message: "You lose. The word was " + window.CONTEXT_LIBRARY["play hangman"].word, html: "<h2>" + window.CONTEXT_LIBRARY["play hangman"].visibleLetters.join(" ") + "</h2><pre>" + drawings[8] + "</pre>guesses: [" + window.CONTEXT_LIBRARY["play hangman"].guessedLetters.join(" ") + "]"})
+
+											// end flow
+												window.CONTEXT_LIBRARY.flow = null
+												delete window.CONTEXT_LIBRARY["play hangman"]
+										}
+								}
 						}
 				}
 				catch (error) {

@@ -517,7 +517,13 @@
 							callback(responseData)
 						} catch (error) {
 							try {
-								var responseData = parseXML(apiData) 
+								if (apiData.includes("<") || apiData.includes(">")) {
+									var responseData = parseXML(apiData)
+								}
+								else {
+									var responseData = {data: apiData}
+								}
+								
 								callback(responseData)
 							}
 							catch (error) {
