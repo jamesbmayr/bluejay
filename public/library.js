@@ -92,6 +92,37 @@
 			"run that by me again": 			"repeat that",
 			"can you repeat that": 				"repeat that",
 			"i didnt catch that": 				"repeat that",
+			"come again": 						"repeat that",
+
+			"do that again": 					"do that again",
+			"one more time": 					"do that again",
+			"do that action again": 			"do that again",
+			"try that again": 					"do that again",
+			"try that action again": 			"do that again",
+			"do that one more time": 			"do that again",
+			"can you do that again": 			"do that again",
+
+			"get next result": 					"get next result",
+			"get the next result": 				"get next result",
+			"get the next one": 				"get next result",
+			"display next result": 				"get next result",
+			"display the next result": 			"get next result",
+			"display the next one": 			"get next result",
+			"show next result": 				"get next result",
+			"show the next result": 			"get next result",
+			"show the next one": 				"get next result",
+			"play next result": 				"get next result",
+			"play the next result": 			"get next result",
+			"play the next one": 				"get next result",
+			"read next result": 				"get next result",
+			"read the next result": 			"get next result",
+			"read the next one": 				"get next result",
+			"tell me next result": 				"get next result",
+			"tell me the next result": 			"get next result",
+			"next result": 						"get next result",
+			"give me another": 					"get next result",
+			"give me the next result": 			"get next result",
+			"give me the next one": 			"get next result",
 
 		// settings
 			"stop listening": 					"stop listening",
@@ -1090,7 +1121,53 @@
 						var icon = "&#x1f426;"
 
 					// send response
-						callback({icon: icon, message: window.CONTEXT_LIBRARY.lastResponseMessage || "No previous response.", html: window.CONTEXT_LIBRARY.lastResponseHTML || "No previous response."})
+						callback({icon: window.CONTEXT_LIBRARY.lastResponseIcon || icon, message: window.CONTEXT_LIBRARY.lastResponseMessage || "No previous response.", html: window.CONTEXT_LIBRARY.lastResponseHTML || "No previous response."})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"do that again": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f426;"
+
+					// no history
+						if (!window.CONTEXT_LIBRARY.lastAction || !window.ACTION_LIBRARY[window.CONTEXT_LIBRARY.lastAction]) {
+							callback({icon: icon, message: "There's nothing for me to do.", html: "<h2>No previous action.</h2>", followup: false})
+							return
+						}
+
+					// perform action again
+						window.ACTION_LIBRARY[window.CONTEXT_LIBRARY.lastAction](window.CONTEXT_LIBRARY.lastRemainder || null, callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get next result": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x23ed;"
+
+					// no more results
+						if (!window.CONTEXT_LIBRARY.lastResults || !window.CONTEXT_LIBRARY.lastResults.length) {
+							// no history at all
+								if (!window.CONTEXT_LIBRARY.lastAction || !window.ACTION_LIBRARY[window.CONTEXT_LIBRARY.lastAction]) {
+									callback({icon: icon, message: "I don't have any results.", html: "<h2>No more results.</h2>", followup: false})
+									return
+								}
+
+							// run the function again
+								window.ACTION_LIBRARY[window.CONTEXT_LIBRARY.lastAction](window.CONTEXT_LIBRARY.lastRemainder || null, callback)
+								return
+						}
+
+					// get first of lastResults
+						var nextResult = window.CONTEXT_LIBRARY.lastResults.shift()
+
+					// send response
+						callback({icon: nextResult.icon || icon, message: nextResult.message, html: nextResult.html})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2126,14 +2203,21 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
 								// fortunes
-									var fortune = window.FUNCTION_LIBRARY.chooseRandom(response)
+									var fortunes = window.FUNCTION_LIBRARY.sortRandom(response)
 
-								// construct response link
-									var fortuneLink = "https://fortunecookieapi.herokuapp.com/"
-									var fortuneText = fortune.message
+								// all results
+									var results = []
+									for (var i in fortunes) {
+										var responseLink = "<a target='_blank' href='https://fortunecookieapi.herokuapp.com/'><h2>" + fortunes[i].message + "</h2></a>"
+										results.push({icon: icon, message: fortunes[i].message, html: responseLink})
+									}
 
-								// response
-									callback({icon: icon, message: fortuneText, html: "<a target='_blank' href='" + fortuneLink + "'><h2>" + fortuneText + "</h2></a>"})
+								// send response
+									callback({icon: icon, message: results[0].message, html: results[0].html})
+
+								// save results to context
+									results.shift()
+									window.CONTEXT_LIBRARY.lastResults = results
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't know any fortunes.", html: "<h2>Error: unable to access fortunes</h2>"})
@@ -3458,14 +3542,22 @@
 										return
 									}
 
-								// top result
-									var responseLink = "https://www.google.com?q=" + remainder
-									var responseText = "Top result:"
-									var topResultText = response.items[0].title + " " + response.items[0].snippet
-									var topResult = "<p><a target='_blank' href='" + response.items[0].link + "'><b>" + response.items[0].title + "</b></a><br>" + response.items[0].snippet + "</p>"
+								// all results
+									var results = []
+									for (var i in response.items) {
+										var responseMessage = response.items[i].title + " " + response.items[i].snippet
+										var responseLink = "<a target='_blank' href='https://www.google.com?q=" + remainder + "'><h2>" + remainder + "</h2></a>"
+										var responseHTML = "<p><a target='_blank' href='" + response.items[i].link + "'><b>" + response.items[i].title + "</b></a><br>" + response.items[i].snippet + "</p>"
+
+										results.push({icon: icon, message: responseMessage, html: responseLink + responseHTML})
+									}
 
 								// send response
-									callback({icon: icon, message: responseText + " " + topResultText, html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a>" + topResult})
+									callback({icon: icon, message: results[0].message, html: results[0].html})
+
+								// save results to context
+									results.shift()
+									window.CONTEXT_LIBRARY.lastResults = results
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
@@ -3616,7 +3708,7 @@
 
 					// options
 						var options = {
-							url: "https://www.googleapis.com/youtube/v3/search?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&part=snippet&type=video&videoEmbeddable=true&maxResults=5&order=viewCount&q=" + remainder
+							url: "https://www.googleapis.com/youtube/v3/search?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&part=snippet&type=video&videoEmbeddable=true&maxResults=10&order=viewCount&q=" + remainder
 						}
 
 					// proxy request
@@ -3628,12 +3720,20 @@
 										return
 									}
 
-								// turn off whistle-on
-									window.FUNCTION_LIBRARY.changeWhistleOn({forceOff: true})
+								// all results
+									var results = []
+									for (var i in response.items) {
+										var responseMessage = "Now playing " + response.items[i].snippet.title
+										var responseHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response.items[i].id.videoId + '?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+										results.push({icon: icon, message: responseMessage, html: responseHTML, followup: false})
+									}
 
-								// response
-									var responseHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response.items[0].id.videoId + '?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-									callback({icon: icon, message: "Now playing " + remainder, html: responseHTML, followup: false})
+								// send response
+									callback({icon: icon, message: results[0].message, html: results[0].html})
+
+								// save results to context
+									results.shift()
+									window.CONTEXT_LIBRARY.lastResults = results
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
@@ -4600,15 +4700,22 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								// select random question
-									var question = window.FUNCTION_LIBRARY.chooseRandom(response.data.children)
+								// shuffle results
+									var questions = window.FUNCTION_LIBRARY.sortRandom(response.data.children)
 
-								// construct response link
-									var redditLink = question.data.url
-									var redditText = question.data.title
+								// all results
+									var results = []
+									for (var i in questions) {
+										var responseLink = "<a target='_blank' href='" + questions[i].data.url + "'><h2>" + questions[i].data.title + "</h2></a>"
+										results.push({icon: icon, message: questions[i].data.title, html: responseLink})
+									}
 
-								// response
-									callback({icon: icon, message: redditText, html: "<a target='_blank' href='" + redditLink + "'><h2>" + redditText + "<h2></a>"})
+								// send response
+									callback({icon: icon, message: results[0].message, html: results[0].html})
+
+								// save results to context
+									results.shift()
+									window.CONTEXT_LIBRARY.lastResults = results
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't have any questions.", html: "<h2>Error: unable to access reddit</h2>"})
@@ -4648,15 +4755,22 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								// select random question
-									var question = window.FUNCTION_LIBRARY.chooseRandom(response.data.children)
+								// shuffle results
+									var prompts = window.FUNCTION_LIBRARY.sortRandom(response.data.children)
 
-								// construct response link
-									var redditLink = question.data.url
-									var redditText = question.data.title
+								// all results
+									var results = []
+									for (var i in prompts) {
+										var responseLink = "<a target='_blank' href='" + prompts[i].data.url + "'><h2>" + prompts[i].data.title + "</h2></a>"
+										results.push({icon: icon, message: prompts[i].data.title, html: responseLink})
+									}
 
-								// response
-									callback({icon: icon, message: redditText, html: "<a target='_blank' href='" + redditLink + "'><h2>" + redditText + "</h2></a>"})
+								// send response
+									callback({icon: icon, message: results[0].message, html: results[0].html})
+
+								// save results to context
+									results.shift()
+									window.CONTEXT_LIBRARY.lastResults = results
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't have any writing prompts.", html: "<h2>Error: unable to access reddit</h2>"})

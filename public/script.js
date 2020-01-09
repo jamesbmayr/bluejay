@@ -29,9 +29,12 @@ window.addEventListener("load", function() {
 			var CONTEXT_LIBRARY = window.CONTEXT_LIBRARY = {
 				lastPhrase: null,
 				lastAction: null,
+				lastRemainder: null,
+				lastResponseIcon: null,
 				lastResponseMessage: null,
 				lastResponseHTML: null,
 				lastResponseNumber: null,
+				lastResults: [],
 				flow: null,
 				alarms: [],
 				startListening: null,
@@ -398,6 +401,8 @@ window.addEventListener("load", function() {
 						else {
 							CONFIGURATION_LIBRARY.settings["whistle-on"] = ELEMENT_LIBRARY["inputs-whistle-on"].checked || false
 							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+
+							window.CONTEXT_LIBRARY.startListening = null
 						}
 
 					// actually stop listening
@@ -738,7 +743,7 @@ window.addEventListener("load", function() {
 							VOICE_LIBRARY.synthesizer.pause()
 							VOICE_LIBRARY.synthesizer.cancel()
 
-						createHistory(phrase || "stop", action, {icon: "&#x1f6ab;", message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop", followup: false})
+						createHistory(phrase || "stop", action, "", {icon: "&#x1f6ab;", message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop", followup: false})
 					}
 
 				// no action
@@ -747,8 +752,7 @@ window.addEventListener("load", function() {
 						var message = ERROR_LIBRARY["noaction-responses"][ERROR_LIBRARY["noaction-index"]]
 
 						ERROR_LIBRARY["noaction-index"] = (ERROR_LIBRARY["noaction-index"] == ERROR_LIBRARY["noaction-responses"].length - 1) ? 0 : (ERROR_LIBRARY["noaction-index"] + 1)
-						var response = {icon: "&#x1f6a9;", error: true, message: message, html: message, followup: followup}
-						createHistory(phrase, action, response)
+						createHistory(phrase, action, "", {icon: "&#x1f6a9;", error: true, message: message, html: message, followup: followup})
 					}
 
 				// phrase & action
@@ -773,7 +777,7 @@ window.addEventListener("load", function() {
 								}
 
 							// history
-								createHistory(phrase, action, response)
+								createHistory(phrase, action, remainder, response)
 						})
 					}
 			}
@@ -781,10 +785,14 @@ window.addEventListener("load", function() {
 	/*** stream output ***/
 		/* createHistory */
 			FUNCTION_LIBRARY.createHistory = createHistory
-			function createHistory(phrase, action, response) {
+			function createHistory(phrase, action, remainder, response) {
 				// context
-					CONTEXT_LIBRARY.lastPhrase = phrase
-					CONTEXT_LIBRARY.lastAction = action
+					if (!["repeat that", "do that again", "get next result"].includes(action)) {
+						CONTEXT_LIBRARY.lastPhrase = phrase
+						CONTEXT_LIBRARY.lastAction = action
+						CONTEXT_LIBRARY.lastRemainder = remainder
+					}
+					CONTEXT_LIBRARY.lastResponseIcon = response.icon
 					CONTEXT_LIBRARY.lastResponseMessage = response.message
 					CONTEXT_LIBRARY.lastResponseHTML = response.html
 
@@ -844,7 +852,7 @@ window.addEventListener("load", function() {
 				// loop through timers to check (and send a message)
 					for (var i = 0; i < CONTEXT_LIBRARY.alarms.length; i++) {
 						if (CONTEXT_LIBRARY.alarms[i] && CONTEXT_LIBRARY.alarms[i] <= timeNow) {
-							createHistory("...", "alarm", {icon: "&#x23F0;", message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "The time is now <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b>.", followup: false})
+							createHistory("...", "alarm", "", {icon: "&#x23F0;", message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "The time is now <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b>.", followup: false})
 							CONTEXT_LIBRARY.alarms[i] = null
 						}
 					}
@@ -859,7 +867,7 @@ window.addEventListener("load", function() {
 				// check if startListening is set and in the past
 					if (CONTEXT_LIBRARY.startListening && CONTEXT_LIBRARY.startListening <= timeNow) {
 						FUNCTION_LIBRARY.changeWhistleOn({forceOn: true})
-						createHistory("...", "start listening", {icon: "&#x1f50a;", message: "", html: "Whistle detection turned on at <b>" + new Date(CONTEXT_LIBRARY.startListening).toLocaleString() + "</b>.", followup: false})
+						createHistory("...", "start listening", "", {icon: "&#x1f50a;", message: "", html: "Whistle detection turned on at <b>" + new Date(CONTEXT_LIBRARY.startListening).toLocaleString() + "</b>.", followup: false})
 						CONTEXT_LIBRARY.startListening = null
 					}
 			}
@@ -1010,7 +1018,7 @@ window.addEventListener("load", function() {
 
 				// set timeout
 					var timeout = setTimeout(function() {
-						FUNCTION_LIBRARY.createHistory("...", "API request", {icon: "&#x231b;", message: "I'm fetching that now.", html: "querying the API...", followup: false})
+						FUNCTION_LIBRARY.createHistory("...", "API request", "", {icon: "&#x231b;", message: "I'm fetching that now.", html: "querying the API...", followup: false})
 					}, CONFIGURATION_LIBRARY.settings["fetch-interval"])
 
 				// create request object and send to server, then clear timeout on response
