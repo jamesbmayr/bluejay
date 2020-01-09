@@ -4222,13 +4222,13 @@
 								if (gameState.player.chips && gameState.dealer.chips) {
 									setTimeout(function() {
 										callback({icon: icon, message: "Next round.", html: "<h2>Next round.</h2>", followup: false})
-									}, 3000)
+									}, 4000)
 								}
 
 							// next round
 								setTimeout(function() {
 									startBlackjackRound()
-								}, 5000)
+								}, 6000)
 						}
 
 					// startBlackjackRound
@@ -4350,14 +4350,14 @@
 								var playerSum = getBestBlackjackSum("player")
 
 							// html
-								var dealerHTML = gameState.roundWinner ? ("<li>[" + gameState.dealer.facedown[0].name + gameState.dealer.facedown[0].symbol  + "]</li>" ): "<li>???</li>"
+								var dealerHTML = gameState.roundWinner ? ("<li>[" + (gameState.dealer.facedown[0].name == 10 ? "10" : String(gameState.dealer.facedown[0].name).slice(0,1)) + gameState.dealer.facedown[0].symbol  + "]</li>" ): "<li>[???]</li>"
 								for (var i in gameState.dealer.faceup) {
-									dealerHTML += "<li>[" + gameState.dealer.faceup[i].name + gameState.dealer.faceup[i].symbol + "]</li>"
+									dealerHTML += "<li>[" + (gameState.dealer.faceup[i].name == 10 ? "10" : String(gameState.dealer.faceup[i].name).slice(0,1)) + gameState.dealer.faceup[i].symbol + "]</li>"
 								}
 
-								var playerHTML = "<li>[" + gameState.player.facedown[0].name + gameState.player.facedown[0].symbol + "]</li>"
+								var playerHTML = "<li>[" + (gameState.player.facedown[0].name == 10 ? "10" : String(gameState.player.facedown[0].name).slice(0,1)) + gameState.player.facedown[0].symbol + "]</li>"
 								for (var i in gameState.player.faceup) {
-									playerHTML += "<li>[" + gameState.player.faceup[i].name + gameState.player.faceup[i].symbol + "]</li>"
+									playerHTML += "<li>[" + (gameState.player.faceup[i].name == 10 ? "10" : String(gameState.player.faceup[i].name).slice(0,1)) + gameState.player.faceup[i].symbol + "]</li>"
 								}
 
 							// response
@@ -4367,7 +4367,7 @@
 										(gameState.player.bust || !playerSum ? "You bust. " : (("You have " + playerSum + ". ") + (gameState.playable ? "Hit or stay? " : ""))) +
 										(gameState.roundWinner ? (gameState.roundWinner + " wins. ") : ""),
 									html: (gameState.pot ? ("<h2>pot: $" + gameState.pot + "</h2>") : "") + ("<h2>dealer: $" + gameState.dealer.chips + "</h2>" + dealerHTML) + ("<h2>player: $" + gameState.player.chips + "</h2>" + playerHTML),
-									followup: gameState.playable ? true : false
+									followup: gameState.playable && !gameState.player.bust && playerSum ? true : false
 								})
 						}
 				}
