@@ -56,6 +56,10 @@
 			"i hope you are enjoying": 			"receive greeting",
 			"i hope you are enjoying your": 	"receive greeting",
 			"i hope you are enjoying this": 	"receive greeting",
+			"have a happy": 					"receive greeting",
+			"have a good": 						"receive greeting",
+			"have a great": 					"receive greeting",
+			"have a merry": 					"receive greeting",
 
 		// meta
 			"help": 							"list actions",
@@ -344,6 +348,13 @@
 			"provide a definition for": 		"find definition",
 			"what is the meaning of": 			"find definition",
 			"whats the meaning of": 			"find definition",
+			"get definition": 					"find definition",
+			"get definition for": 				"find definition",
+			"get definition of": 				"find definition",
+			"get a definition for": 			"find definition",
+			"get the definition of": 			"find definition",
+			"get definition for": 				"find definition",
+			"get the meaning of": 				"find definition",
 
 		// content API fetches
 			"get a joke": 						"get a joke",
@@ -801,6 +812,25 @@
 			"on youtube open up": 				"search youtube",
 			"on youtube open": 					"search youtube",
 
+			"google translate": 				"google translate",
+			"translate": 						"google translate",
+			"get a translation": 				"google translate",
+			"get me a translation": 			"google translate",
+			"give a translation": 				"google translate",
+			"give me a translation": 			"google translate",
+			"get a translation of": 			"google translate",
+			"get me a translation of": 			"google translate",
+			"give a translation of": 			"google translate",
+			"give me a translation of": 		"google translate",
+			"get a translation for": 			"google translate",
+			"get me a translation for": 		"google translate",
+			"give a translation for": 			"google translate",
+			"give me a translation for": 		"google translate",
+			"how do you say": 					"google translate",
+			"how would you say": 				"google translate",
+			"how can you say": 					"google translate",
+			"how to say": 						"google translate",
+
 		// games
 			"lets play more or less": 			"play more or less",
 			"lets play the more or less game": 	"play more or less",
@@ -1012,7 +1042,7 @@
 						}
 
 					// response
-						callback({icon: icon, message: message, html: "<h2>" + message + "</h2>"})
+						callback({icon: icon, message: message, html: "<h2>" + message + "</h2>", followup: false})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -3614,6 +3644,120 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
+			"google translate": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f30e;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "<h2>Error: missing configuration:</h2><li>google api key</li>"})
+							return
+						}
+
+					// split at keywords
+						remainder = " " + remainder
+						var components = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ to | in | into /gi)
+						var phrase = components[0].trim()
+						var language = components[1].trim().toLowerCase()
+
+					// language code
+						var languageCodes = {
+							"amharic":		"am",
+							"arabic":		"ar",
+							"basque":		"eu",
+							"bengali":		"bn",
+							"bulgarian":	"bg",
+							"catalan":		"ca",
+							"cherokee":		"chr",
+							"croatian":		"hr",
+							"czech":		"cs",
+							"danish":		"da",
+							"dutch":		"nl",
+							"english": 		"en",
+							"estonian":		"et",
+							"filipino":		"fil",
+							"finnish":		"fi",
+							"french":		"fr",
+							"german":		"de",
+							"greek":		"el",
+							"gujarati":		"gu",
+							"hebrew":		"iw",
+							"hindi":		"hi",
+							"hungarian":	"hu",
+							"icelandic":	"is",
+							"indonesian":	"id",
+							"italian":		"it",
+							"japanese":		"ja",
+							"kannada":		"kn",
+							"korean":		"ko",
+							"latvian":		"lv",
+							"lithuanian":	"lt",
+							"malay":		"ms",
+							"malayalam":	"ml",
+							"marathi":		"mr",
+							"norwegian":	"no",
+							"polish":		"pl",
+							"portuguese": 	"pt-PT",
+							"romanian":		"ro",
+							"russian":		"ru",
+							"serbian":		"sr",
+							"chinese": 		"zh-CN",
+							"slovak":		"sk",
+							"slovenian":	"sl",
+							"spanish":		"es",
+							"swahili":		"sw",
+							"swedish":		"sv",
+							"tamil":		"ta",
+							"telugu":		"te",
+							"thai":			"th",
+							"turkish":		"tr",
+							"urdu":			"ur",
+							"ukrainian":	"uk",
+							"vietnamese":	"vi",
+							"welsh":		"cy"
+						}
+						var languageCode = languageCodes[language] || null
+
+					// unidentified language
+						if (!languageCode || !phrase) {
+							callback({icon: icon, error: true, message: "I couldn't identify that language", html: "<h2>Error: unknown language:</h2>" + language})
+							return
+						}
+
+					// options
+						var options = {
+							url: "https://translation.googleapis.com/language/translate/v2?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&q=" + phrase + "&target=" + languageCode
+						}
+
+					// proxy request
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// no results
+									if (!response.data || !response.data.translations || !response.data.translations[0] || !response.data.translations[0].translatedText) {
+										callback({icon: icon, error: true, message: "I couldn't translate that phrase.", html: "<h2>Error: unable to access Google Translate:</h2>" + response})
+										return
+									}
+
+								// translation
+									var translation = response.data.translations[0].translatedText.replace(/\&\#39\;/gi, "'")
+
+								// link
+									var responseLink = "<a target='_blank' href='https://translate.google.com/?sl=en&tl=" + languageCode + "&text=" + phrase + "'><h2>" + translation + "</h2></a>"
+									var responseHTML = responseLink + "<b>" + language + "</b> for \"<i>" + phrase + "</i>\""
+
+								// response
+									callback({icon: icon, message: translation, html: responseHTML, followup: false})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to translate that phrase.", html: "<h2>Error: unable to get translation:</h2>" + error})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
 
 		// games
 			"play more or less": function(remainder, callback) {
@@ -3819,7 +3963,7 @@
 								}
 
 							// start
-								callback({icon: icon, message: "Okay, let me shuffle the deck.", html: "<h2>dealer: $" + gameState.dealer.chips + "</h2>" + "<h2>player: $" + gameState.player.chips + "</h2>", followup: false})
+								callback({icon: icon, message: "I'll shuffle the deck.", html: "<h2>dealer: $" + gameState.dealer.chips + "</h2>" + "<h2>player: $" + gameState.player.chips + "</h2>", followup: false})
 
 							// new round
 								setTimeout(function() {
@@ -3977,14 +4121,14 @@
 							// say "next round"
 								if (gameState.player.chips && gameState.dealer.chips) {
 									setTimeout(function() {
-										callback({icon: icon, message: "Okay, next round.", html: "<h2>Next round.</h2>", followup: false})
-									}, 2000)
+										callback({icon: icon, message: "Next round.", html: "<h2>Next round.</h2>", followup: false})
+									}, 3000)
 								}
 
 							// next round
 								setTimeout(function() {
 									startBlackjackRound()
-								}, 4000)
+								}, 5000)
 						}
 
 					// startBlackjackRound
@@ -4120,7 +4264,7 @@
 								callback({
 									icon: icon,
 									message: (gameState.dealer.bust || !dealerSum ? "Dealer busts. " : ("Dealer shows " + dealerSum + ". ")) +
-										(gameState.player.bust || !playerSum ? "You bust. " : ("You have " + playerSum + ". ") + (gameState.playable ? "Hit or stay? " : "")) +
+										(gameState.player.bust || !playerSum ? "You bust. " : (("You have " + playerSum + ". ") + (gameState.playable ? "Hit or stay? " : ""))) +
 										(gameState.roundWinner ? (gameState.roundWinner + " wins. ") : ""),
 									html: (gameState.pot ? ("<h2>pot: $" + gameState.pot + "</h2>") : "") + ("<h2>dealer: $" + gameState.dealer.chips + "</h2>" + dealerHTML) + ("<h2>player: $" + gameState.player.chips + "</h2>" + playerHTML),
 									followup: gameState.playable ? true : false

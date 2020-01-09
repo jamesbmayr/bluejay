@@ -738,7 +738,7 @@ window.addEventListener("load", function() {
 							VOICE_LIBRARY.synthesizer.pause()
 							VOICE_LIBRARY.synthesizer.cancel()
 
-						createHistory(phrase || "stop", action, {icon: "&#x1f507;", message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop", followup: false})
+						createHistory(phrase || "stop", action, {icon: "&#x1f6ab;", message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop", followup: false})
 					}
 
 				// no action
@@ -747,7 +747,7 @@ window.addEventListener("load", function() {
 						var message = ERROR_LIBRARY["noaction-responses"][ERROR_LIBRARY["noaction-index"]]
 
 						ERROR_LIBRARY["noaction-index"] = (ERROR_LIBRARY["noaction-index"] == ERROR_LIBRARY["noaction-responses"].length - 1) ? 0 : (ERROR_LIBRARY["noaction-index"] + 1)
-						var response = {icon: "&#x2753;", error: true, message: message, html: message, followup: followup}
+						var response = {icon: "&#x1f6a9;", error: true, message: message, html: message, followup: followup}
 						createHistory(phrase, action, response)
 					}
 
