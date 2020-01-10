@@ -387,6 +387,25 @@
 			"get definition for": 				"find definition",
 			"get the meaning of": 				"find definition",
 
+			"find etymology": 					"find etymology",
+			"find the etymology": 				"find etymology",
+			"find etymology of": 				"find etymology",
+			"find the etymology of": 			"find etymology",
+			"find etymology of the word": 		"find etymology",
+			"find the etymology of the word": 	"find etymology",
+			"get etymology of": 				"find etymology",
+			"get the etymology of": 			"find etymology",
+			"get etymology of the word": 		"find etymology",
+			"get the etymology of the word": 	"find etymology",
+			"what is etymology of": 			"find etymology",
+			"what is the etymology of": 		"find etymology",
+			"what is etymology of the word": 	"find etymology",
+			"what is the etymology of the word": "find etymology",
+			"whats etymology of": 				"find etymology",
+			"whats the etymology of": 			"find etymology",
+			"whats etymology of the word": 		"find etymology",
+			"whats the etymology of the word": 	"find etymology",
+
 		// content API fetches
 			"get a joke": 						"get a joke",
 			"tell me a joke": 					"get a joke",
@@ -502,10 +521,15 @@
 			"read me the headlines": 			"get the headlines",
 
 			"get the weather": 					"get the weather",
-			"get the weather": 					"get the weather",
+			"get me the weather": 				"get the weather",
+			"look up the weather": 				"get the weather",
 			"whats the weather": 				"get the weather",
 			"what is the weather": 				"get the weather",
-			"what will the be": 				"get the weather",
+			"what will the weather be": 		"get the weather",
+			"whats the weather going to be": 	"get the weather",
+			"what is the weather going to be": 	"get the weather",
+			"whats the weather gonna be": 		"get the weather",
+			"what is the weather gonna be": 	"get the weather",
 			"hows the weather": 				"get the weather",
 			"how is the weather": 				"get the weather",
 			"is it going to rain": 				"get the weather",
@@ -2125,6 +2149,78 @@
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I couldn't define that.", html: "<h2>Error: unable to access definitions</h2>"})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"find etymology": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4da;"
+
+					// options
+						var word = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						var options = {
+							asIs: true,
+							url: "https://www.etymonline.com/word/" + word
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// put response in a temporary element
+									var temporaryElement = document.createElement("div")
+										temporaryElement.innerHTML = response
+
+								// get objects
+									var words = []
+									var objects = Array.from(temporaryElement.querySelectorAll(".word--C9UPa object"))
+
+								// no objects
+									if (!objects || !objects.length) {
+										callback({icon: icon, error: true, message: "I couldn't find the etymology of " + word, html: "<h2>Error: no etymology found:</h2>" + word})
+										return
+									}
+								
+								// loop through objects to extract relevant information
+									for (var i in objects) {
+										// get title --> word & part of speech
+											var objectTitle = objects[i].querySelector(".word__name--TTbAA").innerText.split("(")
+											var objectWord = (objectTitle[0] || "").trim()
+											var objectPartOfSpeech = objectTitle[1] || ""
+											if (objectPartOfSpeech) {
+												objectPartOfSpeech = objectPartOfSpeech.split(")")[0] || ""
+												objectPartOfSpeech = objectPartOfSpeech.replace("n.", "noun").replace("v.", "verb").replace("adj.", "adjective").replace("adv.", "adverb").replace("prep.", "preposition").replace(/[0-9]/gi, "").trim()
+											}
+										
+										// get paragraphs --> history
+											var objectHistory = []
+											var objectParagraphs = objects[i].querySelectorAll(".word__defination--2q7ZH p")
+											for (var j in objectParagraphs) {
+												objectHistory.push(objectParagraphs[j].innerText)
+											}
+
+										// package into an object
+											words.push({
+												word: objectWord,
+												partOfSpeech: objectPartOfSpeech,
+												history: objectHistory
+											})
+									}
+
+								// message & list
+									var message = "I found " + words.length + (words.length == 1 ? " etymology... " : " etymologies... ") + (words.length ? words.map(function(entry) { return entry.word + ", " + entry.partOfSpeech + "... " + entry.history.join(" ... ") }).join(" ... ... ") : "")
+									var responseLink = "<a target='_blank' href='https://www.etymonline.com/word/" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'><h2>" + word + "</h2></a>"
+									var responseList = words.length ? ("<ul><li>" + words.map(function(entry) { return "<h3>" + entry.word + (entry.partOfSpeech ? (" (" + entry.partOfSpeech + ")") : "") + "</h3><p>" + entry.history.join("</p><p>") + "</p>" }).join("</li><li>") + "</li></ul>") : ""
+
+								// response
+									callback({icon: icon, message: message, html: responseLink + responseList})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I couldn't find the etymology of that.", html: "<h2>Error: unable to access etymonline</h2>"})
 							}
 						})
 				}
@@ -4479,6 +4575,8 @@
 							"um": "m",
 							"and": "n",
 							"end": "n",
+							"ann": "n",
+							"anne": "n",
 							"oh": "o",
 							"owe": "o",
 							"pea": "p",
@@ -4488,6 +4586,7 @@
 							"are": "r",
 							"our": "r",
 							"as": "s",
+							"ask": "s",
 							"tea": "t",
 							"tee": "t",
 							"ewe": "u",
@@ -4509,6 +4608,7 @@
 						if (window.CONTEXT_LIBRARY.flow !== "play hangman") {
 							// get a random key
 								var options = {
+									asIs: true,
 									url: "http://random-word-api.herokuapp.com/key"
 								}
 
@@ -4517,7 +4617,7 @@
 									try {
 										// options
 											var options = {
-												url: "http://random-word-api.herokuapp.com/word?key=" + String(response.data) + "&number=100"
+												url: "http://random-word-api.herokuapp.com/word?key=" + String(response) + "&number=100"
 											}
 
 										// proxy to server

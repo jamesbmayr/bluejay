@@ -450,7 +450,7 @@
 					if (protocol == "http") {
 						if (method !== "get" || request.post["Authorization"]) {
 							var apiRequest = http.request(options, function (apiResponse) {
-								proxyResponse(apiResponse, callback)
+								proxyResponse(apiResponse, request.post.asIs, callback)
 							}).on("error", callback)
 							apiRequest.write(body)
 							apiRequest.end()
@@ -459,11 +459,11 @@
 							http.get(request.post.url, function (apiResponse) {
 								if (apiResponse.headers.location) {
 									http.get(apiResponse.headers.location, function(apiReResponse) {
-										proxyResponse(apiReResponse, callback)
+										proxyResponse(apiReResponse, request.post.asIs, callback)
 									})
 								}
 								else {
-									proxyResponse(apiResponse, callback)
+									proxyResponse(apiResponse, request.post.asIs, callback)
 								}
 							}).on("error", callback)
 						}
@@ -471,7 +471,7 @@
 					else if (protocol == "https") {
 						if (method !== "get" || request.post["Authorization"]) {
 							var apiRequest = https.request(options, function (apiResponse) {
-								proxyResponse(apiResponse, callback)
+								proxyResponse(apiResponse, request.post.asIs, callback)
 							}).on("error", callback)
 							apiRequest.write(body)
 							apiRequest.end()
@@ -480,11 +480,11 @@
 							https.get(request.post.url, function (apiResponse) {
 								if (apiResponse.headers.location) {
 									https.get(apiResponse.headers.location, function(apiReResponse) {
-										proxyResponse(apiReResponse, callback)
+										proxyResponse(apiReResponse, request.post.asIs, callback)
 									})
 								}
 								else {
-									proxyResponse(apiResponse, callback)
+									proxyResponse(apiResponse, request.post.asIs, callback)
 								}
 							}).on("error", callback)
 						}
@@ -503,7 +503,7 @@
 
 	/* proxyResponse */
 		module.exports.proxyResponse = proxyResponse
-		function proxyResponse(apiResponse, callback) {
+		function proxyResponse(apiResponse, asIs, callback) {
 			try {
 				// collect data
 					var apiData = ""
@@ -513,21 +513,34 @@
 					apiResponse.on("end", function() { 
 						try {
 							logStatus("proxy response:\n" + apiData)
-							var responseData = JSON.parse(apiData)
-							callback(responseData)
+							// as is
+								if (asIs) {
+									var responseData = String(apiData)
+									callback(responseData)
+								}
+
+							// try json
+								else {
+									var responseData = JSON.parse(apiData)
+									callback(responseData)
+								}
 						} catch (error) {
 							try {
-								if (apiData.includes("<") || apiData.includes(">")) {
-									var responseData = parseXML(apiData)
-								}
-								else {
-									var responseData = {data: apiData}
-								}
-								
-								callback(responseData)
+								// try xml
+									if (apiData.includes("<") || apiData.includes(">")) {
+										var responseData = parseXML(apiData)
+										callback(responseData)
+									}
+
+								// back to as is
+									else {
+										var responseData = String(apiData)
+										callback(responseData)
+									}
 							}
 							catch (error) {
-								callback(responseData || error)	
+								// as is or error
+									callback(responseData || error)	
 							}
 						}
 					})
