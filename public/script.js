@@ -34,6 +34,7 @@ window.addEventListener("load", function() {
 				lastResponseMessage: null,
 				lastResponseHTML: null,
 				lastResponseNumber: null,
+				lastResponseVideo: null,
 				lastResults: [],
 				flow: null,
 				alarms: [],
@@ -44,7 +45,6 @@ window.addEventListener("load", function() {
 		/* error library */
 			var ERROR_LIBRARY = window.ERROR_LIBRARY = {
 				"stop-phrases": ["quit this game", "quit this", "quit", "abort this", "abort", "stop this", "stop", "stop talking", "stop speaking", "please stop", "shut up", "never mind", "forget it", "forget that"],
-				"noaction": "???",
 				"noaction-responses": ["I'm not sure I follow.", "I don't understand.", "What does that mean?", "I don't know that one.", "I don't get it.", "I'm sorry, can you try that again?", "Can you repeat that?", "Please say that again.", "Wait, what was your question?", "I'll need you to repeat that.", "What am I supposed to do?"],
 				"error-responses": ["Something went wrong.", "I couldn't do that.", "Let's try that again later.", "Sorry, I have failed you.", "I'm not sure what happened.", "I ran into an error.", "That's an error.", "That didn't go the way I expected.", "Sorry, I couldn't complete that action.", "I blame the developers for this failure."],
 			}
@@ -196,6 +196,31 @@ window.addEventListener("load", function() {
 				}
 				catch (error) {
 					return numberWord
+				}
+			}
+
+		/* generateRandom */
+			FUNCTION_LIBRARY.generateRandom = generateRandom
+			function generateRandom(set, length) {
+				try {
+					set = set || "0123456789abcdefghijklmnopqrstuvwxyz"
+					length = length || 32
+					
+					var output = ""
+					for (var i = 0; i < length; i++) {
+						output += (set[Math.floor(Math.random() * set.length)])
+					}
+
+					if ((/[a-zA-Z]/).test(set)) {
+						while (!(/[a-zA-Z]/).test(output[0])) {
+							output = (set[Math.floor(Math.random() * set.length)]) + output.substring(1)
+						}
+					}
+
+					return output
+				}
+				catch (error) {
+					return null
 				}
 			}
 
@@ -694,7 +719,7 @@ window.addEventListener("load", function() {
 					}
 
 				// followup
-					var followup = (event.inputType == "written") ? false : true
+					var followup = (event.inputType == "written") ? false : true					
 
 				// match phrase to stop command
 					if (ERROR_LIBRARY["stop-phrases"].includes(phrase.trim())) {
@@ -738,6 +763,11 @@ window.addEventListener("load", function() {
 							if (previousFlow) {
 								delete CONTEXT_LIBRARY[previousFlow]
 							}
+
+						// end videos
+							if (CONTEXT_LIBRARY.lastResponseVideo) {
+								stopVideo(CONTEXT_LIBRARY.lastResponseVideo)
+							}
 						
 						// stop speaking
 							VOICE_LIBRARY.synthesizer.pause()
@@ -748,11 +778,10 @@ window.addEventListener("load", function() {
 
 				// no action
 					else if (!action || !ACTION_LIBRARY[action]) {
-						action = ERROR_LIBRARY["noaction"]
 						var message = ERROR_LIBRARY["noaction-responses"][ERROR_LIBRARY["noaction-index"]]
 
 						ERROR_LIBRARY["noaction-index"] = (ERROR_LIBRARY["noaction-index"] == ERROR_LIBRARY["noaction-responses"].length - 1) ? 0 : (ERROR_LIBRARY["noaction-index"] + 1)
-						createHistory(phrase, action, "", {icon: "&#x1f6a9;", error: true, message: message, html: message, followup: followup})
+						createHistory(phrase, "no action", "", {icon: "&#x1f6a9;", error: true, message: message, html: message, followup: followup})
 					}
 
 				// phrase & action
@@ -787,15 +816,26 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.createHistory = createHistory
 			function createHistory(phrase, action, remainder, response) {
 				// context
-					if (!["repeat that", "do that again", "get next result"].includes(action)) {
-						CONTEXT_LIBRARY.lastPhrase = phrase
-						CONTEXT_LIBRARY.lastAction = action
-						CONTEXT_LIBRARY.lastRemainder = remainder
-					}
 					CONTEXT_LIBRARY.lastResponseIcon = response.icon
 					CONTEXT_LIBRARY.lastResponseMessage = response.message
 					CONTEXT_LIBRARY.lastResponseHTML = response.html
 
+					if (!["no action", "stop", "repeat that", "do that again", "get next result"].includes(action)) {
+						CONTEXT_LIBRARY.lastPhrase = phrase
+						CONTEXT_LIBRARY.lastAction = action
+						CONTEXT_LIBRARY.lastRemainder = remainder
+					}
+
+					if (response.number) {
+						CONTEXT_LIBRARY.lastResponseNumber = response.number
+					}
+					if (response.video) {
+						CONTEXT_LIBRARY.lastResponseVideo = response.video
+					}
+					if (response.results) {
+						CONTEXT_LIBRARY.lastResults = response.results
+					}
+					
 				// visuals
 					var historyBlock = document.createElement("div")
 						historyBlock.className = "stream-history" + (response.error ? " stream-history-error" : "")
@@ -843,6 +883,41 @@ window.addEventListener("load", function() {
 					}
 			}
 
+		/* stopVideo */
+			FUNCTION_LIBRARY.stopVideo = stopVideo
+			function stopVideo(id) {
+				// find element
+					var video = document.getElementById(id)
+
+				// no video
+					if (!video) {
+						return false
+					}
+
+				// youtube iframe --> reload without autoplay
+					if (video.tagName.toLowerCase() == "iframe" && video.src.includes("youtube")) {
+						video.src = video.src.replace("autoplay=1","autoplay=0")
+						return true
+					}
+			}
+
+		/* restartVideo */
+			FUNCTION_LIBRARY.restartVideo = restartVideo
+			function restartVideo(id) {
+				// find element
+					var video = document.getElementById(id)
+
+				// no video
+					if (!video) {
+						return false
+					}
+
+				// youtube iframe --> reload with autoplay
+					if (video.tagName.toLowerCase() == "iframe" && video.src.includes("youtube")) {
+						video.src = video.src.includes("autoplay=1") ? video.src : video.src.includes("autoplay=0") ? video.src.replace("autoplay=0", "autoplay=1") : (video.src + "?autoplay=1")
+					}
+			}
+
 		/* checkAlarms */
 			FUNCTION_LIBRARY.checkAlarms = checkAlarms
 			function checkAlarms() {
@@ -852,7 +927,7 @@ window.addEventListener("load", function() {
 				// loop through timers to check (and send a message)
 					for (var i = 0; i < CONTEXT_LIBRARY.alarms.length; i++) {
 						if (CONTEXT_LIBRARY.alarms[i] && CONTEXT_LIBRARY.alarms[i] <= timeNow) {
-							createHistory("...", "alarm", "", {icon: "&#x23F0;", message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "The time is now <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b>.", followup: false})
+							createHistory("...", "alarm", "", {icon: "&#x23F0;", message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "<h2>alarm #" + (i + 1) + ": <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b></h2>", followup: false})
 							CONTEXT_LIBRARY.alarms[i] = null
 						}
 					}
@@ -867,7 +942,7 @@ window.addEventListener("load", function() {
 				// check if startListening is set and in the past
 					if (CONTEXT_LIBRARY.startListening && CONTEXT_LIBRARY.startListening <= timeNow) {
 						FUNCTION_LIBRARY.changeWhistleOn({forceOn: true})
-						createHistory("...", "start listening", "", {icon: "&#x1f50a;", message: "", html: "Whistle detection turned on at <b>" + new Date(CONTEXT_LIBRARY.startListening).toLocaleString() + "</b>.", followup: false})
+						createHistory("...", "start listening", "", {icon: "&#x1f50a;", message: "", html: "<h2>whistle detection turned on at <b>" + new Date(CONTEXT_LIBRARY.startListening).toLocaleString() + "</b></h2>", followup: false})
 						CONTEXT_LIBRARY.startListening = null
 					}
 			}

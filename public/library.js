@@ -104,25 +104,57 @@
 
 			"get next result": 					"get next result",
 			"get the next result": 				"get next result",
+			"get next results": 				"get next result",
+			"get the next results": 			"get next result",
 			"get the next one": 				"get next result",
 			"display next result": 				"get next result",
 			"display the next result": 			"get next result",
+			"display next results": 			"get next result",
+			"display the next results": 		"get next result",
 			"display the next one": 			"get next result",
 			"show next result": 				"get next result",
 			"show the next result": 			"get next result",
+			"show next results": 				"get next result",
+			"show the next results": 			"get next result",
 			"show the next one": 				"get next result",
 			"play next result": 				"get next result",
 			"play the next result": 			"get next result",
+			"play next results": 				"get next result",
+			"play the next results": 			"get next result",
 			"play the next one": 				"get next result",
 			"read next result": 				"get next result",
 			"read the next result": 			"get next result",
+			"read next results": 				"get next result",
+			"read the next results": 			"get next result",
 			"read the next one": 				"get next result",
 			"tell me next result": 				"get next result",
 			"tell me the next result": 			"get next result",
+			"tell me next results": 			"get next result",
+			"tell me the next results": 		"get next result",
 			"next result": 						"get next result",
+			"next results": 					"get next result",
 			"give me another": 					"get next result",
 			"give me the next result": 			"get next result",
 			"give me the next one": 			"get next result",
+			"give me the next results": 		"get next result",
+
+			"stop last video": 					"stop last video",
+			"stop the last video": 				"stop last video",
+			"stop that video": 					"stop last video",
+			"stop the video": 					"stop last video",
+			"pause last video": 				"stop last video",
+			"pause the last video": 			"stop last video",
+			"pause that video": 				"stop last video",
+			"pause the video": 					"stop last video",
+
+			"restart last video": 				"restart last video",
+			"restart the last video": 			"restart last video",
+			"restart that video": 				"restart last video",
+			"restart the video": 				"restart last video",
+			"play last video": 					"restart last video",
+			"play the last video": 				"restart last video",
+			"play that video": 					"restart last video",
+			"play the video": 					"restart last video",
 
 		// settings
 			"stop listening": 					"stop listening",
@@ -585,12 +617,14 @@
 			"heres a nutrition question": 		"get nutrition answer",
 
 		// Google Apps Script
+			"edit wish list": 					"edit wish list",
 			"add to wish list": 				"edit wish list",
 			"add to my wish list": 				"edit wish list",
 			"add this to my wish list": 		"edit wish list",
 			"include on my wish list": 			"edit wish list",
 			"edit my wish list to include": 	"edit wish list",
 
+			"get balance": 						"get balance",
 			"what is my account balance for": 	"get balance",
 			"whats my account balance for": 	"get balance",
 			"check my account balance for": 	"get balance",
@@ -606,6 +640,7 @@
 			"how much money is in my": 			"get balance",
 			"how much is in my": 				"get balance",
 
+			"log purchase": 					"log purchase",
 			"i just bought": 					"log purchase",
 			"i bought": 						"log purchase",
 			"add a purchase": 					"log purchase",
@@ -621,6 +656,7 @@
 			"log a purchase of": 				"log purchase",
 			"log my purchase of": 				"log purchase",
 
+			"fetch calendar": 					"fetch calendar",
 			"fetch events": 					"fetch calendar",
 			"fetch my events": 					"fetch calendar",
 			"fetch upcoming events": 			"fetch calendar",
@@ -827,6 +863,7 @@
 			"get a route": 						"search google directions",
 			"route me": 						"search google directions",
 
+			"search google places": 			"search google places",
 			"search google places for": 		"search google places",
 			"find a place": 					"search google places",
 			"find a place called": 				"search google places",
@@ -853,6 +890,7 @@
 			"get the business hours of": 		"search google places",
 			"get the hours of": 				"search google places",
 
+			"search youtube": 					"search youtube",
 			"search youtube for": 				"search youtube",
 			"find on youtube": 					"search youtube",
 			"on youtube find": 					"search youtube",
@@ -1033,7 +1071,8 @@
 
 					// send random message
 						var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
-						callback({icon: icon, message: message, html: message, followup: false})
+						var responseHTML = "<h2>" + message + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML, followup: false})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1049,7 +1088,8 @@
 
 					// send random message
 						var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
-						callback({icon: icon, message: message, html: message, followup: false})
+						var responseHTML = "<h2>" + message + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML, followup: false})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1065,7 +1105,8 @@
 
 					// send random message
 						var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
-						callback({icon: icon, message: message, html: message, followup: false})
+						var responseHTML = "<h2>" + message + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML, followup: false})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1107,7 +1148,8 @@
 						}
 
 					// response
-						callback({icon: icon, message: message, html: "<h2>" + message + "</h2>", followup: false})
+						var responseHTML = "<h2>" + message + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML, followup: false})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1124,14 +1166,15 @@
 						var keys = Object.keys(window.ACTION_LIBRARY)
 					
 					// generate html list
-						var list = "<b>Here are all my actions:</b><ul>"
+						var responseHTML = "<h2>action library</h2><ul>"
 						for (var i in keys) {
-							list += ("<li>" + keys[i] + "</li>")
+							responseHTML += ("<li>" + keys[i] + "</li>")
 						}
-						list += "</ul>"
+						responseHTML += "</ul>"
 					
 					// send response
-						callback({icon: icon, message: "Here are all of the actions I know.", html: list})
+						var message = "Here are all of the actions I know."
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1142,8 +1185,17 @@
 					// icon
 						var icon = "&#x1f426;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I repeat?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// send response
-						callback({icon: icon, message: remainder, html: remainder})
+						var message = remainder
+						var responseHTML = "<h2>" + remainder + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1154,8 +1206,16 @@
 					// icon
 						var icon = "&#x1f426;"
 
+					// no history
+						if (!window.CONTEXT_LIBRARY.lastAction || !window.ACTION_LIBRARY[window.CONTEXT_LIBRARY.lastAction]) {
+							callback({icon: icon, error: true, message: "There's nothing for me to repeat.", html: "<h2>Error: no previous response.</h2>", followup: false})
+							return
+						}
+
 					// send response
-						callback({icon: window.CONTEXT_LIBRARY.lastResponseIcon || icon, message: window.CONTEXT_LIBRARY.lastResponseMessage || "No previous response.", html: window.CONTEXT_LIBRARY.lastResponseHTML || "No previous response."})
+						var message = window.CONTEXT_LIBRARY.lastResponseMessage
+						var responseHTML = "<h2>" + window.CONTEXT_LIBRARY.lastResponseHTML + "</h2>"
+						callback({icon: window.CONTEXT_LIBRARY.lastResponseIcon || icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1168,7 +1228,7 @@
 
 					// no history
 						if (!window.CONTEXT_LIBRARY.lastAction || !window.ACTION_LIBRARY[window.CONTEXT_LIBRARY.lastAction]) {
-							callback({icon: icon, message: "There's nothing for me to do.", html: "<h2>No previous action.</h2>", followup: false})
+							callback({icon: icon, error: true, message: "There's nothing for me to do.", html: "<h2>Error: no previous action.</h2>", followup: false})
 							return
 						}
 
@@ -1188,7 +1248,7 @@
 						if (!window.CONTEXT_LIBRARY.lastResults || !window.CONTEXT_LIBRARY.lastResults.length) {
 							// no history at all
 								if (!window.CONTEXT_LIBRARY.lastAction || !window.ACTION_LIBRARY[window.CONTEXT_LIBRARY.lastAction]) {
-									callback({icon: icon, message: "I don't have any results.", html: "<h2>No more results.</h2>", followup: false})
+									callback({icon: icon, error: true, message: "I don't have any results.", html: "<h2>No more results.</h2>", followup: false})
 									return
 								}
 
@@ -1200,8 +1260,54 @@
 					// get first of lastResults
 						var nextResult = window.CONTEXT_LIBRARY.lastResults.shift()
 
+					// if video
+						if (nextResult.video && window.CONTEXT_LIBRARY.lastResponseVideo) {
+							window.FUNCTION_LIBRARY.stopVideo(window.CONTEXT_LIBRARY.lastResponseVideo)
+						}
+
 					// send response
-						callback({icon: nextResult.icon || icon, message: nextResult.message, html: nextResult.html})
+						if (nextResult.followup !== undefined) {
+							callback({icon: nextResult.icon || icon, message: nextResult.message, html: nextResult.html, followup: nextResult.followup, video: nextResult.video || null})
+						}
+						else {
+							callback({icon: nextResult.icon || icon, message: nextResult.message, html: nextResult.html, video: nextResult.video || null})	
+						}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"stop last video": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f6ab;"
+
+					// no video
+						if (!window.CONTEXT_LIBRARY.lastResponseVideo) {
+							callback({icon: icon, error: true, message: "I don't have a video to stop.", html: "<h2>No previous video.</h2>", followup: false})
+							return
+						}
+
+					// stop the video
+						var success = window.FUNCTION_LIBRARY.stopVideo(window.CONTEXT_LIBRARY.lastResponseVideo)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"restart last video": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4fa;"
+
+					// no video
+						if (!window.CONTEXT_LIBRARY.lastResponseVideo) {
+							callback({icon: icon, error: true, message: "I don't have a video to restart.", html: "<h2>No previous video.</h2>", followup: false})
+							return
+						}
+
+					// restart the video
+						var success = window.FUNCTION_LIBRARY.restartVideo(window.CONTEXT_LIBRARY.lastResponseVideo)
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1219,6 +1325,7 @@
 						var restartTime = null
 
 					// split into array
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
 						var words = remainder.split(/\s/gi) || []
 
 					// timer
@@ -1286,10 +1393,10 @@
 
 					// get message
 						if (restartTime) {
-							var responseHTML = "Whistle detection turned off until <b>" + new Date(restartTime).toLocaleString() + "</b>."
+							var responseHTML = "<h2>whistle detection turned off until <b>" + new Date(restartTime).toLocaleString() + "</b></h2>"
 						}
 						else {
-							var responseHTML = "Whistle detection turned off."
+							var responseHTML = "<h2>whistle detection turned off</h2>"
 						}
 						
 					// response
@@ -1304,8 +1411,15 @@
 					// icon
 						var icon = "&#x1f50a;"
 
-					// change voice
-						var name = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What voice should I set?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
+					// chang evoice
+						var name = remainder
 						var voice = window.FUNCTION_LIBRARY.changeVoice({name: name})
 
 					// failure
@@ -1315,7 +1429,9 @@
 						}
 
 					// success
-						callback({icon: icon, message: "Voice set to " + voice, html: "voice: " + voice})
+						var message = "Voice set to " + voice
+						var responseHTML = "<h2>voice: " + voice + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1326,8 +1442,15 @@
 					// icon
 						var icon = "&#x1f50a;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What volume should I set?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// change volume
-						var volume = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
+						var volume = remainder
 							volume = window.FUNCTION_LIBRARY.getDigits(volume)
 						var newVolume = window.FUNCTION_LIBRARY.changeVoiceVolume({volume: volume})
 
@@ -1338,7 +1461,9 @@
 						}
 
 					// success
-						callback({icon: icon, message: "Volume set to " + newVolume + " percent", html: "volume: " + newVolume + "%"})
+						var message = "Volume set to " + newVolume + " percent"
+						var responseHTML = "<h2>volume: " + newVolume + "%</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1349,8 +1474,14 @@
 					// icon
 						var icon = "&#x1f399;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What duration should I set?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// get duration
-						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
 						var words = remainder.split(/\s/gi)
 						var duration = null
 						for (var i in words) {
@@ -1377,7 +1508,9 @@
 						}
 
 					// success
-						callback({icon: icon, message: "Listening duration set to " + newDuration + (newDuration == 1 ? " second" : " seconds"), html: "listening duration: " + newDuration + (newDuration == 1 ? " second" : " seconds")})
+						var message =  "Listening duration set to " + newDuration + (newDuration == 1 ? " second" : " seconds")
+						var responseHTML = "<h2>listening duration: " + newDuration + (newDuration == 1 ? " second" : " seconds") + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1387,6 +1520,13 @@
 				try {
 					// icon
 						var icon = "&#x2699;"
+
+					// no remainder
+						remainder = remainder.trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What key and value should I set?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
 
 					// get key and value
 						var pair = remainder.split(/ equal to | equals | to | is | as /gi)
@@ -1413,7 +1553,9 @@
 						}
 					
 					// success
-						callback({icon: icon, message: key + " is now " + value, html: key + " = " + value})
+						var message = key + " is now " + value
+						var responseHTML = "<h2>" + key + " = " + value + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1423,6 +1565,13 @@
 				try {
 					// icon
 						var icon = "&#x1f510;"
+
+					// no remainder
+						remainder = remainder.trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What platform should I authorize?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
 
 					// get credentials
 						var credentials = remainder.split(/\s/gi)
@@ -1478,7 +1627,9 @@
 								var popup = window.open(url, null, "height=500,width=500,status=yes,toolbar=no,menubar=no,location=no")
 
 							// response
-								callback({icon: icon, message: "Complete the authorization flow for " + host, html: "activating <b>" + host + "</b> in external popup"})
+								var message = "Complete the authorization flow for " + host
+								var responseHTML = "<h2>activating <b>" + host + "</b> in external popup</h2>"
+								callback({icon: icon, message: message, html: responseHTML})
 
 							// periodically attempt to fetch authorization from the server
 								window.FUNCTION_LIBRARY.fetchPeriodically("getAuthorization", host, function(data) {
@@ -1488,7 +1639,9 @@
 											value.refresh_token = data.refresh_token
 											value.expiration = new Date().getTime() + (data.expires_in * 1000)
 										window.FUNCTION_LIBRARY.changeConfiguration({key: host, value: value})
-										callback({icon: icon, message: host + " is now authorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
+										
+										var responseHTML = "<h2>" + host + " authorized</h2>until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()
+										callback({icon: icon, message: "", html: responseHTML})
 									}
 									catch (error) {}
 								})
@@ -1527,7 +1680,7 @@
 									method: "post",
 									url: url,
 									"Authorization": "Basic " + platforms[name].stateSecret(key, secret),
-										"Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+									"Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
 								}
 
 							// proxy request
@@ -1545,7 +1698,9 @@
 												value.refresh_token = data.refresh_token
 												value.expiration = new Date().getTime() + (data.expires_in * 1000)
 											window.FUNCTION_LIBRARY.changeConfiguration({key: host, value: value})
-											callback({icon: icon, message: host + " is now reauthorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
+
+											var responseHTML = "<h2>" + host + " authorized</h2>until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()
+											callback({icon: icon, message: "", html: responseHTML})
 									}
 									catch (error) {
 										callback({icon: icon, error: true, message: "I couldn't reauthorize " + host, html: "<h2>Error: unable to reauthorize:</h2>" + host})
@@ -1555,7 +1710,8 @@
 
 					// already authorized
 						else {
-							callback({icon: icon, message: host + " is already authorized", html: "<b>" + host + "</b> is authorized until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()})
+							var responseHTML = "<h2>" + host + " authorized</h2>until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()
+							callback({icon: icon, message: "", html: responseHTML})
 						}
 				}
 				catch (error) {
@@ -1570,8 +1726,9 @@
 						var icon = "&#x1f553;"
 
 					// response
-						var response = new Date().toLocaleTimeString()
-						callback({icon: icon, message: response, html: "The time is " + response + "."})
+						var message = new Date().toLocaleTimeString()
+						var responseHTML = "The time is <h2>" + message + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1583,8 +1740,9 @@
 						var icon = "&#x1f4c5;"
 
 					// response
-						var response = (["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()])
-						callback({icon: icon, message: response, html: "Today is " + response + "."})
+						var message = (["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()])
+						var responseHTML = "Today is <h2>" + message + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1596,8 +1754,9 @@
 						var icon = "&#x1f4c5;"
 
 					// response
-						var response = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()])
-						callback({icon: icon, message: response, html: "The month is " + response + "."})
+						var message = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()])
+						var responseHTML = "The month is <h2>" + message + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1609,8 +1768,9 @@
 						var icon = "&#x1f4c5;"
 
 					// response
-						var response = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + " " + new Date().getDate())
-						callback({icon: icon, message: response, html: "The date is " + response + "."})
+						var message = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + " " + new Date().getDate())
+						var responseHTML = "The date is <h2>" + message + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1622,6 +1782,13 @@
 				try {
 					// icon
 						var icon = "&#x23f0;"
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What alarm should I set?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
 
 					// split into array
 						var words = remainder.split(/\s/gi) || []
@@ -1674,7 +1841,9 @@
 								window.CONTEXT_LIBRARY.alarms.push(endTime)
 
 							// response
-								callback({icon: icon, message: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for " + new Date(endTime).toLocaleTimeString(), html: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
+								var message = "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for " + new Date(endTime).toLocaleTimeString()
+								var responseHTML = "<h2>alarm #" + window.CONTEXT_LIBRARY.alarms.length + ": <b>" + new Date(endTime).toLocaleString() + "</b></h2>"
+								callback({icon: icon, message: message, html: responseHTML})
 						}
 
 					// alarm
@@ -1704,7 +1873,9 @@
 								window.CONTEXT_LIBRARY.alarms.push(endTime)
 
 							// response
-								callback({icon: icon, message: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for " + new Date(endTime).toLocaleTimeString(), html: "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for <b>" + new Date(endTime).toLocaleString() + "</b>"})
+								var message = "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for " + new Date(endTime).toLocaleTimeString()
+								var responseHTML = "<h2>alarm #" + window.CONTEXT_LIBRARY.alarms.length + ": <b>" + new Date(endTime).toLocaleString() + "</b></h2>"
+								callback({icon: icon, message: message, html: responseHTML})
 						}
 				}
 				catch (error) {
@@ -1715,6 +1886,13 @@
 				try {
 					// icon
 						var icon = "&#x23f0;"
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What alarm should I cancel?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
 
 					// split into array
 						var words = remainder.split(/\s/gi) || []
@@ -1740,7 +1918,9 @@
 						window.CONTEXT_LIBRARY.alarms[index - 1] = null
 
 					// response
-						callback({icon: icon, message: "I cancelled alarm #" + index + ", which was set for " + time + ".", html: "Cancelled alarm #" + index + ": <b>" + time + "</b>."})
+						var message = "I cancelled alarm #" + index + ", which was set for " + time + "."
+						var responseHTML = "<h2>cancelled alarm #" + index + ": <b>" + time + "</b></h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1755,7 +1935,9 @@
 						window.CONTEXT_LIBRARY.alarms = []
 
 					// response
-						callback({icon: icon, message: "I turned off all alarms.", html: "All alarms cancelled."})
+						var message = "I turned off all alarms."
+						var responseHTML = "<h2>all alarms cancelled</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1769,9 +1951,9 @@
 						var icon = "&#x1f3b2;"
 
 					// defaults
+						remainder = " " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
 						var count = 1
 						var sides = 6
-						remainder = " " + remainder
 
 					// X dice with Y sides format
 						if (remainder.includes("side") || remainder.includes("face")) {
@@ -1798,7 +1980,9 @@
 						}
 
 					// return sum
-						callback({icon: icon, message: sum, html: count + "d" + sides + ": " + sum})
+						var message = sum
+						var responseHTML = "<h2>" + count + "d" + sides + ": " + sum + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1810,8 +1994,9 @@
 						var icon = "&#x1f3b2;"
 
 					// response
-						var response = window.FUNCTION_LIBRARY.chooseRandom(["heads","tails"])
-						callback({icon: icon, message: response, html: "coin: " + response})
+						var message = window.FUNCTION_LIBRARY.chooseRandom(["heads","tails"])
+						var responseHTML = "<h2>coin: " + message + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1822,12 +2007,20 @@
 					// icon
 						var icon = "&#x1f3b1;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What are you asking?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// possible options
 						var options = ["It is certain", "It is decidedly so", "Without a doubt", "Yes - definitely", "You may rely on it", "As I see it, yes", "Most likely", "Outlook good", "Yes", "Signs point to yes", "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good", "Very doubtful", "Reply hazy, try again", "Ask again later", "Better not tell you now", "Cannot predict now", "Concentrate and ask again"]
 
 					// response
-						var response = window.FUNCTION_LIBRARY.chooseRandom(options)
-						callback({icon: icon, message: response, html: remainder + "<h2>" + response + "</h2>"})
+						var message = window.FUNCTION_LIBRARY.chooseRandom(options)
+						var responseHTML = remainder + "<h2>" + message + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1839,6 +2032,13 @@
 				try {
 					// icon
 						var icon = "&#x00b1;"
+
+					// no remainder
+						remainder = remainder.replace(/[?!,:;'"_\$]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I calculate?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
 
 					// loop through and identify terms
 						var terms = remainder.split(/\s/gi)
@@ -1857,8 +2057,9 @@
 								else if (terms[i] == "halved")  { terms[i] = "/ 2" }
 								else if (terms[i] == "power")   { terms[i] = "**" }
 								else if (terms[i] == "root")    { terms[i] = "** (1/"; terms.splice(i + 2, 0, ")")}
+								else if (terms[i] == "%") 		{ terms[i] = "/ 100 *"}
 								else if (terms[i] == "percent") { terms[i] = "/ 100 *"}
-								else if (terms[i] == "(" || terms[i] == ")") {}
+								else if (["+","-","*","/","(",")","**"].includes(terms[i])) {}
 								else {
 									terms[i] = window.FUNCTION_LIBRARY.getDigits(terms[i])
 									if (isNaN(terms[i])) {
@@ -1881,8 +2082,9 @@
 						}
 					
 					// response
-						window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
-						callback({icon: icon, message: Number(result), html: terms.join(" ") + " = <b>" + result + "</b>"})
+						var message = Number(result)
+						var responseHTML = "<h2>" + terms.join(" ") + " = <b>" + result + "</b></h2>"
+						callback({icon: icon, message: message, html: responseHTML, number: Number(result)})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1893,9 +2095,15 @@
 					// icon
 						var icon = "&#x00b1;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!,:;'"_\$]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I calculate?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// identify multiplier
-						var term = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"")
-							term = window.FUNCTION_LIBRARY.getDigits(term.toLowerCase().trim())
+						var term = window.FUNCTION_LIBRARY.getDigits(remainder)
 						if (term == "that") {
 							term = Number(window.CONTEXT_LIBRARY.lastResponseNumber)
 						}
@@ -1910,8 +2118,9 @@
 						}
 					
 					// response
-						window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
-						callback({icon: icon, message: Number(result), html: "2 * " + term + " = <b>" + result + "</b>"})
+						var message = Number(result)
+						var responseHTML = "<h2>2 * " + term + " = <b>" + result + "</b></h2>"
+						callback({icon: icon, message: message, html: responseHTML, number: Number(result)})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1922,9 +2131,15 @@
 					// icon
 						var icon = "&#x00b1;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!,:;'"_\$]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I calculate?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// identify multiplier
-						var term = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"")
-							term = window.FUNCTION_LIBRARY.getDigits(term.toLowerCase().trim())
+						var term = window.FUNCTION_LIBRARY.getDigits(remainder)
 						if (term == "that") {
 							term = Number(window.CONTEXT_LIBRARY.lastResponseNumber)
 						}
@@ -1939,8 +2154,9 @@
 						}
 					
 					// response
-						window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
-						callback({icon: icon, message: Number(result), html: "3 * " + term + " = <b>" + result + "</b>"})
+						var message = Number(result)
+						var responseHTML = "<h2>3 * " + term + " = <b>" + result + "</b></h2>"
+						callback({icon: icon, message: message, html: responseHTML, number: Number(result)})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1951,8 +2167,15 @@
 					// icon
 						var icon = "&#x00b1;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!,:;'"_\$]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I calculate?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// loop through to identify terms
-						var terms = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").split(/\s/gi)
+						var terms = remainder.split(/\s/gi)
 						var numbers = []
 						for (var i = 0; i < terms.length; i++) {
 							terms[i] = window.FUNCTION_LIBRARY.getDigits(terms[i].toLowerCase().trim())
@@ -1978,8 +2201,9 @@
 						}
 					
 					// response
-						window.CONTEXT_LIBRARY.lastResponseNumber = Number(result)
-						callback({icon: icon, message: Number(result), html: numbers.join(" + ") + " / " + numbers.length + " = <b>" + result + "</b>"})
+						var message = Number(result)
+						var responseHTML = "<h2>" + numbers.join(" + ") + " / " + numbers.length + " = <b>" + result + "</b></h2>"
+						callback({icon: icon, message: message, html: responseHTML, number: Number(result)})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1990,16 +2214,19 @@
 					// icon
 						var icon = "&#x2673;"
 
-					// start number
-						var startNumber = (" " + remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"")).split(/ up from | down from | from | starting at | start at | between | for /gi)
-							startNumber = (startNumber[1] || startNumber[0]).split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)[0].toLowerCase().trim()
+					// remainder
+						remainder = " " + remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+
+					// startNumber
+						var startNumber = remainder.split(/ up from | down from | from | starting at | start at | between | for /gi)
+							startNumber = (startNumber[1] || startNumber[0]).split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)[0].trim()
 							startNumber = window.FUNCTION_LIBRARY.getDigits(startNumber)
 						if (startNumber == "that") { startNumber = Number(window.CONTEXT_LIBRARY.lastResponseNumber) }
 						if (!startNumber || isNaN(startNumber)) { startNumber = 1 }
 
 					// end number
-						var endNumber = (" " + remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"")).split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)
-							endNumber = (endNumber[1] || endNumber[0]).split(/ up from | down from | starting at | start at | between | for /gi)[0].toLowerCase().trim()
+						var endNumber = remainder.split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)
+							endNumber = (endNumber[1] || endNumber[0]).split(/ up from | down from | starting at | start at | between | for /gi)[0].trim()
 							endNumber = window.FUNCTION_LIBRARY.getDigits(endNumber)
 						if (endNumber == "that") { endNumber = Number(window.CONTEXT_LIBRARY.lastResponseNumber) }
 						if (!endNumber || isNaN(endNumber)) { endNumber = 100 }
@@ -2018,7 +2245,9 @@
 						}
 
 					// message
-						callback({icon: icon, message: list.join("... "), html: "Counting from <b>" + String(startNumber) + "</b> to <b>" + String(endNumber) + "</b>."})
+						var message = list.join("... ")
+						var responseHTML = "<h2>counting from <b>" + String(startNumber) + "</b> to <b>" + String(endNumber) + "</b></h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2031,12 +2260,21 @@
 					// icon
 						var icon = "&#x1f4dd;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I spell?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// get letters
-						var word = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim().toUpperCase()
+						var word = remainder.toUpperCase()
 						var letters = word.split("")
 
 					// response
-						callback({icon: icon, message: word + "... " + letters.join(", "), html: "<h2>" + letters.join(" - ") + "</h2>"})
+						var message = word + "... " + letters.join(", ")
+						var responseHTML = "<h2>" + letters.join(" - ") + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2047,9 +2285,16 @@
 					// icon
 						var icon = "&#x1f4da;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
 					// options
 						var options = {
-							url: "https://api.datamuse.com/words?rel_rhy=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+							url: "https://api.datamuse.com/words?rel_rhy=" + remainder
 						}
 
 					// proxy to server
@@ -2064,11 +2309,12 @@
 									}
 
 								// message & link
-									var message = "I found " + list.length + " rhyme" + (list.length == 1 ? "" : "s") + " for " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim() + "."
-									var link = "<a target='_blank' href='https://rhymezone.com/r/rhyme.cgi?typeofrhyme=perfect&Word=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'>" + message + "</a>"
+									var message = "I found " + list.length + " rhyme" + (list.length == 1 ? "" : "s") + " for " + remainder + ". " + list.join(",")
+									var responseHTML = "<a target='_blank' href='https://rhymezone.com/r/rhyme.cgi?typeofrhyme=perfect&Word=" + remainder + "'><h2>" + remainder + "</h2></a>" +
+										"<ul>" + listItems.join("") + "</ul>"
 
 								// response
-									callback({icon: icon, message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I couldn't rhyme that.", html: "<h2>Error: unable to access rhymes</h2>"})
@@ -2084,9 +2330,16 @@
 					// icon
 						var icon = "&#x1f4da;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
 					// options
 						var options = {
-							url: "https://api.datamuse.com/words?rel_syn=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+							url: "https://api.datamuse.com/words?rel_syn=" + remainder
 						}
 
 					// proxy to server
@@ -2101,11 +2354,12 @@
 									}
 
 								// message & link
-									var message = "I found " + list.length + " synonym" + (list.length == 1 ? "" : "s") + " for " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim() + "."
-									var link = "<a target='_blank' href='https://rhymezone.com/r/rhyme.cgi?typeofrhyme=syn&Word=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'>" + message + "</a>"
+									var message = "I found " + list.length + " synonym" + (list.length == 1 ? "" : "s") + " for " + remainder + ". " + list.join(",")
+									var responseHTML = "<a target='_blank' href='https://rhymezone.com/r/rhyme.cgi?typeofrhyme=syn&Word=" + remainder + "'><h2>" + remainder + "</h2></a>" +
+										"<ul>" + listItems.join("") + "</ul>"
 
 								// response
-									callback({icon: icon, message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't know any synonyms for that.", html: "<h2>Error: unable to access synonyms</h2>"})
@@ -2121,9 +2375,16 @@
 					// icon
 						var icon = "&#x1f4da;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
 					// options
 						var options = {
-							url: "https://api.datamuse.com/words?md=d&sp=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+							url: "https://api.datamuse.com/words?md=d&sp=" + remainder
 						}
 
 					// proxy to server
@@ -2141,11 +2402,12 @@
 									}
 
 								// message & link
-									var message = "I found " + list.length + " definition" + (list.length == 1 ? "" : "s") + " for " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim() + "."
-									var link = "<a target='_blank' href='http://wordnetweb.princeton.edu/perl/webwn?s=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'>" + message + "</a>"
+									var message = "I found " + list.length + " definition" + (list.length == 1 ? "" : "s") + " for " + remainder + ". " + list.join(",")
+									var responseHTML = "<a target='_blank' href='http://wordnetweb.princeton.edu/perl/webwn?s=" + remainder + "'><h2>" + remainder + "</h2></a>" + 
+										"<ul>" + listItems.join("") + "</ul>"
 
 								// response
-									callback({icon: icon, message: message + " " + list.join(","), html: link + "<ul>" + listItems.join("") + "</ul>"})
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I couldn't define that.", html: "<h2>Error: unable to access definitions</h2>"})
@@ -2161,8 +2423,15 @@
 					// icon
 						var icon = "&#x1f4da;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
 					// options
-						var word = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						var word = remainder
 						var options = {
 							asIs: true,
 							url: "https://www.etymonline.com/word/" + word
@@ -2213,11 +2482,11 @@
 
 								// message & list
 									var message = "I found " + words.length + (words.length == 1 ? " etymology... " : " etymologies... ") + (words.length ? words.map(function(entry) { return entry.word + ", " + entry.partOfSpeech + "... " + entry.history.join(" ... ") }).join(" ... ... ") : "")
-									var responseLink = "<a target='_blank' href='https://www.etymonline.com/word/" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + "'><h2>" + word + "</h2></a>"
-									var responseList = words.length ? ("<ul><li>" + words.map(function(entry) { return "<h3>" + entry.word + (entry.partOfSpeech ? (" (" + entry.partOfSpeech + ")") : "") + "</h3><p>" + entry.history.join("</p><p>") + "</p>" }).join("</li><li>") + "</li></ul>") : ""
+									var responseHTML = "<a target='_blank' href='https://www.etymonline.com/word/" + remainder + "'><h2>" + word + "</h2></a>" +
+										(words.length ? ("<ul><li>" + words.map(function(entry) { return "<h3>" + entry.word + (entry.partOfSpeech ? (" (" + entry.partOfSpeech + ")") : "") + "</h3><p>" + entry.history.join("</p><p>") + "</p>" }).join("</li><li>") + "</li></ul>") : "")
 
 								// response
-									callback({icon: icon, message: message, html: responseLink + responseList})
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I couldn't find the etymology of that.", html: "<h2>Error: unable to access etymonline</h2>"})
@@ -2243,12 +2512,10 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								// message & link
-									var jokeLink = "https://icanhazdadjoke.com"
-									var jokeText = response.attachments[0].text
-
 								// response
-									callback({icon: icon, message: jokeText, html: "<a target='_blank' href='" + jokeLink + "'><h2>" + jokeText + "</h2></a>"})
+									var message = response.attachments[0].text
+									var responseHTML = "<a target='_blank' href='https://icanhazdadjoke.com'><h2>" + response.attachments[0].text + "</h2></a>"
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't know any jokes.", html: "<h2>Error: unable to access jokes</h2>"})
@@ -2284,7 +2551,9 @@
 									var quoteAuthor = response.quoteAuthor
 
 								// response
-									callback({icon: icon, message: quoteAuthor + " said... " + quoteText, html: "<a target='_blank' href='" + quoteLink + "'><h2>\"" + quoteText + "\" - " + quoteAuthor + "</h2></a>"})
+									var message = quoteAuthor + " said... " + quoteText
+									var responseHTML = "<a target='_blank' href='" + quoteLink + "'><h2>\"" + quoteText + "\" - " + quoteAuthor + "</h2></a>"
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, message: "I don't know any quotes.", html: "unable to access quotes"})
@@ -2314,16 +2583,13 @@
 								// all results
 									var results = []
 									for (var i in fortunes) {
-										var responseLink = "<a target='_blank' href='https://fortunecookieapi.herokuapp.com/'><h2>" + fortunes[i].message + "</h2></a>"
-										results.push({icon: icon, message: fortunes[i].message, html: responseLink})
+										var responseHTML = "<a target='_blank' href='https://fortunecookieapi.herokuapp.com/'><h2>" + fortunes[i].message + "</h2></a>"
+										results.push({icon: icon, message: fortunes[i].message, html: responseHTML})
 									}
 
 								// send response
-									callback({icon: icon, message: results[0].message, html: results[0].html})
-
-								// save results to context
-									results.shift()
-									window.CONTEXT_LIBRARY.lastResults = results
+									var firstResult = results.shift()
+									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't know any fortunes.", html: "<h2>Error: unable to access fortunes</h2>"})
@@ -2348,7 +2614,9 @@
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
 								// response
-									callback({icon: icon, message: response.joke, html: "<h2>" + response.joke + "</h2>"})
+									var message = response.joke
+									var responseHTML = "<h2>" + response.joke + "</h2>"
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon, icon, error: true, message: "I don't know any insults.", html: "<h2>Error: unable to access insults</h2>"})
@@ -2369,9 +2637,16 @@
 							window.CONTEXT_LIBRARY["wikipedia attempt counter"] = 1
 						}
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
 					// options
 						var options = {
-							url: "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=" + remainder.replace(/[?!.,:;'"\/\(\)\$\%]/gi,"").trim()
+							url: "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=" + remainder
 						}
 
 					// proxy to server --> search
@@ -2412,21 +2687,21 @@
 											}
 									
 										// get text
-											var htmlContent = response.parse.text["*"]
-												htmlContent = htmlContent.split('id="References">References')[0]
-												htmlContent = htmlContent.split('id="See_also">See also')[0]
-												htmlContent = htmlContent.replace(/\<a href='\//gi, "<a target='_blank' href='https://en.wikipedia.org/")
-												htmlContent = htmlContent.replace(/\<a href="\//gi, '<a target="_blank" href="https://en.wikipedia.org/')
+											var responseHTML = response.parse.text["*"]
+												responseHTML = responseHTML.split('id="References">References')[0]
+												responseHTML = responseHTML.split('id="See_also">See also')[0]
+												responseHTML = responseHTML.replace(/\<a href='\//gi, "<a target='_blank' href='https://en.wikipedia.org/")
+												responseHTML = responseHTML.replace(/\<a href="\//gi, '<a target="_blank" href="https://en.wikipedia.org/')
 
-											var textNode = document.createElement("div")
-												textNode.innerHTML = htmlContent.replace(/<table[\s\S]*?>[\s\S]*?<\/table>/gi,"")
-											var text = textNode.innerText
-												text = text.replace(/\[[0-9]+\]/gi, "")
-												text = text.replace(/\[edit\]/gi,"")
+											var messageNode = document.createElement("div")
+												messageNode.innerHTML = responseHTML.replace(/<table[\s\S]*?>[\s\S]*?<\/table>/gi,"")
+											var message = messageNode.innerText
+												message = message.replace(/\[[0-9]+\]/gi, "")
+												message = message.replace(/\[edit\]/gi,"")
 											
-										// message
-											var link = "<a target='_blank' href='https://en.wikipedia.org/?curid=" + response.parse.pageid + "'>" + response.parse.title + "</a>"
-											callback({icon: icon, message: text, html: "<h2>" + link + "</h2><br>" + htmlContent})
+										// response
+											responseHTML = "<a target='_blank' href='https://en.wikipedia.org/?curid=" + response.parse.pageid + "'><h2>" + response.parse.title + "</h2></a>" + responseHTML
+											callback({icon: icon, message: message, html: responseHTML})
 
 										// reset counter
 											window.CONTEXT_LIBRARY["wikipedia attempt counter"] = 0
@@ -2475,11 +2750,10 @@
 										storyItems.push("<li><a target='_blank' href='" + list[i].link + "'><b>" + list[i].title + "</b></a><p>" + list[i].description + "</p></li>")
 									}
 
-								// message
-									var message = "I found " + stories.length + " stor" + (list.length == 1 ? "y" : "ies") + " on the New York Times."
-
 								// response
-									callback({icon: icon, message: message + " " + stories.join("... "), html: message + "<ul>" + storyItems.join("") + "</ul>"})
+									var message = "I found " + stories.length + " stor" + (list.length == 1 ? "y" : "ies") + " on the New York Times." + stories.join("... ")
+									var responseHTML = "<a target='_blank' href='https://www.nytimes.com'><h2>New York Times</h2></a><ul>" + storyItems.join("") + "</ul>"
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I can't get the news.", html: "<h2>Error: unable to access the New York Times</h2>"})
@@ -2501,9 +2775,12 @@
 							return
 						}
 
+					// remainder
+						remainder = " " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+
 					// locale
 						if (remainder) {
-							var locale = (" " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"")).toLowerCase().replace(/ in | at | for | inside /gi,"").trim() || window.CONFIGURATION_LIBRARY["city"] || window.CONFIGURATION_LIBRARY["zip code"] || null
+							var locale = remainder.replace(/ in | at | for | inside /gi,"").trim() || window.CONFIGURATION_LIBRARY["city"] || window.CONFIGURATION_LIBRARY["zip code"] || null
 						}
 						else {
 							var locale = window.CONFIGURATION_LIBRARY["city"] || window.CONFIGURATION_LIBRARY["zip code"] || null
@@ -2516,10 +2793,9 @@
 								locale: null
 							}
 
-							callback({icon: icon, message: "What city should I get the weather for?", html: "What <b>city</b> should I get the weather for?"})
+							callback({icon: icon, error: true, message: "What city should I get the weather for?", html: "What <b>city</b> should I get the weather for?"})
 							return
 						}
-
 					
 					// options
 						var options = {
@@ -2607,11 +2883,11 @@
 								// get locale, conditions, message, link
 									var locale = response.city.name + ", " + response.city.country
 									var conditions = "Right now it's " + response.list[0].main.temp + " degrees and " + (response.list[0].weather ? response.list[0].weather[0].description : "clear")
-									var message = "Here's the weather for " + locale + "."
-									var link = "<b><a target='_blank' href='https://openweathermap.org/find?q=" + locale + "'>" + message + "</a></b>"
+									var message = "Here's the weather for " + locale + "." + conditions
+									var responseHTML = "<a target='_blank' href='https://openweathermap.org/find?q=" + locale + "'><h2>weather in <b>" + locale + "</b></h2></a>" + table
 
 								// response
-									callback({icon: icon, message: message + " ... " + conditions, html: link + "<br>" + table})
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get the weather for " + remainder, html: "<h2>Error: unable to access the weather for that location:</h2>" + remainder})
@@ -2633,8 +2909,14 @@
 							return
 						}
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
 					// options
-						remainder = remainder.toLowerCase().replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
 						var options = {
 							url: "https://api.spoonacular.com/recipes/guessNutrition?apiKey=" + window.CONFIGURATION_LIBRARY["spoonacular api"] + "&title=" + remainder
 						}
@@ -2681,8 +2963,14 @@
 							return
 						}
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
 					// options
-						remainder = remainder.toLowerCase().replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
 						var options = {
 							url: "https://api.spoonacular.com/recipes/quickAnswer?apiKey=" + window.CONFIGURATION_LIBRARY["spoonacular api"] + "&q=" + remainder
 						}
@@ -2697,7 +2985,9 @@
 									}
 								
 								// respond with answer
-									callback({icon: icon, message: response.answer, html: "<h2>" + remainder + "</h2>" + response.answer})
+									var message = response.answer
+									var responseHTML = "<h2>" + response.answer + "</h2>"
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get a nutrition answer about " + remainder, html: "<h2>Error: unable to get a nutrition answer:</h2>" + remainder})
@@ -2721,8 +3011,14 @@
 							return
 						}
 
+					// no remainder
+						remainder = " " + remainder.replace(/[?!,:;'"_\/\(\)\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I add?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// split at keywords
-						remainder = " " + remainder
 						var cost = remainder.split(/ for | costing | that costs | which costs /gi)
 							cost = (cost[1] || cost[0]).split(/ called | named | by the name | which is a | which is an | which is the /gi)[0].trim()
 
@@ -2740,11 +3036,10 @@
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								// generate list
-									var responseHTML = "<ul><li><b>item: </b>" + response.item + "</li><li><b>cost: </b>" + response.cost + "</li><li><b>type: </b>" + response.type + "</li></ul>" 
-
 								// response
-									callback({icon: icon, message: response.message, html: responseHTML})
+									var message = response.message
+									var responseHTML = "<h2>" + response.item + "</h2><li><b>cost: </b>" + response.cost + "</li><li><b>type: </b>" + response.type + "</li>"
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to edit your wish list.", html: "<h2>Error: unable to edit wish list:</h2>" + error})
@@ -2766,19 +3061,31 @@
 							return
 						}
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
 					// build options
 						var options = {
-							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getBalance&account=" + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getBalance&account=" + remainder
 						}
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								// construct response html
-									var responseHTML = "<ul><li><b>account: </b>" + response.account + "</li><li><b>amount: </b>" + response.amount + "</li></ul>" 
+								// no account
+									if (!response.account) {
+										callback({icon: icon, error: true, message: "I couldn't find that account.", html: "<h2>Error: invalid account</h2>"})
+										return
+									}
 
 								// response
-									callback({icon: icon, message: response.message, html: responseHTML})
+									var message = response.message
+									var responseHTML = "<h2><b>" + response.account + ":</b> $" + response.amount + "</h2>"
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get your balance.", html: "<h2>Error: unable to get balance:</h2>" + error})
@@ -2800,11 +3107,16 @@
 							return
 						}
 
+					// no remainder
+						remainder = " " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I add?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// split at keywords
-						remainder = " " + remainder
 						var amount = remainder.split(/ for | costing | that cost | that costs | which cost | which costs /gi)
 							amount = (amount[1] || amount[0]).split(/ called | named | by the name | item | which is a | which is an | which is the | which is type | which is category | which is | type | category /gi)[0].trim()
-							amount = amount.replace("$","")
 
 						var description = remainder.split(/ called | named | by the name | item /gi)
 							description = (description[1] || description[0]).split(/ for | costing | that cost | that costs | which cost | which costs | which is a | which is an | which is the | which is type | which is category | which is | type | category /gi)[0].trim()
@@ -2820,11 +3132,10 @@
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								// construct response html
-									var responseHTML = "<ul><li><b>description: </b>" + response.description + "</li><li><b>amount: </b>" + response.amount + "</li><li><b>category: </b>" + response.category + "</li></ul>" 
-
 								// response
-									callback({icon: icon, message: response.message, html: responseHTML})
+									var message = response.message
+									var responseHTML = "<h2>" + response.description + "</h2><li><b>amount: </b>" + response.amount + "</li><li><b>category: </b>" + response.category + "</li>"
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to log your purchase.", html: "<h2>Error: unable to log purchase:</h2>" + error})
@@ -2846,16 +3157,18 @@
 							return
 						}
 
+					// remainder
+						remainder = " " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+
 					// split at keywords
-						remainder = " " + remainder
 						var startDate = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ from | starting at | start date | start time | between | for /gi)
-							startDate = (startDate[1] || startDate[0]).split(/ to | until | ending at | end date | end time | and | through /gi)[0].toLowerCase().trim()
+							startDate = (startDate[1] || startDate[0]).split(/ to | until | ending at | end date | end time | and | through /gi)[0].trim()
 							if (startDate == "today")     { startDate = new Date().toLocaleDateString() }
 							if (startDate == "yesterday") { startDate = new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).toLocaleDateString() }
 							if (startDate == "tomorrow")  { startDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24)).toLocaleDateString() }
 
 						var endDate = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ to | until | ending at | end date | end time | and | through /gi)
-							endDate = (endDate[1] || endDate[0]).split(/ from | starting at | start date | start time | between | for /gi)[0].toLowerCase().trim()
+							endDate = (endDate[1] || endDate[0]).split(/ from | starting at | start date | start time | between | for /gi)[0].trim()
 							if (endDate == "today")     { endDate = new Date().toLocaleDateString() }
 							if (endDate == "yesterday") { endDate = new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).toLocaleDateString() }
 							if (endDate == "tomorrow")  { endDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24)).toLocaleDateString() }
@@ -2882,12 +3195,10 @@
 										}
 									}
 
-								// link & message
-									var responseLink = "https://calendar.google.com"
-									var responseText = response.message
-
 								// response
-									callback({icon: icon, message: response.message + " " + eventList.join(" ... "),html: "<a target='_blank' href='" + responseLink + "'>" + responseText + "</a><ul>" + eventItems.join("") + "</ul>"})
+									var message = response.message + eventList.join(" ... ")
+									var responseHTML = "<a target='_blank' href='https://calendar.google.com'><h2>upcoming events</h2></a><ul>" + eventItems.join("") + "</ul>"
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to fetch your calendar.", html: "<h2>Error: unable to fetch calendar:</h2>" + error})
@@ -2909,8 +3220,15 @@
 							return
 						}
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
 					// build options
-						var list = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").toLowerCase().trim() || null
+						var list = remainder
 						var options = {
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getList" + (list ? ("&list=" + list) : "")
 						}
@@ -3024,7 +3342,9 @@
 									responseHTML += "<ul>"
 
 								// send response
-									callback({icon: icon, message: response.listName + " ... " + message, html: "<h2>" + response.listName + "</h2>" + responseHTML})
+									message = response.listName + " ... " + message
+									responseHTML = "<h2>" + response.listName + "</h2>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get your list.", html: "<h2>Error: unable to get list:</h2>" + error})
@@ -3046,10 +3366,16 @@
 							return
 						}
 
+					// no remainder
+						remainder = " " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I add?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// split at keywords
-						remainder = " " + remainder
-						var components = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ list | list\: /gi)
-						var list = components[0].toLowerCase().trim() || ""
+						var components = remainder.split(/ list | list\: /gi)
+						var list = components[0].trim() || ""
 						var task = components[1] ? components[1] : components[0]
 
 					// no task?
@@ -3165,7 +3491,9 @@
 									responseHTML += "<ul>"
 
 								// send response
-									callback({icon: icon, message: "I added " + task + " to " + response.listName, html: "<h2>" + response.listName + "</h2>" + responseHTML})
+									var message = "I added " + task + " to " + response.listName
+									responseHTML = "<h2>" + response.listName + "</h2>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to add to your list.", html: "<h2>Error: unable to add to list:</h2>" + error})
@@ -3187,11 +3515,11 @@
 							return
 						}
 
-					// no remainder?
-						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
-						if (!remainder) {
-							callback({icon: icon, error: true, message: "I need a name to search for.", html: "<h2>Error: missing or invalid name:</h2>" + remainder})
-							return	
+					// no remainder
+						remainder = remainder.replace(/[?!,:;"_\/\(\)\$\%]/gi,"").trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
 						}
 
 					// build options
@@ -3269,7 +3597,9 @@
 									responseHTML += "</ul>"
 
 								// send response
-									callback({icon: icon, message: "I found " + response.list.length + (response.list.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + "</h2>" + responseHTML})
+									message = "I found " + response.list.length + (response.list.length == 1 ? "person" : "people") + ": " + message
+									responseHTML = "<h2>" + remainder + "</h2>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
@@ -3292,9 +3622,9 @@
 						}
 
 					// no remainder?
-						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
-						if (!remainder) {
-							callback({icon: icon, error: true, message: "I need a name to search for.", html: "<h2>Error: missing or invalid name:</h2>" + remainder})
+						remainder = remainder.replace(/[?!,:;"_\/\(\)\$\%]/gi,"").trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
 							return	
 						}
 
@@ -3339,7 +3669,9 @@
 									responseHTML += "</ul>"
 
 								// send response
-									callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " birthdays</h2>" + responseHTML})
+									message = "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message
+									responseHTML = "<h2>" + remainder + " birthdays</h2>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
@@ -3362,9 +3694,9 @@
 						}
 
 					// no remainder?
-						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
-						if (!remainder) {
-							callback({icon: icon, error: true, message: "I need a name to search for.", html: "<h2>Error: missing or invalid name:</h2>" + remainder})
+						remainder = remainder.replace(/[?!,:;"_\/\(\)\$\%]/gi,"").trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
 							return	
 						}
 
@@ -3418,7 +3750,9 @@
 									responseHTML += "</ul>"
 
 								// send response
-									callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " phone numbers</h2>" + responseHTML})
+									message = "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message
+									responseHTML = "<h2>" + remainder + " phone numbers</h2>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
@@ -3441,9 +3775,9 @@
 						}
 
 					// no remainder?
-						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
-						if (!remainder) {
-							callback({icon: icon, error: true, message: "I need a name to search for.", html: "<h2>Error: missing or invalid name:</h2>" + remainder})
+						remainder = remainder.replace(/[?!,:;"_\/\(\)\$\%]/gi,"").trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
 							return	
 						}
 
@@ -3497,7 +3831,9 @@
 									responseHTML += "</ul>"
 
 								// send response
-									callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " emails</h2>" + responseHTML})
+									message = "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message
+									responseHTML = "<h2>" + remainder + " emails</h2>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
@@ -3520,9 +3856,9 @@
 						}
 
 					// no remainder?
-						remainder = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").trim()
-						if (!remainder) {
-							callback({icon: icon, error: true, message: "I need a name to search for.", html: "<h2>Error: missing or invalid name:</h2>" + remainder})
+						remainder = remainder.replace(/[?!,:;"_\/\(\)\$\%]/gi,"").trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
 							return	
 						}
 
@@ -3576,7 +3912,9 @@
 									responseHTML += "</ul>"
 
 								// send response
-									callback({icon: icon, message: "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message, html: "<h2>" + remainder + " addresses</h2>" + responseHTML})
+									message = "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message
+									responseHTML = "<h2>" + remainder + " addresses</h2>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
@@ -3598,15 +3936,25 @@
 							return
 						}
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I add?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// build options
 						var options = {
-							url: window.CONFIGURATION_LIBRARY["google apps script 2"] + "&text=" + remainder.trim()
+							url: window.CONFIGURATION_LIBRARY["google apps script 2"] + "&text=" + remainder
 						}
 						
 					// proxy
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								callback({icon: icon, message: response.message, html: response.message})
+								// response
+									var message = response.message
+									var responseHTML = "<h2>" + response.message + "</h2>"
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to log gratitude.", html: "<h2>Error: unable to log gratitude:</h2>" + error})
@@ -3634,6 +3982,13 @@
 							return
 						}
 
+					// no remainder
+						remainder = remainder.trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
 					// options
 						var options = {
 							url: window.CONFIGURATION_LIBRARY["google custom search"] + "&key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&q=" + remainder
@@ -3652,18 +4007,15 @@
 									var results = []
 									for (var i in response.items) {
 										var responseMessage = response.items[i].title + " " + response.items[i].snippet
-										var responseLink = "<a target='_blank' href='https://www.google.com?q=" + remainder + "'><h2>" + remainder + "</h2></a>"
-										var responseHTML = "<p><a target='_blank' href='" + response.items[i].link + "'><b>" + response.items[i].title + "</b></a><br>" + response.items[i].snippet + "</p>"
+										var responseHTML = "<a target='_blank' href='https://www.google.com?q=" + remainder + "'><h2>" + remainder + "</h2></a>" +
+											"<p><a target='_blank' href='" + response.items[i].link + "'><b>" + response.items[i].title + "</b></a><br>" + response.items[i].snippet + "</p>"
 
-										results.push({icon: icon, message: responseMessage, html: responseLink + responseHTML})
+										results.push({icon: icon, message: responseMessage, html: responseHTML})
 									}
 
 								// send response
-									callback({icon: icon, message: results[0].message, html: results[0].html})
-
-								// save results to context
-									results.shift()
-									window.CONTEXT_LIBRARY.lastResults = results
+									var firstResult = results.shift()
+									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
@@ -3685,13 +4037,19 @@
 							return
 						}
 
+					// no remainder
+						remainder = " " + remainder.trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
 					// split at keywords
-						remainder = " " + remainder
 						var origin = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ leaving from | from | starting at | start at | etween | originating at | origin /gi)
-							origin = (origin[1] || origin[0]).split(/ going to | go to | ending at | end at | to | and | arriving at | destination | for /gi)[0].toLowerCase().trim()
+							origin = (origin[1] || origin[0]).split(/ going to | go to | ending at | end at | to | and | arriving at | destination | for /gi)[0].trim()
 
 						var destination = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ going to | go to | ending at | end at | to | and | arriving at | destination | for /gi)
-							destination = (destination[1] || destination[0]).split(/ leaving from | from | starting at | start at | between | originating at | origin /gi)[0].toLowerCase().trim()
+							destination = (destination[1] || destination[0]).split(/ leaving from | from | starting at | start at | between | originating at | origin /gi)[0].trim()
 
 					// options
 						var options = {
@@ -3716,10 +4074,12 @@
 
 								// message & link
 									var message = origin + " to " + destination + " is " + distance + " for " + duration + "."
-									var link = "<a target='_blank' href='https://www.google.com/maps/dir/" + origin + "/" + destination + "'>" + message + "</a>"
+									var responseHTML = "<a target='_blank' href='https://www.google.com/maps/dir/" + origin + "/" + destination + "'><h2>" + origin + " to " + destination + "</h2></a>" +
+										"<i>" + distance + " for " + duration + "</i><b2>" +
+										"<ol>" + steps.join("") + "</ol>"
 
 								// response
-									callback({icon: icon, message: message, html: link + "<ol>" + steps.join("") + "</ol>"})
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
@@ -3738,6 +4098,13 @@
 					// missing config?
 						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
 							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "<h2>Error: missing configuration:</h2><li>google api key</li>"})
+							return
+						}
+
+					// no remainder
+						remainder = remainder.trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
 							return
 						}
 
@@ -3782,10 +4149,11 @@
 
 											// message & html
 												var message = "I found " + place.name + " at " + (place.formatted_address || "an unknown address") + ". " + openNow
-												var infoBlock = "<b>" + place.name + "</b><ul><li><a target='_blank' href='" + place.url + "'>" + (place.formatted_address || "<i>no address found</i>") + "</a></li><li>" + (place.formatted_phone_number || "<i>no phone number found</i>") + "</li><li>" + (place.website ? ("<a target='_blank' href='" + place.website + "'>" + place.website + "</a>") : "<i>no website found</i>") + "<li>hours: " + (openHours || "<i>no hours found</i>") + "</li>" + "</ul>"
+												var responseHTML = "<h2>" + place.name + "</h2>" + 
+													"<ul><li><a target='_blank' href='" + place.url + "'>" + (place.formatted_address || "<i>no address found</i>") + "</a></li><li>" + (place.formatted_phone_number || "<i>no phone number found</i>") + "</li><li>" + (place.website ? ("<a target='_blank' href='" + place.website + "'>" + place.website + "</a>") : "<i>no website found</i>") + "<li>hours: " + (openHours || "<i>no hours found</i>") + "</li></ul>"
 
 											// response
-												callback({icon: icon, message: message, html: infoBlock})
+												callback({icon: icon, message: message, html: responseHTML})
 										}
 										catch (error) {
 											callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
@@ -3812,6 +4180,13 @@
 							return
 						}
 
+					// no remainder
+						remainder = remainder.trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
 					// options
 						var options = {
 							url: "https://www.googleapis.com/youtube/v3/search?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&part=snippet&type=video&videoEmbeddable=true&maxResults=10&order=viewCount&q=" + remainder
@@ -3829,17 +4204,15 @@
 								// all results
 									var results = []
 									for (var i in response.items) {
-										var responseMessage = "Now playing " + response.items[i].snippet.title
-										var responseHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response.items[i].id.videoId + '?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-										results.push({icon: icon, message: responseMessage, html: responseHTML, followup: false})
+										var message = "Now playing " + response.items[i].snippet.title
+										var randomID = window.FUNCTION_LIBRARY.generateRandom()
+										var responseHTML = '<iframe id="' + randomID + '" width="560" height="315" src="https://www.youtube.com/embed/' + response.items[i].id.videoId + '?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+										results.push({icon: icon, message: message, html: responseHTML, followup: false, video: randomID})
 									}
 
 								// send response
-									callback({icon: icon, message: results[0].message, html: results[0].html})
-
-								// save results to context
-									results.shift()
-									window.CONTEXT_LIBRARY.lastResults = results
+									var firstResult = results.shift()
+									callback({icon: icon, message: firstResult.message, html: firstResult.html, followup: false, video: firstResult.video, results: results})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
@@ -3861,9 +4234,15 @@
 							return
 						}
 
+					// no remainder
+						remainder = " " + remainder.trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I translate?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// split at keywords
-						remainder = " " + remainder
-						var components = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ to | in | into /gi)
+						var components = remainder.split(/ to | in | into /gi)
 						var phrase = components[0].trim()
 						var language = components[1].trim().toLowerCase()
 
@@ -3947,13 +4326,12 @@
 
 								// translation
 									var translation = response.data.translations[0].translatedText.replace(/\&\#39\;/gi, "'")
-
-								// link
-									var responseLink = "<a target='_blank' href='https://translate.google.com/?sl=en&tl=" + languageCode + "&text=" + phrase + "'><h2>" + translation + "</h2></a>"
-									var responseHTML = responseLink + "<b>" + language + "</b> for \"<i>" + phrase + "</i>\""
-
+									
 								// response
-									callback({icon: icon, message: translation, html: responseHTML, followup: false})
+									var message = translation
+									var responseHTML = "<a target='_blank' href='https://translate.google.com/?sl=en&tl=" + languageCode + "&text=" + phrase + "'><h2>" + translation + "</h2></a>" +
+										"<b>" + language + "</b> for \"<i>" + phrase + "</i>\""
+									callback({icon: icon, message: message, html: responseHTML, followup: false})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to translate that phrase.", html: "<h2>Error: unable to get translation:</h2>" + error})
@@ -3971,6 +4349,9 @@
 					// icon
 						var icon = "&#x1f4af;"
 
+					// remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+
 					// pick a number
 						if (window.CONTEXT_LIBRARY.flow !== "play more or less") {
 							window.CONTEXT_LIBRARY.flow = "play more or less"
@@ -3979,11 +4360,16 @@
 								guesses: 0
 							}
 
-							callback({icon: icon, message: "Okay, I'm thinking of a number between 1 and 100.", html: "<b>I'm thinking of a number between 1 and 100.</b><br>Make a guess. I'll tell you if my number is more or less."})
+							var message = "Okay, I'm thinking of a number between 1 and 100."
+							var responseHTML = "<h2>number between 1 and 100</h2><li>Make a guess.</li><li>I'll tell you if my number is more or less.</li>"
+							callback({icon: icon, message: message, html: responseHTML})
 						}
 
 					// interpret guess
 						else {
+							// gameState
+								var gameState = window.CONTEXT_LIBRARY["play more or less"]
+
 							// get guess
 								var guess = Number(window.FUNCTION_LIBRARY.getDigits(remainder))
 
@@ -3994,16 +4380,14 @@
 								}
 							
 							// increase guess count
-								window.CONTEXT_LIBRARY["play more or less"].guesses++
+								gameState.guesses++
 
 							// correct
-								if (guess == window.CONTEXT_LIBRARY["play more or less"].number) {
-									// message
-										var message = "You took " + window.CONTEXT_LIBRARY["play more or less"].guesses + " guess" + (window.CONTEXT_LIBRARY["play more or less"].guesses == 1 ? "" : "es") + " to find my number: " + window.CONTEXT_LIBRARY["play more or less"].number + "."
-										var messageBlock = "You took <b>" + window.CONTEXT_LIBRARY["play more or less"].guesses + "</b> guess" + (window.CONTEXT_LIBRARY["play more or less"].guesses == 1 ? "" : "es") + " to find my number: <b>" + window.CONTEXT_LIBRARY["play more or less"].number + "</b>."
-
+								if (guess == gameState.number) {
 									// response
-										callback({icon: icon, message: message, html: messageBlock})
+										var message = "You took " + gameState.guesses + " guess" + (gameState.guesses == 1 ? "" : "es") + " to find my number: " + gameState.number + "."
+										var responseHTML = "<h2>" + gameState.guesses + " guess" + (gameState.guesses == 1 ? "" : "es") + "</h2><li>my number: <b>" + gameState.number + "</b></li>"
+										callback({icon: icon, message: message, html: responseHTML})
 
 									// end flow
 										window.CONTEXT_LIBRARY.flow = null
@@ -4011,21 +4395,19 @@
 								}
 
 							// more
-								else if (window.CONTEXT_LIBRARY["play more or less"].number > guess) {
-									// message
-										var message = "More than " + guess + "."
-
+								else if (gameState.number > guess) {
 									// response
-										callback({icon: icon, message: message, html: "&uarr; " + message + " &uarr;"})
+										var message = "More than " + guess
+										var responseHTML = "<h2>&uarr; &gt; " + guess + " &uarr;</h2>"
+										callback({icon: icon, message: message, html: responseHTML})
 								}
 
 							// less
-								else if (window.CONTEXT_LIBRARY["play more or less"].number < guess) {
-									// message
-										var message = "Less than " + guess + "."
-
+								else if (gameState.number < guess) {
 									// response
-										callback({icon: icon, message: message, html: "&darr; " + message + " &darr;"})
+										var message = "Less than " + guess
+										var responseHTML = "<h2>&darr; &lt; " + guess + " &darr;</h2>"
+										callback({icon: icon, message: message, html: responseHTML})
 								}
 						}
 				}
@@ -4037,6 +4419,9 @@
 				try {
 					// icon
 						var icon = "&#x1f4cb;"
+
+					// remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
 
 					// initialize game
 						if (window.CONTEXT_LIBRARY.flow !== "play true or false") {
@@ -4056,13 +4441,18 @@
 												questions: response.results
 											}
 
+										// gameState
+											var gameState = window.CONTEXT_LIBRARY["play true or false"]
+
 										// first question
-											var question = window.CONTEXT_LIBRARY["play true or false"].questions[window.CONTEXT_LIBRARY["play true or false"].index].question
+											var question = gameState.questions[gameState.index].question
 												question = question.replace(/(&#039;)/gi,"\'")
-											var questionNumber = window.CONTEXT_LIBRARY["play true or false"].index + 1
+											var questionNumber = gameState.index + 1
 
 										// response
-											callback({icon: icon, message: "True or False: " + question, html: "<b>True or False #" + questionNumber + "</b><br>" + question})
+											var message = "True or False: " + question
+											var responseHTML = "<h2>True or False #" + questionNumber + "</h2>" + question
+											callback({icon: icon, message: message, html: responseHTML})
 									}
 									catch (error) {
 										window.CONTEXT_LIBRARY.flow = null
@@ -4073,8 +4463,11 @@
 
 					// interpret guess
 						else {
+							// gameState
+								var gameState = window.CONTEXT_LIBRARY["play true or false"]
+
 							// validate
-								var guess = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
+								var guess = remainder
 
 							// true / false
 								if (guess.includes("true")) {
@@ -4091,39 +4484,43 @@
 								}
 
 							// correct
-								var correctAnswer = window.CONTEXT_LIBRARY["play true or false"].questions[window.CONTEXT_LIBRARY["play true or false"].index].correct_answer
+								var correctAnswer = gameState.questions[gameState.index].correct_answer
 								if (guess == correctAnswer) {
-									window.CONTEXT_LIBRARY["play true or false"].score++
-									var message = guess.toUpperCase() + " is correct!"
+									gameState.score++
+									var situation = guess.toUpperCase() + " is correct!"
 								}
 
 							// incorrect
 								else {
-									var message = "Sorry, this is actually " + correctAnswer.toUpperCase() + "."
+									var situation = "Sorry, this is actually " + correctAnswer.toUpperCase() + "."
 								}
 
 							// advance
-								if (window.CONTEXT_LIBRARY["play true or false"].index + 1 < window.CONTEXT_LIBRARY["play true or false"].questions.length) {
+								if (gameState.index + 1 < gameState.questions.length) {
 									// next question
-										window.CONTEXT_LIBRARY["play true or false"].index++
-										var nextQuestion = window.CONTEXT_LIBRARY["play true or false"].questions[window.CONTEXT_LIBRARY["play true or false"].index].question
-										var nextQuestionNumber = window.CONTEXT_LIBRARY["play true or false"].index + 1
+										gameState.index++
+										var nextQuestion = gameState.questions[gameState.index].question
+										var nextQuestionNumber = gameState.index + 1
 
 									// response
-										callback({icon: icon, message: message + " ... " + "Question " + nextQuestionNumber + ": True or False: " + nextQuestion, html: message + "<br><br><b>True or False #" + nextQuestionNumber + "</b><br>" + nextQuestion})
+										var message = situation + " ... " + "Question " + nextQuestionNumber + ": True or False: " + nextQuestion
+										var responseHTML = situation + "<br><h2>True or False #" + nextQuestionNumber + "</h2>" + nextQuestion
+										callback({icon: icon, message: message, html: responseHTML})
 								}
 
 							// done
 								else {
 									// final score
-										var finalScore = window.CONTEXT_LIBRARY["play true or false"].score || 0
+										var finalScore = gameState.score || 0
 
 									// end flow
 										window.CONTEXT_LIBRARY.flow = null
 										delete window.CONTEXT_LIBRARY["play true or false"]
 
 									// response
-										callback({icon: icon, message: message + " ... " + "You got " + finalScore + " questions correct.", html: message + "<br><br><b>Final score: " + finalScore + "</b>"})
+										var message = situation + " ... " + "You got " + finalScore + " questions correct."
+										var responseHTML = situation + "<br><h2>Final score: " + finalScore + "</h2>"
+										callback({icon: icon, message: message, html: responseHTML})
 								}
 						}
 				}
@@ -4135,6 +4532,9 @@
 				try {
 					// icon
 						var icon = "&#x1f0a1;"
+
+					// remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
 
 					// initialize
 						if (window.CONTEXT_LIBRARY.flow !== "play blackjack") {
@@ -4169,7 +4569,9 @@
 								}
 
 							// start
-								callback({icon: icon, message: "I'll shuffle the deck.", html: "<h2>dealer: $" + gameState.dealer.chips + "</h2>" + "<h2>player: $" + gameState.player.chips + "</h2>", followup: false})
+								var message = "I'll shuffle the deck."
+								var responseHTML =  "<h2>dealer: $" + gameState.dealer.chips + "</h2>" + "<h2>player: $" + gameState.player.chips + "</h2>"
+								callback({icon: icon, message: message, html: responseHTML, followup: false})
 
 							// new round
 								setTimeout(function() {
@@ -4183,7 +4585,7 @@
 								var gameState = window.CONTEXT_LIBRARY["play blackjack"]
 
 							// hit
-								if (remainder.includes("hit")) {
+								if (remainder.includes("hit") || remainder.includes("another")) {
 									// deal card
 										dealBlackjackCard("player", "faceup")
 
@@ -4208,12 +4610,20 @@
 								}
 
 							// stay
-								else if (remainder.includes("stay")) {
+								else if (remainder.includes("stay") || remainder.includes("done")) {
 									// response
-										callback({icon: icon, message: "Okay, my turn.", html: "<h2>Dealer's turn.</h2>", followup: false})
+										var message = "Okay, my turn."
+										var responseHTML = "<h2>Dealer's turn.</h2>"
+										callback({icon: icon, message: message, html: responseHTML, followup: false})
 
 									// switch to dealer's turn
 										gameState.playable = false
+								}
+
+							// other
+								else {
+									// response
+										callback({icon: icon, error: true, message: "Sorry, I only understand hit and stay.", html: "<h2>Error: invalid response.</h2>"})
 								}
 
 							// player is done
@@ -4327,7 +4737,7 @@
 							// say "next round"
 								if (gameState.player.chips && gameState.dealer.chips) {
 									setTimeout(function() {
-										callback({icon: icon, message: "Next round.", html: "<h2>Next round.</h2>", followup: false})
+										callback({icon: icon, message: "Next round.", html: "<h2>next round</h2>", followup: false})
 									}, 4000)
 								}
 
@@ -4345,7 +4755,9 @@
 							// game over?
 								if (gameState.player.chips == 0) {
 									// response
-										callback({icon: icon, message: "The dealer wins the game.", html: "<h2>Dealer wins.</h2>", followup: false})
+										var message = "The dealer wins the game."
+										var responseHTML = "<h2>dealer wins</h2>"
+										callback({icon: icon, message: message, html: responseHTML, followup: false})
 
 									// end flow
 										window.CONTEXT_LIBRARY.flow = null
@@ -4353,7 +4765,9 @@
 								}
 								else if (gameState.dealer.chips == 0) {
 									// response
-										callback({icon: icon, message: "You win the game.", html: "<h2>Player wins.</h2>", followup: false})
+										var message = "You win the game."
+										var responseHTML = "<h2>player wins</h2>"
+										callback({icon: icon, message: message, html: responseHTML, followup: false})
 
 									// end flow
 										window.CONTEXT_LIBRARY.flow = null
@@ -4467,14 +4881,15 @@
 								}
 
 							// response
-								callback({
-									icon: icon,
-									message: (gameState.dealer.bust || !dealerSum ? "Dealer busts. " : ("Dealer shows " + dealerSum + ". ")) +
-										(gameState.player.bust || !playerSum ? "You bust. " : (("You have " + playerSum + ". ") + (gameState.playable ? "Hit or stay? " : ""))) +
-										(gameState.roundWinner ? (gameState.roundWinner + " wins. ") : ""),
-									html: (gameState.pot ? ("<h2>pot: $" + gameState.pot + "</h2>") : "") + ("<h2>dealer: $" + gameState.dealer.chips + "</h2>" + dealerHTML) + ("<h2>player: $" + gameState.player.chips + "</h2>" + playerHTML),
-									followup: gameState.playable && !gameState.player.bust && playerSum ? true : false
-								})
+								var message = (gameState.dealer.bust || !dealerSum ? "Dealer busts. " : ("Dealer shows " + dealerSum + ". ")) +
+									(gameState.player.bust || !playerSum ? "You bust. " : (("You have " + playerSum + ". ") +
+									(gameState.playable && !gameState.player.bust && playerSum && playerSum !== 21 ? "Hit or stay? " : ""))) +
+									(gameState.roundWinner ? (gameState.roundWinner + " wins. ") : "")
+								var responseHTML = (gameState.pot ? ("<h2>pot: $" + gameState.pot + "</h2>") : "") +
+									("<h2>dealer: $" + gameState.dealer.chips + "</h2>" + dealerHTML) +
+									("<h2>player: $" + gameState.player.chips + "</h2>" + playerHTML)
+								var followup = (gameState.playable && !gameState.player.bust && playerSum && playerSum !== 21) ? true : false
+								callback({icon: icon, message: message, html: responseHTML, followup: followup})
 						}
 				}
 				catch (error) {
@@ -4485,6 +4900,9 @@
 				try {
 					// icon
 						var icon = "&#x1f3dc;"
+
+					// remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
 
 					// drawings
 						var drawings = [
@@ -4647,9 +5065,12 @@
 															wrongGuesses: 0,
 														}
 
+													// gameState
+														var gameState = window.CONTEXT_LIBRARY["play hangman"]
+
 													// message
-														var message = "The word is " + window.CONTEXT_LIBRARY["play hangman"].word.length + " letters long. Guess a letter."
-														var responseHTML = "<h2>" + window.CONTEXT_LIBRARY["play hangman"].visibleLetters.join(" ") + "</h2><pre>" + drawings[window.CONTEXT_LIBRARY["play hangman"].wrongGuesses] + "</pre>guesses: [" + window.CONTEXT_LIBRARY["play hangman"].guessedLetters.join(" ") + "]"
+														var message = "The word is " + gameState.word.length + " letters long. Guess a letter."
+														var responseHTML = "<h2>" + gameState.visibleLetters.join(" ") + "</h2><pre>" + drawings[gameState.wrongGuesses] + "</pre>guesses: [" + gameState.guessedLetters.join(" ") + "]"
 
 													// response
 														callback({icon: icon, message: message, html: responseHTML})
@@ -4669,9 +5090,12 @@
 
 					// guess a letter
 						else {
+							// gameState
+								var gameState = window.CONTEXT_LIBRARY["play hangman"]
+
 							// identify letter
 								var letter = null
-								var phraseWords = remainder.toLowerCase().split(/\s/gi)
+								var phraseWords = remainder.split(/\s/gi)
 								for (var i in phraseWords) {
 									if ((/^[a-z]{1}$/).test(phraseWords[i])) {
 										letter = phraseWords[i]
@@ -4690,25 +5114,25 @@
 								}
 
 							// already guessed?
-								else if (window.CONTEXT_LIBRARY["play hangman"].guessedLetters.includes(letter)) {
-									callback({icon: icon, error: true, message: "You already guessed the letter '" + letter + "'.", html: "<h2>Error: duplicate guess:</h2>" + letter})
+								else if (gameState.guessedLetters.includes(letter)) {
+									callback({icon: icon, error: true, message: "You already guessed the letter '" + letter.toUpperCase() + "'.", html: "<h2>Error: duplicate guess:</h2>" + letter})
 									return
 								}
 
 							// log guess
-								window.CONTEXT_LIBRARY["play hangman"].guessedLetters.push(letter)
+								gameState.guessedLetters.push(letter)
 
 							// in word
-								if (window.CONTEXT_LIBRARY["play hangman"].word.includes(letter)) {
+								if (gameState.word.includes(letter)) {
 									// update visible letters
 										var count = 0
 										var blanksCount = 0
-										for (var i = 0; i < window.CONTEXT_LIBRARY["play hangman"].word.length; i++) {
-											if (window.CONTEXT_LIBRARY["play hangman"].word[i] == letter) {
+										for (var i = 0; i < gameState.word.length; i++) {
+											if (gameState.word[i] == letter) {
 												count++
-												window.CONTEXT_LIBRARY["play hangman"].visibleLetters[i] = letter
+												gameState.visibleLetters[i] = letter
 											}
-											else if (window.CONTEXT_LIBRARY["play hangman"].visibleLetters[i] == "_") {
+											else if (gameState.visibleLetters[i] == "_") {
 												blanksCount++
 											}
 										}
@@ -4716,8 +5140,8 @@
 									// still more blanks?
 										if (blanksCount) {
 											// message
-												var message = "The letter '" + letter + "' appears " + count + (count == 1 ? " time. " : "times. ") + "The word is now " + window.CONTEXT_LIBRARY["play hangman"].visibleLetters.map(function(l) { return l.replace("_", "blank").toUpperCase() }).join(", ")
-												var responseHTML = "<h2>" + window.CONTEXT_LIBRARY["play hangman"].visibleLetters.join(" ") + "</h2><pre>" + drawings[window.CONTEXT_LIBRARY["play hangman"].wrongGuesses] + "</pre>guesses: [" + window.CONTEXT_LIBRARY["play hangman"].guessedLetters.join(" ") + "]"
+												var message = "The letter '" + letter.toUpperCase() + "' appears " + count + (count == 1 ? " time. " : "times. ") + "The word is now " + gameState.visibleLetters.map(function(l) { return l.replace("_", "blank").toUpperCase() }).join(", ")
+												var responseHTML = "<h2>" + gameState.visibleLetters.join(" ") + "</h2><pre>" + drawings[gameState.wrongGuesses] + "</pre>guesses: [" + gameState.guessedLetters.join(" ") + "]"
 
 											// response
 												callback({icon: icon, message: message, html: responseHTML})
@@ -4726,9 +5150,9 @@
 									// game over (victory)
 										else {
 											// message
-												window.CONTEXT_LIBRARY["play hangman"].visibleLetters = window.CONTEXT_LIBRARY["play hangman"].word.split("")
-												var message = "You win. The word was " + window.CONTEXT_LIBRARY["play hangman"].word
-												var responseHTML = "<h2>" + window.CONTEXT_LIBRARY["play hangman"].visibleLetters.join(" ") + "</h2><pre>" + drawings[window.CONTEXT_LIBRARY["play hangman"].wrongGuesses] + "</pre>guesses: [" + window.CONTEXT_LIBRARY["play hangman"].guessedLetters.join(" ") + "]"
+												gameState.visibleLetters = gameState.word.split("")
+												var message = "You win. The word was " + gameState.word
+												var responseHTML = "<h2>" + gameState.visibleLetters.join(" ") + "</h2><pre>" + drawings[gameState.wrongGuesses] + "</pre>guesses: [" + gameState.guessedLetters.join(" ") + "]"
 
 											// response
 												callback({icon: icon, message: message, html: responseHTML})
@@ -4742,18 +5166,18 @@
 							// not in word
 								else {
 									// increment wrong guesses
-										window.CONTEXT_LIBRARY["play hangman"].wrongGuesses++
+										gameState.wrongGuesses++
 
 									// game continues
-										if (window.CONTEXT_LIBRARY["play hangman"].wrongGuesses < 8) {
-											callback({icon: icon, message: "The word does not contain the letter '" + letter + "'.", html: "<h2>" + window.CONTEXT_LIBRARY["play hangman"].visibleLetters.join(" ") + "</h2><pre>" + drawings[window.CONTEXT_LIBRARY["play hangman"].wrongGuesses] + "</pre>guesses: [" + window.CONTEXT_LIBRARY["play hangman"].guessedLetters.join(" ") + "]"})
+										if (gameState.wrongGuesses < 8) {
+											callback({icon: icon, message: "The word does not contain the letter '" + letter.toUpperCase() + "'.", html: "<h2>" + gameState.visibleLetters.join(" ") + "</h2><pre>" + drawings[gameState.wrongGuesses] + "</pre>guesses: [" + gameState.guessedLetters.join(" ") + "]"})
 										}
 
 									// game over (loss)
 										else {
 											// response
-												window.CONTEXT_LIBRARY["play hangman"].visibleLetters = window.CONTEXT_LIBRARY["play hangman"].word.split("")
-												callback({icon: icon, message: "You lose. The word was " + window.CONTEXT_LIBRARY["play hangman"].word, html: "<h2>" + window.CONTEXT_LIBRARY["play hangman"].visibleLetters.join(" ") + "</h2><pre>" + drawings[8] + "</pre>guesses: [" + window.CONTEXT_LIBRARY["play hangman"].guessedLetters.join(" ") + "]"})
+												gameState.visibleLetters = gameState.word.split("")
+												callback({icon: icon, message: "You lose. The word was " + gameState.word, html: "<h2>" + gameState.visibleLetters.join(" ") + "</h2><pre>" + drawings[8] + "</pre>guesses: [" + gameState.guessedLetters.join(" ") + "]"})
 
 											// end flow
 												window.CONTEXT_LIBRARY.flow = null
@@ -4858,7 +5282,7 @@
 									var lightsOn = 0
 									var temperature = 0
 									var smoke = 0
-									var responseHTML = "Here are your Wink devices: <ul>"
+									var responseHTML = "<h2>Wink devices</h2><ul>"
 
 								// loop through devices
 									for (var i in devices) {
@@ -4934,10 +5358,17 @@
 								return
 						}
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I adjust?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// split remainder
-						var components = remainder.split(/\sto\s|\sbecome\s|\sinto\s|\sat\s/gi)
-						var deviceName = components[0].toLowerCase().trim().replace(/the /gi,"")
-						var desiredState = window.FUNCTION_LIBRARY.getDigits(components[1].toLowerCase().trim())
+						var components = remainder.split(/ to | become | into | at /gi)
+						var deviceName = components[0].trim().replace(/the /gi,"")
+						var desiredState = window.FUNCTION_LIBRARY.getDigits(components[1].trim())
 
 					// replace number words with numbers
 						deviceName = deviceName.split(/\s/gi)
@@ -5003,7 +5434,7 @@
 						}
 
 					// generate message & html
-						var responseHTML = "Wink devices updated: <ul>"
+						var responseHTML = "<h2>Wink devices updated</h2><ul>"
 						for (var i in deviceIds) {
 							responseHTML += "<li>" + window.CONFIGURATION_LIBRARY["api.wink.com"].devices[deviceIds[i]].name + ": " + JSON.stringify(desiredState) + "</li>"
 						}
@@ -5011,7 +5442,8 @@
 						var messageState = (desiredState.powered === true) ? "on" : (desiredState.powered === false) ? "off" : (desiredState.max_set_point || desiredState.min_set_point) ? farenheit : "unknown"
 
 					// response
-						callback({icon: icon, message: "Okay, I set " + deviceName + " to " + messageState, html: responseHTML})
+						var message = "Okay, I set " + deviceName + " to " + messageState
+						callback({icon: icon, message: message, html: responseHTML})
 
 					// actually attempt to set the desiredState for each device
 						for (var i in deviceIds) {
@@ -5097,16 +5529,14 @@
 								// all results
 									var results = []
 									for (var i in questions) {
-										var responseLink = "<a target='_blank' href='" + questions[i].data.url + "'><h2>" + questions[i].data.title + "</h2></a>"
-										results.push({icon: icon, message: questions[i].data.title, html: responseLink})
+										var message = questions[i].data.title
+										var responseHTML = "<a target='_blank' href='" + questions[i].data.url + "'><h2>" + questions[i].data.title + "</h2></a>"
+										results.push({icon: icon, message: message, html: responseHTML})
 									}
 
 								// send response
-									callback({icon: icon, message: results[0].message, html: results[0].html})
-
-								// save results to context
-									results.shift()
-									window.CONTEXT_LIBRARY.lastResults = results
+									var firstResult = results.shift()
+									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't have any questions.", html: "<h2>Error: unable to access reddit</h2>"})
@@ -5152,16 +5582,14 @@
 								// all results
 									var results = []
 									for (var i in prompts) {
-										var responseLink = "<a target='_blank' href='" + prompts[i].data.url + "'><h2>" + prompts[i].data.title + "</h2></a>"
-										results.push({icon: icon, message: prompts[i].data.title, html: responseLink})
+										var message = prompts[i].data.title
+										var responseHTML = "<a target='_blank' href='" + prompts[i].data.url + "'><h2>" + prompts[i].data.title + "</h2></a>"
+										results.push({icon: icon, message: message, html: responseHTML})
 									}
 
 								// send response
-									callback({icon: icon, message: results[0].message, html: results[0].html})
-
-								// save results to context
-									results.shift()
-									window.CONTEXT_LIBRARY.lastResults = results
+									var firstResult = results.shift()
+									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't have any writing prompts.", html: "<h2>Error: unable to access reddit</h2>"})
@@ -5179,9 +5607,14 @@
 					// icon
 						var icon = "&#9878;"
 
-					// parameters
-						remainder = " " + remainder
+					// no remainder
+						remainder = " " + remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I convert?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
 
+					// parameters
 						var toUnit = remainder.split(/ into | to /gi)
 							toUnit = (toUnit[1] || toUnit[0]).split(/ from /gi)[0].trim()
 
@@ -5217,7 +5650,9 @@
 									var outputToUnit   = (response.parameters.to.prefix   !== "_" ? response.parameters.to.prefix   : "") + response.parameters.to.unit
 
 								// response
-									callback({icon: icon, message: outputQuantity + " " + outputToUnit, html: response.parameters.quantity + " " + outputFromUnit + " = <b>" + outputQuantity + "</b> " + outputToUnit})
+									var message = outputQuantity + " " + outputToUnit
+									var responseHTML = "<h2>" + response.parameters.quantity + " " + outputFromUnit + " = <b>" + outputQuantity + "</b> " + outputToUnit + "</h2>"
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to convert.", html: "<h2>Error: unable to access unitConverter</h2>"})
@@ -5233,8 +5668,15 @@
 					// icon
 						var icon = "&#x2a37;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
 					// parameters
-						var input = window.FUNCTION_LIBRARY.getDigits(remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim())
+						var input = window.FUNCTION_LIBRARY.getDigits(remainder)
 
 					// options
 						var options = {
@@ -5256,9 +5698,11 @@
 									}) || []
 										message[0] = message[0].replace(/x/gi, "times")
 										message = message.join("... ")
+										message = "Here's what I found for " + input + ": " + message
 
 								// response
-									callback({icon: icon, message: "Here's what I found for " + input + ": " + message, html: "<h2>" + input + "</h2>" + response.html})
+									var responseHTML = "<h2>" + input + "</h2><ul>" + response.html + "</ul>"
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to fetch that number.", html: "<h2>Error: unable to access factorFinder</h2>"})
@@ -5274,8 +5718,15 @@
 					// icon
 						var icon = "&#x1f3b5;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!.:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I analyze?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// parameters
-						var input = remainder.replace(/[?!.:;'"_\-\/\(\)\$\%]/gi,"").trim().replace(/and/gi,"")
+						var input = remainder.replace(/and/gi,"")
 							input = input.split(/,\s|,|\s/gi)
 						for (var i in input) {
 							input[i] = input[i].slice(0,1).toUpperCase() + input[i].slice(1,input[i].length)
@@ -5297,7 +5748,9 @@
 									}
 								
 								// response
-									callback({icon: icon, message: response.smallOutput.replace(/\#/gi," sharp").replace(/b/g, " flat"), html: response.chord.join(" - ") + "<h2>" + response.bigOutput + "</h2>" + response.smallOutput})
+									var message = response.smallOutput.replace(/\#/gi," sharp").replace(/b/g, " flat")
+									var responseHTML = response.chord.join(" - ") + "<h2>" + response.bigOutput + "</h2>" + response.smallOutput
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to analyze that chord.", html: "<h2>Error: unable to access chordAnalyzer</h2>"})
@@ -5313,8 +5766,15 @@
 					// icon
 						var icon = "&#x1f500;"
 
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I shuffle?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// parameters
-						var input = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
+						var input = remainder
 
 					// options
 						var options = {
@@ -5339,7 +5799,9 @@
 									}
 
 								// response
-									callback({icon: icon, message: "I found " + wordList.length + " words within " + input + ": " + wordList.join(", "), html: "<h2>" + input + "</h2>" + response.html})
+									var message = "I found " + wordList.length + " words within " + input + ": " + wordList.join(", ")
+									var responseHTML = "<h2>" + input + "</h2>" + response.html
+									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to shuffle that word.", html: "<h2>Error: unable to access wordShuffler</h2>"})
