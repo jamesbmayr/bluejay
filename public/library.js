@@ -665,6 +665,44 @@
 			"what was written by the author": 	"search goodreads",
 			"find books by the author": 		"search goodreads",
 
+			"get the latest post": 				"get the latest post",
+			"get me the latest post": 			"get the latest post",
+			"get the latest post from": 		"get the latest post",
+			"get me the latest post from": 		"get the latest post",
+			"get the latest post on": 			"get the latest post",
+			"get me the latest post on": 		"get the latest post",
+			"give me the latest post": 			"get the latest post",
+			"give me the latest post from": 	"get the latest post",
+			"give me the latest post on": 		"get the latest post",
+			"fetch the latest post": 			"get the latest post",
+			"fetch the latest post from": 		"get the latest post",
+			"fetch the latest post on": 		"get the latest post",
+			"read the latest entry": 			"get the latest post",
+			"read me the latest entry": 		"get the latest post",
+			"read the latest entry from": 		"get the latest post",
+			"read me the latest entry from": 	"get the latest post",
+			"read the latest entry on": 		"get the latest post",
+			"read me the latest entry on": 		"get the latest post",
+
+			"get a random post": 				"get a random post",
+			"get me a random post": 			"get a random post",
+			"get a random post from": 			"get a random post",
+			"get me a random post from": 		"get a random post",
+			"get a random post on": 			"get a random post",
+			"get me a random post on": 			"get a random post",
+			"give me a random post": 			"get a random post",
+			"give me a random post from": 		"get a random post",
+			"give me a random post on": 		"get a random post",
+			"fetch a random post": 				"get a random post",
+			"fetch a random post from": 		"get a random post",
+			"fetch a random post on": 			"get a random post",
+			"read a random entry": 				"get a random post",
+			"read me a random entry": 			"get a random post",
+			"read a random entry from": 		"get a random post",
+			"read me a random entry from": 		"get a random post",
+			"read a random entry on": 			"get a random post",
+			"read me a random entry on": 		"get a random post",
+
 		// Google Apps Script
 			"edit wish list": 					"edit wish list",
 			"add to wish list": 				"edit wish list",
@@ -3133,6 +3171,138 @@
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I couldn't find that book.", html: "<h2>Error: unable to access goodreads</h2>"})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get the latest post": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f5de;"
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY[remainder]) {
+							callback({icon: icon, error: true, message: "I'm not subscribed to that feed yet.", html: "<h2>Error: missing feed:</h2><li>" + remainder + "</li>"})
+							return
+						}
+
+					// options
+						var options = {
+							url: window.CONFIGURATION_LIBRARY[remainder]
+						}
+
+					// proxy request
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// loop through all entries
+									var entries = []
+									for (var i in response) {
+										entries.push({
+											url: response[i].url || null,
+											title: response[i].title || "untitled",
+											author: response[i].author || null,
+											date: response[i].date ? new Date(response[i].date) : null,
+											text: response[i].text || ""
+										})
+									}
+									entries = entries.sort(function(a,b) { return new Date(a.date).getTime() - new Date(b.date).getTime() })
+
+								// loop through all results
+									var results = []
+									for (var i in entries) {
+										if (entries[i].text) {
+											var message = entries[i].title + (entries[i].author ? (" by " + entries[i].author) : "") + " ... " + entries[i].text.replace(/\n/gi, " ... ")
+											var responseHTML = (entries[i].url ? ("<a target='_blank' href='" + entries[i].url + "'><h2>" + entries[i].title + "</h2></a>") : ("<h2>" + entries[i].title + "</h2>")) + 
+												(entries[i].author ? ("<i>" + entries[i].author + "</i>") : "") +
+												(entries[i].author && entries[i].date ? ", " : "") +
+												(entries[i].date ? ("<i>" + new Date(entries[i].date).toLocaleDateString() + "</i>") : "") +
+												("<p>" + entries[i].text.replace(/\n/gi, "<br>") + "</p>")
+											results.push({icon: icon, message: message, html: responseHTML})
+										}
+									}
+
+								// display first result
+									var firstResult = results.shift()
+									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I couldn't access that feed.", html: "<h2>Error: unable to access feed</h2>" + remainder})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get a random post": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f5de;"
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY[remainder]) {
+							callback({icon: icon, error: true, message: "I'm not subscribed to that feed yet.", html: "<h2>Error: missing feed:</h2><li>" + remainder + "</li>"})
+							return
+						}
+
+					// options
+						var options = {
+							url: window.CONFIGURATION_LIBRARY[remainder]
+						}
+
+					// proxy request
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// loop through all entries
+									var entries = []
+									for (var i in response) {
+										entries.push({
+											url: response[i].url || null,
+											title: response[i].title || "untitled",
+											author: response[i].author || null,
+											date: response[i].date ? new Date(response[i].date) : null,
+											text: response[i].text || ""
+										})
+									}
+									entries = window.FUNCTION_LIBRARY.sortRandom(entries)
+
+								// loop through all results
+									var results = []
+									for (var i in entries) {
+										if (entries[i].text) {
+											var message = entries[i].title + (entries[i].author ? (" by " + entries[i].author) : "") + " ... " + entries[i].text.replace(/\n/gi, " ... ")
+											var responseHTML = (entries[i].url ? ("<a target='_blank' href='" + entries[i].url + "'><h2>" + entries[i].title + "</h2></a>") : ("<h2>" + entries[i].title + "</h2>")) + 
+												(entries[i].author ? ("<i>" + entries[i].author + "</i>") : "") +
+												(entries[i].author && entries[i].date ? ", " : "") +
+												(entries[i].date ? ("<i>" + new Date(entries[i].date).toLocaleDateString() + "</i>") : "") +
+												("<p>" + entries[i].text.replace(/\n/g, "<br>") + "</p>")
+											results.push({icon: icon, message: message, html: responseHTML})
+										}
+									}
+
+								// display first result
+									var firstResult = results.shift()
+									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I couldn't access that feed.", html: "<h2>Error: unable to access feed</h2>" + remainder})
 							}
 						})
 				}
