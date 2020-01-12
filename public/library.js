@@ -128,6 +128,7 @@
 			"read the next results": 			"get next result",
 			"read the next one": 				"get next result",
 			"tell me next result": 				"get next result",
+			"tell me another": 					"get next result",
 			"tell me the next result": 			"get next result",
 			"tell me next results": 			"get next result",
 			"tell me the next results": 		"get next result",
@@ -137,6 +138,10 @@
 			"give me the next result": 			"get next result",
 			"give me the next one": 			"get next result",
 			"give me the next results": 		"get next result",
+			"get me another": 					"get next result",
+			"get me the next result": 			"get next result",
+			"get me the next one": 				"get next result",
+			"get me the next results": 			"get next result",
 
 			"stop last video": 					"stop last video",
 			"stop the last video": 				"stop last video",
@@ -615,6 +620,50 @@
 			"i have a nutrition question": 		"get nutrition answer",
 			"let me ask a nutrition question": 	"get nutrition answer",
 			"heres a nutrition question": 		"get nutrition answer",
+
+			"search goodreads": 				"search goodreads",
+			"search goodreads for": 			"search goodreads",
+			"on goodreads search": 				"search goodreads",
+			"on goodreads search for": 			"search goodreads",
+			"get a book": 						"search goodreads",
+			"get me a book": 					"search goodreads",
+			"find the book": 					"search goodreads",
+			"find a book": 						"search goodreads",
+			"get the book": 					"search goodreads",
+			"i want to read": 					"search goodreads",
+			"i want to read a book called": 	"search goodreads",
+			"look up the book": 				"search goodreads",
+			"look up a book": 					"search goodreads",
+			"look for a book": 					"search goodreads",
+			"look up a book called": 			"search goodreads",
+			"look up this book": 				"search goodreads",
+			"tell me about the book": 			"search goodreads",
+			"look up a book about": 			"search goodreads",
+			"look up books about": 				"search goodreads",
+			"find a book about": 				"search goodreads",
+			"find books about": 				"search goodreads",
+			"find me a book about": 			"search goodreads",
+			"find me books about": 				"search goodreads",
+			"get a book about": 				"search goodreads",
+			"get books about": 					"search goodreads",
+			"get me a book about": 				"search goodreads",
+			"get me books about": 				"search goodreads",
+			"search for a book about": 			"search goodreads",
+			"search for books about": 			"search goodreads",
+			"get a book by": 					"search goodreads",
+			"get books by": 					"search goodreads",
+			"get me a book by": 				"search goodreads",
+			"get me books by": 					"search goodreads",
+			"look up a book by": 				"search goodreads",
+			"look up books by": 				"search goodreads",
+			"what books were written by": 		"search goodreads",
+			"what was written by": 				"search goodreads",
+			"find books by": 					"search goodreads",
+			"look up a book by the author": 	"search goodreads",
+			"look up books by the author": 		"search goodreads",
+			"what books were written by the author": "search goodreads",
+			"what was written by the author": 	"search goodreads",
+			"find books by the author": 		"search goodreads",
 
 		// Google Apps Script
 			"edit wish list": 					"edit wish list",
@@ -2583,8 +2632,9 @@
 								// all results
 									var results = []
 									for (var i in fortunes) {
+										var message = fortunes[i].message
 										var responseHTML = "<a target='_blank' href='https://fortunecookieapi.herokuapp.com/'><h2>" + fortunes[i].message + "</h2></a>"
-										results.push({icon: icon, message: fortunes[i].message, html: responseHTML})
+										results.push({icon: icon, message: message, html: responseHTML})
 									}
 
 								// send response
@@ -2991,6 +3041,98 @@
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get a nutrition answer about " + remainder, html: "<h2>Error: unable to get a nutrition answer:</h2>" + remainder})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"search goodreads": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4da;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["goodreads api"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for goodreads api.", html: "<h2>Error: missing configuration:</h2><li>goodreads api</li>"})
+							return
+						}
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
+					// options
+						var options = {
+							url: "https://www.goodreads.com/search.xml?key=" + window.CONFIGURATION_LIBRARY["goodreads api"] + "&q=" + remainder
+						}
+
+					// proxy request - have your people talk to my people
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// get a list of books
+									var books = response.GoodreadsResponse.search.results.work
+
+									if (!Array.isArray(books)) {
+										books = [books]
+									}
+								
+								// loop through all results
+									var results = []
+									for (var i in books) {
+										// get info
+											var coverImage = books[i].best_book.image_url
+											var title = books[i].best_book.title.replace(/\&amp\;/gi, "&")
+											var author = books[i].best_book.author.name.replace(/\&amp\;/gi, "&")
+											var rating = (typeof books[i].average_rating == "number") ? books[i].average_rating : null
+											var url = "https://www.goodreads.com/book/show/" + books[i].best_book.id._
+
+										// construct publication date
+											if (books[i].original_publication_month._ && books[i].original_publication_day._ && books[i].original_publication_year._) {
+												var publicationDate = ["January","February","March","April","May","June","July","August","September","October","November","December"][books[i].original_publication_month._ - 1] + " " + books[i].original_publication_day._ + ", " + books[i].original_publication_year._
+											}
+											else if (books[i].original_publication_month._ && books[i].original_publication_year._) {
+												var publicationDate = ["January","February","March","April","May","June","July","August","September","October","November","December"][books[i].original_publication_month._ - 1] + " " + books[i].original_publication_year._
+											}
+											else if (books[i].original_publication_year._) {
+												var publicationDate = books[i].original_publication_year._
+											}
+											else {
+												var publicationDate = null
+											}
+
+										// table
+											var responseHTML = "<table>" +
+												"<tr><th rowspan='4'><img src='" + coverImage + "'></th><td><a target='_blank' href='" + url + "'><h2>" + title + "</h2></a></td></tr>" + 
+												"<tr>" + 								"<td>" + author + "</td></tr>" +
+												"<tr>" + 								"<td>" + (publicationDate || "---") + "</td></tr>" +
+												"<tr>" + 								"<td>&#x2b50; " + (rating || "???") + "</td></tr>" +
+											"</table>"
+
+										// message
+											var message = title + " by " + author +
+												(publicationDate ? (" was published " + publicationDate) : "") +
+												(publicationDate && rating ? " and" : "") +
+												(rating ? (" has an average rating of " + rating + " star" + (rating == 1 ? "" : "s")) : "")
+
+										// add to results array
+											results.push({
+												icon: icon,
+												message: message,
+												html: responseHTML
+											})
+									}
+
+								// display first result
+									var firstResult = results.shift()
+									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I couldn't find that book.", html: "<h2>Error: unable to access goodreads</h2>"})
 							}
 						})
 				}
