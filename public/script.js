@@ -1056,13 +1056,23 @@ window.addEventListener("load", function() {
 
 					// speak the transcript
 						if (CONFIGURATION_LIBRARY.settings["voice"] && VOICE_LIBRARY.voices[CONFIGURATION_LIBRARY.settings["voice"]]) {
-							var utterance = new SpeechSynthesisUtterance(response.message)
-								utterance.voice = VOICE_LIBRARY.voices[CONFIGURATION_LIBRARY.settings["voice"]]
-								utterance.volume = Math.max(0, Math.min(1, CONFIGURATION_LIBRARY.settings["voice-volume"] / 100))
+							// language
+								if (response.language) {
+									var voiceName = Object.keys(VOICE_LIBRARY.voices).find(function(key) {
+										return VOICE_LIBRARY.voices[key].lang == response.language || VOICE_LIBRARY.voices[key].lang.split("-")[0] == response.language
+									}) || null
+								}
+
+							// utterance
+								var utterance = new SpeechSynthesisUtterance(response.message)
+									utterance.voice = VOICE_LIBRARY.voices[voiceName || CONFIGURATION_LIBRARY.settings["voice"]]
+									utterance.volume = Math.max(0, Math.min(1, CONFIGURATION_LIBRARY.settings["voice-volume"] / 100))
 								if (response.followup) {
 									utterance.onend = FUNCTION_LIBRARY.startRecognizing
 								}
-							VOICE_LIBRARY.synthesizer.speak(utterance)
+
+							// speak
+								VOICE_LIBRARY.synthesizer.speak(utterance)
 						}
 				}, CONFIGURATION_LIBRARY.settings["voice-delay"])
 			}

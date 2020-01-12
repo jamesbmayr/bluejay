@@ -4473,7 +4473,7 @@
 									var message = translation
 									var responseHTML = "<a target='_blank' href='https://translate.google.com/?sl=en&tl=" + languageCode + "&text=" + phrase + "'><h2>" + translation + "</h2></a>" +
 										"<b>" + language + "</b> for \"<i>" + phrase + "</i>\""
-									callback({icon: icon, message: message, html: responseHTML, followup: false})
+									callback({icon: icon, message: message, html: responseHTML, language: languageCode})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to translate that phrase.", html: "<h2>Error: unable to get translation:</h2>" + error})
