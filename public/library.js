@@ -202,6 +202,7 @@
 			"set new recognition duration at": 	"change listening duration",
 
 			"change configuration": 			"change configuration",
+			"change configuration for": 		"change configuration",
 			"edit configuration": 				"change configuration",
 			"edit configuration for": 			"change configuration",
 			"set configuration": 				"change configuration",
@@ -3204,30 +3205,52 @@
 					// proxy request
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
+								// get list
+									if (Array.isArray(response)) {
+										var list = response
+									}
+									else if (response.rss && response.rss.channel && response.rss.channel.item && Array.isArray(response.rss.channel.item)) {
+										var list = response.rss.channel.item
+									}
+
+								// no list
+									if (!list) {
+										callback({icon: icon, error: true, message: "I couldn't parse that feed.", html: "<h2>Error: unparseable feed:</h2><li>" + remainder + "</li>"})
+										return
+									}
+
 								// loop through all entries
 									var entries = []
-									for (var i in response) {
+									for (var i in list) {
 										entries.push({
-											url: response[i].url || null,
-											title: response[i].title || "untitled",
-											author: response[i].author || null,
-											date: response[i].date ? new Date(response[i].date) : null,
-											text: response[i].text || ""
+											url: list[i].url || list[i].link || null,
+											title: list[i].title || "untitled",
+											author: list[i].author || list[i]["dc:creator"] || null,
+											date: (list[i].date || list[i].pubDate) ? new Date(list[i].date || list[i].pubDate) : null,
+											text: list[i].text || list[i]["content:encoded"] || list[i].description || ""
 										})
 									}
-									entries = entries.sort(function(a,b) { return new Date(a.date).getTime() - new Date(b.date).getTime() })
+									entries = entries.sort(function(a,b) { return new Date(b.date).getTime() - new Date(a.date).getTime() })
 
 								// loop through all results
 									var results = []
 									for (var i in entries) {
 										if (entries[i].text) {
-											var message = entries[i].title + (entries[i].author ? (" by " + entries[i].author) : "") + " ... " + entries[i].text.replace(/\n/gi, " ... ")
-											var responseHTML = (entries[i].url ? ("<a target='_blank' href='" + entries[i].url + "'><h2>" + entries[i].title + "</h2></a>") : ("<h2>" + entries[i].title + "</h2>")) + 
-												(entries[i].author ? ("<i>" + entries[i].author + "</i>") : "") +
-												(entries[i].author && entries[i].date ? ", " : "") +
-												(entries[i].date ? ("<i>" + new Date(entries[i].date).toLocaleDateString() + "</i>") : "") +
-												("<p>" + entries[i].text.replace(/\n/gi, "<br>") + "</p>")
-											results.push({icon: icon, message: message, html: responseHTML})
+											// message
+												var textNode = document.createElement("div")
+													textNode.innerHTML = entries[i].text.replace(/\n/gi, " ... ")
+												var text = textNode.innerText
+												var message = entries[i].title + (entries[i].author ? (" by " + entries[i].author) : "") + " ... " + (text || "")
+
+											// html
+												var responseHTML = (entries[i].url ? ("<a target='_blank' href='" + entries[i].url + "'><h2>" + entries[i].title + "</h2></a>") : ("<h2>" + entries[i].title + "</h2>")) + 
+													(entries[i].author ? ("<i>" + entries[i].author + "</i>") : "") +
+													(entries[i].author && entries[i].date ? ", " : "") +
+													(entries[i].date ? ("<i>" + new Date(entries[i].date).toLocaleDateString() + "</i>") : "") +
+													("<p>" + entries[i].text.replace(/\n/gi, "<br>").replace(/srcset\=/gi, "data-srcset=").replace(/\<a href\=/gi, "<a target='_blank' href=") + "</p>")
+
+											// add to results
+												results.push({icon: icon, message: message, html: responseHTML})
 										}
 									}
 
@@ -3270,15 +3293,29 @@
 					// proxy request
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
+								// get list
+									if (Array.isArray(response)) {
+										var list = response
+									}
+									else if (response.rss && response.rss.channel && response.rss.channel.item && Array.isArray(response.rss.channel.item)) {
+										var list = response.rss.channel.item
+									}
+
+								// no list
+									if (!list) {
+										callback({icon: icon, error: true, message: "I couldn't parse that feed.", html: "<h2>Error: unparseable feed:</h2><li>" + remainder + "</li>"})
+										return
+									}
+
 								// loop through all entries
 									var entries = []
-									for (var i in response) {
+									for (var i in list) {
 										entries.push({
-											url: response[i].url || null,
-											title: response[i].title || "untitled",
-											author: response[i].author || null,
-											date: response[i].date ? new Date(response[i].date) : null,
-											text: response[i].text || ""
+											url: list[i].url || list[i].link || null,
+											title: list[i].title || "untitled",
+											author: list[i].author || list[i]["dc:creator"] || null,
+											date: (list[i].date || list[i].pubDate) ? new Date(list[i].date || list[i].pubDate) : null,
+											text: list[i].text || list[i]["content:encoded"] || list[i].description || ""
 										})
 									}
 									entries = window.FUNCTION_LIBRARY.sortRandom(entries)
@@ -3287,13 +3324,21 @@
 									var results = []
 									for (var i in entries) {
 										if (entries[i].text) {
-											var message = entries[i].title + (entries[i].author ? (" by " + entries[i].author) : "") + " ... " + entries[i].text.replace(/\n/gi, " ... ")
-											var responseHTML = (entries[i].url ? ("<a target='_blank' href='" + entries[i].url + "'><h2>" + entries[i].title + "</h2></a>") : ("<h2>" + entries[i].title + "</h2>")) + 
-												(entries[i].author ? ("<i>" + entries[i].author + "</i>") : "") +
-												(entries[i].author && entries[i].date ? ", " : "") +
-												(entries[i].date ? ("<i>" + new Date(entries[i].date).toLocaleDateString() + "</i>") : "") +
-												("<p>" + entries[i].text.replace(/\n/g, "<br>") + "</p>")
-											results.push({icon: icon, message: message, html: responseHTML})
+											// message
+												var textNode = document.createElement("div")
+													textNode.innerHTML = entries[i].text.replace(/\n/gi, " ... ")
+												var text = textNode.innerText
+												var message = entries[i].title + (entries[i].author ? (" by " + entries[i].author) : "") + " ... " + (text || "")
+
+											// html
+												var responseHTML = (entries[i].url ? ("<a target='_blank' href='" + entries[i].url + "'><h2>" + entries[i].title + "</h2></a>") : ("<h2>" + entries[i].title + "</h2>")) + 
+													(entries[i].author ? ("<i>" + entries[i].author + "</i>") : "") +
+													(entries[i].author && entries[i].date ? ", " : "") +
+													(entries[i].date ? ("<i>" + new Date(entries[i].date).toLocaleDateString() + "</i>") : "") +
+													("<p>" + entries[i].text.replace(/\n/gi, "<br>").replace(/srcset\=/gi, "data-srcset=").replace(/\<a href\=/gi, "<a target='_blank' href=") + "</p>")
+
+											// add to results
+												results.push({icon: icon, message: message, html: responseHTML})
 										}
 									}
 

@@ -344,7 +344,10 @@
 									data = data.substring(0, data.length - 1).trim()
 								}
 
-								if ((data.indexOf("<") == 0) && (tempObj["escape"] < 100)) {
+								if (data.indexOf("<![CDATA[") == 0) {
+									tempObj[innerIndex] = data.substring(9, data.length - 3).trim()
+								}
+								else if ((data.indexOf("<") == 0) && (tempObj["escape"] < 100)) {
 									tempObj["escape"] = tempObj["escape"] + 1
 									
 									var tempData = parseXML(data)
@@ -372,7 +375,6 @@
 							else if (keys.length == 0) {
 								tempObj[innerIndex] = true
 							}
-
 
 						//remove section from xml string
 							if (!selfClosing) {
