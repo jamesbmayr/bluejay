@@ -488,6 +488,7 @@
 		.stream-history img {
 			border-radius: 5px;
 			border: 2px solid #222222;
+			max-width: 100%;
 		}
 
 		.stream-history details {

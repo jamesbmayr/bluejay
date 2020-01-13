@@ -3193,6 +3193,7 @@
 							"ny times": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
 							"the ny times": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
 							"nytimes": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+							"mcsweeneys": "https://www.mcsweeneys.net/rss",
 						}
 
 					// missing config?
@@ -3220,6 +3221,9 @@
 									catch (error) {
 										var rssDoc = new DOMParser().parseFromString(response, "text/xml")
 										var list = rssDoc.querySelectorAll("channel item")
+										if (!list.length) {
+											var list = rssDoc.querySelectorAll("entry")
+										}
 										var json = false
 									}
 
@@ -3237,28 +3241,32 @@
 												if (json) {
 													var url = list[i].url || list[i].link
 													var title = list[i].title
-													var author = list[i].author || list[i]["dc:creator"] || list[i]["dc:contributor"]
-													var date = list[i].date || list[i].pubDate
-													var text = list[i].text || list[i]["content:encoded"] || list[i].description
+													var author = list[i].author || list[i].writer
+													var date = list[i].date || list[i].pubDate || list[i].publication
+													var text = list[i].text || list[i].content || list[i].description
 												}
 
 											// xml
 												else {
 													var url = (list[i].querySelector("url") ? list[i].querySelector("url").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+														|| (list[i].querySelector("link[type='text/html']") ? list[i].querySelector("link[type='text/html']").getAttribute("href") : null)
 														|| (list[i].querySelector("link") ? list[i].querySelector("link").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
-												
+
 													var title = (list[i].querySelector("title") ? list[i].querySelector("title").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
 
-													var author = (list[i].querySelector("author") ? list[i].querySelector("author").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+													var author = (list[i].querySelector("author name") ? list[i].querySelector("author name").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+														|| (list[i].querySelector("author") ? list[i].querySelector("author").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
 														|| (list[i].getElementsByTagNameNS("*", "creator").length ? list[i].getElementsByTagNameNS("*", "creator")[0].innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
 														|| (list[i].getElementsByTagNameNS("*", "contributor").length ? list[i].getElementsByTagNameNS("*", "contributor")[0].innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
 
 													var date = (list[i].querySelector("date") ? list[i].querySelector("date").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
 														|| (list[i].querySelector("pubDate") ? list[i].querySelector("pubDate").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+														|| (list[i].querySelector("published") ? list[i].querySelector("published").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
 
 													var text = (list[i].querySelector("text") ? list[i].querySelector("text").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
 														|| (list[i].getElementsByTagNameNS("*", "encoded").length ? list[i].getElementsByTagNameNS("*", "encoded")[0].innerHTML .replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, ""): null)
 														|| (list[i].querySelector("description") ? list[i].querySelector("description").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+														|| (list[i].querySelector("content") ? list[i].querySelector("content").innerHTML .replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, ""): null)
 												}
 											
 											// entry
@@ -3277,9 +3285,12 @@
 									var results = []
 									for (var i in entries) {
 										if (entries[i].text) {
+											// clean up
+												entries[i].text = entries[i].text.replace(/&amp;/gi, "&").replace(/&#8217;/gi, "'").replace(/\&lt\;/gi, "<").replace(/\&gt\;/gi, ">").replace(/srcset\=/gi, "data-srcset=").replace(/\<a href\=/gi, "<a target='_blank' href=")
+
 											// message
 												var textNode = document.createElement("div")
-													textNode.innerHTML = entries[i].text.replace(/\n/gi, " ... ")
+													textNode.innerHTML = entries[i].text.replace(/\n/gi, " ... ").replace(/\<script[^>]*\>(.*?)script\>/gi, "").replace(/\<style[^>]*\>(.*?)style\>/gi, "")
 												var text = textNode.innerText
 												var message = entries[i].title + (entries[i].author ? (" by " + entries[i].author) : "") + " ... " + (text || "")
 
@@ -3288,7 +3299,7 @@
 													(entries[i].author ? ("<i>" + entries[i].author + "</i>") : "") +
 													(entries[i].author && entries[i].date ? ", " : "") +
 													(entries[i].date ? ("<i>" + new Date(entries[i].date).toLocaleDateString() + "</i>") : "") +
-													("<p>" + entries[i].text.replace(/\n/gi, "<br>").replace(/srcset\=/gi, "data-srcset=").replace(/\<a href\=/gi, "<a target='_blank' href=") + "</p>")
+													("<p>" + entries[i].text.replace(/\n/gi, "<br>") + "</p>")
 
 											// add to results
 												results.push({icon: icon, message: message, html: responseHTML})
