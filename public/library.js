@@ -142,6 +142,8 @@
 			"get me the next result": 			"get next result",
 			"get me the next one": 				"get next result",
 			"get me the next results": 			"get next result",
+			"next": 							"get next result",
+			"another": 							"get next result",
 
 			"stop last video": 					"stop last video",
 			"stop the last video": 				"stop last video",
