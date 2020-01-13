@@ -540,24 +540,6 @@
 			"what went down in history today": 	"get this day in history",
 			"what happened on this date": 		"get this day in history",
 
-			"get the headlines": 				"get the headlines",
-			"get todays headlines": 			"get the headlines",
-			"whats happening in the world": 	"get the headlines",
-			"what is happening in the world": 	"get the headlines",
-			"get the top stories": 				"get the headlines",
-			"get the news": 					"get the headlines",
-			"get me the news": 					"get the headlines",
-			"give me the news": 				"get the headlines",
-			"fetch the news": 					"get the headlines",
-			"what is the news": 				"get the headlines",
-			"whats the news": 					"get the headlines",
-			"whats the latest news": 			"get the headlines",
-			"what is the latest news": 			"get the headlines",
-			"whats happening in the news": 		"get the headlines",
-			"what is happening in the news": 	"get the headlines",
-			"read the headlines": 				"get the headlines",
-			"read me the headlines": 			"get the headlines",
-
 			"get the weather": 					"get the weather",
 			"get me the weather": 				"get the weather",
 			"look up the weather": 				"get the weather",
@@ -666,6 +648,7 @@
 			"what was written by the author": 	"search goodreads",
 			"find books by the author": 		"search goodreads",
 
+		// news & blogs
 			"get the latest post": 				"get the latest post",
 			"get me the latest post": 			"get the latest post",
 			"get the latest post from": 		"get the latest post",
@@ -684,6 +667,12 @@
 			"read me the latest entry from": 	"get the latest post",
 			"read the latest entry on": 		"get the latest post",
 			"read me the latest entry on": 		"get the latest post",
+			"read the latest post": 			"get the latest post",
+			"read me the latest post": 			"get the latest post",
+			"read the latest post from": 		"get the latest post",
+			"read me the latest post from": 	"get the latest post",
+			"read the latest post on": 			"get the latest post",
+			"read me the latest post on": 		"get the latest post",
 
 			"get a random post": 				"get a random post",
 			"get me a random post": 			"get a random post",
@@ -703,6 +692,30 @@
 			"read me a random entry from": 		"get a random post",
 			"read a random entry on": 			"get a random post",
 			"read me a random entry on": 		"get a random post",
+			"read a random post": 				"get a random post",
+			"read me a random post": 			"get a random post",
+			"read a random post from": 			"get a random post",
+			"read me a random post from": 		"get a random post",
+			"read a random post on": 			"get a random post",
+			"read me a random post on": 		"get a random post",
+
+			"get the headlines": 				"get the headlines",
+			"get todays headlines": 			"get the headlines",
+			"whats happening in the world": 	"get the headlines",
+			"what is happening in the world": 	"get the headlines",
+			"get the top stories": 				"get the headlines",
+			"get the news": 					"get the headlines",
+			"get me the news": 					"get the headlines",
+			"give me the news": 				"get the headlines",
+			"fetch the news": 					"get the headlines",
+			"what is the news": 				"get the headlines",
+			"whats the news": 					"get the headlines",
+			"whats the latest news": 			"get the headlines",
+			"what is the latest news": 			"get the headlines",
+			"whats happening in the news": 		"get the headlines",
+			"what is happening in the news": 	"get the headlines",
+			"read the headlines": 				"get the headlines",
+			"read me the headlines": 			"get the headlines",
 
 		// Google Apps Script
 			"edit wish list": 					"edit wish list",
@@ -2817,42 +2830,6 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
-			"get the headlines": function(remainder, callback) {
-				try {
-					// icon
-						var icon = "&#x1f4f0;"
-
-					// options
-						var options = {
-							url: "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
-						}
-
-					// proxy to server
-						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							try {
-								// construct response list
-									var list = response.rss.channel.item
-									var stories = []
-									var storyItems = []
-									for (var i = 0; i < list.length - 1; i++) {
-										stories.push(list[i].title + " " + list[i].description)
-										storyItems.push("<li><a target='_blank' href='" + list[i].link + "'><b>" + list[i].title + "</b></a><p>" + list[i].description + "</p></li>")
-									}
-
-								// response
-									var message = "I found " + stories.length + " stor" + (list.length == 1 ? "y" : "ies") + " on the New York Times." + stories.join("... ")
-									var responseHTML = "<a target='_blank' href='https://www.nytimes.com'><h2>New York Times</h2></a><ul>" + storyItems.join("") + "</ul>"
-									callback({icon: icon, message: message, html: responseHTML})
-							}
-							catch (error) {
-								callback({icon: icon, error: true, message: "I can't get the news.", html: "<h2>Error: unable to access the New York Times</h2>"})
-							}
-						})
-				}
-				catch (error) {
-					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
-				}
-			},
 			"get the weather": function(remainder, callback) {
 				try {
 					// icon
@@ -3179,6 +3156,8 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
+
+		// news & blogs
 			"get the latest post": function(remainder, callback) {
 				try {
 					// icon
@@ -3191,26 +3170,55 @@
 							return
 						}
 
+					// built-in feeds
+						var feeds = {
+							"bbc": "http://feeds.bbci.co.uk/news/rss.xml",
+							"the bbc": "http://feeds.bbci.co.uk/news/rss.xml",
+							"wired": "https://www.wired.com/feed/rss",
+							"onion": "https://www.theonion.com/rss",
+							"the onion": "https://www.theonion.com/rss",
+							"fivethirtyeight": "https://fivethirtyeight.com/all/feed",
+							"five thirtyeight": "https://fivethirtyeight.com/all/feed",
+							"five thirty eight": "https://fivethirtyeight.com/all/feed",
+							"538": "https://fivethirtyeight.com/all/feed",
+							"science news": "https://sciencenews.org/feed",
+							"anagram times": "https://www.anagramtimes.com/feeds/posts/default",
+							"the anagram times": "https://www.anagramtimes.com/feeds/posts/default",
+							"the muse": "https://www.themuse.com/feeds/rss",
+							"new york times": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+							"the new york times": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+							"new york times": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+							"ny times": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+							"the ny times": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+							"nytimes": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+						}
+
 					// missing config?
-						if (!window.CONFIGURATION_LIBRARY[remainder]) {
+						if (!feeds[remainder] && !window.CONFIGURATION_LIBRARY[remainder]) {
 							callback({icon: icon, error: true, message: "I'm not subscribed to that feed yet.", html: "<h2>Error: missing feed:</h2><li>" + remainder + "</li>"})
 							return
 						}
 
 					// options
 						var options = {
-							url: window.CONFIGURATION_LIBRARY[remainder]
+							asIs: true,
+							url: feeds[remainder] || window.CONFIGURATION_LIBRARY[remainder]
 						}
 
 					// proxy request
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								// get list
-									if (Array.isArray(response)) {
-										var list = response
+								// get list (json)
+									try {
+										var list = JSON.parse(response)
+										var json = true
 									}
-									else if (response.rss && response.rss.channel && response.rss.channel.item && Array.isArray(response.rss.channel.item)) {
-										var list = response.rss.channel.item
+
+								// get list (xml)
+									catch (error) {
+										var rssDoc = new DOMParser().parseFromString(response, "text/xml")
+										var list = rssDoc.querySelectorAll("channel item")
+										var json = false
 									}
 
 								// no list
@@ -3222,13 +3230,44 @@
 								// loop through all entries
 									var entries = []
 									for (var i in list) {
-										entries.push({
-											url: list[i].url || list[i].link || null,
-											title: list[i].title || "untitled",
-											author: list[i].author || list[i]["dc:creator"] || null,
-											date: (list[i].date || list[i].pubDate) ? new Date(list[i].date || list[i].pubDate) : null,
-											text: list[i].text || list[i]["content:encoded"] || list[i].description || ""
-										})
+										if (typeof list[i] == "object") {
+											// json
+												if (json) {
+													var url = list[i].url || list[i].link
+													var title = list[i].title
+													var author = list[i].author || list[i]["dc:creator"] || list[i]["dc:contributor"]
+													var date = list[i].date || list[i].pubDate
+													var text = list[i].text || list[i]["content:encoded"] || list[i].description
+												}
+
+											// xml
+												else {
+													var url = (list[i].querySelector("url") ? list[i].querySelector("url").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+														|| (list[i].querySelector("link") ? list[i].querySelector("link").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+												
+													var title = (list[i].querySelector("title") ? list[i].querySelector("title").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+
+													var author = (list[i].querySelector("author") ? list[i].querySelector("author").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+														|| (list[i].getElementsByTagNameNS("*", "creator").length ? list[i].getElementsByTagNameNS("*", "creator")[0].innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+														|| (list[i].getElementsByTagNameNS("*", "contributor").length ? list[i].getElementsByTagNameNS("*", "contributor")[0].innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+
+													var date = (list[i].querySelector("date") ? list[i].querySelector("date").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+														|| (list[i].querySelector("pubDate") ? list[i].querySelector("pubDate").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+
+													var text = (list[i].querySelector("text") ? list[i].querySelector("text").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+														|| (list[i].getElementsByTagNameNS("*", "encoded").length ? list[i].getElementsByTagNameNS("*", "encoded")[0].innerHTML .replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, ""): null)
+														|| (list[i].querySelector("description") ? list[i].querySelector("description").innerHTML.replace(/\<\!\[CDATA\[/gi, "").replace(/\]\]\>/gi, "") : null)
+												}
+											
+											// entry
+												entries.push({
+													url: url || null,
+													title: title || "untitled",
+													author: author || null,
+													date: date ? new Date(date) : null,
+													text: text || null
+												})
+										}
 									}
 									entries = entries.sort(function(a,b) { return new Date(b.date).getTime() - new Date(a.date).getTime() })
 
@@ -3269,86 +3308,53 @@
 			},
 			"get a random post": function(remainder, callback) {
 				try {
+					// proxy to get the latest post (ordered list)
+						window.ACTION_LIBRARY["get the latest post"](remainder, function(response) {
+							// error?
+								if (response.error) {
+									callback({icon: response.icon, error: true, message: response.message, html: response.html})
+									return
+								}
+
+							// extract results
+								var results = response.results || []
+									results.unshift({icon: response.icon, message: response.message, html: response.html})
+
+							// shuffle them 
+								results = window.FUNCTION_LIBRARY.sortRandom(results)
+
+							// display first result
+								var firstResult = results.shift()
+								callback({icon: firstResult.icon, message: firstResult.message, html: firstResult.html, results: results})
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get the headlines": function(remainder, callback) {
+				try {
 					// icon
-						var icon = "&#x1f5de;"
+						var icon = "&#x1f4f0;"
 
-					// no remainder
-						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
-						if (!remainder || !remainder.trim()) {
-							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
-							return
-						}
+					// proxy to get the latest post (ordered list)
+						window.ACTION_LIBRARY["get the latest post"]("the new york times", function(response) {
+							// error?
+								if (response.error) {
+									callback({icon: icon, error: true, message: response.message, html: response.html})
+									return
+								}
 
-					// missing config?
-						if (!window.CONFIGURATION_LIBRARY[remainder]) {
-							callback({icon: icon, error: true, message: "I'm not subscribed to that feed yet.", html: "<h2>Error: missing feed:</h2><li>" + remainder + "</li>"})
-							return
-						}
+							// extract results
+								var results = response.results || []
+									results.unshift({icon: response.icon, message: response.message, html: response.html})
 
-					// options
-						var options = {
-							url: window.CONFIGURATION_LIBRARY[remainder]
-						}
-
-					// proxy request
-						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							try {
-								// get list
-									if (Array.isArray(response)) {
-										var list = response
-									}
-									else if (response.rss && response.rss.channel && response.rss.channel.item && Array.isArray(response.rss.channel.item)) {
-										var list = response.rss.channel.item
-									}
-
-								// no list
-									if (!list) {
-										callback({icon: icon, error: true, message: "I couldn't parse that feed.", html: "<h2>Error: unparseable feed:</h2><li>" + remainder + "</li>"})
-										return
-									}
-
-								// loop through all entries
-									var entries = []
-									for (var i in list) {
-										entries.push({
-											url: list[i].url || list[i].link || null,
-											title: list[i].title || "untitled",
-											author: list[i].author || list[i]["dc:creator"] || null,
-											date: (list[i].date || list[i].pubDate) ? new Date(list[i].date || list[i].pubDate) : null,
-											text: list[i].text || list[i]["content:encoded"] || list[i].description || ""
-										})
-									}
-									entries = window.FUNCTION_LIBRARY.sortRandom(entries)
-
-								// loop through all results
-									var results = []
-									for (var i in entries) {
-										if (entries[i].text) {
-											// message
-												var textNode = document.createElement("div")
-													textNode.innerHTML = entries[i].text.replace(/\n/gi, " ... ")
-												var text = textNode.innerText
-												var message = entries[i].title + (entries[i].author ? (" by " + entries[i].author) : "") + " ... " + (text || "")
-
-											// html
-												var responseHTML = (entries[i].url ? ("<a target='_blank' href='" + entries[i].url + "'><h2>" + entries[i].title + "</h2></a>") : ("<h2>" + entries[i].title + "</h2>")) + 
-													(entries[i].author ? ("<i>" + entries[i].author + "</i>") : "") +
-													(entries[i].author && entries[i].date ? ", " : "") +
-													(entries[i].date ? ("<i>" + new Date(entries[i].date).toLocaleDateString() + "</i>") : "") +
-													("<p>" + entries[i].text.replace(/\n/gi, "<br>").replace(/srcset\=/gi, "data-srcset=").replace(/\<a href\=/gi, "<a target='_blank' href=") + "</p>")
-
-											// add to results
-												results.push({icon: icon, message: message, html: responseHTML})
-										}
-									}
-
-								// display first result
-									var firstResult = results.shift()
-									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
-							}
-							catch (error) {
-								callback({icon: icon, error: true, message: "I couldn't access that feed.", html: "<h2>Error: unable to access feed</h2>" + remainder})
-							}
+							// display all results
+								var message = "I found " + results.length + (results.length == 1 ? " story: " : " stories: ") +
+									results.map(function(result) { return result.message }).join(" ... ")
+								var responseHTML = "<a target='_blank' href='https://www.nytimes.com/'><h2>Today's Headlines from The New York Times</h2></a>" +
+									"<ul>" + results.map(function(result) { return "<li>" + result.html + "</li>"}).join("") + "</ul>"
+								callback({icon: icon, message: message, html: responseHTML})
 						})
 				}
 				catch (error) {
