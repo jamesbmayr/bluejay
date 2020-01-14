@@ -1608,6 +1608,17 @@
 							// websites library
 								var websites = {
 									"google": "https://google.com",
+									"drive": "https://www.drive.google.com",
+									"google drive": "https://www.drive.google.com",
+									"gmail": "https://www.mail.google.com",
+									"google calendar": "https://www.calendar.google.com",
+									"youtube": "https://www.youtube.com",
+									"wikipedia": "https://www.wikipedia.com",
+									"reddit": "https://www.reddit.com",
+									"tumblr": "https://www.tumblr.com",
+									"hulu": "https://www.hulu.com",
+									"netflix": "https://www.netflix.com",
+									"amazon": "https://www.amazon.com"
 								}
 
 							// can't be found

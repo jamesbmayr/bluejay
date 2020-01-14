@@ -811,6 +811,11 @@ window.addEventListener("load", function() {
 						    followup = false
 					}
 
+				// last word is cancel
+					else if (phrase.toLowerCase().includes("cancel") && phrase.toLowerCase().trim().lastIndexOf("cancel") == phrase.trim().length - 6) {
+						return false
+					}
+
 				// existing flow?
 					else if (CONTEXT_LIBRARY.flow) {
 						var action = CONTEXT_LIBRARY.flow
@@ -828,7 +833,12 @@ window.addEventListener("load", function() {
 							if (!action) {
 								remainder.unshift(phraseText.pop())
 							}
-						} while (!action && phraseText.length)
+						} while ((!action || !ACTION_LIBRARY[action]) && phraseText.length)
+
+						// no action, but lastIncompleteAction
+							if ((!action || !ACTION_LIBRARY[action]) && CONTEXT_LIBRARY.lastIncompleteAction && ACTION_LIBRARY[CONTEXT_LIBRARY.lastIncompleteAction]) {
+								action = CONTEXT_LIBRARY.lastIncompleteAction
+							}
 					}
 
 				// enact phrase
@@ -846,6 +856,9 @@ window.addEventListener("load", function() {
 							if (previousFlow) {
 								delete CONTEXT_LIBRARY[previousFlow]
 							}
+
+						// end lastIncompleteAction
+							CONTEXT_LIBRARY.lastIncompleteAction = null
 
 						// end videos
 							if (CONTEXT_LIBRARY.lastResponseVideo) {
@@ -902,6 +915,13 @@ window.addEventListener("load", function() {
 					CONTEXT_LIBRARY.lastResponseIcon = response.icon
 					CONTEXT_LIBRARY.lastResponseMessage = response.message
 					CONTEXT_LIBRARY.lastResponseHTML = response.html
+
+					if (response.error) {
+						CONTEXT_LIBRARY.lastIncompleteAction = action
+					}
+					else {
+						CONTEXT_LIBRARY.lastIncompleteAction = null
+					}
 
 					if (!["no action", "stop", "repeat that", "do that again", "get next result"].includes(action)) {
 						CONTEXT_LIBRARY.lastPhrase = phrase
