@@ -3790,7 +3790,7 @@
 													("<p>" + entries[i].text.replace(/\n/gi, "<br>").replace(/height\=\"1\"/gi, 'height="1" style="display:none !important;"') + "</p>")
 
 											// add to results
-												results.push({icon: icon, message: message, html: responseHTML, url: url})
+												results.push({icon: icon, message: message, html: responseHTML, url: entries[i].url})
 										}
 									}
 
