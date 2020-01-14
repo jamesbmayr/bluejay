@@ -453,6 +453,13 @@
 			text-shadow: 0px 0px 5px #0093c4;
 		}
 
+		.stream-history hr {
+			background-color: #222222;
+			border: 0px;
+			height: 1px;
+			margin: 30px 0px;
+		}
+
 		.stream-history table {
 			border: 2px solid #222222;
 			border-radius: 5px;
@@ -488,7 +495,7 @@
 		.stream-history img {
 			border-radius: 5px;
 			border: 2px solid #222222;
-			max-width: 100%;
+			max-width: calc(100% - 4px);
 		}
 
 		.stream-history details {

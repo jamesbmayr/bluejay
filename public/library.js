@@ -62,6 +62,7 @@
 			"have a merry": 					"receive greeting",
 
 		// meta
+			"list actions": 					"list actions",
 			"help": 							"list actions",
 			"get help": 						"list actions",
 			"what are your functions": 			"list actions",
@@ -72,11 +73,10 @@
 			"i need some help": 				"list actions",
 			"what can i say": 					"list actions",
 			"list functions": 					"list actions",
-			"list actions": 					"list actions",
 			"list commands": 					"list actions",
 
-			"repeat after me": 					"repeat this",
 			"repeat this": 						"repeat this",
+			"repeat after me": 					"repeat this",
 			"say what i say": 					"repeat this",
 			"say exactly what i say": 			"repeat this",
 			"say this back": 					"repeat this",
@@ -101,6 +101,7 @@
 			"try that action again": 			"do that again",
 			"do that one more time": 			"do that again",
 			"can you do that again": 			"do that again",
+			"again": 							"do that again",
 
 			"get next result": 					"get next result",
 			"get the next result": 				"get next result",
@@ -162,6 +163,15 @@
 			"play the last video": 				"restart last video",
 			"play that video": 					"restart last video",
 			"play the video": 					"restart last video",
+
+			"open": 							"open",
+			"open up": 							"open",
+			"open this": 						"open",
+			"open this up": 					"open",
+			"open in a new tab": 				"open",
+			"open in another tab": 				"open",
+			"open in a new window": 			"open",
+			"open in another window": 			"open",
 
 		// settings
 			"stop listening": 					"stop listening",
@@ -391,6 +401,23 @@
 			"tell me the spelling of the word": "spell word",
 			"tell me the spelling for the word": "spell word",
 
+			"pronounce word": 					"pronounce word",
+			"pronounce": 						"pronounce word",
+			"pronounce a word": 				"pronounce word",
+			"pronounce the word": 				"pronounce word",
+			"how do you pronounce": 			"pronounce word",
+			"how do you pronounce the word": 	"pronounce word",
+			"can you pronounce": 				"pronounce word",
+			"can you pronounce the word": 		"pronounce word",
+			"what is the pronunciation of": 	"pronounce word",
+			"whats the pronunciation of": 		"pronounce word",
+			"tell me how to pronounce": 		"pronounce word",
+			"tell me how to pronounce the word": "pronounce word",
+			"tell me the pronunciation of": 	"pronounce word",
+			"tell me the pronunciation for": 	"pronounce word",
+			"tell me the pronunciation of the word": "pronounce word",
+			"tell me the pronunciation for the word": "pronounce word",
+
 			"find rhymes": 						"find rhymes",
 			"what rhymes with": 				"find rhymes",
 			"find a rhyme for": 				"find rhymes",
@@ -445,6 +472,41 @@
 			"whats the etymology of": 			"find etymology",
 			"whats etymology of the word": 		"find etymology",
 			"whats the etymology of the word": 	"find etymology",
+			"what is history of": 				"find etymology",
+			"what is the history of": 			"find etymology",
+			"what is history of the word": 		"find etymology",
+			"what is the history of the word": 	"find etymology",
+			"whats history of": 				"find etymology",
+			"whats the history of": 			"find etymology",
+			"whats history of the word": 		"find etymology",
+			"whats the history of the word": 	"find etymology",
+			"what is origin of": 				"find etymology",
+			"what is the origin of": 			"find etymology",
+			"what is origin of the word": 		"find etymology",
+			"what is the origin of the word": 	"find etymology",
+			"whats origin of": 					"find etymology",
+			"whats the origin of": 				"find etymology",
+			"whats origin of the word": 		"find etymology",
+			"whats the origin of the word": 	"find etymology",
+
+			"define idiom": 					"define idiom",
+			"define the idiom": 				"define idiom",
+			"define this idiom": 				"define idiom",
+			"define an idiom": 					"define idiom",
+			"define phrase": 					"define idiom",
+			"define the phrase": 				"define idiom",
+			"define this phrase": 				"define idiom",
+			"define a phrase": 					"define idiom",
+			"define saying": 					"define idiom",
+			"define the saying": 				"define idiom",
+			"define this saying": 				"define idiom",
+			"define a saying": 					"define idiom",
+			"what is the meaning of the idiom": "define idiom",
+			"whats the meaning of the idiom": 	"define idiom",
+			"what is the meaning of the phrase": "define idiom",
+			"whats the meaning of the phrase": 	"define idiom",
+			"what is the meaning of the saying": "define idiom",
+			"whats the meaning of the saying": 	"define idiom",
 
 		// content API fetches
 			"get a joke": 						"get a joke",
@@ -491,6 +553,7 @@
 			"fetch me a fortune": 				"get a fortune",
 			"what is my fortune": 				"get a fortune",
 			"whats my fortune": 				"get a fortune",
+			"get my fortune": 					"get a fortune",
 
 			"get an insult": 					"get an insult",
 			"insult me": 						"get an insult",
@@ -515,7 +578,6 @@
 			"yo mommas": 						"get an insult",
 
 			"get a wikipedia entry": 			"get a wikipedia entry",
-			"on wikipedia, look up": 			"get a wikipedia entry",
 			"tell me about": 					"get a wikipedia entry",
 			"on wikipedia tell me about": 		"get a wikipedia entry",
 			"look this up on wikipedia": 		"get a wikipedia entry",
@@ -524,6 +586,7 @@
 			"get the wikipedia entry for": 		"get a wikipedia entry",
 			"on wikipedia find": 				"get a wikipedia entry",
 			"on wikipedia look up": 			"get a wikipedia entry",
+			"on wikipedia search for": 			"get a wikipedia entry",
 			"read the wikipedia page about": 	"get a wikipedia entry",
 			"read me the wikipedia page about": "get a wikipedia entry",
 			"read the wikipedia entry for": 	"get a wikipedia entry",
@@ -534,6 +597,9 @@
 			"do a wikipedia search for": 		"get a wikipedia entry",
 			"get the wikipedia article for": 	"get a wikipedia entry",
 			"get the wikipedia article about": 	"get a wikipedia entry",
+			"get the wikipedia page on": 		"get a wikipedia entry",
+			"get the wikipedia page about": 	"get a wikipedia entry",
+			"get the wikipedia page for": 		"get a wikipedia entry",
 
 			"get this day in history": 			"get this day in history",
 			"what happened today in history": 	"get this day in history",
@@ -610,6 +676,8 @@
 			"search goodreads for": 			"search goodreads",
 			"on goodreads search": 				"search goodreads",
 			"on goodreads search for": 			"search goodreads",
+			"on goodreads look up": 			"search goodreads",
+			"on goodreads look for": 			"search goodreads",
 			"get a book": 						"search goodreads",
 			"get me a book": 					"search goodreads",
 			"find the book": 					"search goodreads",
@@ -650,6 +718,27 @@
 			"what was written by the author": 	"search goodreads",
 			"find books by the author": 		"search goodreads",
 
+			"find lyrics": 						"find lyrics",
+			"find me lyrics": 					"find lyrics",
+			"find lyrics for": 					"find lyrics",
+			"find me lyrics for": 				"find lyrics",
+			"find the lyrics for": 				"find lyrics",
+			"find the lyrics to": 				"find lyrics",
+			"find me the lyrics for": 			"find lyrics",
+			"find me the lyrics to": 			"find lyrics",
+			"get lyrics": 						"find lyrics",
+			"get me lyrics": 					"find lyrics",
+			"get lyrics for": 					"find lyrics",
+			"get me lyrics for": 				"find lyrics",
+			"get the lyrics for": 				"find lyrics",
+			"get the lyrics to": 				"find lyrics",
+			"get me the lyrics for": 			"find lyrics",
+			"get me the lyrics to": 			"find lyrics",
+			"search for lyrics": 				"find lyrics",
+			"search for lyrics for": 			"find lyrics",
+			"search for the lyrics for": 		"find lyrics",
+			"search for the lyrics to": 		"find lyrics",
+
 		// news & blogs
 			"get the latest post": 				"get the latest post",
 			"get me the latest post": 			"get the latest post",
@@ -657,6 +746,12 @@
 			"get me the latest post from": 		"get the latest post",
 			"get the latest post on": 			"get the latest post",
 			"get me the latest post on": 		"get the latest post",
+			"get the latest news": 				"get the latest post",
+			"get me the latest news": 			"get the latest post",
+			"get the latest news from": 		"get the latest post",
+			"get me the latest news from": 		"get the latest post",
+			"get the latest news on": 			"get the latest post",
+			"get me the latest news on": 		"get the latest post",
 			"give me the latest post": 			"get the latest post",
 			"give me the latest post from": 	"get the latest post",
 			"give me the latest post on": 		"get the latest post",
@@ -700,6 +795,37 @@
 			"read me a random post from": 		"get a random post",
 			"read a random post on": 			"get a random post",
 			"read me a random post on": 		"get a random post",
+
+			"get all posts": 					"get all posts",
+			"get me all posts": 				"get all posts",
+			"get all posts from": 				"get all posts",
+			"get me all posts from": 			"get all posts",
+			"get all posts on": 				"get all posts",
+			"get me all posts on": 				"get all posts",
+			"get everything": 					"get all posts",
+			"get me everything": 				"get all posts",
+			"get everything from": 				"get all posts",
+			"get me everything from": 			"get all posts",
+			"get everything on": 				"get all posts",
+			"get me everything on": 			"get all posts",
+			"give me all posts": 				"get all posts",
+			"give me all posts from": 			"get all posts",
+			"give me all posts on": 			"get all posts",
+			"fetch all posts": 					"get all posts",
+			"fetch all posts from": 			"get all posts",
+			"fetch all posts on": 				"get all posts",
+			"read all entries": 				"get all posts",
+			"read me all entries": 				"get all posts",
+			"read all entries from": 			"get all posts",
+			"read me all entries from": 		"get all posts",
+			"read all entries on": 				"get all posts",
+			"read me all entries on": 			"get all posts",
+			"read all posts": 					"get all posts",
+			"read me all posts": 				"get all posts",
+			"read all posts from": 				"get all posts",
+			"read me all posts from": 			"get all posts",
+			"read all posts on": 				"get all posts",
+			"read me all posts on": 			"get all posts",
 
 			"get the headlines": 				"get the headlines",
 			"get todays headlines": 			"get the headlines",
@@ -765,6 +891,12 @@
 			"fetch upcoming events": 			"fetch calendar",
 			"fetch my upcoming events": 		"fetch calendar",
 			"fetch my calendar": 				"fetch calendar",
+			"get calendar": 					"fetch calendar",
+			"get events": 						"fetch calendar",
+			"get my events": 					"fetch calendar",
+			"get upcoming events": 				"fetch calendar",
+			"get my upcoming events": 			"fetch calendar",
+			"get my calendar": 					"fetch calendar",
 			"what is on my calendar": 			"fetch calendar",
 			"whats on my calendar": 			"fetch calendar",
 			"what is on the calendar": 			"fetch calendar",
@@ -790,6 +922,10 @@
 			"fetch a list called": 				"get a list",
 			"fetch my list called": 			"get a list",
 			"fetch the list called": 			"get a list",
+			"what is on my list": 				"get a list",
+			"whats on my list": 				"get a list",
+			"what is on the list": 				"get a list",
+			"whats on the list": 				"get a list",
 
 			"add an item to a list": 			"add an item to a list",
 			"add an item to the": 				"add an item to a list",
@@ -1007,6 +1143,7 @@
 			"on youtube put on": 				"search youtube",
 			"on youtube open up": 				"search youtube",
 			"on youtube open": 					"search youtube",
+			"do a youtube search for": 			"search youtube",
 
 			"google translate": 				"google translate",
 			"translate": 						"google translate",
@@ -1152,6 +1289,7 @@
 			"make a chord from": 				"analyze chord",
 
 			"shuffle word": 					"shuffle word",
+			"shuffle": 							"shuffle word",
 			"shuffle the word": 				"shuffle word",
 			"shuffle this word": 				"shuffle word",
 			"what words can you make from": 	"shuffle word",
@@ -1265,18 +1403,38 @@
 					// icon
 						var icon = "&#x1f426;"
 
-					// get all functions
-						var keys = Object.keys(window.ACTION_LIBRARY)
-					
-					// generate html list
-						var responseHTML = "<h2>action library</h2><ul>"
-						for (var i in keys) {
-							responseHTML += ("<li>" + keys[i] + "</li>")
+					// actions
+						var phraseLists = []
+						var actionList = Object.keys(window.ACTION_LIBRARY)
+						for (var i in actionList) {
+							phraseLists[actionList[i]] = []
 						}
-						responseHTML += "</ul>"
-					
-					// send response
-						var message = "Here are all of the actions I know."
+
+					// phrases
+						for (var i in window.PHRASE_LIBRARY) {
+							phraseLists[window.PHRASE_LIBRARY[i]].push(i)
+						}
+
+					// pick three at random
+						var randomActions = []
+						var escapeCount = 10
+						while (randomActions.length < 3 && escapeCount) {
+							escapeCount--
+							var randomAction = window.FUNCTION_LIBRARY.chooseRandom(actionList)
+							if (!randomActions.includes(randomAction)) {
+								randomActions.push(randomAction)
+							} 
+						}
+
+					// response
+						var message = "Here are all the actions I know. Why don't you try " + randomActions.join(", or ") + "?"
+						var responseHTML = "<h2>all actions</h2>" + 
+							actionList.map(function(action) {
+								return "<details>" + 
+								"<summary>" + action + "</summary>" + 
+								"<ul><li>" + phraseLists[action].join("</li><li>") + "</li></ul>" + 
+								"</details>"
+							}).join("")
 						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {
@@ -1369,12 +1527,7 @@
 						}
 
 					// send response
-						if (nextResult.followup !== undefined) {
-							callback({icon: nextResult.icon || icon, message: nextResult.message, html: nextResult.html, followup: nextResult.followup, video: nextResult.video || null})
-						}
-						else {
-							callback({icon: nextResult.icon || icon, message: nextResult.message, html: nextResult.html, video: nextResult.video || null})	
-						}
+						callback(nextResult)
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1411,6 +1564,75 @@
 
 					// restart the video
 						var success = window.FUNCTION_LIBRARY.restartVideo(window.CONTEXT_LIBRARY.lastResponseVideo)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"open": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f5a5;"
+
+					// clean up remainder
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What did you want me to open?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
+					// url
+						var url = null
+
+					// that?
+						if (remainder == "that") {
+							url = window.CONTEXT_LIBRARY.lastResponseURL
+						}
+
+					// url?
+						if (!url) {
+							try {
+								url = new URL(remainder).href
+							}
+							catch (error) {}
+						}
+
+					// name?
+						if (!url) {
+							// name
+								var name = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+								if (!name || !name.trim()) {
+									callback({icon: icon, error: true, message: "What did you want me to open?", html: "<h2>Error: invalid query</h2>"})
+									return
+								}
+
+							// websites library
+								var websites = {
+									"google": "https://google.com",
+								}
+
+							// can't be found
+								if (!websites[name] && !window.CONFIGURATION_LIBRARY[name]) {
+									callback({icon: icon, error: true, message: "I don't know that website.", html: "<h2>Error: unknown website:</h2>" + name})
+									return
+								}
+
+							// named website
+								url = websites[name] || window.CONFIGURATION_LIBRARY[name]
+						}
+
+					// still no url
+						if (!url) {
+							callback({icon: icon, error: true, message: "I don't know that website.", html: "<h2>Error: unknown website:</h2>" + name})
+							return
+						}
+
+					// response
+						var message = ""
+						var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + (name || url) + "</h2></a>"
+						callback({icon: icon, message: message, html: responseHTML, url: url})
+
+					// open window
+						window.open(url, "_blank")
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2085,7 +2307,7 @@
 					// return sum
 						var message = sum
 						var responseHTML = "<h2>" + count + "d" + sides + ": " + sum + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML})
+						callback({icon: icon, message: message, html: responseHTML, number: sum})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2369,20 +2591,72 @@
 							callback({icon: icon, error: true, message: "What should I spell?", html: "<h2>Error: invalid query</h2>"})
 							return
 						}
+						var word = remainder
 
-					// get letters
-						var word = remainder.toUpperCase()
-						var letters = word.split("")
+					// that?
+						if (remainder == "that" && window.CONTEXT_LIBRARY.lastResponseWord) {
+							word = window.CONTEXT_LIBRARY.lastResponseWord
+						}
+
+					// letters
+						var letters = word.toUpperCase().split("")
 
 					// response
 						var message = word + "... " + letters.join(", ")
 						var responseHTML = "<h2>" + letters.join(" - ") + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML})
+						callback({icon: icon, message: message, html: responseHTML, word: word.toLowerCase()})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
-			},			
+			},
+			"pronounce word": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4dd;"
+
+					// clean up remainder
+						remainder = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What did you want me to say?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
+					// that
+						if (remainder == "that" && window.CONTEXT_LIBRARY.lastResponseWord) {
+							var letters = window.CONTEXT_LIBRARY.lastResponseWord.split("")
+						}
+
+					// from remainder --> all one word
+						else if (!remainder.includes(" ")) {
+							var letters = remainder.split("")
+						}
+
+					// from remainder --> multiple words
+						else {
+							// split at spaces
+								var letters = remainder.split(/\s/gi)
+								for (var i in letters) {
+									letters[i] = window.FUNCTION_LIBRARY.getLetters(letters[i])
+								}
+
+							// multi-letter letters?
+								if (letters.filter(function(letter) { return letter.trim().length !== 1 }).length) {
+									callback({icon: icon, error: true, message: "I couldn't identify those letters.", html: "<h2>Error: invalid letters:</h2>" + letters.join(" - ")})
+									return
+								}
+						}
+
+					// combine and say
+						word = letters.join("")
+						var message = word
+						var responseHTML = "<h2>" + word + "</h2>" + word.toUpperCase().split("").join(" - ")
+						callback({icon: icon, message: message, html: responseHTML, word: word})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
 			"find rhymes": function(remainder, callback) {
 				try {
 					// icon
@@ -2394,10 +2668,16 @@
 							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
 							return
 						}
+						var word = remainder
+
+					// that
+						if (remainder == "that" && window.CONTEXT_LIBRARY.lastResponseWord) {
+							word = window.CONTEXT_LIBRARY.lastResponseWord
+						}
 
 					// options
 						var options = {
-							url: "https://api.datamuse.com/words?rel_rhy=" + remainder
+							url: "https://api.datamuse.com/words?rel_rhy=" + word
 						}
 
 					// proxy to server
@@ -2412,12 +2692,13 @@
 									}
 
 								// message & link
-									var message = "I found " + list.length + " rhyme" + (list.length == 1 ? "" : "s") + " for " + remainder + ". " + list.join(",")
-									var responseHTML = "<a target='_blank' href='https://rhymezone.com/r/rhyme.cgi?typeofrhyme=perfect&Word=" + remainder + "'><h2>" + remainder + "</h2></a>" +
+									var message = "I found " + list.length + " rhyme" + (list.length == 1 ? "" : "s") + " for " + word + ". " + list.join(",")
+									var url = "https://rhymezone.com/r/rhyme.cgi?typeofrhyme=perfect&Word=" + word
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + word + "</h2></a>" +
 										"<ul>" + listItems.join("") + "</ul>"
 
 								// response
-									callback({icon: icon, message: message, html: responseHTML})
+									callback({icon: icon, message: message, html: responseHTML, url: url, word: word})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I couldn't rhyme that.", html: "<h2>Error: unable to access rhymes</h2>"})
@@ -2439,10 +2720,16 @@
 							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
 							return
 						}
+						var word = remainder
+
+					// that?
+						if (remainder == "that" && window.CONTEXT_LIBRARY.lastResponseWord) {
+							word = window.CONTEXT_LIBRARY.lastResponseWord
+						}
 
 					// options
 						var options = {
-							url: "https://api.datamuse.com/words?rel_syn=" + remainder
+							url: "https://api.datamuse.com/words?rel_syn=" + word
 						}
 
 					// proxy to server
@@ -2457,12 +2744,13 @@
 									}
 
 								// message & link
-									var message = "I found " + list.length + " synonym" + (list.length == 1 ? "" : "s") + " for " + remainder + ". " + list.join(",")
-									var responseHTML = "<a target='_blank' href='https://rhymezone.com/r/rhyme.cgi?typeofrhyme=syn&Word=" + remainder + "'><h2>" + remainder + "</h2></a>" +
+									var message = "I found " + list.length + " synonym" + (list.length == 1 ? "" : "s") + " for " + word + ". " + list.join(",")
+									var url = "https://rhymezone.com/r/rhyme.cgi?typeofrhyme=syn&Word=" + word
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + word + "</h2></a>" +
 										"<ul>" + listItems.join("") + "</ul>"
 
 								// response
-									callback({icon: icon, message: message, html: responseHTML})
+									callback({icon: icon, message: message, html: responseHTML, url: url, word: word})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't know any synonyms for that.", html: "<h2>Error: unable to access synonyms</h2>"})
@@ -2484,33 +2772,40 @@
 							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
 							return
 						}
+						var word = remainder
+
+					// that?
+						if (remainder == "that" && window.CONTEXT_LIBRARY.lastResponseWord) {
+							word = window.CONTEXT_LIBRARY.lastResponseWord
+						}
 
 					// options
 						var options = {
-							url: "https://api.datamuse.com/words?md=d&sp=" + remainder
+							url: "https://api.datamuse.com/words?md=d&sp=" + word
 						}
 
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
 								// construct response list
-									var word = response[0]
+									var wordGroup = response[0]
 									var list = []
 									var listItems = []
-									for (var i in word.defs) {
-										word.defs[i] = "[" + word.defs[i].replace(/\t/,"] ")
-										word.defs[i] = word.defs[i].replace("[n]", "[noun]").replace("[v]", "[verb]").replace("[adj]", "[adjective]").replace("[adv]", "[adverb]").replace("[u]", "[other]")
-										list[i] = word.defs[i]
-										listItems[i] = "<li>" + word.defs[i] + "</li>"
+									for (var i in wordGroup.defs) {
+										wordGroup.defs[i] = "[" + wordGroup.defs[i].replace(/\t/,"] ")
+										wordGroup.defs[i] = wordGroup.defs[i].replace("[n]", "[noun]").replace("[v]", "[verb]").replace("[adj]", "[adjective]").replace("[adv]", "[adverb]").replace("[u]", "[other]")
+										list[i] = wordGroup.defs[i]
+										listItems[i] = "<li>" + wordGroup.defs[i] + "</li>"
 									}
 
 								// message & link
-									var message = "I found " + list.length + " definition" + (list.length == 1 ? "" : "s") + " for " + remainder + ". " + list.join(",")
-									var responseHTML = "<a target='_blank' href='http://wordnetweb.princeton.edu/perl/webwn?s=" + remainder + "'><h2>" + remainder + "</h2></a>" + 
+									var message = "I found " + list.length + " definition" + (list.length == 1 ? "" : "s") + " for " + word + ". " + list.join(",")
+									var url = "http://wordnetweb.princeton.edu/perl/webwn?s=" + word
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + word + "</h2></a>" + 
 										"<ul>" + listItems.join("") + "</ul>"
 
 								// response
-									callback({icon: icon, message: message, html: responseHTML})
+									callback({icon: icon, message: message, html: responseHTML, url: url, word: word})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I couldn't define that.", html: "<h2>Error: unable to access definitions</h2>"})
@@ -2532,9 +2827,14 @@
 							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
 							return
 						}
+						var word = remainder
+
+					// that?
+						if (remainder == "that" && window.CONTEXT_LIBRARY.lastResponseWord) {
+							word = window.CONTEXT_LIBRARY.lastResponseWord
+						}
 
 					// options
-						var word = remainder
 						var options = {
 							asIs: true,
 							url: "https://www.etymonline.com/word/" + word
@@ -2548,7 +2848,7 @@
 										temporaryElement.innerHTML = response
 
 								// get objects
-									var words = []
+									var wordGroups = []
 									var objects = Array.from(temporaryElement.querySelectorAll(".word--C9UPa object"))
 
 								// no objects
@@ -2576,7 +2876,7 @@
 											}
 
 										// package into an object
-											words.push({
+											wordGroups.push({
 												word: objectWord,
 												partOfSpeech: objectPartOfSpeech,
 												history: objectHistory
@@ -2584,15 +2884,115 @@
 									}
 
 								// message & list
-									var message = "I found " + words.length + (words.length == 1 ? " etymology... " : " etymologies... ") + (words.length ? words.map(function(entry) { return entry.word + ", " + entry.partOfSpeech + "... " + entry.history.join(" ... ") }).join(" ... ... ") : "")
-									var responseHTML = "<a target='_blank' href='https://www.etymonline.com/word/" + remainder + "'><h2>" + word + "</h2></a>" +
-										(words.length ? ("<ul><li>" + words.map(function(entry) { return "<h3>" + entry.word + (entry.partOfSpeech ? (" (" + entry.partOfSpeech + ")") : "") + "</h3><p>" + entry.history.join("</p><p>") + "</p>" }).join("</li><li>") + "</li></ul>") : "")
+									var message = "I found " + wordGroups.length + (wordGroups.length == 1 ? " etymology... " : " etymologies... ") + (wordGroups.length ? wordGroups.map(function(entry) { return entry.word + ", " + entry.partOfSpeech + "... " + entry.history.join(" ... ") }).join(" ... ... ") : "")
+									var url = "https://www.etymonline.com/word/" + word
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + word + "</h2></a>" +
+										(wordGroups.length ? ("<ul><li>" + wordGroups.map(function(entry) { return "<h3>" + entry.word + (entry.partOfSpeech ? (" (" + entry.partOfSpeech + ")") : "") + "</h3><p>" + entry.history.join("</p><p>") + "</p>" }).join("</li><li>") + "</li></ul>") : "")
 
 								// response
-									callback({icon: icon, message: message, html: responseHTML})
+									callback({icon: icon, message: message, html: responseHTML, url: url, word: word})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I couldn't find the etymology of that.", html: "<h2>Error: unable to access etymonline</h2>"})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"define idiom": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4ac;"
+
+					// clean up remainder
+						remainder = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+						var word = remainder
+
+					// that?
+						if (remainder == "that" && window.CONTEXT_LIBRARY.lastResponseWord) {
+							word = window.CONTEXT_LIBRARY.lastResponseWord
+						}
+
+					// options
+						var options = {
+							asIs: true,
+							url: "https://www.thefreedictionary.com/_/partner.aspx?Set=idioms&Word=" + word
+						}
+
+					// proxy request
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// put response in a temporary element
+									var temporaryElement = document.createElement("div")
+										temporaryElement.innerHTML = response
+
+								// get sections
+									var idioms = []
+									var sections = Array.from(temporaryElement.querySelectorAll("#MainTxt section"))
+
+								// no sections
+									if (!sections || !sections.length) {
+										callback({icon: icon, error: true, message: "I couldn't find the meaning of " + remainder, html: "<h2>Error: no definition found:</h2>" + remainder})
+										return
+									}
+
+								// loop through sections to extract relevant information
+									for (var i in sections) {
+										// get h2 --> phrase
+											var phrase = sections[i].querySelector("h2").innerText
+
+										// examples
+											var exampleBlocks = Array.from(sections[i].querySelectorAll(".illustration")) || []
+											var examples = exampleBlocks.map(function(example) { return example ? example.innerText : null })
+
+										// seeAlso & copyright
+											var seeAlso = sections[i].querySelector(".SeeAlso") || null
+											var copyright = sections[i].querySelector(".brand_copy") || null
+
+										// definition
+											var definition = sections[i].innerText
+												definition = definition.replace(phrase, "")
+											if (seeAlso) {
+												definition = definition.replace(seeAlso.innerText, "")
+											}
+											if (copyright) {
+												definition = definition.replace(copyright.innerText, "")
+											}
+											if (examples && examples.length) {
+												for (var i in examples) {
+													definition = definition.replace(examples[i], "")
+												}
+											}
+												definition = definition.trim()
+
+										// package into an object
+											idioms.push({
+												phrase: phrase,
+												definition: definition,
+												examples: examples
+											})
+									}
+
+								// message & list
+									var message = "I found " + idioms.length + (idioms.length == 1 ? " idiom... " : " idioms... ") + 
+										(idioms.length ? idioms.map(function(entry) { return entry.phrase + ", " + entry.definition + "... " + (entry.examples && entry.examples.length ? " for example: " + entry.examples.join(" ... ") : "") }).join(" ... ... ") : "")
+									var url = "https://idioms.thefreedictionary.com/" + word
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + word + "</h2></a>" +
+										(idioms.length ? ("<ul><li>" + idioms.map(function(entry) {
+											return "<h3>" + entry.phrase + "</h3><p>" + entry.definition + (entry.examples && entry.examples.length ? ("<ul><li>" + entry.examples.join("</li><li>") + "</li></ul>") : "") + "</p>"
+										}).join("</li><li>") + "</li></ul>") : "")
+
+								// response
+									callback({icon: icon, message: message, html: responseHTML, url: url, word: word})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I couldn't find the meaning of that.", html: "<h2>Error: unable to access idioms</h2>"})
 							}
 						})
 				}
@@ -2617,8 +3017,9 @@
 							try {
 								// response
 									var message = response.attachments[0].text
-									var responseHTML = "<a target='_blank' href='https://icanhazdadjoke.com'><h2>" + response.attachments[0].text + "</h2></a>"
-									callback({icon: icon, message: message, html: responseHTML})
+									var url = "https://icanhazdadjoke.com"
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + response.attachments[0].text + "</h2></a>"
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't know any jokes.", html: "<h2>Error: unable to access jokes</h2>"})
@@ -2648,15 +3049,11 @@
 										return
 									}
 
-								// quote link, text, author
-									var quoteLink   = response.quoteLink
-									var quoteText   = response.quoteText
-									var quoteAuthor = response.quoteAuthor
-
 								// response
-									var message = quoteAuthor + " said... " + quoteText
-									var responseHTML = "<a target='_blank' href='" + quoteLink + "'><h2>\"" + quoteText + "\" - " + quoteAuthor + "</h2></a>"
-									callback({icon: icon, message: message, html: responseHTML})
+									var message = response.quoteAuthor + " said... " + response.quoteText
+									var url = response.quoteLink
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>\"" + response.quoteText + "\" - " + response.quoteAuthor + "</h2></a>"
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, message: "I don't know any quotes.", html: "unable to access quotes"})
@@ -2687,13 +3084,15 @@
 									var results = []
 									for (var i in fortunes) {
 										var message = fortunes[i].message
-										var responseHTML = "<a target='_blank' href='https://fortunecookieapi.herokuapp.com/'><h2>" + fortunes[i].message + "</h2></a>"
-										results.push({icon: icon, message: message, html: responseHTML})
+										var url = "https://fortunecookieapi.herokuapp.com"
+										var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + fortunes[i].message + "</h2></a>"
+										results.push({icon: icon, message: message, html: responseHTML, url: url})
 									}
 
 								// send response
 									var firstResult = results.shift()
-									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
+									firstResult.results = results
+									callback(firstResult)
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't know any fortunes.", html: "<h2>Error: unable to access fortunes</h2>"})
@@ -2736,21 +3135,27 @@
 					// icon
 						var icon = "&#x1f310;"
 
-					// attempt counter
-						if (!window.CONTEXT_LIBRARY["wikipedia attempt counter"]) {
-							window.CONTEXT_LIBRARY["wikipedia attempt counter"] = 1
-						}
-
 					// no remainder
 						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
 						if (!remainder || !remainder.trim()) {
 							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
 							return
 						}
+						var word = remainder
+
+					// that?
+						if (remainder == "that" && window.CONTEXT_LIBRARY.lastResponseWord) {
+							word = window.CONTEXT_LIBRARY.lastResponseWord
+						}
+
+					// attempt counter
+						if (!window.CONTEXT_LIBRARY["wikipedia attempt counter"]) {
+							window.CONTEXT_LIBRARY["wikipedia attempt counter"] = 1
+						}
 
 					// options
 						var options = {
-							url: "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=" + remainder
+							url: "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=" + word
 						}
 
 					// proxy to server --> search
@@ -2768,6 +3173,7 @@
 										}
 
 									// other error
+										window.CONTEXT_LIBRARY["wikipedia attempt counter"] = 0
 										callback({icon: icon, error: true, message: "I couldn't find " + remainder + " on Wikipedia.", html: "<h2>Error: unable to access Wikipedia</h2>"})
 										return
 								}
@@ -2804,8 +3210,9 @@
 												message = message.replace(/\[edit\]/gi,"")
 											
 										// response
-											responseHTML = "<a target='_blank' href='https://en.wikipedia.org/?curid=" + response.parse.pageid + "'><h2>" + response.parse.title + "</h2></a>" + responseHTML
-											callback({icon: icon, message: message, html: responseHTML})
+											var url = "https://en.wikipedia.org/?curid=" + response.parse.pageid
+											responseHTML = "<a target='_blank' href='" + url + "'><h2>" + response.parse.title + "</h2></a>" + responseHTML
+											callback({icon: icon, message: message, html: responseHTML, url: url, word: word})
 
 										// reset counter
 											window.CONTEXT_LIBRARY["wikipedia attempt counter"] = 0
@@ -2952,10 +3359,11 @@
 									var locale = response.city.name + ", " + response.city.country
 									var conditions = "Right now it's " + response.list[0].main.temp + " degrees and " + (response.list[0].weather ? response.list[0].weather[0].description : "clear")
 									var message = "Here's the weather for " + locale + "." + conditions
-									var responseHTML = "<a target='_blank' href='https://openweathermap.org/find?q=" + locale + "'><h2>weather in <b>" + locale + "</b></h2></a>" + table
+									var url = "https://openweathermap.org/find?q=" + locale
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>weather in <b>" + locale + "</b></h2></a>" + table
 
 								// response
-									callback({icon: icon, message: message, html: responseHTML})
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get the weather for " + remainder, html: "<h2>Error: unable to access the weather for that location:</h2>" + remainder})
@@ -3006,7 +3414,11 @@
 
 								// construct response
 									var message = "Here's what I found for " + remainder + "... " + calories + "; " + carbs + " of carbs; " + fat + " of fat; " + protein + " of protein"
-									var responseHTML = "<h2>" + remainder + "</h2>" + "<li><b>calories:</b> " + calories + "</li>" + "<li><b>carbs:</b> " + carbs + "</li>" + "<li><b>fat:</b> " + fat + "</li>" + "<li><b>protein:</b> " + protein + "</li>"
+									var responseHTML = "<h2>" + remainder + "</h2>" +
+										"<li><b>calories:</b> " + calories + "</li>" +
+										"<li><b>carbs:</b> " + carbs + "</li>" +
+										"<li><b>fat:</b> " + fat + "</li>" +
+										"<li><b>protein:</b> " + protein + "</li>"
 
 								// send response
 									callback({icon: icon, message: message, html: responseHTML})
@@ -3138,21 +3550,81 @@
 												(rating ? (" has an average rating of " + rating + " star" + (rating == 1 ? "" : "s")) : "")
 
 										// add to results array
-											results.push({
-												icon: icon,
-												message: message,
-												html: responseHTML
-											})
+											results.push({icon: icon, message: message, html: responseHTML, url: url})
 									}
 
 								// display first result
 									var firstResult = results.shift()
-									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
+										firstResult.results = results
+									callback(firstResult)
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I couldn't find that book.", html: "<h2>Error: unable to access goodreads</h2>"})
 							}
 						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"find lyrics": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f3b5;"
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
+					// remove "by"
+						var search = remainder.replace(/ performed by | played by | written by | composed by | sung by | by /gi, " ")
+
+					// attempt counter
+						if (!window.CONTEXT_LIBRARY["lyrics attempt counter"]) {
+							window.CONTEXT_LIBRARY["lyrics attempt counter"] = 1
+						}
+
+					// options
+						var options = {
+							url: "https://mourits.xyz:2096/?q=" + search
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// unsuccessful
+									if (!response.success || !response.result) {
+										// too long (fewer than 5 attempts)
+											if (window.CONTEXT_LIBRARY["lyrics attempt counter"] < 5) {
+												window.CONTEXT_LIBRARY["lyrics attempt counter"]++
+												window.ACTION_LIBRARY["find lyrics"](remainder, callback)
+												return
+											}
+
+										// other error
+											window.CONTEXT_LIBRARY["lyrics attempt counter"] = 0
+											callback({icon: icon, error: true, message: "I was unable to find lyrics for " + remainder, html: "<h2>Error: no results:</h2>" + response.error})
+											return
+									}
+								
+								// respond with answer
+									window.CONTEXT_LIBRARY["lyrics attempt counter"] = 0
+									
+									var message = response.result.lyrics.replace(/\[.*[^\]]\]/gi, "").trim().replace(/\n\n\n|\n\n|\n/gi, " ... ")
+									var url = response.result.source ? response.result.source.url : null
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + response.song + "</h2></a>" +
+										"<h3>" + response.artist + "</h3>" +
+										"<p>" + response.result.lyrics.replace(/\n\n\n|\n\n|\n/gi, "<br>") + "</p>"
+									callback({icon: icon, message: message, html: responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to find lyrics for " + remainder, html: "<h2>Error: unable to access lyrics:</h2>" + remainder})
+							}
+						})
+
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -3194,6 +3666,22 @@
 							"the ny times": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
 							"nytimes": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
 							"mcsweeneys": "https://www.mcsweeneys.net/rss",
+							"google news": "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en",
+							"cnn": "http://rss.cnn.com/rss/cnn_topstories.rss",
+							"washington post": "http://feeds.washingtonpost.com/rss/world",
+							"the washington post": "http://feeds.washingtonpost.com/rss/world",
+							"npr": "https://www.npr.org/rss/rss.php?id=1001",
+							"reuters": "http://feeds.reuters.com/reuters/topNews",
+							"science daily": "http://feeds.sciencedaily.com/sciencedaily",
+							"pbs": "https://www.pbs.org/wgbh/nova/rss/all/",
+							"guardian": "https://www.theguardian.com/world/rss",
+							"the guardian": "https://www.theguardian.com/world/rss",
+							"vox": "https://www.vox.com/rss/world/index.xml",
+							"abc": "https://abcnews.go.com/abcnews/internationalheadlines",
+							"cbs": "https://www.cbsnews.com/latest/rss/world",
+							"nbc": "https://www.cnbc.com/id/100727362/device/rss/rss.html",
+							"time": "http://feeds.feedburner.com/time/world",
+							"time magazine": "http://feeds.feedburner.com/time/world",
 						}
 
 					// missing config?
@@ -3292,23 +3780,24 @@
 												var textNode = document.createElement("div")
 													textNode.innerHTML = entries[i].text.replace(/\n/gi, " ... ").replace(/\<script[^>]*\>(.*?)script\>/gi, "").replace(/\<style[^>]*\>(.*?)style\>/gi, "")
 												var text = textNode.innerText
-												var message = entries[i].title + (entries[i].author ? (" by " + entries[i].author) : "") + " ... " + (text || "")
+												var message = entries[i].title + (entries[i].author ? entries[i].author : "") + " ... " + (text || "")
 
 											// html
 												var responseHTML = (entries[i].url ? ("<a target='_blank' href='" + entries[i].url + "'><h2>" + entries[i].title + "</h2></a>") : ("<h2>" + entries[i].title + "</h2>")) + 
 													(entries[i].author ? ("<i>" + entries[i].author + "</i>") : "") +
 													(entries[i].author && entries[i].date ? ", " : "") +
 													(entries[i].date ? ("<i>" + new Date(entries[i].date).toLocaleDateString() + "</i>") : "") +
-													("<p>" + entries[i].text.replace(/\n/gi, "<br>") + "</p>")
+													("<p>" + entries[i].text.replace(/\n/gi, "<br>").replace(/height\=\"1\"/gi, 'height="1" style="display:none !important;"') + "</p>")
 
 											// add to results
-												results.push({icon: icon, message: message, html: responseHTML})
+												results.push({icon: icon, message: message, html: responseHTML, url: url})
 										}
 									}
 
 								// display first result
 									var firstResult = results.shift()
-									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
+										firstResult.results = results
+									callback(firstResult)
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I couldn't access that feed.", html: "<h2>Error: unable to access feed</h2>" + remainder})
@@ -3331,14 +3820,42 @@
 
 							// extract results
 								var results = response.results || []
-									results.unshift({icon: response.icon, message: response.message, html: response.html})
+									results.unshift({icon: response.icon, message: response.message, html: response.html, url: response.url})
 
 							// shuffle them 
 								results = window.FUNCTION_LIBRARY.sortRandom(results)
 
 							// display first result
 								var firstResult = results.shift()
-								callback({icon: firstResult.icon, message: firstResult.message, html: firstResult.html, results: results})
+									firstResult.results = results
+								callback(firstResult)
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get all posts": function(remainder, callback) {
+				try {
+					// proxy to get the latest post (ordered list)
+						window.ACTION_LIBRARY["get the latest post"](remainder, function(response) {
+							// error?
+								if (response.error) {
+									callback({icon: icon, error: true, message: response.message, html: response.html})
+									return
+								}
+
+							// extract results
+								var results = response.results || []
+									results.unshift({icon: response.icon, message: response.message, html: response.html, url: response.url})
+
+							// display all results
+								var icon = results[0].icon
+								var message = "I found " + results.length + (results.length == 1 ? " post: " : " posts: ") +
+									results.map(function(result) { return result.message }).join(" ... ")
+								var responseHTML = "<h2>top posts from " + remainder + "</h2>" +
+									results.map(function(result) { return "<p>" + result.html + "</p>"}).join("<hr>")
+								callback({icon: icon, message: message, html: responseHTML, url: results[0].url})
 						})
 				}
 				catch (error) {
@@ -3351,24 +3868,7 @@
 						var icon = "&#x1f4f0;"
 
 					// proxy to get the latest post (ordered list)
-						window.ACTION_LIBRARY["get the latest post"]("the new york times", function(response) {
-							// error?
-								if (response.error) {
-									callback({icon: icon, error: true, message: response.message, html: response.html})
-									return
-								}
-
-							// extract results
-								var results = response.results || []
-									results.unshift({icon: response.icon, message: response.message, html: response.html})
-
-							// display all results
-								var message = "I found " + results.length + (results.length == 1 ? " story: " : " stories: ") +
-									results.map(function(result) { return result.message }).join(" ... ")
-								var responseHTML = "<a target='_blank' href='https://www.nytimes.com/'><h2>Today's Headlines from The New York Times</h2></a>" +
-									"<ul>" + results.map(function(result) { return "<li>" + result.html + "</li>"}).join("") + "</ul>"
-								callback({icon: icon, message: message, html: responseHTML})
-						})
+						window.ACTION_LIBRARY["get all posts"]("npr", callback)
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -3573,8 +4073,9 @@
 
 								// response
 									var message = response.message + eventList.join(" ... ")
-									var responseHTML = "<a target='_blank' href='https://calendar.google.com'><h2>upcoming events</h2></a><ul>" + eventItems.join("") + "</ul>"
-									callback({icon: icon, message: message, html: responseHTML})
+									var url = "https://calendar.google.com"
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>upcoming events</h2></a><ul>" + eventItems.join("") + "</ul>"
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to fetch your calendar.", html: "<h2>Error: unable to fetch calendar:</h2>" + error})
@@ -3719,8 +4220,9 @@
 
 								// send response
 									message = response.listName + " ... " + message
-									responseHTML = "<h2>" + response.listName + "</h2>" + responseHTML
-									callback({icon: icon, message: message, html: responseHTML})
+									var url = "https://mail.google.com"
+									responseHTML = "<a target='_blank' href='" + url + "'><h2>" + response.listName + "</h2></a>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get your list.", html: "<h2>Error: unable to get list:</h2>" + error})
@@ -3868,8 +4370,9 @@
 
 								// send response
 									var message = "I added " + task + " to " + response.listName
-									responseHTML = "<h2>" + response.listName + "</h2>" + responseHTML
-									callback({icon: icon, message: message, html: responseHTML})
+									var url = "https://mail.google.com"
+									responseHTML = "<a target='_blank' href='" + url + "'><h2>" + response.listName + "</h2></a>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to add to your list.", html: "<h2>Error: unable to add to list:</h2>" + error})
@@ -3974,8 +4477,9 @@
 
 								// send response
 									message = "I found " + response.list.length + (response.list.length == 1 ? "person" : "people") + ": " + message
-									responseHTML = "<h2>" + remainder + "</h2>" + responseHTML
-									callback({icon: icon, message: message, html: responseHTML})
+									var url = "https://contacts.google.com/search/" + remainder
+									responseHTML = "<a target='_blank' href='" + url + "'><h2>" + remainder + "</h2></a>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
@@ -4046,8 +4550,9 @@
 
 								// send response
 									message = "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message
-									responseHTML = "<h2>" + remainder + " birthdays</h2>" + responseHTML
-									callback({icon: icon, message: message, html: responseHTML})
+									var url = "https://contacts.google.com/search/" + remainder
+									responseHTML = "<a target='_blank' href='" + url + "'><h2>" + remainder + " birthdays</h2></a>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
@@ -4127,8 +4632,9 @@
 
 								// send response
 									message = "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message
-									responseHTML = "<h2>" + remainder + " phone numbers</h2>" + responseHTML
-									callback({icon: icon, message: message, html: responseHTML})
+									var url = "https://contacts.google.com/search/" + remainder
+									responseHTML = "<a target='_blank' href='" + url + "'><h2>" + remainder + " phone numbers</h2></a>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
@@ -4208,8 +4714,9 @@
 
 								// send response
 									message = "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message
-									responseHTML = "<h2>" + remainder + " emails</h2>" + responseHTML
-									callback({icon: icon, message: message, html: responseHTML})
+									var url = "https://contacts.google.com/search/" + remainder
+									responseHTML = "<a target='_blank' href='" + url + "'><h2>" + remainder + " emails</h2></a>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
@@ -4289,8 +4796,9 @@
 
 								// send response
 									message = "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message
-									responseHTML = "<h2>" + remainder + " addresses</h2>" + responseHTML
-									callback({icon: icon, message: message, html: responseHTML})
+									var url = "https://contacts.google.com/search/" + remainder
+									responseHTML = "<a target='_blank' href='" + url + "'><h2>" + remainder + " addresses</h2></a>" + responseHTML
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
@@ -4364,10 +4872,16 @@
 							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
 							return
 						}
+						var word = remainder
+
+					// that?
+						if (remainder == "that" && window.CONTEXT_LIBRARY.lastResponseWord) {
+							word = window.CONTEXT_LIBRARY.lastResponseWord
+						}
 
 					// options
 						var options = {
-							url: window.CONFIGURATION_LIBRARY["google custom search"] + "&key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&q=" + remainder
+							url: window.CONFIGURATION_LIBRARY["google custom search"] + "&key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&q=" + word
 						}
 
 					// proxy
@@ -4383,15 +4897,17 @@
 									var results = []
 									for (var i in response.items) {
 										var responseMessage = response.items[i].title + " " + response.items[i].snippet
-										var responseHTML = "<a target='_blank' href='https://www.google.com?q=" + remainder + "'><h2>" + remainder + "</h2></a>" +
+										var url = "https://www.google.com?q=" + word
+										var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + word + "</h2></a>" +
 											"<p><a target='_blank' href='" + response.items[i].link + "'><b>" + response.items[i].title + "</b></a><br>" + response.items[i].snippet + "</p>"
 
-										results.push({icon: icon, message: responseMessage, html: responseHTML})
+										results.push({icon: icon, message: responseMessage, html: responseHTML, url: url, word: word})
 									}
 
 								// send response
 									var firstResult = results.shift()
-									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
+										firstResult.results = results
+									callback(firstResult)
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
@@ -4450,12 +4966,13 @@
 
 								// message & link
 									var message = origin + " to " + destination + " is " + distance + " for " + duration + "."
-									var responseHTML = "<a target='_blank' href='https://www.google.com/maps/dir/" + origin + "/" + destination + "'><h2>" + origin + " to " + destination + "</h2></a>" +
+									var url = "https://www.google.com/maps/dir/" + origin + "/" + destination
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + origin + " to " + destination + "</h2></a>" +
 										"<i>" + distance + " for " + duration + "</i><b2>" +
 										"<ol>" + steps.join("") + "</ol>"
 
 								// response
-									callback({icon: icon, message: message, html: responseHTML})
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
@@ -4525,11 +5042,16 @@
 
 											// message & html
 												var message = "I found " + place.name + " at " + (place.formatted_address || "an unknown address") + ". " + openNow
-												var responseHTML = "<h2>" + place.name + "</h2>" + 
-													"<ul><li><a target='_blank' href='" + place.url + "'>" + (place.formatted_address || "<i>no address found</i>") + "</a></li><li>" + (place.formatted_phone_number || "<i>no phone number found</i>") + "</li><li>" + (place.website ? ("<a target='_blank' href='" + place.website + "'>" + place.website + "</a>") : "<i>no website found</i>") + "<li>hours: " + (openHours || "<i>no hours found</i>") + "</li></ul>"
+												var url = place.url
+												var responseHTML = "<h2>" + place.name + "</h2><ul>" + 
+													"<li><a target='_blank' href='" + place.url + "'>" + (place.formatted_address || "<i>no address found</i>") + "</a></li>" + 
+													"<li>" + (place.formatted_phone_number || "<i>no phone number found</i>") + "</li>" +
+													"<li>" + (place.website ? ("<a target='_blank' href='" + place.website + "'>" + place.website + "</a>") : "<i>no website found</i>") + "</li>" + 
+													"<li>hours: " + (openHours || "<i>no hours found</i>") + "</li>" +
+													"</ul>"
 
 											// response
-												callback({icon: icon, message: message, html: responseHTML})
+												callback({icon: icon, message: message, html: responseHTML, url: url})
 										}
 										catch (error) {
 											callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
@@ -4562,10 +5084,16 @@
 							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
 							return
 						}
+						var word = remainder
+
+					// that?
+						if (remainder == "that" && window.CONTEXT_LIBRARY.lastResponseWord) {
+							word = window.CONTEXT_LIBRARY.lastResponseWord
+						}
 
 					// options
 						var options = {
-							url: "https://www.googleapis.com/youtube/v3/search?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&part=snippet&type=video&videoEmbeddable=true&maxResults=10&order=viewCount&q=" + remainder
+							url: "https://www.googleapis.com/youtube/v3/search?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&part=snippet&type=video&videoEmbeddable=true&maxResults=10&order=viewCount&q=" + word
 						}
 
 					// proxy request
@@ -4582,13 +5110,15 @@
 									for (var i in response.items) {
 										var message = "Now playing " + response.items[i].snippet.title
 										var randomID = window.FUNCTION_LIBRARY.generateRandom()
-										var responseHTML = '<iframe id="' + randomID + '" width="560" height="315" src="https://www.youtube.com/embed/' + response.items[i].id.videoId + '?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-										results.push({icon: icon, message: message, html: responseHTML, followup: false, video: randomID})
+										var url = "https://www.youtube.com/embed/" + response.items[i].id.videoId + "?autoplay=1"
+										var responseHTML = '<iframe id="' + randomID + '" width="560" height="315" src="' + url + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+										results.push({icon: icon, message: message, html: responseHTML, followup: false, url: url, word: word, video: randomID})
 									}
 
 								// send response
 									var firstResult = results.shift()
-									callback({icon: icon, message: firstResult.message, html: firstResult.html, followup: false, video: firstResult.video, results: results})
+										firstResult.results = results
+									callback(firstResult)
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
@@ -4621,6 +5151,11 @@
 						var components = remainder.split(/ to | in | into /gi)
 						var phrase = components[0].trim()
 						var language = components[1].trim().toLowerCase()
+
+					// that?
+						if (phrase == "that" && window.CONTEXT_LIBRARY.lastResponseWord) {
+							phrase = window.CONTEXT_LIBRARY.lastResponseWord
+						}
 
 					// language code
 						var languageCodes = {
@@ -4705,9 +5240,10 @@
 									
 								// response
 									var message = translation
-									var responseHTML = "<a target='_blank' href='https://translate.google.com/?sl=en&tl=" + languageCode + "&text=" + phrase + "'><h2>" + translation + "</h2></a>" +
+									var url = "https://translate.google.com/?sl=en&tl=" + languageCode + "&text=" + phrase
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + translation + "</h2></a>" +
 										"<b>" + language + "</b> for \"<i>" + phrase + "</i>\""
-									callback({icon: icon, message: message, html: responseHTML, language: languageCode})
+									callback({icon: icon, message: message, html: responseHTML, url: url, language: languageCode, word: phrase})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to translate that phrase.", html: "<h2>Error: unable to get translation:</h2>" + error})
@@ -4763,7 +5299,7 @@
 									// response
 										var message = "You took " + gameState.guesses + " guess" + (gameState.guesses == 1 ? "" : "es") + " to find my number: " + gameState.number + "."
 										var responseHTML = "<h2>" + gameState.guesses + " guess" + (gameState.guesses == 1 ? "" : "es") + "</h2><li>my number: <b>" + gameState.number + "</b></li>"
-										callback({icon: icon, message: message, html: responseHTML})
+										callback({icon: icon, message: message, html: responseHTML, number: Number(gameState.number)})
 
 									// end flow
 										window.CONTEXT_LIBRARY.flow = null
@@ -5346,58 +5882,6 @@
 							"  ____|_\n"
 						]
 
-					// homophones
-						var homophones = {
-							"eh": "a",
-							"hey": "a",
-							"bee": "b",
-							"sea": "c",
-							"see": "c",
-							"dee": "d",
-							"he": "e",
-							"app": "f",
-							"gee": "g",
-							"chi": "g",
-							"each": "h",
-							"eye": "i",
-							"hi": "i",
-							"jay": "j",
-							"kay": "k",
-							"hell": "l",
-							"al": "l",
-							"elf": "l",
-							"um": "m",
-							"and": "n",
-							"end": "n",
-							"ann": "n",
-							"anne": "n",
-							"oh": "o",
-							"owe": "o",
-							"pea": "p",
-							"pee": "p",
-							"cue": "q",
-							"queue": "q",
-							"are": "r",
-							"our": "r",
-							"as": "s",
-							"ask": "s",
-							"tea": "t",
-							"tee": "t",
-							"ewe": "u",
-							"you": "u",
-							"via": "v",
-							"vis": "v",
-							"viz": "v",
-							"double": "w",
-							"ax": "x",
-							"axe": "x",
-							"ex": "x",
-							"why": "y",
-							"while": "y",
-							"the": "z",
-							"zed": "z"
-						}
-
 					// initialize game
 						if (window.CONTEXT_LIBRARY.flow !== "play hangman") {
 							// get a random key
@@ -5473,12 +5957,9 @@
 								var letter = null
 								var phraseWords = remainder.split(/\s/gi)
 								for (var i in phraseWords) {
-									if ((/^[a-z]{1}$/).test(phraseWords[i])) {
-										letter = phraseWords[i]
-										break
-									}
-									else if (homophones[phraseWords[i]]) {
-										letter = homophones[phraseWords[i]]
+									var temp = window.FUNCTION_LIBRARY.getLetters(phraseWords[i])
+									if ((/^[a-z]{1}$/).test(temp)) {
+										letter = temp
 										break
 									}
 								}
@@ -5531,7 +6012,7 @@
 												var responseHTML = "<h2>" + gameState.visibleLetters.join(" ") + "</h2><pre>" + drawings[gameState.wrongGuesses] + "</pre>guesses: [" + gameState.guessedLetters.join(" ") + "]"
 
 											// response
-												callback({icon: icon, message: message, html: responseHTML})
+												callback({icon: icon, message: message, html: responseHTML, word: gameState.word})
 
 											// end flow
 												window.CONTEXT_LIBRARY.flow = null
@@ -5553,7 +6034,9 @@
 										else {
 											// response
 												gameState.visibleLetters = gameState.word.split("")
-												callback({icon: icon, message: "You lose. The word was " + gameState.word, html: "<h2>" + gameState.visibleLetters.join(" ") + "</h2><pre>" + drawings[8] + "</pre>guesses: [" + gameState.guessedLetters.join(" ") + "]"})
+												var message = "You lose. The word was " + gameState.word
+												var responseHTML = "<h2>" + gameState.visibleLetters.join(" ") + "</h2><pre>" + drawings[8] + "</pre>guesses: [" + gameState.guessedLetters.join(" ") + "]"
+												callback({icon: icon, message: message, html: responseHTML, word: gameState.word})
 
 											// end flow
 												window.CONTEXT_LIBRARY.flow = null
@@ -5906,13 +6389,15 @@
 									var results = []
 									for (var i in questions) {
 										var message = questions[i].data.title
-										var responseHTML = "<a target='_blank' href='" + questions[i].data.url + "'><h2>" + questions[i].data.title + "</h2></a>"
-										results.push({icon: icon, message: message, html: responseHTML})
+										var url = questions[i].data.url
+										var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + questions[i].data.title + "</h2></a>"
+										results.push({icon: icon, message: message, html: responseHTML, url: url})
 									}
 
 								// send response
 									var firstResult = results.shift()
-									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
+										firstResult.results = results
+									callback(firstResult)
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't have any questions.", html: "<h2>Error: unable to access reddit</h2>"})
@@ -5959,13 +6444,15 @@
 									var results = []
 									for (var i in prompts) {
 										var message = prompts[i].data.title
-										var responseHTML = "<a target='_blank' href='" + prompts[i].data.url + "'><h2>" + prompts[i].data.title + "</h2></a>"
-										results.push({icon: icon, message: message, html: responseHTML})
+										var url = prompts[i].data.url
+										var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + prompts[i].data.title + "</h2></a>"
+										results.push({icon: icon, message: message, html: responseHTML, url: url})
 									}
 
 								// send response
 									var firstResult = results.shift()
-									callback({icon: icon, message: firstResult.message, html: firstResult.html, results: results})
+										firstResult.results = results
+									callback(firstResult)
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't have any writing prompts.", html: "<h2>Error: unable to access reddit</h2>"})
@@ -6054,6 +6541,17 @@
 					// parameters
 						var input = window.FUNCTION_LIBRARY.getDigits(remainder)
 
+					// that?
+						if (input == "that" && window.CONTEXT_LIBRARY.lastResponseNumber) {
+							input = Number(window.CONTEXT_LIBRARY.lastResponseNumber)
+						}
+
+					// not a number?
+						if (!input || isNaN(input)) {
+							callback({icon: icon, error: true, message: "I don't know that number", html: "<h2>Error: invalid search:</h2>" + remainder})
+							return
+						}
+
 					// options
 						var options = {
 							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/factorfinder?number=" + input
@@ -6078,7 +6576,7 @@
 
 								// response
 									var responseHTML = "<h2>" + input + "</h2><ul>" + response.html + "</ul>"
-									callback({icon: icon, message: message, html: responseHTML})
+									callback({icon: icon, message: message, html: responseHTML, number: input})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to fetch that number.", html: "<h2>Error: unable to access factorFinder</h2>"})
@@ -6148,13 +6646,16 @@
 							callback({icon: icon, error: true, message: "What should I shuffle?", html: "<h2>Error: invalid query</h2>"})
 							return
 						}
+						var word = remainder
 
-					// parameters
-						var input = remainder
+					// that?
+						if (word == "that" && window.CONTEXT_LIBRARY.lastResponseWord) {
+							word = window.CONTEXT_LIBRARY.lastResponseWord
+						}
 
 					// options
 						var options = {
-							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/wordshuffler?word=" + input
+							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/wordshuffler?word=" + word
 						}
 
 					// proxy to server
@@ -6175,9 +6676,9 @@
 									}
 
 								// response
-									var message = "I found " + wordList.length + " words within " + input + ": " + wordList.join(", ")
-									var responseHTML = "<h2>" + input + "</h2>" + response.html
-									callback({icon: icon, message: message, html: responseHTML})
+									var message = "I found " + wordList.length + " words within " + word + ": " + wordList.join(", ")
+									var responseHTML = "<h2>" + word + "</h2>" + response.html
+									callback({icon: icon, message: message, html: responseHTML, word: word})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to shuffle that word.", html: "<h2>Error: unable to access wordShuffler</h2>"})

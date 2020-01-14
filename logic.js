@@ -459,7 +459,12 @@
 						}
 						else if (method == "get") {
 							http.get(request.post.url, function (apiResponse) {
-								if (apiResponse.headers.location) {
+								if (apiResponse.headers.location && apiResponse.headers.location.indexOf("https://") == 0) {
+									https.get(apiResponse.headers.location, function(apiReResponse) {
+										proxyResponse(apiReResponse, request.post.asIs, callback)
+									})
+								}
+								else if (apiResponse.headers.location && apiResponse.headers.location.indexOf("http://") == 0) {
 									http.get(apiResponse.headers.location, function(apiReResponse) {
 										proxyResponse(apiReResponse, request.post.asIs, callback)
 									})
@@ -480,8 +485,13 @@
 						}
 						else if (method == "get") {
 							https.get(request.post.url, function (apiResponse) {
-								if (apiResponse.headers.location) {
+								if (apiResponse.headers.location && apiResponse.headers.location.indexOf("https://") == 0) {
 									https.get(apiResponse.headers.location, function(apiReResponse) {
+										proxyResponse(apiReResponse, request.post.asIs, callback)
+									})
+								}
+								else if (apiResponse.headers.location && apiResponse.headers.location.indexOf("http://") == 0) {
+									http.get(apiResponse.headers.location, function(apiReResponse) {
 										proxyResponse(apiReResponse, request.post.asIs, callback)
 									})
 								}

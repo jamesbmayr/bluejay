@@ -34,6 +34,8 @@ window.addEventListener("load", function() {
 				lastResponseMessage: null,
 				lastResponseHTML: null,
 				lastResponseNumber: null,
+				lastResponseWord: null,
+				lastResponseURL: null,
 				lastResponseVideo: null,
 				lastResults: [],
 				flow: null,
@@ -87,6 +89,98 @@ window.addEventListener("load", function() {
 				"inputs-voice-volume": 			document.getElementById("inputs-voice-volume"),
 
 				"stream": 						document.getElementById("stream")
+			}
+
+		/* number word library */
+			var NUMBER_WORD_LIBRARY = window.NUMBER_WORD_LIBRARY = {
+				"zero": 		0,
+				"a": 			1,
+				"an": 			1,
+				"one": 			1,
+				"two": 			2,
+				"three": 		3,
+				"four": 		4,
+				"five": 		5,
+				"six": 			6,
+				"seven": 		7,
+				"eight": 		8,
+				"nine": 		9,
+				"ten": 			10,
+				"eleven": 		11,
+				"twelve": 		12,
+				"thirteen": 	13,
+				"fourteen": 	14,
+				"fifteen": 		15,
+				"sixteen": 		16,
+				"seventeen": 	17,
+				"eighteen": 	18,
+				"nineteen": 	19,
+				"twenty": 		20,
+				"thirty": 		30,
+				"forty": 		40,
+				"fifty": 		50,
+				"sixty": 		60,
+				"seventy": 		70,
+				"eighty": 		80,
+				"ninety": 		90,
+				"hundred": 		100,
+				"thousand": 	1000,
+				"million": 		1000000,
+				"billion": 		1000000000,
+				"trillion": 	1000000000000
+			}
+
+		/* letter word library */
+			var LETTER_WORD_LIBRARY = window.LETTER_WORD_LIBRARY = {
+				"eh": 		"a",
+				"hey": 		"a",
+				"bee": 		"b",
+				"sea": 		"c",
+				"see": 		"c",
+				"dee": 		"d",
+				"he": 		"e",
+				"app": 		"f",
+				"gee": 		"g",
+				"chi": 		"g",
+				"each": 	"h",
+				"eye": 		"i",
+				"hi": 		"i",
+				"jay": 		"j",
+				"kay": 		"k",
+				"hell": 	"l",
+				"al": 		"l",
+				"elf": 		"l",
+				"um": 		"m",
+				"an": 		"n",
+				"and": 		"n",
+				"end": 		"n",
+				"ann": 		"n",
+				"anne": 	"n",
+				"oh": 		"o",
+				"owe": 		"o",
+				"pea": 		"p",
+				"pee": 		"p",
+				"cue": 		"q",
+				"queue": 	"q",
+				"are": 		"r",
+				"our": 		"r",
+				"as": 		"s",
+				"ask": 		"s",
+				"tea": 		"t",
+				"tee": 		"t",
+				"ewe": 		"u",
+				"you": 		"u",
+				"via": 		"v",
+				"vis": 		"v",
+				"viz": 		"v",
+				"double": 	"w",
+				"ax": 		"x",
+				"axe": 		"x",
+				"ex": 		"x",
+				"why": 		"y",
+				"while": 	"y",
+				"the": 		"z",
+				"zed": 		"z"
 			}
 
 	/*** application ***/
@@ -154,41 +248,9 @@ window.addEventListener("load", function() {
 					}
 					else {
 						numberWord = numberWord.toLowerCase().trim()
-						     if (numberWord == "zero") 		{ return 0 }
-						else if (numberWord == "a") 		{ return 1 }
-						else if (numberWord == "an") 		{ return 1 }
-						else if (numberWord == "one") 		{ return 1 }
-						else if (numberWord == "two") 		{ return 2 }
-						else if (numberWord == "three") 	{ return 3 }
-						else if (numberWord == "four") 		{ return 4 }
-						else if (numberWord == "five") 		{ return 5 }
-						else if (numberWord == "six") 		{ return 6 }
-						else if (numberWord == "seven") 	{ return 7 }
-						else if (numberWord == "eight") 	{ return 8 }
-						else if (numberWord == "nine") 		{ return 9 }
-						else if (numberWord == "ten") 		{ return 10 }
-						else if (numberWord == "eleven") 	{ return 11 }
-						else if (numberWord == "twelve") 	{ return 12 }
-						else if (numberWord == "thirteen") 	{ return 13 }
-						else if (numberWord == "fourteen") 	{ return 14 }
-						else if (numberWord == "fifteen") 	{ return 15 }
-						else if (numberWord == "sixteen") 	{ return 16 }
-						else if (numberWord == "seventeen") { return 17 }
-						else if (numberWord == "eighteen") 	{ return 18 }
-						else if (numberWord == "nineteen") 	{ return 19 }
-						else if (numberWord == "twenty") 	{ return 20 }
-						else if (numberWord == "thirty") 	{ return 30 }
-						else if (numberWord == "forty") 	{ return 40 }
-						else if (numberWord == "fifty") 	{ return 50 }
-						else if (numberWord == "sixty") 	{ return 60 }
-						else if (numberWord == "seventy") 	{ return 70 }
-						else if (numberWord == "eighty") 	{ return 80 }
-						else if (numberWord == "ninety") 	{ return 90 }
-						else if (numberWord == "hundred") 	{ return 100 }
-						else if (numberWord == "thousand") 	{ return 1000 }
-						else if (numberWord == "million") 	{ return 1000000 }
-						else if (numberWord == "billion") 	{ return 1000000000 }
-						else if (numberWord == "trillion") 	{ return 1000000000000 }
+						if (NUMBER_WORD_LIBRARY[numberWord]) {
+							return NUMBER_WORD_LIBRARY[numberWord]
+						}
 						else {
 							return numberWord
 						}
@@ -196,6 +258,27 @@ window.addEventListener("load", function() {
 				}
 				catch (error) {
 					return numberWord
+				}
+			}
+
+		/* getLetters */
+			FUNCTION_LIBRARY.getLetters = getLetters
+			function getLetters(letterWord) {
+				try {
+					letterWord = letterWord.toLowerCase().trim()
+
+					if ((/^[a-z]{1}$/).test(letterWord)) {
+						return letterWord
+					}
+					else if (LETTER_WORD_LIBRARY[letterWord]) {
+						return LETTER_WORD_LIBRARY[letterWord]
+					}
+					else {
+						return letterWord
+					}
+				}
+				catch (error) {
+					return letterWord
 				}
 			}
 
@@ -828,6 +911,12 @@ window.addEventListener("load", function() {
 
 					if (response.number) {
 						CONTEXT_LIBRARY.lastResponseNumber = response.number
+					}
+					if (response.word) {
+						CONTEXT_LIBRARY.lastResponseWord = response.word
+					}
+					if (response.url) {
+						CONTEXT_LIBRARY.lastResponseURL = response.url
 					}
 					if (response.video) {
 						CONTEXT_LIBRARY.lastResponseVideo = response.video
