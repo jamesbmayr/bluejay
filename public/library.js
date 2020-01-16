@@ -3836,7 +3836,6 @@
 									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + name + " (" + symbol.toUpperCase() + ")</h2></a>" +
 										"$" + dailyClose + " (" + dailyChange.toFixed(2) + "%)" +
 										"<br><br>" + chart
-										console.log(message)
 									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
