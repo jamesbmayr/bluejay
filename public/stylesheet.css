@@ -526,3 +526,12 @@
 			padding: 10px;
 			font-family: monospace;
 		}
+
+		.stream-history svg {
+			padding: 10px;
+			height: auto;
+			min-height: 200px;
+			width: calc(100% - 20px);
+			background-color: #222222;
+			border-radius: 5px;
+		}

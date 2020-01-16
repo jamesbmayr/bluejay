@@ -508,7 +508,7 @@
 			"what is the meaning of the saying": "define idiom",
 			"whats the meaning of the saying": 	"define idiom",
 
-		// content API fetches
+		// random content
 			"get a joke": 						"get a joke",
 			"tell me a joke": 					"get a joke",
 			"know any jokes": 					"get a joke",
@@ -577,6 +577,7 @@
 			"yo momma": 						"get an insult",
 			"yo mommas": 						"get an insult",
 
+		// search content
 			"get a wikipedia entry": 			"get a wikipedia entry",
 			"tell me about": 					"get a wikipedia entry",
 			"on wikipedia tell me about": 		"get a wikipedia entry",
@@ -738,6 +739,22 @@
 			"search for lyrics for": 			"find lyrics",
 			"search for the lyrics for": 		"find lyrics",
 			"search for the lyrics to": 		"find lyrics",
+
+			"get stock price": 					"get stock price",
+			"get stock price for": 				"get stock price",
+			"get stock price of": 				"get stock price",
+			"get the stock price": 				"get stock price",
+			"get the stock price for": 			"get stock price",
+			"get the stock price of": 			"get stock price",
+			"fetch the stock price": 			"get stock price",
+			"fetch the stock price for": 		"get stock price",
+			"fetch the stock price of": 		"get stock price",
+			"whats the stock price": 			"get stock price",
+			"whats the stock price for": 		"get stock price",
+			"whats the stock price of": 		"get stock price",
+			"what is the stock price": 			"get stock price",
+			"what is the stock price for": 		"get stock price",
+			"what is the stock price of": 		"get stock price",
 
 		// news & blogs
 			"get the latest post": 				"get the latest post",
@@ -3022,7 +3039,7 @@
 				}
 			},
 
-		// content API fetches
+		// random content
 			"get a joke": function(remainder, callback) {
 				try {
 					// icon
@@ -3151,6 +3168,8 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
+
+		// search content
 			"get a wikipedia entry": function(remainder, callback) {
 				try {
 					// icon
@@ -3412,11 +3431,9 @@
 									var responseHTML = "<a target='_blank' href='" + url + "'><h2>weather in <b>" + locale + "</b></h2></a>" + table
 
 								// response
-									console.log(message)
 									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
-								console.log(error)
 								var location = (locale || remainder.trim() || window.CONFIGURATION_LIBRARY["city"] || window.CONFIGURATION_LIBRARY["zip code"])
 								callback({icon: icon, error: true, message: "I was unable to get the weather for " + location, html: "<h2>Error: unable to access the weather for that location:</h2>" + location})
 							}
@@ -3677,6 +3694,155 @@
 							}
 						})
 
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get stock price": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4c8;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["alphavantage api"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for alphavantage api.", html: "<h2>Error: missing configuration:</h2><li>alphavantage api</li>"})
+							return
+						}
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
+					// options
+						var options = {
+							url: "https://www.alphavantage.co/query?apikey=" + window.CONFIGURATION_LIBRARY["alphavantage api"] + "&function=SYMBOL_SEARCH&keywords=" + remainder
+						}
+
+					// proxy request - have your people talk to my people
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// no matches
+									if (!response.bestMatches || !response.bestMatches.length) {
+										callback({icon: icon, error: true, message: "I couldn't find any stocks for " + remainder + ".", html: "<h2>Error: invalid search:</h2>" + remainder})
+										return
+									}
+
+								// attempt counter
+									var allMatches = response.bestMatches
+									if (!window.CONTEXT_LIBRARY["alphavantage attempt counter"]) {
+										window.CONTEXT_LIBRARY["alphavantage attempt counter"] = 0
+									}
+
+								// fetch
+									fetchNextMatch(allMatches, handleMatch, callback)
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I couldn't find that corporation.", html: "<h2>Error: unable to access alphavantage</h2>"})
+							}
+						})
+				
+					// fetchNextMatch
+						function fetchNextMatch(allMatches, handler, callback) {
+							try {
+								// options
+									var symbol = allMatches[window.CONTEXT_LIBRARY["alphavantage attempt counter"]]["1. symbol"]
+									var name = allMatches[window.CONTEXT_LIBRARY["alphavantage attempt counter"]]["2. name"]
+									var options = {
+										url: "https://www.alphavantage.co/query?apikey=" + window.CONFIGURATION_LIBRARY["alphavantage api"] + "&function=TIME_SERIES_DAILY&symbol=" + symbol
+									}
+
+								// search
+									window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+										handler(allMatches, symbol, name, response, callback)
+									})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I couldn't find that corporation.", html: "<h2>Error: unable to access alphavantage</h2>"})
+							}
+						}
+
+					// handleMatch
+						function handleMatch(allMatches, symbol, name, response, callback) {
+							try {
+								// no data
+									if (!response["Time Series (Daily)"] || !Object.keys(response["Time Series (Daily)"]).length) {
+										// try again
+											if (window.CONTEXT_LIBRARY["alphavantage attempt counter"] < 5 && allMatches[window.CONTEXT_LIBRARY["alphavantage attempt counter"] + 1]) {
+												window.CONTEXT_LIBRARY["alphavantage attempt counter"]++
+												fetchNextMatch(allMatches, handleMatch, callback)
+												return
+											}
+
+										// give up
+											window.CONTEXT_LIBRARY["alphavantage attempt counter"] = 0
+											callback({icon: icon, error: true, message: "I couldn't find any stocks for " + remainder + ".", html: "<h2>Error: invalid search:</h2>" + remainder})
+											return
+									}
+
+								// data
+									var data = response["Time Series (Daily)"]
+									var dates = Object.keys(data).slice(0,10)
+									var minimum = 10000 // arbitrarily large
+									var maximum = -10000 // arbitrarily small
+									for (var i in dates) {
+										var close = Number(data[dates[i]]["4. close"])
+										if (close < minimum) {
+											minimum = close
+										}
+										if (close > maximum) {
+											maximum = close
+										}
+									}
+
+								// prices
+									var range = maximum - minimum
+									var scaleFactor = 400 / range
+									var dailyOpen = Number(data[dates[0]]["1. open"])
+									var dailyClose = Number(data[dates[0]]["4. close"])
+									var dailyChange = ((dailyClose - dailyOpen) / dailyOpen) * 100
+									var prices = []
+									for (var i = -1; i < 11; i++) {
+										prices.push("<text fill='#dddddd' text-anchor='middle' font-size='25' x='35' y='" + (450 - (i * 40)) + "'>" + (minimum + range / 10 * i).toFixed(2) + "</text>")
+									}
+
+								// chart
+									var points = []
+									for (var i = 0; i < dates.length; i++) {
+										points[i] = (1000 - i * 100) + "," + ((maximum - Number(data[dates[i]]["4. close"])) * scaleFactor + 50)
+									}
+
+									dates = dates.map(function(date, index) {
+										return "<text fill='#dddddd' text-anchor='middle' font-size='25' x='" + (1000 - index * 100) + "' y='535'>" + date.slice(5, date.length) + "</text>"
+									})
+
+									var chart = "<svg viewBox='0 0 1050 550'>" +
+										"<line stroke='#dddddd' stroke-width='5' x1='100' x2='100' y1='0' y2='500'></line>" +
+										"<line stroke='#dddddd' stroke-width='5' x1='100' x2='1000' y1='500' y2='500'></line>" +
+										"<polyline fill='transparent' stroke='#0093c4' stroke-width='5' points='" + points.join(" ") + "'/>" +
+										prices.join("") +
+										dates.join("") +
+									"</svg>"
+
+								// reset counter
+									window.FUNCTION_LIBRARY["alphavantage attempt counter"] = 0
+
+								// response
+									var message = name + " is" + (dailyChange > 0 ? (" up " + dailyChange.toFixed(2) + " percent to ") : dailyChange < 0 ? (" down " + dailyChange.toFixed(2) + " percent to ") : " unchanged at ") + dailyClose + " dollars."
+									var url = "https://www.google.com/search?tbm=fin&q=" + symbol
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + name + " (" + symbol.toUpperCase() + ")</h2></a>" +
+										"$" + dailyClose + " (" + dailyChange.toFixed(2) + "%)" +
+										"<br><br>" + chart
+										console.log(message)
+									callback({icon: icon, message: message, html: responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I couldn't find that corporation.", html: "<h2>Error: unable to access alphavantage</h2>"})
+							}
+						}
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
