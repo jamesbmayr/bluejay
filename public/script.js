@@ -1206,14 +1206,16 @@ window.addEventListener("load", function() {
 
 		/* proxyRequest */
 			FUNCTION_LIBRARY.proxyRequest = proxyRequest
-			function proxyRequest(options, callback) {
+			function proxyRequest(options, callback, silent) {
 				// set action for server
 					options.action = "proxyRequest"
 
 				// set timeout
-					var timeout = setTimeout(function() {
-						FUNCTION_LIBRARY.createHistory("...", "API request", "", {icon: "&#x231b;", message: "I'm fetching that now.", html: "querying the API...", followup: false})
-					}, CONFIGURATION_LIBRARY.settings["fetch-interval"])
+					if (!silent) {
+						var timeout = setTimeout(function() {
+							FUNCTION_LIBRARY.createHistory("...", "API request", "", {icon: "&#x231b;", message: "I'm fetching that now.", html: "querying the API...", followup: false})
+						}, CONFIGURATION_LIBRARY.settings["fetch-interval"])
+					}
 
 				// create request object and send to server, then clear timeout on response
 					sendPost(options, function(response) {

@@ -1235,13 +1235,21 @@
 
 			"on wink turn off": 				"turn off wink device",
 			"on wink switch off": 				"turn off wink device",
-			"on wink turn off": 				"turn off wink device",
+			"on wink flip off": 				"turn off wink device",
 			"on wink deactivate": 				"turn off wink device",
+			"turn off": 						"turn off wink device",
+			"switch off": 						"turn off wink device",
+			"flip off": 						"turn off wink device",
+			"deactivate": 						"turn off wink device",
 
 			"on wink turn on": 					"turn on wink device",
 			"on wink switch on": 				"turn on wink device",
 			"on wink flip on": 					"turn on wink device",
 			"on wink activate": 				"turn on wink device",
+			"turn on": 							"turn on wink device",
+			"switch on": 						"turn on wink device",
+			"flip on": 							"turn on wink device",
+			"activate": 						"turn on wink device",
 
 		// Reddit
 			"ask reddit": 						"ask reddit",
@@ -1978,6 +1986,8 @@
 										
 										var responseHTML = "<h2>" + host + " authorized</h2>until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()
 										callback({icon: icon, message: "", html: responseHTML})
+
+										popup.close()
 									}
 									catch (error) {}
 								})
@@ -2041,7 +2051,7 @@
 									catch (error) {
 										callback({icon: icon, error: true, message: "I couldn't reauthorize " + host, html: "<h2>Error: unable to reauthorize:</h2>" + host})
 									}
-								})
+								}, true)
 						}
 
 					// already authorized
@@ -3299,6 +3309,7 @@
 
 								// days of the week
 									var allDays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+									var dayStates = {}
 
 								// axes
 									var dayColumns = []
@@ -3317,7 +3328,15 @@
 											timeRows.push(segment.time)
 										}
 
-										segment.cell = "<td>" + segment.main.temp + "°F<br><br>" + (segment.weather ? segment.weather[0].description : "clear") + "</td>"
+										segment.cell = "<td>" + Math.round(segment.main.temp) + "°F<br><br>" + (segment.weather ? segment.weather[0].description : "clear") + "</td>"
+
+										// dayStates (for message)
+											if (!dayStates[segment.day]) {
+												dayStates[segment.day] = {
+													hours: []
+												}
+											}
+											dayStates[segment.day].hours.push({temperature: Math.round(segment.main.temp), condition: (segment.weather ? segment.weather[0].description : "clear")})
 									}
 
 								// sort times
@@ -3362,22 +3381,44 @@
 									}
 									table += "</tbody></table>"
 
-								// current weather
-									var currentTemperature = "unknown"
-									var currentWeather = "unknown"
+								// day synopses
+									for (var d in dayStates) {
+										dayStates[d].high = -1000 // arbitrarily low
+										dayStates[d].low = 1000 // arbitrarily high
+										dayStates[d].conditions = []
+										for (var h in dayStates[d].hours) {
+											if (dayStates[d].hours[h].temperature > dayStates[d].high) {
+												dayStates[d].high = dayStates[d].hours[h].temperature
+											}
+											if (dayStates[d].hours[h].temperature < dayStates[d].low) {
+												dayStates[d].low = dayStates[d].hours[h].temperature
+											}
+
+											if (!dayStates[d].conditions.length || dayStates[d].hours[h].condition !== dayStates[d].conditions[dayStates[d].conditions.length - 1]) {
+												dayStates[d].conditions.push(dayStates[d].hours[h].condition)
+											}
+										}
+									}
+
+								// day summaries
+									var daySummaries = Object.keys(dayStates).map(function(d) { return (d + " has a high of " + dayStates[d].high + " and a low of " + dayStates[d].low + "; conditions will be " + dayStates[d].conditions.join(", then ")) }) || []
 
 								// get locale, conditions, message, link
 									var locale = response.city.name + ", " + response.city.country
-									var conditions = "Right now it's " + response.list[0].main.temp + " degrees and " + (response.list[0].weather ? response.list[0].weather[0].description : "clear")
-									var message = "Here's the weather for " + locale + "." + conditions
+									var message = "Here's the weather for " + locale + " ... " +
+										"Right now it's " + Math.round(response.list[0].main.temp) + " degrees and " + (response.list[0].weather ? response.list[0].weather[0].description : "clear") + " ... " +
+										daySummaries.join(" ... ")
 									var url = "https://openweathermap.org/find?q=" + locale
 									var responseHTML = "<a target='_blank' href='" + url + "'><h2>weather in <b>" + locale + "</b></h2></a>" + table
 
 								// response
+									console.log(message)
 									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
-								callback({icon: icon, error: true, message: "I was unable to get the weather for " + remainder, html: "<h2>Error: unable to access the weather for that location:</h2>" + remainder})
+								console.log(error)
+								var location = (locale || remainder.trim() || window.CONFIGURATION_LIBRARY["city"] || window.CONFIGURATION_LIBRARY["zip code"])
+								callback({icon: icon, error: true, message: "I was unable to get the weather for " + location, html: "<h2>Error: unable to access the weather for that location:</h2>" + location})
 							}
 						})
 				}
@@ -3693,6 +3734,7 @@
 							"nbc": "https://www.cnbc.com/id/100727362/device/rss/rss.html",
 							"time": "http://feeds.feedburner.com/time/world",
 							"time magazine": "http://feeds.feedburner.com/time/world",
+							"freakonomics": "http://freakonomics.com/feed/",
 						}
 
 					// missing config?
@@ -6116,11 +6158,11 @@
 											}
 											else if (response.data[i].air_conditioner_id) {
 												device.type = "air_conditioner"
-												device.current_state = response.data[i].last_reading.connection ? ((response.data[i].last_reading.temperature * 9 / 5) + 32 + "°F") : "disconnected"
+												device.current_state = response.data[i].last_reading.connection ? (Math.round((response.data[i].last_reading.temperature * 9 / 5) + 32) + "°F") : "disconnected"
 											}
 											else if (response.data[i].thermostat_id) {
 												device.type = "thermostat"
-												device.current_state = response.data[i].last_reading.connection ? ((response.data[i].last_reading.temperature * 9 / 5) + 32 + "°F") : "disconnected"
+												device.current_state = response.data[i].last_reading.connection ? (Math.round((response.data[i].last_reading.temperature * 9 / 5) + 32) + "°F") : "disconnected"
 											}
 											else if (response.data[i].outlets) {
 												device.type = "powerstrip"
@@ -6337,7 +6379,7 @@
 									catch (error) {
 										callback({icon: icon, error: true, message: "I was unable to update a device.", html: "<h2>Error: Wink responded with these errors:</h2><li>" + error + "</li>"})
 									}
-								})
+								}, true)
 						}
 				}
 				catch (error) {

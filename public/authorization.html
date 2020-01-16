@@ -2,22 +2,27 @@
 <html>
 	<head>
 		<title>bluejay API authorization</title>
+		<style>
+			html, body, a {
+				font-family: sans-serif;
+				color: #222222;
+				font-size: 20px;
+				text-align: center;
+			}
+		</style>
 	</head>
 	<body>
 		<script node>
 			try {
 				if (request.authorizationResults && request.authorizationResults.success) {
-					("<style>html, body, a { font-family: monospace; font-color: #222222; font-size: 20px; }</style>" +
-					"<b>Success!</b><br>You may close this window.")
+					"<h2 style='color: #0093c4;'>Success!</h2><br>You may close this window."
 				}
 				else {
-					("<style>html, body, a { font-family: monospace; font-color: #222222; font-size: 20px; }</style>" +
-					"<b>Failure!</b><br>Please try this command again.")
+					"<h2 style='color: #d03a3a;'>Failure!</h2><br>Please try this command again."
 				}
 			}
 			catch (error) {
-				("<style>html, body, a { font-family: monospace; font-color: #222222; font-size: 20px; }</style>" +
-				"<b>Failure!</b><br>Please try this command again.")
+				"<h2 style='color: #d03a3a;'>Failure!</h2><br>Please try this command again."
 			}
 		</script>node>
 	</body>
