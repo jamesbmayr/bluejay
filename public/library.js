@@ -974,24 +974,53 @@
 			"log a purchase of": 				"log purchase",
 			"log my purchase of": 				"log purchase",
 
-			"fetch calendar": 					"fetch calendar",
-			"fetch events": 					"fetch calendar",
-			"fetch my events": 					"fetch calendar",
-			"fetch upcoming events": 			"fetch calendar",
-			"fetch my upcoming events": 		"fetch calendar",
-			"fetch my calendar": 				"fetch calendar",
-			"get calendar": 					"fetch calendar",
-			"get events": 						"fetch calendar",
-			"get my events": 					"fetch calendar",
-			"get upcoming events": 				"fetch calendar",
-			"get my upcoming events": 			"fetch calendar",
-			"get my calendar": 					"fetch calendar",
-			"what is on my calendar": 			"fetch calendar",
-			"whats on my calendar": 			"fetch calendar",
-			"what is on the calendar": 			"fetch calendar",
-			"whats on the calendar": 			"fetch calendar",
-			"what is happening": 				"fetch calendar",
-			"whats happening": 					"fetch calendar",
+			"get calendar": 					"get calendar",
+			"get events": 						"get calendar",
+			"get my events": 					"get calendar",
+			"get upcoming events": 				"get calendar",
+			"get my upcoming events": 			"get calendar",
+			"get my calendar": 					"get calendar",
+			"fetch calendar": 					"get calendar",
+			"fetch events": 					"get calendar",
+			"fetch my events": 					"get calendar",
+			"fetch upcoming events": 			"get calendar",
+			"fetch my upcoming events": 		"get calendar",
+			"fetch my calendar": 				"get calendar",
+			"what is on my calendar": 			"get calendar",
+			"whats on my calendar": 			"get calendar",
+			"what is on the calendar": 			"get calendar",
+			"whats on the calendar": 			"get calendar",
+			"what is happening": 				"get calendar",
+			"whats happening": 					"get calendar",
+
+			"add event": 						"add event",
+			"add an event": 					"add event",
+			"add this event": 					"add event",
+			"create event": 					"add event",
+			"create an event": 					"add event",
+			"create this event": 				"add event",
+			"add event to my calendar": 		"add event",
+			"add an event to my calendar": 		"add event",
+			"add this event to my calendar": 	"add event",
+			"create event on my calendar": 		"add event",
+			"create an event on my calendar": 	"add event",
+			"create this event on my calendar": "add event",
+			"add event called": 				"add event",
+			"add an event called": 				"add event",
+			"create event called": 				"add event",
+			"create an event called": 			"add event",
+			"add event to my calendar called": 	"add event",
+			"add an event to my calendar called": "add event",
+			"create event on my calendar called": 	"add event",
+			"create an event on my calendar called": "add event",
+			"add event named": 					"add event",
+			"add an event named": 				"add event",
+			"create event named": 				"add event",
+			"create an event named": 			"add event",
+			"add event to my calendar named": 	"add event",
+			"add an event to my calendar named": "add event",
+			"create event on my calendar named": "add event",
+			"create an event on my calendar named": "add event",
 
 			"get a list": 						"get a list",
 			"get my list": 						"get a list",
@@ -3504,6 +3533,10 @@
 
 								// response
 									callback({icon: icon, message: message, html: responseHTML, url: url})
+
+								// end flow
+									window.CONTEXT_LIBRARY.flow = null
+									delete window.CONTEXT_LIBRARY["get the weather"]
 							}
 							catch (error) {
 								var location = (locale || remainder.trim() || window.CONFIGURATION_LIBRARY["city"] || window.CONFIGURATION_LIBRARY["zip code"])
@@ -4422,7 +4455,7 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
-			"fetch calendar": function(remainder, callback) {
+			"get calendar": function(remainder, callback) {
 				try {
 					// icon
 						var icon = "&#x1f4c5;"
@@ -4478,7 +4511,151 @@
 									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
-								callback({icon: icon, error: true, message: "I was unable to fetch your calendar.", html: "<h2>Error: unable to fetch calendar:</h2>" + error})
+								callback({icon: icon, error: true, message: "I was unable to fetch your calendar.", html: "<h2>Error: unable to get calendar:</h2>" + error})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"add event": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4c5;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
+							return
+						}
+
+					// enter flow
+						window.CONTEXT_LIBRARY.flow = "add event"
+						window.CONTEXT_LIBRARY["add event"] = window.CONTEXT_LIBRARY["add event"] || {
+							title: null,
+							startDate: null,
+							startTime: null,
+							endDate: null,
+							endTime: null,
+							location: null
+						}
+
+					// check what's missing
+						var nextParameter = null
+						for (var i in window.CONTEXT_LIBRARY["add event"]) {
+							if (!window.CONTEXT_LIBRARY["add event"][i]) {
+								nextParameter = i
+								break
+							}
+						}
+
+					// something missing
+						if (nextParameter && remainder) {
+							// clean remainder
+								remainder = remainder.trim()
+
+							// add it
+								if (nextParameter == "title" || nextParameter == "location") {
+									window.CONTEXT_LIBRARY["add event"][nextParameter] = remainder
+								}
+								else if (nextParameter == "startDate" || nextParameter == "endDate") {
+									if (remainder == "today") {
+										var date = new Date().toLocaleDateString()
+									}
+									else if (remainder == "tomorrow") {
+										var date = new Date(new Date().getTime() + 1000 * 60 * 60 * 24).toLocaleDateString()
+									}
+									else {
+										var date = remainder.split(/ \/ |\s/gi)
+										if (isNaN(date[0])) {
+											date[0] = ["january","february","march","april","may","june","july","august","september","october","november","december"].indexOf(date[0].toLowerCase()) + 1
+										}
+										date[1] = date[1].replace(/[^0-9]/gi, "")
+										
+										if (date.length == 2) {
+											var attempt = date.join("/") + "/" + new Date().getFullYear()
+
+											if (new Date(attempt) < new Date()) {
+												date = date.join("/") + "/" + (new Date().getFullYear() + 1)
+											}
+											else {
+												date = attempt
+											}
+										}
+									}
+
+									if (!isNaN(new Date(date).getTime())) {
+										window.CONTEXT_LIBRARY["add event"][nextParameter] = date
+									}
+								}
+								else if (nextParameter == "startTime" || nextParameter == "endTime") {
+									var time = remainder.replace(/\s?p\.?\s?m\./gi, " PM").replace(/\s?a\.?\s?m\./gi, " AM")
+										time = time.split(/\s+/gi)
+										time = (time[0].replace(/[^0-9:]/gi, "") || "12") + ":00 " + (time[1] || "AM")
+
+									if (!isNaN(new Date("1/1/1 " + time).getTime())) {
+										window.CONTEXT_LIBRARY["add event"][nextParameter] = time
+									}
+								}
+
+							// get new nextParameter
+								var nextParameter = null
+								for (var i in window.CONTEXT_LIBRARY["add event"]) {
+									if (!window.CONTEXT_LIBRARY["add event"][i]) {
+										nextParameter = i
+										break
+									}
+								}
+						}
+
+					// still something missing
+						if (nextParameter) {
+							// response
+								var message = "What is the " + nextParameter + "?"
+								var responseHTML = "<h2>" + nextParameter + " = ?</h2>" + 
+									"<ul>" + Object.keys(window.CONTEXT_LIBRARY["add event"]).map(function(key) {
+										return "<li><b>" + key + ":</b> " + (window.CONTEXT_LIBRARY["add event"][key] || "?") + "</li>"
+									}).join("") + "</ul>"
+								callback({icon: icon, message: message, html: responseHTML})
+								return
+						}
+
+					// build options
+						var options = {
+							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=addEvent" +
+								"&title=" + window.CONTEXT_LIBRARY["add event"].title +
+								"&startDate=" + window.CONTEXT_LIBRARY["add event"].startDate +
+								"&startTime=" + window.CONTEXT_LIBRARY["add event"].startTime +
+								"&endDate=" + window.CONTEXT_LIBRARY["add event"].endDate +
+								"&endTime=" + window.CONTEXT_LIBRARY["add event"].endTime +
+								"&location=" + window.CONTEXT_LIBRARY["add event"].location
+						}
+						
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// not successful?
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to add the event.", html: "<h2>Error: unable to add event:</h2><pre style='text-align: left'>" + JSON.stringify(window.CONTEXT_LIBRARY["add event"], null, '\t') + "</pre>"})
+										return
+									}
+
+								// response
+									var message = response.message + " " + response.event.title + ", from " + response.event.startTime + " to " + response.event.endTime + (response.event.location ? (" at " + response.event.location) : "")
+									var url = "https://calendar.google.com"
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + response.event.title + "</h2></a><ul>" +
+										"<li>" + response.event.startTime + " - " + response.event.endTime + "</li>" +
+										(response.event.location ? ("<li>" + response.event.location + "</li>") : "") +
+										"</ul>"
+									callback({icon: icon, message: message, html: responseHTML, url: url})
+
+								// end flow
+									window.CONTEXT_LIBRARY.flow = null
+									delete window.CONTEXT_LIBRARY["add event"]
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to fetch your calendar.", html: "<h2>Error: unable to get calendar:</h2>" + error})
 							}
 						})
 				}
