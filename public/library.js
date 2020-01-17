@@ -418,95 +418,102 @@
 			"tell me the pronunciation of the word": "pronounce word",
 			"tell me the pronunciation for the word": "pronounce word",
 
-			"find rhymes": 						"find rhymes",
-			"what rhymes with": 				"find rhymes",
-			"find a rhyme for": 				"find rhymes",
-			"find rhymes for": 					"find rhymes",
-			"get a rhyme for": 					"find rhymes",
-			"get rhymes for": 					"find rhymes",
-			"rhymes with": 						"find rhymes",
-			"something that rhymes with": 		"find rhymes",
+			"get rhymes": 						"get rhymes",
+			"get a rhyme for": 					"get rhymes",
+			"get rhymes for": 					"get rhymes",
+			"find rhymes": 						"get rhymes",
+			"what rhymes with": 				"get rhymes",
+			"find a rhyme for": 				"get rhymes",
+			"find rhymes for": 					"get rhymes",
+			"rhymes with": 						"get rhymes",
+			"something that rhymes with": 		"get rhymes",
 
-			"find synonyms": 					"find synonyms",
-			"what is a synonym for": 			"find synonyms",
-			"find a synonym for": 				"find synonyms",
-			"find synonyms for": 				"find synonyms",
-			"get a synonym for": 				"find synonyms",
-			"get synonyms for": 				"find synonyms",
-			"synonym of": 						"find synonyms",
-			"what has the same meaning as": 	"find synonyms",
+			"get synonyms": 					"get synonyms",
+			"get a synonym for": 				"get synonyms",
+			"get synonyms for": 				"get synonyms",
+			"find synonyms": 					"get synonyms",
+			"what is a synonym for": 			"get synonyms",
+			"find a synonym for": 				"get synonyms",
+			"find synonyms for": 				"get synonyms",
+			"synonym of": 						"get synonyms",
+			"what has the same meaning as": 	"get synonyms",
 
-			"find definition": 					"find definition",
-			"find a definition for": 			"find definition",
-			"find definition for": 				"find definition",
-			"find the meaning of": 				"find definition",
-			"define": 							"find definition",
-			"define the word": 					"find definition",
-			"look up the word": 				"find definition",
-			"provide a definition for": 		"find definition",
-			"what is the meaning of": 			"find definition",
-			"whats the meaning of": 			"find definition",
-			"get definition": 					"find definition",
-			"get definition for": 				"find definition",
-			"get definition of": 				"find definition",
-			"get a definition for": 			"find definition",
-			"get the definition of": 			"find definition",
-			"get definition for": 				"find definition",
-			"get the meaning of": 				"find definition",
+			"get definition": 					"get definition",
+			"get definition for": 				"get definition",
+			"get definition of": 				"get definition",
+			"get a definition for": 			"get definition",
+			"get the definition of": 			"get definition",
+			"get definition for": 				"get definition",
+			"get the meaning of": 				"get definition",
+			"find definition": 					"get definition",
+			"find a definition for": 			"get definition",
+			"find definition for": 				"get definition",
+			"find the meaning of": 				"get definition",
+			"define": 							"get definition",
+			"define the word": 					"get definition",
+			"look up the word": 				"get definition",
+			"provide a definition for": 		"get definition",
+			"what is the meaning of": 			"get definition",
+			"whats the meaning of": 			"get definition",
 
-			"find etymology": 					"find etymology",
-			"find the etymology": 				"find etymology",
-			"find etymology of": 				"find etymology",
-			"find the etymology of": 			"find etymology",
-			"find etymology of the word": 		"find etymology",
-			"find the etymology of the word": 	"find etymology",
-			"get etymology of": 				"find etymology",
-			"get the etymology of": 			"find etymology",
-			"get etymology of the word": 		"find etymology",
-			"get the etymology of the word": 	"find etymology",
-			"what is etymology of": 			"find etymology",
-			"what is the etymology of": 		"find etymology",
-			"what is etymology of the word": 	"find etymology",
-			"what is the etymology of the word": "find etymology",
-			"whats etymology of": 				"find etymology",
-			"whats the etymology of": 			"find etymology",
-			"whats etymology of the word": 		"find etymology",
-			"whats the etymology of the word": 	"find etymology",
-			"what is history of": 				"find etymology",
-			"what is the history of": 			"find etymology",
-			"what is history of the word": 		"find etymology",
-			"what is the history of the word": 	"find etymology",
-			"whats history of": 				"find etymology",
-			"whats the history of": 			"find etymology",
-			"whats history of the word": 		"find etymology",
-			"whats the history of the word": 	"find etymology",
-			"what is origin of": 				"find etymology",
-			"what is the origin of": 			"find etymology",
-			"what is origin of the word": 		"find etymology",
-			"what is the origin of the word": 	"find etymology",
-			"whats origin of": 					"find etymology",
-			"whats the origin of": 				"find etymology",
-			"whats origin of the word": 		"find etymology",
-			"whats the origin of the word": 	"find etymology",
+			"get etymology": 					"get etymology",
+			"get etymology of": 				"get etymology",
+			"get the etymology of": 			"get etymology",
+			"get etymology of the word": 		"get etymology",
+			"get the etymology of the word": 	"get etymology",
+			"find etymology": 					"get etymology",
+			"find the etymology": 				"get etymology",
+			"find etymology of": 				"get etymology",
+			"find the etymology of": 			"get etymology",
+			"find etymology of the word": 		"get etymology",
+			"find the etymology of the word": 	"get etymology",
+			"what is etymology of": 			"get etymology",
+			"what is the etymology of": 		"get etymology",
+			"what is etymology of the word": 	"get etymology",
+			"what is the etymology of the word": "get etymology",
+			"whats etymology of": 				"get etymology",
+			"whats the etymology of": 			"get etymology",
+			"whats etymology of the word": 		"get etymology",
+			"whats the etymology of the word": 	"get etymology",
+			"what is history of": 				"get etymology",
+			"what is the history of": 			"get etymology",
+			"what is history of the word": 		"get etymology",
+			"what is the history of the word": 	"get etymology",
+			"whats history of": 				"get etymology",
+			"whats the history of": 			"get etymology",
+			"whats history of the word": 		"get etymology",
+			"whats the history of the word": 	"get etymology",
+			"what is origin of": 				"get etymology",
+			"what is the origin of": 			"get etymology",
+			"what is origin of the word": 		"get etymology",
+			"what is the origin of the word": 	"get etymology",
+			"whats origin of": 					"get etymology",
+			"whats the origin of": 				"get etymology",
+			"whats origin of the word": 		"get etymology",
+			"whats the origin of the word": 	"get etymology",
 
-			"define idiom": 					"define idiom",
-			"define the idiom": 				"define idiom",
-			"define this idiom": 				"define idiom",
-			"define an idiom": 					"define idiom",
-			"define phrase": 					"define idiom",
-			"define the phrase": 				"define idiom",
-			"define this phrase": 				"define idiom",
-			"define a phrase": 					"define idiom",
-			"define saying": 					"define idiom",
-			"define the saying": 				"define idiom",
-			"define this saying": 				"define idiom",
-			"define a saying": 					"define idiom",
-			"what is the meaning of the idiom": "define idiom",
-			"whats the meaning of the idiom": 	"define idiom",
-			"what is the meaning of the phrase": "define idiom",
-			"whats the meaning of the phrase": 	"define idiom",
-			"what is the meaning of the saying": "define idiom",
-			"whats the meaning of the saying": 	"define idiom",
+			"get idiom": 						"get idiom",
+			"get the idiom": 					"get idiom",
+			"get this idiom": 					"get idiom",
+			"get an idiom": 					"get idiom",
+			"define idiom": 					"get idiom",
+			"define the idiom": 				"get idiom",
+			"define this idiom": 				"get idiom",
+			"define an idiom": 					"get idiom",
+			"define phrase": 					"get idiom",
+			"define the phrase": 				"get idiom",
+			"define this phrase": 				"get idiom",
+			"define a phrase": 					"get idiom",
+			"define saying": 					"get idiom",
+			"define the saying": 				"get idiom",
+			"define this saying": 				"get idiom",
+			"define a saying": 					"get idiom",
+			"what is the meaning of the idiom": "get idiom",
+			"whats the meaning of the idiom": 	"get idiom",
+			"what is the meaning of the phrase": "get idiom",
+			"whats the meaning of the phrase": 	"get idiom",
+			"what is the meaning of the saying": "get idiom",
+			"whats the meaning of the saying": 	"get idiom",
 
 		// random content
 			"get a joke": 						"get a joke",
@@ -673,72 +680,72 @@
 			"let me ask a nutrition question": 	"get nutrition answer",
 			"heres a nutrition question": 		"get nutrition answer",
 
-			"search goodreads": 				"search goodreads",
-			"search goodreads for": 			"search goodreads",
-			"on goodreads search": 				"search goodreads",
-			"on goodreads search for": 			"search goodreads",
-			"on goodreads look up": 			"search goodreads",
-			"on goodreads look for": 			"search goodreads",
-			"get a book": 						"search goodreads",
-			"get me a book": 					"search goodreads",
-			"find the book": 					"search goodreads",
-			"find a book": 						"search goodreads",
-			"get the book": 					"search goodreads",
-			"i want to read": 					"search goodreads",
-			"i want to read a book called": 	"search goodreads",
-			"look up the book": 				"search goodreads",
-			"look up a book": 					"search goodreads",
-			"look for a book": 					"search goodreads",
-			"look up a book called": 			"search goodreads",
-			"look up this book": 				"search goodreads",
-			"tell me about the book": 			"search goodreads",
-			"look up a book about": 			"search goodreads",
-			"look up books about": 				"search goodreads",
-			"find a book about": 				"search goodreads",
-			"find books about": 				"search goodreads",
-			"find me a book about": 			"search goodreads",
-			"find me books about": 				"search goodreads",
-			"get a book about": 				"search goodreads",
-			"get books about": 					"search goodreads",
-			"get me a book about": 				"search goodreads",
-			"get me books about": 				"search goodreads",
-			"search for a book about": 			"search goodreads",
-			"search for books about": 			"search goodreads",
-			"get a book by": 					"search goodreads",
-			"get books by": 					"search goodreads",
-			"get me a book by": 				"search goodreads",
-			"get me books by": 					"search goodreads",
-			"look up a book by": 				"search goodreads",
-			"look up books by": 				"search goodreads",
-			"what books were written by": 		"search goodreads",
-			"what was written by": 				"search goodreads",
-			"find books by": 					"search goodreads",
-			"look up a book by the author": 	"search goodreads",
-			"look up books by the author": 		"search goodreads",
-			"what books were written by the author": "search goodreads",
-			"what was written by the author": 	"search goodreads",
-			"find books by the author": 		"search goodreads",
+			"get a book": 						"get a book",
+			"get me a book": 					"get a book",
+			"search goodreads": 				"get a book",
+			"search goodreads for": 			"get a book",
+			"on goodreads search": 				"get a book",
+			"on goodreads search for": 			"get a book",
+			"on goodreads look up": 			"get a book",
+			"on goodreads look for": 			"get a book",
+			"find the book": 					"get a book",
+			"find a book": 						"get a book",
+			"get the book": 					"get a book",
+			"i want to read": 					"get a book",
+			"i want to read a book called": 	"get a book",
+			"look up the book": 				"get a book",
+			"look up a book": 					"get a book",
+			"look for a book": 					"get a book",
+			"look up a book called": 			"get a book",
+			"look up this book": 				"get a book",
+			"tell me about the book": 			"get a book",
+			"look up a book about": 			"get a book",
+			"look up books about": 				"get a book",
+			"find a book about": 				"get a book",
+			"find books about": 				"get a book",
+			"find me a book about": 			"get a book",
+			"find me books about": 				"get a book",
+			"get a book about": 				"get a book",
+			"get books about": 					"get a book",
+			"get me a book about": 				"get a book",
+			"get me books about": 				"get a book",
+			"search for a book about": 			"get a book",
+			"search for books about": 			"get a book",
+			"get a book by": 					"get a book",
+			"get books by": 					"get a book",
+			"get me a book by": 				"get a book",
+			"get me books by": 					"get a book",
+			"look up a book by": 				"get a book",
+			"look up books by": 				"get a book",
+			"what books were written by": 		"get a book",
+			"what was written by": 				"get a book",
+			"find books by": 					"get a book",
+			"look up a book by the author": 	"get a book",
+			"look up books by the author": 		"get a book",
+			"what books were written by the author": "get a book",
+			"what was written by the author": 	"get a book",
+			"find books by the author": 		"get a book",
 
-			"find lyrics": 						"find lyrics",
-			"find me lyrics": 					"find lyrics",
-			"find lyrics for": 					"find lyrics",
-			"find me lyrics for": 				"find lyrics",
-			"find the lyrics for": 				"find lyrics",
-			"find the lyrics to": 				"find lyrics",
-			"find me the lyrics for": 			"find lyrics",
-			"find me the lyrics to": 			"find lyrics",
-			"get lyrics": 						"find lyrics",
-			"get me lyrics": 					"find lyrics",
-			"get lyrics for": 					"find lyrics",
-			"get me lyrics for": 				"find lyrics",
-			"get the lyrics for": 				"find lyrics",
-			"get the lyrics to": 				"find lyrics",
-			"get me the lyrics for": 			"find lyrics",
-			"get me the lyrics to": 			"find lyrics",
-			"search for lyrics": 				"find lyrics",
-			"search for lyrics for": 			"find lyrics",
-			"search for the lyrics for": 		"find lyrics",
-			"search for the lyrics to": 		"find lyrics",
+			"get lyrics": 						"get lyrics",
+			"get me lyrics": 					"get lyrics",
+			"get lyrics for": 					"get lyrics",
+			"get me lyrics for": 				"get lyrics",
+			"get the lyrics for": 				"get lyrics",
+			"get the lyrics to": 				"get lyrics",
+			"get me the lyrics for": 			"get lyrics",
+			"get me the lyrics to": 			"get lyrics",
+			"find lyrics": 						"get lyrics",
+			"find me lyrics": 					"get lyrics",
+			"find lyrics for": 					"get lyrics",
+			"find me lyrics for": 				"get lyrics",
+			"find the lyrics for": 				"get lyrics",
+			"find the lyrics to": 				"get lyrics",
+			"find me the lyrics for": 			"get lyrics",
+			"find me the lyrics to": 			"get lyrics",
+			"search for lyrics": 				"get lyrics",
+			"search for lyrics for": 			"get lyrics",
+			"search for the lyrics for": 		"get lyrics",
+			"search for the lyrics to": 		"get lyrics",
 
 			"get stock price": 					"get stock price",
 			"get stock price for": 				"get stock price",
@@ -755,6 +762,71 @@
 			"what is the stock price": 			"get stock price",
 			"what is the stock price for": 		"get stock price",
 			"what is the stock price of": 		"get stock price",
+
+			"get a movie": 						"get a movie",
+			"get the movie": 					"get a movie",
+			"get a movie called": 				"get a movie",
+			"get the movie called": 			"get a movie",
+			"get a movie named": 				"get a movie",
+			"get the movie named": 				"get a movie",
+			"find a movie": 					"get a movie",
+			"find a movie called": 				"get a movie",
+			"find a movie named": 				"get a movie",
+			"look up the movie": 				"get a movie",
+			"look up a movie called": 			"get a movie",
+			"look up a movie named": 			"get a movie",
+			"search for the movie": 			"get a movie",
+			"search for a movie called": 		"get a movie",
+			"search for a movie named": 		"get a movie",
+			"who was in the movie": 			"get a movie",
+			"who starred in the movie": 		"get a movie",
+			"who acted in the movie": 			"get a movie",
+			"who directed the movie": 			"get a movie",
+			"who wrote the movie": 				"get a movie",
+			"what was the release of the movie": "get a movie",
+			"what was the release date of the movie": "get a movie",
+			"what is the rating of the movie": 	"get a movie",
+			"what is the average rating of the movie": "get a movie",
+			"get reviews for the movie": 		"get a movie",
+			"find reviews for the movie": 		"get a movie",
+			"look up reviews for the movie": 	"get a movie",
+			"search for reviews for the movie": "get a movie",
+			"get reviews of the movie": 		"get a movie",
+			"find reviews of the movie": 		"get a movie",
+			"look up reviews of the movie": 	"get a movie",
+			"search for reviews of the movie": 	"get a movie",
+			"get a film": 						"get a movie",
+			"get the film": 					"get a movie",
+			"get a film called": 				"get a movie",
+			"get the film called": 				"get a movie",
+			"get a film named": 				"get a movie",
+			"get the film named": 				"get a movie",
+			"find a film": 						"get a movie",
+			"find a film called": 				"get a movie",
+			"find a film named": 				"get a movie",
+			"look up the film": 				"get a movie",
+			"look up a film called": 			"get a movie",
+			"look up a film named": 			"get a movie",
+			"search for the film": 				"get a movie",
+			"search for a film called": 		"get a movie",
+			"search for a film named": 			"get a movie",
+			"who was in the film": 				"get a movie",
+			"who starred in the film": 			"get a movie",
+			"who acted in the film": 			"get a movie",
+			"who directed the film": 			"get a movie",
+			"who wrote the film": 				"get a movie",
+			"what was the release of the film": "get a movie",
+			"what was the release date of the film": "get a movie",
+			"what is the rating of the film": 	"get a movie",
+			"what is the average rating of the film": "get a movie",
+			"get reviews for the film": 		"get a movie",
+			"find reviews for the film": 		"get a movie",
+			"look up reviews for the film": 	"get a movie",
+			"search for reviews for the film": 	"get a movie",
+			"get reviews of the film": 			"get a movie",
+			"find reviews of the film": 		"get a movie",
+			"look up reviews of the film": 		"get a movie",
+			"search for reviews of the film": 	"get a movie",
 
 		// news & blogs
 			"get the latest post": 				"get the latest post",
@@ -2695,7 +2767,7 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
-			"find rhymes": function(remainder, callback) {
+			"get rhymes": function(remainder, callback) {
 				try {
 					// icon
 						var icon = "&#x1f4da;"
@@ -2747,7 +2819,7 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
-			"find synonyms": function(remainder, callback) {
+			"get synonyms": function(remainder, callback) {
 				try {
 					// icon
 						var icon = "&#x1f4da;"
@@ -2799,7 +2871,7 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
-			"find definition": function(remainder, callback) {
+			"get definition": function(remainder, callback) {
 				try {
 					// icon
 						var icon = "&#x1f4da;"
@@ -2854,7 +2926,7 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
-			"find etymology": function(remainder, callback) {
+			"get etymology": function(remainder, callback) {
 				try {
 					// icon
 						var icon = "&#x1f4da;"
@@ -2939,7 +3011,7 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
-			"define idiom": function(remainder, callback) {
+			"get idiom": function(remainder, callback) {
 				try {
 					// icon
 						var icon = "&#x1f4ac;"
@@ -3547,7 +3619,7 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
-			"search goodreads": function(remainder, callback) {
+			"get a book": function(remainder, callback) {
 				try {
 					// icon
 						var icon = "&#x1f4da;"
@@ -3636,7 +3708,7 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
-			"find lyrics": function(remainder, callback) {
+			"get lyrics": function(remainder, callback) {
 				try {
 					// icon
 						var icon = "&#x1f3b5;"
@@ -3669,13 +3741,13 @@
 										// too long (fewer than 5 attempts)
 											if (window.CONTEXT_LIBRARY["lyrics attempt counter"] < 5) {
 												window.CONTEXT_LIBRARY["lyrics attempt counter"]++
-												window.ACTION_LIBRARY["find lyrics"](remainder, callback)
+												window.ACTION_LIBRARY["get lyrics"](remainder, callback)
 												return
 											}
 
 										// other error
 											window.CONTEXT_LIBRARY["lyrics attempt counter"] = 0
-											callback({icon: icon, error: true, message: "I was unable to find lyrics for " + remainder, html: "<h2>Error: no results:</h2>" + response.error})
+											callback({icon: icon, error: true, message: "I was unable to get lyrics for " + remainder, html: "<h2>Error: no results:</h2>" + response.error})
 											return
 									}
 								
@@ -3687,10 +3759,10 @@
 									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + response.song + "</h2></a>" +
 										"<h3>" + response.artist + "</h3>" +
 										"<p>" + response.result.lyrics.replace(/\n\n\n|\n\n|\n/gi, "<br>") + "</p>"
-									callback({icon: icon, message: message, html: responseHTML})
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
-								callback({icon: icon, error: true, message: "I was unable to find lyrics for " + remainder, html: "<h2>Error: unable to access lyrics:</h2>" + remainder})
+								callback({icon: icon, error: true, message: "I was unable to get lyrics for " + remainder, html: "<h2>Error: unable to access lyrics:</h2>" + remainder})
 							}
 						})
 
@@ -3836,7 +3908,7 @@
 									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + name + " (" + symbol.toUpperCase() + ")</h2></a>" +
 										"$" + dailyClose + " (" + dailyChange.toFixed(2) + "%)" +
 										"<br><br>" + chart
-									callback({icon: icon, message: message, html: responseHTML})
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I couldn't find that corporation.", html: "<h2>Error: unable to access alphavantage</h2>"})
@@ -3844,6 +3916,121 @@
 						}
 				}
 				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get a movie": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f3ac;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["omdb api"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for omdb api.", html: "<h2>Error: missing configuration:</h2><li>omdb api</li>"})
+							return
+						}
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
+					// options
+						var options = {
+							url: "https://www.omdbapi.com/?apikey=" + window.CONFIGURATION_LIBRARY["omdb api"] + "&s=" + remainder
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								console.log(response)
+								// unsuccessful
+									if (!response.Search || !response.Search.length) {
+										callback({icon: icon, error: true, message: "I was unable to find the film " + remainder, html: "<h2>Error: no results:</h2>" + remainder})
+										return
+									}
+
+								// results
+									var results = []
+									var resultsCount = response.Search.length
+								
+								// loop through ids
+									for (var i = 0; i < resultsCount; i++) {
+										// options
+											var id = response.Search[i].imdbID
+											var options = {
+												url: "https://www.omdbapi.com/?apikey=" + window.CONFIGURATION_LIBRARY["omdb api"] + "&plot=full&i=" + id
+											}
+
+										// proxy to server
+											window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+												console.log(response)
+												try {
+													// ratings
+														var ratings = {
+															imdb: 			(response.Ratings.find(function(r) { return r.Source == "Internet Movie Database"}) 	|| {Value: null}).Value,
+															rottentomatoes: (response.Ratings.find(function(r) { return r.Source == "Rotten Tomatoes"}) 			|| {Value: null}).Value,
+															metacritic: 	(response.Ratings.find(function(r) { return r.Source == "Metacritic"}) 					|| {Value: null}).Value
+														}
+														for (var i in ratings) {
+															if (isNaN(ratings[i])) {
+																if (ratings[i].includes("/")) {
+																	ratings[i] = Number(ratings[i].split("/")[0]) / Number(ratings[i].split("/")[1]) * 100
+																}
+																else if (ratings[i].includes("%")) {
+																	ratings[i] = Number(ratings[i].split("%")[0])
+																}
+															}
+															else {
+																ratings[i] = Number(ratings[i])
+															}
+														}
+
+													// message
+														var message = response.Title + " is " + (["a","e","i","o","u"].includes(response.Genre[0].toLowerCase()) ? "an " : "a ") + response.Genre + " film released by " + response.Production + " in " + response.Year + " ... " + 
+															"It was written by " + response.Writer + " and directed by " + response.Director + " and stars " + response.Actors + " ... " +
+															"It has a rating of " + ratings.imdb + " percent on IMDb, " + ratings.rottentomatoes + " percent on Rotten Tomatoes, and " + ratings.metacritic + " percent on Metacritic ... " +
+															"Here's the plot: " + response.Plot
+
+													// table
+														var url = "https://imdb.com/title/" + response.imdbID
+														var responseHTML = "<table>" +
+															"<tr><th rowspan='6'><img src='" + response.Poster + "'></th><td colspan='3'><a target='_blank' href='" + url + "'><h2>" + response.Title + "</h2></a></td></tr>" + 
+															"<tr>" + 													"<td><b>released</b><br>" + response.Released + "</td>" + 		"<td><b>runtime</b><br>" + response.Runtime + "</td>" + 					"<td><b>rated</b><br>" + response.Rated + "</td></tr>" +
+															"<tr>" + 													"<td><b>production</b><br>" + response.Production + "</td>" +	"<td><b>writer</b><br>" + response.Writer + "</td>" + 					"<td><b>director</b><br>" + response.Director + "</td></tr>" +
+															"<tr>" + 													"<td colspan='3'><b>starring</b><br>" + response.Actors + "</td></tr>" +
+															"<tr>" + 													"<td colspan='3'>" + response.Plot + "</td></tr>" +
+															"<tr>" + 													"<td><b>&#x2b50; IMDb</b><br>" + ratings.imdb + "%</td>" +			"<td><b>&#x2b50; Metacritic</b><br>" + ratings.metacritic + "%</td>" +		"<td><b>&#x2b50; Rotten Tomatoes</b><br>" + ratings.rottentomatoes + "%</td></tr>" +
+														"</table>"
+
+													// add to results
+														results.push({icon: icon, message: message, html: responseHTML, url: url})
+
+													// last one? display first result
+														if (results.length == resultsCount) {
+															var firstResult = results.shift()
+																firstResult.results = results
+															callback(firstResult)
+														}
+												}
+												catch (error) {
+													console.log(error)
+													callback({icon: icon, error: true, message: "I was unable to find the film " + id, html: "<h2>Error: unable to access movies:</h2>" + id})
+												}
+											})
+									}
+							}
+							catch (error) {
+								console.log(error)
+								callback({icon: icon, error: true, message: "I was unable to find the film " + remainder, html: "<h2>Error: unable to access movies:</h2>" + remainder})
+							}
+						})
+
+				}
+				catch (error) {
+					console.log(error)
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
