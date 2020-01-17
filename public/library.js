@@ -3945,7 +3945,6 @@
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
-								console.log(response)
 								// unsuccessful
 									if (!response.Search || !response.Search.length) {
 										callback({icon: icon, error: true, message: "I was unable to find the film " + remainder, html: "<h2>Error: no results:</h2>" + remainder})
@@ -3966,7 +3965,6 @@
 
 										// proxy to server
 											window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-												console.log(response)
 												try {
 													// ratings
 														var ratings = {
@@ -4016,21 +4014,18 @@
 														}
 												}
 												catch (error) {
-													console.log(error)
 													callback({icon: icon, error: true, message: "I was unable to find the film " + id, html: "<h2>Error: unable to access movies:</h2>" + id})
 												}
 											})
 									}
 							}
 							catch (error) {
-								console.log(error)
 								callback({icon: icon, error: true, message: "I was unable to find the film " + remainder, html: "<h2>Error: unable to access movies:</h2>" + remainder})
 							}
 						})
 
 				}
 				catch (error) {
-					console.log(error)
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
