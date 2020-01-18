@@ -259,10 +259,16 @@
 
 			"get the day": 						"get the day",
 			"what day is it": 					"get the day",
-			"what day is today": 				"get the day",
+			"what day is": 						"get the day",
+			"what day was": 					"get the day",
+			"what day was it": 					"get the day",
+			"what day was it on": 				"get the day",
+			"what day will it be": 				"get the day",
+			"what day will it be on": 			"get the day",
 			"whats the day": 					"get the day",
 			"whats today": 						"get the day",
 			"tell me the day": 					"get the day",
+			"tell me the day on": 				"get the day",
 
 			"get the month": 					"get the month",
 			"what month is it": 				"get the month",
@@ -277,6 +283,59 @@
 			"what is todays date": 				"get the date",
 			"whats the date": 					"get the date",
 			"tell me the date": 				"get the date",
+
+			"get time until": 					"get time until",
+			"get time till": 					"get time until",
+			"get time on": 						"get time until",
+			"get time since": 					"get time until",
+			"get time left until": 				"get time until",
+			"get time left till": 				"get time until",
+			"get time left on": 				"get time until",
+			"get time remaining until": 		"get time until",
+			"get time remaining till": 			"get time until",
+			"get time remaining on": 			"get time until",
+			"how much time until": 				"get time until",
+			"how much time till": 				"get time until",
+			"how much time on": 				"get time until",
+			"how much time since": 				"get time until",
+			"how much time left until": 		"get time until",
+			"how much time left till": 			"get time until",
+			"how much time left on": 			"get time until",
+			"how much time is left until": 		"get time until",
+			"how much time is left till": 		"get time until",
+			"how much time is left on": 		"get time until",
+			"how much time is remaining until": "get time until",
+			"how much time is remaining till": 	"get time until",
+			"how much time is remaining on": 	"get time until",
+			"how much time remains until": 		"get time until",
+			"how much time remains till": 		"get time until",
+			"how much time remains on": 		"get time until",
+			"get days until": 					"get time until",
+			"get days till": 					"get time until",
+			"get days on": 						"get time until",
+			"get days since": 					"get time until",
+			"get days left until": 				"get time until",
+			"get days left till": 				"get time until",
+			"get days left on": 				"get time until",
+			"get days remaining until": 		"get time until",
+			"get days remaining till": 			"get time until",
+			"get days remaining on": 			"get time until",
+			"how many days until": 				"get time until",
+			"how many days till": 				"get time until",
+			"how many days on": 				"get time until",
+			"how many days since": 				"get time until",
+			"how many days left until": 		"get time until",
+			"how many days left till": 			"get time until",
+			"how many days left on": 			"get time until",
+			"how many days is left until": 		"get time until",
+			"how many days is left till": 		"get time until",
+			"how many days is left on": 		"get time until",
+			"how many days is remaining until": "get time until",
+			"how many days is remaining till": 	"get time until",
+			"how many days is remaining on": 	"get time until",
+			"how many days remains until": 		"get time until",
+			"how many days remains till": 		"get time until",
+			"how many days remains on": 		"get time until",
 
 		// alarms
 			"set a timer": 						"set alarm",
@@ -346,6 +405,31 @@
 
 			"flip a coin": 						"flip a coin",
 			"heads or tails": 					"flip a coin",
+
+			"choose randomly": 					"choose randomly",
+			"choose randomly from a list": 		"choose randomly",
+			"choose randomly from this list": 	"choose randomly",
+			"choose a random thing": 			"choose randomly",
+			"choose a random item": 			"choose randomly",
+			"choose from this list": 			"choose randomly",
+			"choose from a list": 				"choose randomly",
+			"choose an item": 					"choose randomly",
+			"pick randomly": 					"choose randomly",
+			"pick randomly from a list": 		"choose randomly",
+			"pick randomly from this list": 	"choose randomly",
+			"pick a random thing": 				"choose randomly",
+			"pick a random item": 				"choose randomly",
+			"pick from this list": 				"choose randomly",
+			"pick from a list": 				"choose randomly",
+			"pick an item": 					"choose randomly",
+			"select randomly": 					"choose randomly",
+			"select randomly from a list": 		"choose randomly",
+			"select randomly from this list": 	"choose randomly",
+			"select a random thing": 			"choose randomly",
+			"select a random item": 			"choose randomly",
+			"select from this list": 			"choose randomly",
+			"select from a list": 				"choose randomly",
+			"select an item": 					"choose randomly",
 
 			"consult the magic 8 ball": 		"consult the magic 8 ball",
 			"consult a magic 8 ball": 			"consult the magic 8 ball",
@@ -437,6 +521,16 @@
 			"find synonyms for": 				"get synonyms",
 			"synonym of": 						"get synonyms",
 			"what has the same meaning as": 	"get synonyms",
+
+			"get antonyms": 					"get antonyms",
+			"get an antonym for": 				"get antonyms",
+			"get antonyms for": 				"get antonyms",
+			"find antonyms": 					"get antonyms",
+			"what is an antonym for": 			"get antonyms",
+			"find an antonym for": 				"get antonyms",
+			"find antonyms for": 				"get antonyms",
+			"antonym of": 						"get antonyms",
+			"what has the opposite meaning of": "get antonyms",
 
 			"get definition": 					"get definition",
 			"get definition for": 				"get definition",
@@ -1370,6 +1464,12 @@
 			"activate": 						"turn on wink device",
 
 		// Reddit
+			"get a reddit post": 				"get a reddit post",
+			"get a random reddit post": 		"get a reddit post",
+			"what is happening on reddit": 		"get a reddit post",
+			"whats happening on reddit": 		"get a reddit post",
+			"fetch reddit": 					"get a reddit post",
+
 			"ask reddit": 						"ask reddit",
 			"ask a question": 					"ask reddit",
 			"ask me a question": 				"ask reddit",
@@ -1386,6 +1486,14 @@
 			"get a writing prompt": 			"get a reddit writing prompt",
 			"give me a writing prompt": 		"get a reddit writing prompt",
 			"fetch a writing prompt": 			"get a reddit writing prompt",
+			"what should i write about": 		"get a reddit writing prompt",
+
+			"get a reddit shower thought": 		"get a reddit shower thought",
+			"get a shower thought": 			"get a reddit shower thought",
+			"give me a shower thought": 		"get a reddit shower thought",
+			"fetch a shower thought": 			"get a reddit shower thought",
+			"give me an idea": 					"get a reddit shower thought",
+			"give me something to think about": "get a reddit shower thought",
 
 		// custom APIs
 			"convert": 							"convert",
@@ -2203,10 +2311,46 @@
 					// icon
 						var icon = "&#x1f4c5;"
 
+					// remainder?
+						if (remainder && remainder.trim()) {
+							if (remainder == "yesterday") {
+								var date = new Date(new Date().getTime() - 1000 * 60 * 60 * 24).toLocaleDateString()
+							}
+							else if (remainder == "today") {
+								var date = new Date().toLocaleDateString()
+							}
+							else if (remainder == "tomorrow") {
+								var date = new Date(new Date().getTime() + 1000 * 60 * 60 * 24).toLocaleDateString()
+							}
+							else {
+								var date = remainder.split(/ ?\/ ?|\s/gi)
+								if (isNaN(date[0])) {
+									date[0] = ["january","february","march","april","may","june","july","august","september","october","november","december"].indexOf(date[0].toLowerCase()) + 1
+								}
+								date[1] = date[1].replace(/[^0-9]/gi, "")
+													
+								if (date.length == 2) {
+									var attempt = date.join("/") + "/" + new Date().getFullYear()
+
+									if (new Date(attempt) < new Date()) {
+										date = date.join("/") + "/" + (new Date().getFullYear() + 1)
+									}
+									else {
+										date = attempt
+									}
+								}
+								else {
+									date = date.join("/")
+								}
+								date = new Date(date)
+							}
+						}
+
 					// response
-						var message = (["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()])
-						var responseHTML = "Today is <h2>" + message + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML})
+						var word = (["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date(date || null).getDay()])
+						var message = word
+						var responseHTML = (date ? new Date(date).toLocaleDateString() : "Today") + " is <h2>" + word + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML, word: word})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2235,6 +2379,85 @@
 						var message = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + " " + new Date().getDate())
 						var responseHTML = "The date is <h2>" + message + "</h2>"
 						callback({icon: icon, message: message, html: responseHTML})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get time until": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4c5;"
+
+					// remainder?
+						if (remainder && remainder.trim()) {
+							if (remainder == "yesterday") {
+								var date = new Date(new Date().getTime() - 1000 * 60 * 60 * 24).toLocaleDateString()
+							}
+							else if (remainder == "today") {
+								var date = new Date().toLocaleDateString()
+							}
+							else if (remainder == "tomorrow") {
+								var date = new Date(new Date().getTime() + 1000 * 60 * 60 * 24).toLocaleDateString()
+							}
+							else if (remainder.includes("alarm") || remainder.includes("timer")) {
+								var index = null
+								var words = remainder.split(/\s/gi)
+								for (var i in words) {
+									words[i] = window.FUNCTION_LIBRARY.getDigits(words[i])
+									if (!isNaN(words[i])) {
+										index = Number(words[i])
+									}
+								}
+
+								if (!index || !window.CONTEXT_LIBRARY.alarms[index - 1]) {
+									callback({icon: icon, error: true, message: "I couldn't find that alarm.", html: "<h2>Error: invalid alarm</h2>"})
+									return
+								}
+								var date = new Date(window.CONTEXT_LIBRARY.alarms[index - 1])
+							}
+							else {
+								var date = remainder.split(/ ?\/ ?|\s/gi)
+								if (isNaN(date[0])) {
+									date[0] = ["january","february","march","april","may","june","july","august","september","october","november","december"].indexOf(date[0].toLowerCase()) + 1
+								}
+								date[1] = date[1].replace(/[^0-9]/gi, "")
+													
+								if (date.length == 2) {
+									var attempt = date.join("/") + "/" + new Date().getFullYear()
+
+									if (new Date(attempt) < new Date()) {
+										date = date.join("/") + "/" + (new Date().getFullYear() + 1)
+									}
+									else {
+										date = attempt
+									}
+								}
+								else {
+									date = date.join("/")
+								}
+								date = new Date(date)
+							}
+						}
+
+						console.log(date)
+
+					// get time
+						var number = new Date(date || null).getTime() - new Date().getTime()
+						var segments = []
+						var days = Math.floor(Math.abs(number) / (1000 * 60 * 60 * 24))
+						if (days) { segments.push(days + " day" + (days == 1 ? "" : "s")) }
+						var hours = Math.floor(Math.abs(number) / (1000 * 60 * 60) % 24)
+						if (hours) { segments.push(hours + " hour" + (hours == 1 ? "" : "s")) }
+						var minutes = Math.floor(Math.abs(number) / (1000 * 60) % 60)
+						if (minutes) { segments.push(minutes + " minute" + (minutes == 1 ? "" : "s")) }
+						var seconds = Math.floor(Math.abs(number) / (1000) % 60)
+						if (seconds) { segments.push(seconds + " second" + (seconds == 1 ? "" : "s")) }
+
+					// response
+						var message = segments.join(", ")
+						var responseHTML = (new Date(date).toLocaleString() + " - " + new Date().toLocaleString()) + "<h2>" + message + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML, number: number})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2461,6 +2684,34 @@
 						var message = window.FUNCTION_LIBRARY.chooseRandom(["heads","tails"])
 						var responseHTML = "<h2>coin: " + message + "</h2>"
 						callback({icon: icon, message: message, html: responseHTML})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"choose randomly": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f3b2;"
+
+					// no remainder
+						remainder = remainder.replace(/[?!,:;'"_\$]/gi,"").toLowerCase().trim()
+						var items = remainder.split(/ and | or |\s/gi)
+						if (!remainder || !remainder.trim() || !items || items.length < 2) {
+							callback({icon: icon, error: true, message: "What should I choose from?", html: "<h2>Error: invalid input</h2>"})
+							return
+						}
+
+					// choose
+						var word = window.FUNCTION_LIBRARY.chooseRandom(items)
+
+					// response
+						var message = word
+						var responseHTML = "<h2>" + word + "</h2>" + 
+							"all options:<br><ul><li>" + 
+							items.join("</li><li>") +
+							"</li></ul>"
+					callback({icon: icon, message: message, html: responseHTML, word: word})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2893,6 +3144,58 @@
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't know any synonyms for that.", html: "<h2>Error: unable to access synonyms</h2>"})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get antonyms": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4da;"
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+						var word = remainder
+
+					// that?
+						if (remainder == "that" && window.CONTEXT_LIBRARY.lastResponseWord) {
+							word = window.CONTEXT_LIBRARY.lastResponseWord
+						}
+
+					// options
+						var options = {
+							url: "https://api.datamuse.com/words?rel_ant=" + word
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// construct response list
+									var list = response || []
+									var listItems = []
+									for (var i in list) {
+										list[i] = list[i].word
+										listItems[i] = "<li>" + list[i] + "</li>"
+									}
+
+								// message & link
+									var message = "I found " + list.length + " antonym" + (list.length == 1 ? "" : "s") + " for " + word + ". " + list.join(",")
+									var url = "https://rhymezone.com/r/rhyme.cgi?typeofrhyme=ant&Word=" + word
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + word + "</h2></a>" +
+										"<ul>" + listItems.join("") + "</ul>"
+
+								// response
+									callback({icon: icon, message: message, html: responseHTML, url: url, word: word})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I don't know any antonyms for that.", html: "<h2>Error: unable to access antonyms</h2>"})
 							}
 						})
 				}
@@ -6930,7 +7233,7 @@
 			},
 
 		// Reddit
-			"ask reddit": function(remainder, callback) {
+			"get a reddit post": function(remainder, callback) {
 				try {
 					// icon
 						var icon = "&#x1f4bb;"
@@ -6943,31 +7246,35 @@
 									
 									// now authorized? re-run this function
 										if (window.CONFIGURATION_LIBRARY["www.reddit.com"] && window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration >= new Date().getTime()) {
-											window.ACTION_LIBRARY["ask reddit"](remainder, callback)
+											window.ACTION_LIBRARY["get a reddit post"](remainder, callback)
 										}
 								})
 								return
 						}
 
+					// subreddits
+						var subreddits = ["askreddit", "showerthoughts", "writingprompts"]
+						var selection = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").replace(/\s/gi,"").toLowerCase()
+
 					// options
 						var options = {
 							"User-Agent": "web:bluejay:v1 (by /u/quargy)",
 							Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token,
-							url: "https://oauth.reddit.com/r/askreddit/"
+							url: "https://oauth.reddit.com/r/" + (subreddits.includes(selection) ? selection : "all")
 						}
 
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
 								// shuffle results
-									var questions = window.FUNCTION_LIBRARY.sortRandom(response.data.children)
+									var posts = window.FUNCTION_LIBRARY.sortRandom(response.data.children)
 
 								// all results
 									var results = []
-									for (var i in questions) {
-										var message = questions[i].data.title
-										var url = questions[i].data.url
-										var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + questions[i].data.title + "</h2></a>"
+									for (var i in posts) {
+										var message = posts[i].data.title
+										var url = posts[i].data.url
+										var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + posts[i].data.title + "</h2></a>"
 										results.push({icon: icon, message: message, html: responseHTML, url: url})
 									}
 
@@ -6977,7 +7284,7 @@
 									callback(firstResult)
 							}
 							catch (error) {
-								callback({icon: icon, error: true, message: "I don't have any questions.", html: "<h2>Error: unable to access reddit</h2>"})
+								callback({icon: icon, error: true, message: "I can't access reddit.", html: "<h2>Error: unable to access reddit</h2>"})
 							}
 						})
 				}
@@ -6985,56 +7292,28 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
+			"ask reddit": function(remainder, callback) {
+				try {
+					// proxy to set get a reddit post
+						window.ACTION_LIBRARY["get a reddit post"]("askreddit", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
 			"get a reddit writing prompt": function(remainder, callback) {
 				try {
-					// icon
-						var icon = "&#x1f4bb;"
-
-					// missing config?
-						if (!window.CONFIGURATION_LIBRARY["www.reddit.com"] || !window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token || !window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration || window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration < new Date().getTime()) {
-							// attempt to reuathorize
-								window.ACTION_LIBRARY["authorize platform"]("reddit", function(response) {
-									callback(response)
-									
-									// now authorized? re-run this function
-										if (window.CONFIGURATION_LIBRARY["www.reddit.com"] && window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration && window.CONFIGURATION_LIBRARY["www.reddit.com"].expiration >= new Date().getTime()) {
-											window.ACTION_LIBRARY["get a reddit writing prompt"](remainder, callback)
-										}
-								})
-								return
-						}
-
-					// options
-						var options = {
-							"User-Agent": "web:bluejay:v1 (by /u/quargy)",
-							Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token,
-							url: "https://oauth.reddit.com/r/writingprompts/"
-						}
-
-					// proxy to server
-						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-							try {
-								// shuffle results
-									var prompts = window.FUNCTION_LIBRARY.sortRandom(response.data.children)
-
-								// all results
-									var results = []
-									for (var i in prompts) {
-										var message = prompts[i].data.title
-										var url = prompts[i].data.url
-										var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + prompts[i].data.title + "</h2></a>"
-										results.push({icon: icon, message: message, html: responseHTML, url: url})
-									}
-
-								// send response
-									var firstResult = results.shift()
-										firstResult.results = results
-									callback(firstResult)
-							}
-							catch (error) {
-								callback({icon: icon, error: true, message: "I don't have any writing prompts.", html: "<h2>Error: unable to access reddit</h2>"})
-							}
-						})
+					// proxy to set get a reddit post
+						window.ACTION_LIBRARY["get a reddit post"]("writingprompts", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get a reddit shower thought": function(remainder, callback) {
+				try {
+					// proxy to set get a reddit post
+						window.ACTION_LIBRARY["get a reddit post"]("showerthoughts", callback)
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
