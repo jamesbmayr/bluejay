@@ -4295,14 +4295,14 @@
 														for (var i in ratings) {
 															if (isNaN(ratings[i])) {
 																if (ratings[i].includes("/")) {
-																	ratings[i] = Number(ratings[i].split("/")[0]) / Number(ratings[i].split("/")[1]) * 100
+																	ratings[i] = Math.round(Number(ratings[i].split("/")[0]) / Number(ratings[i].split("/")[1]) * 100)
 																}
 																else if (ratings[i].includes("%")) {
-																	ratings[i] = Number(ratings[i].split("%")[0])
+																	ratings[i] = Math.round(Number(ratings[i].split("%")[0]))
 																}
 															}
 															else {
-																ratings[i] = Number(ratings[i])
+																ratings[i] = Math.round(Number(ratings[i]))
 															}
 														}
 
