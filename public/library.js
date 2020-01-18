@@ -2416,6 +2416,23 @@
 								}
 								var date = new Date(window.CONTEXT_LIBRARY.alarms[index - 1])
 							}
+							else if (remainder.includes(":") || remainder.toLowerCase().replace(/\./gi, "").includes("am") || remainder.toLowerCase().replace(/\./gi, "").includes("pm")) {
+								var time = remainder.replace(/\s?p\.?\s?m\.?/gi, " PM").replace(/\s?a\.?\s?m\.?/gi, " AM")
+									time = time.split(/\s+/gi)
+									time = (time[0].replace(/[^0-9:]/gi, "") || "12") + ":00 " + (time[1] || "AM")
+
+								var date = new Date(time).getTime() || new Date(new Date().toDateString() + " " + time).getTime()
+								
+								// in the past? 12 hours ahead
+									if (!time.includes("PM") && !time.includes("AM") && new Date().getTime() < date + (1000 * 60 * 60 * 12)) {
+										date = date + (1000 * 60 * 60 * 12)
+									}
+
+								// in the past & am/pm specified? 24 hours ahead
+									else if (new Date().getTime() < date + (1000 * 60 * 60 * 24)) {
+										date = date + (1000 * 60 * 60 * 24)
+									}
+							}
 							else {
 								var date = remainder.split(/ ?\/ ?|\s/gi)
 								if (isNaN(date[0])) {
@@ -2439,8 +2456,6 @@
 								date = new Date(date)
 							}
 						}
-
-						console.log(date)
 
 					// get time
 						var number = new Date(date || null).getTime() - new Date().getTime()
@@ -4893,7 +4908,7 @@
 									}
 								}
 								else if (nextParameter == "startTime" || nextParameter == "endTime") {
-									var time = remainder.replace(/\s?p\.?\s?m\./gi, " PM").replace(/\s?a\.?\s?m\./gi, " AM")
+									var time = remainder.replace(/\s?p\.?\s?m\.?/gi, " PM").replace(/\s?a\.?\s?m\.?/gi, " AM")
 										time = time.split(/\s+/gi)
 										time = (time[0].replace(/[^0-9:]/gi, "") || "12") + ":00 " + (time[1] || "AM")
 
