@@ -1992,7 +1992,6 @@
 						callback({icon: icon, message: "", html: responseHTML, followup: false, time: time})
 				}
 				catch (error) {
-					console.log(error)
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
