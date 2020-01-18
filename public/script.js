@@ -34,6 +34,7 @@ window.addEventListener("load", function() {
 				lastResponseMessage: null,
 				lastResponseHTML: null,
 				lastResponseNumber: null,
+				lastResponseTime: null,
 				lastResponseWord: null,
 				lastResponseURL: null,
 				lastResponseVideo: null,
@@ -94,6 +95,31 @@ window.addEventListener("load", function() {
 		/* number word library */
 			var NUMBER_WORD_LIBRARY = window.NUMBER_WORD_LIBRARY = {
 				"zero": 		0,
+				"twelfth": 		(1 / 12),
+				"twelfths": 	(1 / 12),
+				"eleventh": 	(1 / 11),
+				"elevenths": 	(1 / 11),
+				"tenth": 		(1 / 10),
+				"tenths": 		(1 / 10),
+				"ninth": 		(1 / 9),
+				"ninths": 		(1 / 9),
+				"eighth": 		(1 / 8),
+				"eighths": 		(1 / 8),
+				"seventh": 		(1 / 7),
+				"sevenths": 	(1 / 7),
+				"sixth": 		(1 / 6),
+				"sixths": 		(1 / 6),
+				"fifth": 		(1 / 5),
+				"fifths": 		(1 / 5),
+				"fourth": 		(1 / 4),
+				"fourths": 		(1 / 4),
+				"quarter": 		(1 / 4),
+				"quarters": 	(1 / 4),
+				"third": 		(1 / 3),
+				"thirds": 		(1 / 3),
+				"half": 		(1 / 2),
+				"halfs": 		(1 / 2),
+				"halves": 		(1 / 2),
 				"a": 			1,
 				"an": 			1,
 				"one": 			1,
@@ -224,16 +250,17 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.getAverage = getAverage
 			function getAverage(arr) {
 				try {
-					if (!Array.isArray(arr)) {
-						return null
-					}
-					else {
+					// not an array
+						if (!Array.isArray(arr)) {
+							return null
+						}
+
+					// add items & divide by count
 						var sum = 0
 						for (var i = 0; i < arr.length; i++) {
 							sum += arr[i]
 						}
 						return (sum / arr.length)
-					}
 				} catch (error) {
 					return null
 				}
@@ -243,18 +270,19 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.getDigits = getDigits
 			function getDigits(numberWord) {
 				try {
-					if (!isNaN(numberWord)) {
-						return numberWord
-					}
-					else {
+					// already is a digit
+						if (!isNaN(numberWord)) {
+							return numberWord
+						}
+
+					// run through number word library
 						numberWord = numberWord.toLowerCase().trim()
 						if (NUMBER_WORD_LIBRARY[numberWord]) {
 							return NUMBER_WORD_LIBRARY[numberWord]
 						}
-						else {
-							return numberWord
-						}
-					}
+
+					// return original
+						return numberWord
 				}
 				catch (error) {
 					return numberWord
@@ -265,20 +293,107 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.getLetters = getLetters
 			function getLetters(letterWord) {
 				try {
-					letterWord = letterWord.toLowerCase().trim()
+					// clean up
+						letterWord = letterWord.toLowerCase().trim()
 
-					if ((/^[a-z]{1}$/).test(letterWord)) {
+					// already is a letter
+						if ((/^[a-z]{1}$/).test(letterWord)) {
+							return letterWord
+						}
+
+					// run through letter word library
+						else if (LETTER_WORD_LIBRARY[letterWord]) {
+							return LETTER_WORD_LIBRARY[letterWord]
+						}
+
+					// return original
 						return letterWord
-					}
-					else if (LETTER_WORD_LIBRARY[letterWord]) {
-						return LETTER_WORD_LIBRARY[letterWord]
-					}
-					else {
-						return letterWord
-					}
 				}
 				catch (error) {
 					return letterWord
+				}
+			}
+
+		/* getDateTime */
+			FUNCTION_LIBRARY.getDateTime = getDateTime
+			function getDateTime(timePhrase) {
+				try {
+					// clean up
+						timePhrase = timePhrase.toLowerCase().trim()
+
+					// word
+						if (timePhrase == "yesterday") {
+							return new Date(new Date().getTime() - 1000 * 60 * 60 * 24)
+						}
+						else if (timePhrase == "today") {
+							return new Date()
+						}
+						else if (timePhrase == "tomorrow") {
+							return new Date(new Date().getTime() + 1000 * 60 * 60 * 24)
+						}
+						else if (timePhrase == "now") {
+							return new Date()
+						}
+
+					// time
+						else if (timePhrase == "noon" || timePhrase == "midnight" || timePhrase.includes(":") || timePhrase.replace(/\./gi, "").includes("am") || timePhrase.replace(/\./gi, "").includes("pm") || timePhrase.replace(/\'/gi, "").includes("oclock")) {
+							// fix AM / PM and hours without minutes
+								var time = timePhrase.replace(/\s?p\.?\s?m\.?/gi, " PM").replace(/\s?a\.?\s?m\.?/gi, " AM").replace(/o\'clock/gi, "").replace("noon", "12:00 PM").replace("midnight", "12:00 AM")
+									time = time.split(/\s+/gi)
+									time = (time[0].replace(/[^0-9:]/gi, "") || "12") + ":00 " + (time[1] || "")
+
+							// get ms
+								var date = new Date(time).getTime() || new Date(new Date().toDateString() + " " + time).getTime()
+							
+							// in the past?
+								if (new Date().getTime() > date) {
+									// 12 hours ahead
+										if (!time.includes("PM") && !time.includes("AM") && new Date().getTime() < date + (1000 * 60 * 60 * 12)) {
+											date = date + (1000 * 60 * 60 * 12)
+										}
+
+									// in the past & am/pm specified? 24 hours ahead
+										else if (new Date().getTime() < date + (1000 * 60 * 60 * 24)) {
+											date = date + (1000 * 60 * 60 * 24)
+										}
+								}
+
+							return new Date(date)
+						}
+
+					// date
+						else {
+							// split at spaces
+								var date = timePhrase.split(/ ?\/ ?|\s/gi)
+
+							// month
+								if (isNaN(date[0])) {
+									date[0] = ["january","february","march","april","may","june","july","august","september","october","november","december"].indexOf(date[0]) + 1
+								}
+
+							// day (ordinal --> cardinal)
+								date[1] = date[1].replace(/[^0-9]/gi, "")
+							
+							// year or no year?
+								if (date.length !== 2) {
+									date = date.join("/")
+								}
+								else {
+									var attempt = date.join("/") + "/" + new Date().getFullYear()
+
+									if (new Date(attempt) < new Date()) {
+										date = date.join("/") + "/" + (new Date().getFullYear() + 1)
+									}
+									else {
+										date = attempt
+									}
+								}
+							
+							return new Date(date)
+						}
+				}
+				catch (error) {
+					return timePhrase
 				}
 			}
 
@@ -931,6 +1046,9 @@ window.addEventListener("load", function() {
 
 					if (response.number) {
 						CONTEXT_LIBRARY.lastResponseNumber = response.number
+					}
+					if (response.time) {
+						CONTEXT_LIBRARY.lastResponseTime = response.time
 					}
 					if (response.word) {
 						CONTEXT_LIBRARY.lastResponseWord = response.word

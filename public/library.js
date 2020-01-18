@@ -258,6 +258,7 @@
 			"tell me the time": 				"get the time",
 
 			"get the day": 						"get the day",
+			"get the day on": 					"get the day",
 			"what day is it": 					"get the day",
 			"what day is": 						"get the day",
 			"what day was": 					"get the day",
@@ -327,23 +328,29 @@
 			"how many days left until": 		"get time until",
 			"how many days left till": 			"get time until",
 			"how many days left on": 			"get time until",
-			"how many days is left until": 		"get time until",
-			"how many days is left till": 		"get time until",
-			"how many days is left on": 		"get time until",
-			"how many days is remaining until": "get time until",
-			"how many days is remaining till": 	"get time until",
-			"how many days is remaining on": 	"get time until",
-			"how many days remains until": 		"get time until",
-			"how many days remains till": 		"get time until",
-			"how many days remains on": 		"get time until",
+			"how many days are left until": 	"get time until",
+			"how many days are left till": 		"get time until",
+			"how many days are left on": 		"get time until",
+			"how many days are remaining until": "get time until",
+			"how many days are remaining till": "get time until",
+			"how many days are remaining on": 	"get time until",
+			"how many days remain until": 		"get time until",
+			"how many days remain till": 		"get time until",
+			"how many days remain on": 			"get time until",
 
 		// alarms
+			"set alarm": 						"set alarm",
+			"set an alarm": 					"set alarm",
+			"set alarm for": 					"set alarm",
+			"set an alarm for": 				"set alarm",
 			"set a timer": 						"set alarm",
 			"set timer": 						"set alarm",
-			"set an alarm": 					"set alarm",
-			"set alarm": 						"set alarm",
+			"set a timer for": 					"set alarm",
+			"set timer for": 					"set alarm",
 			"wake me up": 						"set alarm",
 			"alert me": 						"set alarm",
+			"wake me up at": 					"set alarm",
+			"alert me at": 						"set alarm",
 
 			"cancel alarm": 					"cancel alarm",
 			"turn off alarm": 					"cancel alarm",
@@ -414,6 +421,7 @@
 			"choose from this list": 			"choose randomly",
 			"choose from a list": 				"choose randomly",
 			"choose an item": 					"choose randomly",
+			"choose one of these": 				"choose randomly",
 			"pick randomly": 					"choose randomly",
 			"pick randomly from a list": 		"choose randomly",
 			"pick randomly from this list": 	"choose randomly",
@@ -422,6 +430,7 @@
 			"pick from this list": 				"choose randomly",
 			"pick from a list": 				"choose randomly",
 			"pick an item": 					"choose randomly",
+			"pick one of these": 				"choose randomly",
 			"select randomly": 					"choose randomly",
 			"select randomly from a list": 		"choose randomly",
 			"select randomly from this list": 	"choose randomly",
@@ -430,6 +439,7 @@
 			"select from this list": 			"choose randomly",
 			"select from a list": 				"choose randomly",
 			"select an item": 					"choose randomly",
+			"select one of these": 				"choose randomly",
 
 			"consult the magic 8 ball": 		"consult the magic 8 ball",
 			"consult a magic 8 ball": 			"consult the magic 8 ball",
@@ -889,6 +899,8 @@
 			"find reviews of the movie": 		"get a movie",
 			"look up reviews of the movie": 	"get a movie",
 			"search for reviews of the movie": 	"get a movie",
+			"what is the plot of the movie": 	"get a movie",
+			"tell me about the movie": 			"get a movie",
 			"get a film": 						"get a movie",
 			"get the film": 					"get a movie",
 			"get a film called": 				"get a movie",
@@ -921,6 +933,8 @@
 			"find reviews of the film": 		"get a movie",
 			"look up reviews of the film": 		"get a movie",
 			"search for reviews of the film": 	"get a movie",
+			"what is the plot of the film": 	"get a movie",
+			"tell me about the film": 			"get a movie",
 
 		// news & blogs
 			"get the latest post": 				"get the latest post",
@@ -1069,8 +1083,10 @@
 			"log my purchase of": 				"log purchase",
 
 			"get calendar": 					"get calendar",
+			"get all events": 					"get calendar",
 			"get events": 						"get calendar",
 			"get my events": 					"get calendar",
+			"get all my events": 				"get calendar",
 			"get upcoming events": 				"get calendar",
 			"get my upcoming events": 			"get calendar",
 			"get my calendar": 					"get calendar",
@@ -1650,6 +1666,11 @@
 						}
 
 					// pick three at random
+						var nonsuggestable = ["receive gratitude", "receive apology", "receive affirmation", "receive greeting",
+							"list actions", "stop last video", "stop listening", "change configuration", "authorize platform", "cancel alarm", "cancel all alarms"]
+						var suggestableActionList = actionList.filter(function(name) {
+							return !nonsuggestable.includes(name)
+						})
 						var randomActions = []
 						var escapeCount = 10
 						while (randomActions.length < 3 && escapeCount) {
@@ -1895,11 +1916,16 @@
 						var restartTime = null
 
 					// split into array
-						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						remainder = remainder.replace(/[?!.,;'"_\(\)\$\%]/gi,"").toLowerCase().trim()
 						var words = remainder.split(/\s/gi) || []
 
+					// then
+						if (remainder.includes("then") && window.CONTEXT_LIBRARY.lastResponseTime) {
+							restartTime = window.CONTEXT_LIBRARY.lastResponseTime.getTime()
+						}
+
 					// timer
-						if ((/second|minute|hour|day|for/gi).test(remainder)) {
+						else if ((/second|minute|hour|day|for/gi).test(remainder)) {
 							var units = {
 								"second": 1000,
 								"minute": 1000 * 60,
@@ -1932,7 +1958,7 @@
 								duration += (amounts[i].number * units[amounts[i].unit])
 							}
 
-							if (duration) {
+							if (duration && !isNaN(duration)) {
 								restartTime = new Date().getTime() + duration
 							}
 						}
@@ -1940,17 +1966,8 @@
 					// alarm
 						else if ((/until|till|til/gi).test(remainder)) {
 							var timePhrase = remainder.replace(/until|till|til/gi,"").toLowerCase().trim()
-								timePhrase = timePhrase.replace("p.m.", "PM").replace("pm", "PM").replace("a.m.", "AM").replace("am", "AM")
-							restartTime = new Date(timePhrase).getTime() || new Date(new Date().toDateString() + " " + timePhrase).getTime()
-							
-							if (!isNaN(restartTime)) {
-								if (!timePhrase.includes("PM") && !timePhrase.includes("AM") && new Date().getTime() < restartTime + (1000 * 60 * 60 * 12)) {
-									restartTime = restartTime + (1000 * 60 * 60 * 12)
-								}
-								else if (new Date().getTime() < restartTime + (1000 * 60 * 60 * 24)) {
-									restartTime = restartTime + (1000 * 60 * 60 * 24)
-								}
-							}
+							restartTime = window.FUNCTION_LIBRARY.getDateTime(timePhrase)
+							restartTime = new Date(restartTime).getTime()
 						}
 
 					// restartTime?
@@ -1963,16 +1980,19 @@
 
 					// get message
 						if (restartTime) {
-							var responseHTML = "<h2>whistle detection turned off until <b>" + new Date(restartTime).toLocaleString() + "</b></h2>"
+							var time = new Date(restartTime)
+							var responseHTML = "<h2>whistle detection turned off until <b>" + time.toLocaleString() + "</b></h2>"
 						}
 						else {
+							var time = null
 							var responseHTML = "<h2>whistle detection turned off</h2>"
 						}
 						
 					// response
-						callback({icon: icon, message: "", html: responseHTML, followup: false})
+						callback({icon: icon, message: "", html: responseHTML, followup: false, time: time})
 				}
 				catch (error) {
+					console.log(error)
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
@@ -2020,7 +2040,7 @@
 						}
 
 					// change volume
-						var volume = remainder
+						var volume = remainder.replace(/percent/gi, "").trim()
 							volume = window.FUNCTION_LIBRARY.getDigits(volume)
 						var newVolume = window.FUNCTION_LIBRARY.changeVoiceVolume({volume: volume})
 
@@ -2298,9 +2318,10 @@
 						var icon = "&#x1f553;"
 
 					// response
-						var message = new Date().toLocaleTimeString()
+						var time = new Date()
+						var message = time.toLocaleTimeString()
 						var responseHTML = "The time is <h2>" + message + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML})
+						callback({icon: icon, message: message, html: responseHTML, time: time})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2313,44 +2334,23 @@
 
 					// remainder?
 						if (remainder && remainder.trim()) {
-							if (remainder == "yesterday") {
-								var date = new Date(new Date().getTime() - 1000 * 60 * 60 * 24).toLocaleDateString()
-							}
-							else if (remainder == "today") {
-								var date = new Date().toLocaleDateString()
-							}
-							else if (remainder == "tomorrow") {
-								var date = new Date(new Date().getTime() + 1000 * 60 * 60 * 24).toLocaleDateString()
-							}
-							else {
-								var date = remainder.split(/ ?\/ ?|\s/gi)
-								if (isNaN(date[0])) {
-									date[0] = ["january","february","march","april","may","june","july","august","september","october","november","december"].indexOf(date[0].toLowerCase()) + 1
+							// then
+								if (remainder.trim() == "then" && window.CONTEXT_LIBRARY.lastResponseTime) {
+									var date = window.CONTEXT_LIBRARY.lastResponseTime.getTime()
 								}
-								date[1] = date[1].replace(/[^0-9]/gi, "")
-													
-								if (date.length == 2) {
-									var attempt = date.join("/") + "/" + new Date().getFullYear()
 
-									if (new Date(attempt) < new Date()) {
-										date = date.join("/") + "/" + (new Date().getFullYear() + 1)
-									}
-									else {
-										date = attempt
-									}
-								}
+							// other
 								else {
-									date = date.join("/")
+									var date = window.FUNCTION_LIBRARY.getDateTime(remainder)
 								}
-								date = new Date(date)
-							}
 						}
 
 					// response
-						var word = (["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date(date || null).getDay()])
+						var time = new Date(date || null)
+						var word = (["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][time.getDay()])
 						var message = word
 						var responseHTML = (date ? new Date(date).toLocaleDateString() : "Today") + " is <h2>" + word + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML, word: word})
+						callback({icon: icon, message: message, html: responseHTML, word: word, time: time})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2362,9 +2362,10 @@
 						var icon = "&#x1f4c5;"
 
 					// response
-						var message = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()])
+						var time = new Date()
+						var message = (["January","February","March","April","May","June","July","August","September","October","November","December"][time.getMonth()])
 						var responseHTML = "The month is <h2>" + message + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML})
+						callback({icon: icon, message: message, html: responseHTML, time: time})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2376,9 +2377,10 @@
 						var icon = "&#x1f4c5;"
 
 					// response
-						var message = (["January","February","March","April","May","June","July","August","September","October","November","December"][new Date().getMonth()] + " " + new Date().getDate())
+						var time = new Date()
+						var message = (["January","February","March","April","May","June","July","August","September","October","November","December"][time.getMonth()] + " " + time.getDate())
 						var responseHTML = "The date is <h2>" + message + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML})
+						callback({icon: icon, message: message, html: responseHTML, time: time})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2389,76 +2391,45 @@
 					// icon
 						var icon = "&#x1f4c5;"
 
+					// no remainder
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What time or date should I calculate?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
 					// remainder?
 						if (remainder && remainder.trim()) {
-							if (remainder == "yesterday") {
-								var date = new Date(new Date().getTime() - 1000 * 60 * 60 * 24).toLocaleDateString()
-							}
-							else if (remainder == "today") {
-								var date = new Date().toLocaleDateString()
-							}
-							else if (remainder == "tomorrow") {
-								var date = new Date(new Date().getTime() + 1000 * 60 * 60 * 24).toLocaleDateString()
-							}
-							else if (remainder.includes("alarm") || remainder.includes("timer")) {
-								var index = null
-								var words = remainder.split(/\s/gi)
-								for (var i in words) {
-									words[i] = window.FUNCTION_LIBRARY.getDigits(words[i])
-									if (!isNaN(words[i])) {
-										index = Number(words[i])
-									}
+							// then
+								if (remainder == "then" && window.CONTEXT_LIBRARY.lastResponseTime) {
+									var date = window.CONTEXT_LIBRARY.lastResponseTime.getTime()
 								}
 
-								if (!index || !window.CONTEXT_LIBRARY.alarms[index - 1]) {
-									callback({icon: icon, error: true, message: "I couldn't find that alarm.", html: "<h2>Error: invalid alarm</h2>"})
-									return
-								}
-								var date = new Date(window.CONTEXT_LIBRARY.alarms[index - 1])
-							}
-							else if (remainder.includes(":") || remainder.toLowerCase().replace(/\./gi, "").includes("am") || remainder.toLowerCase().replace(/\./gi, "").includes("pm")) {
-								var time = remainder.replace(/\s?p\.?\s?m\.?/gi, " PM").replace(/\s?a\.?\s?m\.?/gi, " AM")
-									time = time.split(/\s+/gi)
-									time = (time[0].replace(/[^0-9:]/gi, "") || "12") + ":00 " + (time[1] || "AM")
-
-								var date = new Date(time).getTime() || new Date(new Date().toDateString() + " " + time).getTime()
-								
-								// in the past? 12 hours ahead
-									if (!time.includes("PM") && !time.includes("AM") && new Date().getTime() < date + (1000 * 60 * 60 * 12)) {
-										date = date + (1000 * 60 * 60 * 12)
+							// alarm
+								else if (remainder.includes("alarm") || remainder.includes("timer")) {
+									var index = null
+									var words = remainder.split(/\s/gi)
+									for (var i in words) {
+										words[i] = window.FUNCTION_LIBRARY.getDigits(words[i])
+										if (!isNaN(words[i])) {
+											index = Number(words[i])
+										}
 									}
 
-								// in the past & am/pm specified? 24 hours ahead
-									else if (new Date().getTime() < date + (1000 * 60 * 60 * 24)) {
-										date = date + (1000 * 60 * 60 * 24)
+									if (!index || !window.CONTEXT_LIBRARY.alarms[index - 1]) {
+										callback({icon: icon, error: true, message: "I couldn't find that alarm.", html: "<h2>Error: invalid alarm</h2>"})
+										return
 									}
-							}
-							else {
-								var date = remainder.split(/ ?\/ ?|\s/gi)
-								if (isNaN(date[0])) {
-									date[0] = ["january","february","march","april","may","june","july","august","september","october","november","december"].indexOf(date[0].toLowerCase()) + 1
+									var date = new Date(window.CONTEXT_LIBRARY.alarms[index - 1])
 								}
-								date[1] = date[1].replace(/[^0-9]/gi, "")
-													
-								if (date.length == 2) {
-									var attempt = date.join("/") + "/" + new Date().getFullYear()
 
-									if (new Date(attempt) < new Date()) {
-										date = date.join("/") + "/" + (new Date().getFullYear() + 1)
-									}
-									else {
-										date = attempt
-									}
-								}
+							// getDateTime
 								else {
-									date = date.join("/")
+									var date = window.FUNCTION_LIBRARY.getDateTime(remainder)
 								}
-								date = new Date(date)
-							}
 						}
 
 					// get time
-						var number = new Date(date || null).getTime() - new Date().getTime()
+						var number = new Date(date).getTime() - new Date().getTime()
 						var segments = []
 						var days = Math.floor(Math.abs(number) / (1000 * 60 * 60 * 24))
 						if (days) { segments.push(days + " day" + (days == 1 ? "" : "s")) }
@@ -2470,9 +2441,10 @@
 						if (seconds) { segments.push(seconds + " second" + (seconds == 1 ? "" : "s")) }
 
 					// response
+						var time = new Date(date)
 						var message = segments.join(", ")
-						var responseHTML = (new Date(date).toLocaleString() + " - " + new Date().toLocaleString()) + "<h2>" + message + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML, number: number})
+						var responseHTML = (time.toLocaleString() + " - " + new Date().toLocaleString()) + "<h2>" + message + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML, number: number, time: time})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2495,8 +2467,13 @@
 					// split into array
 						var words = remainder.split(/\s/gi) || []
 
+					// then
+						if (remainder == "then" && window.CONTEXT_LIBRARY.lastResponseTime) {
+							var endTime = window.CONTEXT_LIBRARY.lastResponseTime.getTime()
+						}
+
 					// timer
-						if ((/second|minute|hour|day|in/gi).test(remainder)) {
+						else if ((/second|minute|hour|day|in/gi).test(remainder)) {
 							// possible units
 								var units = {
 									"second": 1000,
@@ -2517,12 +2494,6 @@
 												unit: words[i + 1].replace(/s$/gi,"")
 											})
 										}
-										else {
-											amounts.push({
-												number: Number(words[i]),
-												unit: "minute"
-											})
-										}
 									}
 								}
 
@@ -2533,51 +2504,39 @@
 								}
 
 							// no duration
-								if (!duration) {
+								if (!duration || isNaN(duration)) {
 									callback({icon: icon, error: true, message: "I was unable to set that timer.", html: "<h2>Error: unable to set timer:</h2>" + response})
 									return
 								}
 							
-							// create alarm
+							// identify endTime
 								var endTime = new Date().getTime() + duration
-								window.CONTEXT_LIBRARY.alarms.push(endTime)
-
-							// response
-								var message = "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for " + new Date(endTime).toLocaleTimeString()
-								var responseHTML = "<h2>alarm #" + window.CONTEXT_LIBRARY.alarms.length + ": <b>" + new Date(endTime).toLocaleString() + "</b></h2>"
-								callback({icon: icon, message: message, html: responseHTML})
 						}
 
 					// alarm
 						else {
 							// identify endtime
 								var timePhrase = remainder.replace(/in|at|for|after|before|around/gi,"").toLowerCase().trim()
-									timePhrase = timePhrase.replace("p.m.", "PM").replace("pm", "PM").replace("a.m.", "AM").replace("am", "AM")
-								var endTime = new Date(timePhrase).getTime() || new Date(new Date().toDateString() + " " + timePhrase).getTime()
+								var endTime = window.FUNCTION_LIBRARY.getDateTime(timePhrase)
+									endTime = new Date(endTime).getTime()
 							
 							// invalid endTime
 								if (isNaN(endTime)) {
 									callback({icon: icon, error: true, message: "I was unable to set that alarm.", html: "<h2>Error: unable to set alarm:</h2>" + remainder})
 									return
 								}
-							
-							// in the past? 12 hours ahead
-								if (!timePhrase.includes("PM") && !timePhrase.includes("AM") && new Date().getTime() < endTime + (1000 * 60 * 60 * 12)) {
-									endTime = endTime + (1000 * 60 * 60 * 12)
-								}
+						}
 
-							// in the past & am/pm specified? 24 hours ahead
-								else if (new Date().getTime() < endTime + (1000 * 60 * 60 * 24)) {
-									endTime = endTime + (1000 * 60 * 60 * 24)
-								}
-
+					// endTime
+						if (endTime && !isNaN(endTime)) {
 							// add alarm
 								window.CONTEXT_LIBRARY.alarms.push(endTime)
 
 							// response
-								var message = "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for " + new Date(endTime).toLocaleTimeString()
-								var responseHTML = "<h2>alarm #" + window.CONTEXT_LIBRARY.alarms.length + ": <b>" + new Date(endTime).toLocaleString() + "</b></h2>"
-								callback({icon: icon, message: message, html: responseHTML})
+								var time = new Date(endTime)
+								var message = "Alarm #" + window.CONTEXT_LIBRARY.alarms.length + " set for " + time.toLocaleTimeString()
+								var responseHTML = "<h2>alarm #" + window.CONTEXT_LIBRARY.alarms.length + ": <b>" + time.toLocaleString() + "</b></h2>"
+								callback({icon: icon, message: message, html: responseHTML, time: time})
 						}
 				}
 				catch (error) {
@@ -2616,13 +2575,13 @@
 						}
 
 					// cancel alarm
-						var time = new Date(window.CONTEXT_LIBRARY.alarms[index - 1]).toLocaleString()
+						var time = new Date(window.CONTEXT_LIBRARY.alarms[index - 1])
 						window.CONTEXT_LIBRARY.alarms[index - 1] = null
 
 					// response
-						var message = "I cancelled alarm #" + index + ", which was set for " + time + "."
-						var responseHTML = "<h2>cancelled alarm #" + index + ": <b>" + time + "</b></h2>"
-						callback({icon: icon, message: message, html: responseHTML})
+						var message = "I cancelled alarm #" + index + ", which was set for " + time.toLocaleString() + "."
+						var responseHTML = "<h2>cancelled alarm #" + index + ": <b>" + time.toLocaleString() + "</b></h2>"
+						callback({icon: icon, message: message, html: responseHTML, time: time})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2771,17 +2730,19 @@
 						}
 
 					// loop through and identify terms
-						var terms = remainder.split(/\s/gi)
+						var terms = remainder.toLowerCase().replace(/the/gi, "").replace(/percent of/gi, "percent").replace(/square root/gi, "sqrt").replace(/cube root/gi, "cbrt").split(/\s/gi)
 						for (var i = 0; i < terms.length; i++) {
 							if (isNaN(terms[i])) {
-								terms[i] = terms[i].toLowerCase()
+								terms[i] = terms[i]
 									 if (terms[i] == "that") 	{ terms[i] = Number(window.CONTEXT_LIBRARY.lastResponseNumber) || 0 }
 								else if (terms[i] == "by")      { terms[i] = "" }
-								else if (terms[i] == "of")      { terms[i] = "" }
+								else if (terms[i] == "of")      { terms[i] = "*" }
 								else if (terms[i] == "plus")    { terms[i] = "+" }
 								else if (terms[i] == "minus")   { terms[i] = "-" }
 								else if (terms[i] == "times")   { terms[i] = "*" }
 								else if (terms[i] == "divided") { terms[i] = "/" }
+								else if (terms[i] == "sqrt") 	{ terms[i] = "** (1/2)" }
+								else if (terms[i] == "cbrt") 	{ terms[i] = "** (1/3)" }
 								else if (terms[i] == "squared") { terms[i] = "** 2" }
 								else if (terms[i] == "cubed")   { terms[i] = "** 3" }
 								else if (terms[i] == "halved")  { terms[i] = "/ 2" }
@@ -2793,7 +2754,7 @@
 								else {
 									terms[i] = window.FUNCTION_LIBRARY.getDigits(terms[i])
 									if (isNaN(terms[i])) {
-										terms[i] = "'" + terms[i] + "'"
+										terms[i] = "/*" + terms[i] + "*/"
 									}
 								}
 							}
@@ -2803,6 +2764,15 @@
 						}
 
 					// evaluate
+						if (isNaN(terms[0])) {
+							terms.unshift(1)
+						}
+						for (var i = 0; i < terms.length - 1; i++) {
+							if (!isNaN(terms[i]) && !isNaN(terms[i + 1])) {
+								terms.splice(i + 1, 0, "*")
+								i--
+							}
+						}
 						var result = eval(terms.join(" "))
 
 					// not a number?
@@ -4790,19 +4760,25 @@
 					// split at keywords
 						var startDate = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ from | starting at | start date | start time | between | for /gi)
 							startDate = (startDate[1] || startDate[0]).split(/ to | until | ending at | end date | end time | and | through /gi)[0].trim()
-							if (startDate == "today")     { startDate = new Date().toLocaleDateString() }
-							if (startDate == "yesterday") { startDate = new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).toLocaleDateString() }
-							if (startDate == "tomorrow")  { startDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24)).toLocaleDateString() }
+							if (startDate == "then" && window.CONTEXT_LIBRARY.lastResponseTime) {
+								startDate = window.CONTEXT_LIBRARY.lastResponseTime
+							}
+							else {
+								startDate = window.FUNCTION_LIBRARY.getDateTime(startDate)
+							}
 
 						var endDate = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ to | until | ending at | end date | end time | and | through /gi)
 							endDate = (endDate[1] || endDate[0]).split(/ from | starting at | start date | start time | between | for /gi)[0].trim()
-							if (endDate == "today")     { endDate = new Date().toLocaleDateString() }
-							if (endDate == "yesterday") { endDate = new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).toLocaleDateString() }
-							if (endDate == "tomorrow")  { endDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24)).toLocaleDateString() }
+							if (endDate == "then" && window.CONTEXT_LIBRARY.lastResponseTime) {
+								endDate = window.CONTEXT_LIBRARY.lastResponseTime
+							}
+							else {
+								endDate = window.FUNCTION_LIBRARY.getDateTime(endDate)
+							}
 
 					// build options
 						var options = {
-							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=fetchEvents" + (startDate ? "&startDate=" + startDate : "") + (endDate ? "&endDate=" + endDate : "")
+							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=fetchEvents" + (startDate ? "&startDate=" + startDate.toLocaleString() : "") + (endDate ? "&endDate=" + endDate.toLocaleString() : "")
 						}
 						
 					// proxy
@@ -4823,10 +4799,11 @@
 									}
 
 								// response
+									var time = response.events && response.events.length ? new Date(response.events[0].startTime) : null
 									var message = response.message + eventList.join(" ... ")
 									var url = "https://calendar.google.com"
 									var responseHTML = "<a target='_blank' href='" + url + "'><h2>upcoming events</h2></a><ul>" + eventItems.join("") + "</ul>"
-									callback({icon: icon, message: message, html: responseHTML, url: url})
+									callback({icon: icon, message: message, html: responseHTML, url: url, time: time})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to fetch your calendar.", html: "<h2>Error: unable to get calendar:</h2>" + error})
@@ -4878,29 +4855,11 @@
 									window.CONTEXT_LIBRARY["add event"][nextParameter] = remainder
 								}
 								else if (nextParameter == "startDate" || nextParameter == "endDate") {
-									if (remainder == "today") {
-										var date = new Date().toLocaleDateString()
-									}
-									else if (remainder == "tomorrow") {
-										var date = new Date(new Date().getTime() + 1000 * 60 * 60 * 24).toLocaleDateString()
+									if (remainder == "then" && window.CONTEXT_LIBRARY.lastResponseTime) {
+										var date = window.CONTEXT_LIBRARY.lastResponseTime.toLocaleDateString()
 									}
 									else {
-										var date = remainder.split(/ \/ |\s/gi)
-										if (isNaN(date[0])) {
-											date[0] = ["january","february","march","april","may","june","july","august","september","october","november","december"].indexOf(date[0].toLowerCase()) + 1
-										}
-										date[1] = date[1].replace(/[^0-9]/gi, "")
-										
-										if (date.length == 2) {
-											var attempt = date.join("/") + "/" + new Date().getFullYear()
-
-											if (new Date(attempt) < new Date()) {
-												date = date.join("/") + "/" + (new Date().getFullYear() + 1)
-											}
-											else {
-												date = attempt
-											}
-										}
+										var date = window.FUNCTION_LIBRARY.getDateTime(remainder).toLocaleDateString()
 									}
 
 									if (!isNaN(new Date(date).getTime())) {
@@ -4908,9 +4867,12 @@
 									}
 								}
 								else if (nextParameter == "startTime" || nextParameter == "endTime") {
-									var time = remainder.replace(/\s?p\.?\s?m\.?/gi, " PM").replace(/\s?a\.?\s?m\.?/gi, " AM")
-										time = time.split(/\s+/gi)
-										time = (time[0].replace(/[^0-9:]/gi, "") || "12") + ":00 " + (time[1] || "AM")
+									if (remainder == "then" && window.CONTEXT_LIBRARY.lastResponseTime) {
+										var time = window.CONTEXT_LIBRARY.lastResponseTime.toLocaleTimeString()
+									}
+									else {
+										var time = window.FUNCTION_LIBRARY.getDateTime(remainder).toLocaleTimeString()
+									}
 
 									if (!isNaN(new Date("1/1/1 " + time).getTime())) {
 										window.CONTEXT_LIBRARY["add event"][nextParameter] = time
@@ -4960,13 +4922,14 @@
 									}
 
 								// response
+									var time = new Date(response.event.startTime)
 									var message = response.message + " " + response.event.title + ", from " + response.event.startTime + " to " + response.event.endTime + (response.event.location ? (" at " + response.event.location) : "")
 									var url = "https://calendar.google.com"
 									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + response.event.title + "</h2></a><ul>" +
 										"<li>" + response.event.startTime + " - " + response.event.endTime + "</li>" +
 										(response.event.location ? ("<li>" + response.event.location + "</li>") : "") +
 										"</ul>"
-									callback({icon: icon, message: message, html: responseHTML, url: url})
+									callback({icon: icon, message: message, html: responseHTML, url: url, time: time})
 
 								// end flow
 									window.CONTEXT_LIBRARY.flow = null
@@ -5444,10 +5407,11 @@
 									responseHTML += "</ul>"
 
 								// send response
+									var time = people.length ? new Date(people[0].birthday) : null
 									message = "I found " + people.length + (people.length == 1 ? "person" : "people") + ": " + message
 									var url = "https://contacts.google.com/search/" + remainder
 									responseHTML = "<a target='_blank' href='" + url + "'><h2>" + remainder + " birthdays</h2></a>" + responseHTML
-									callback({icon: icon, message: message, html: responseHTML, url: url})
+									callback({icon: icon, message: message, html: responseHTML, url: url, time: time})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
@@ -6008,6 +5972,11 @@
 										var url = "https://www.youtube.com/embed/" + response.items[i].id.videoId + "?autoplay=1"
 										var responseHTML = '<iframe id="' + randomID + '" width="560" height="315" src="' + url + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
 										results.push({icon: icon, message: message, html: responseHTML, followup: false, url: url, word: word, video: randomID})
+									}
+
+								// last video?
+									if (window.CONTEXT_LIBRARY.lastResponseVideo) {
+										window.FUNCTION_LIBRARY.stopVideo(window.CONTEXT_LIBRARY.lastResponseVideo)
 									}
 
 								// send response
@@ -7360,9 +7329,9 @@
 								words[i] = window.FUNCTION_LIBRARY.getDigits(words[i].trim())
 							}
 							words = words.join(" ")
-							fromUnit = words.replace(/[0-9]/gi,"").trim()
+							fromUnit = words.replace(/[0-9\.]/gi,"").trim()
 						
-						var quantity = Number(words.replace(/[^0-9]/gi,"")) || 1
+						var quantity = Number(words.replace(/[^0-9\.]/gi,"")) || 1
 
 					// options
 						var options = {
@@ -7384,9 +7353,10 @@
 									var outputToUnit   = (response.parameters.to.prefix   !== "_" ? response.parameters.to.prefix   : "") + response.parameters.to.unit
 
 								// response
+									var number = outputQuantity
 									var message = outputQuantity + " " + outputToUnit
 									var responseHTML = "<h2>" + response.parameters.quantity + " " + outputFromUnit + " = <b>" + outputQuantity + "</b> " + outputToUnit + "</h2>"
-									callback({icon: icon, message: message, html: responseHTML})
+									callback({icon: icon, message: message, html: responseHTML, number: number})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to convert.", html: "<h2>Error: unable to access unitConverter</h2>"})
