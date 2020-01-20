@@ -43,6 +43,7 @@
 			"youre amazing": 					"receive affirmation",
 			"you are amazing": 					"receive affirmation",
 
+			"hello": 							"receive greeting",
 			"happy": 							"receive greeting",
 			"good": 							"receive greeting",
 			"merry": 							"receive greeting",
@@ -288,7 +289,6 @@
 			"get time until": 					"get time until",
 			"get time till": 					"get time until",
 			"get time on": 						"get time until",
-			"get time since": 					"get time until",
 			"get time left until": 				"get time until",
 			"get time left till": 				"get time until",
 			"get time left on": 				"get time until",
@@ -298,7 +298,6 @@
 			"how much time until": 				"get time until",
 			"how much time till": 				"get time until",
 			"how much time on": 				"get time until",
-			"how much time since": 				"get time until",
 			"how much time left until": 		"get time until",
 			"how much time left till": 			"get time until",
 			"how much time left on": 			"get time until",
@@ -314,7 +313,6 @@
 			"get days until": 					"get time until",
 			"get days till": 					"get time until",
 			"get days on": 						"get time until",
-			"get days since": 					"get time until",
 			"get days left until": 				"get time until",
 			"get days left till": 				"get time until",
 			"get days left on": 				"get time until",
@@ -324,7 +322,6 @@
 			"how many days until": 				"get time until",
 			"how many days till": 				"get time until",
 			"how many days on": 				"get time until",
-			"how many days since": 				"get time until",
 			"how many days left until": 		"get time until",
 			"how many days left till": 			"get time until",
 			"how many days left on": 			"get time until",
@@ -337,6 +334,18 @@
 			"how many days remain until": 		"get time until",
 			"how many days remain till": 		"get time until",
 			"how many days remain on": 			"get time until",
+			"how long until": 					"get time until",
+			"how long is it until": 			"get time until",
+
+			"get time since": 					"get time since",
+			"how much time since": 				"get time since",
+			"get days since": 					"get time since",
+			"how many days since": 				"get time since",
+			"how long has it been since": 		"get time since",
+			"how long ago was": 				"get time since",
+			"how many days has it been since": 	"get time since",
+			"how many days ago was": 			"get time since",
+			"how long since": 					"get time since",
 
 		// alarms
 			"set alarm": 						"set alarm",
@@ -736,6 +745,52 @@
 			"will it rain": 					"get the weather",
 			"is it going to snow": 				"get the weather",
 			"will it snow": 					"get the weather",
+
+			"get sunrise": 						"get sunrise",
+			"get the sunrise": 					"get sunrise",
+			"get me the sunrise": 				"get sunrise",
+			"get the sunrise for": 				"get sunrise",
+			"get me the sunrise for": 			"get sunrise",
+			"get sunrise time": 				"get sunrise",
+			"get the sunrise time": 			"get sunrise",
+			"get me the sunrise time": 			"get sunrise",
+			"what time is the sunrise": 		"get sunrise",
+			"when is the sunrise": 				"get sunrise",
+			"when will the sunrise": 			"get sunrise",
+			"when will the sun rise": 			"get sunrise",
+			"get sunrise in": 					"get sunrise",
+			"get the sunrise in": 				"get sunrise",
+			"get me the sunrise in": 			"get sunrise",
+			"get sunrise time for": 			"get sunrise",
+			"get the sunrise time for": 		"get sunrise",
+			"get me the sunrise time for": 		"get sunrise",
+			"what time is the sunrise in": 		"get sunrise",
+			"when is the sunrise in": 			"get sunrise",
+			"when will the sunrise in": 		"get sunrise",
+			"when will the sun rise in": 		"get sunrise",
+
+			"get sunset": 						"get sunset",
+			"get the sunset": 					"get sunset",
+			"get me the sunset": 				"get sunset",
+			"get the sunset for": 				"get sunset",
+			"get me the sunset for": 			"get sunset",
+			"get sunset time": 					"get sunset",
+			"get the sunset time": 				"get sunset",
+			"get me the sunset time": 			"get sunset",
+			"what time is the sunset": 			"get sunset",
+			"when is the sunset": 				"get sunset",
+			"when will the sunset": 			"get sunset",
+			"when will the sun rise": 			"get sunset",
+			"get sunset in": 					"get sunset",
+			"get the sunset in": 				"get sunset",
+			"get me the sunset in": 			"get sunset",
+			"get sunset time for": 				"get sunset",
+			"get the sunset time for": 			"get sunset",
+			"get me the sunset time for": 		"get sunset",
+			"what time is the sunset in": 		"get sunset",
+			"when is the sunset in": 			"get sunset",
+			"when will the sunset in": 			"get sunset",
+			"when will the sun set in": 		"get sunset",
 
 			"get nutrition facts": 				"get nutrition facts",
 			"get nutrition facts about": 		"get nutrition facts",
@@ -1317,6 +1372,54 @@
 			"i am curious": 					"search google",
 			"im curious": 						"search google",
 
+			"google geolocate": 				"google geolocate",
+			"geolocate": 						"google geolocate",
+			"get coordinates": 					"google geolocate",
+			"get coordinates of": 				"google geolocate",
+			"get coordinates for": 				"google geolocate",
+			"get the coordinates": 				"google geolocate",
+			"get the coordinates of": 			"google geolocate",
+			"get the coordinates for": 			"google geolocate",
+			"find the coordinates": 			"google geolocate",
+			"find the coordinates of": 			"google geolocate",
+			"find the coordinates for": 		"google geolocate",
+			"what are the coordinates": 		"google geolocate",
+			"what are the coordinates of": 		"google geolocate",
+			"what are the coordinates for": 	"google geolocate",
+			"get latitude": 					"google geolocate",
+			"get latitude of": 					"google geolocate",
+			"get latitude for": 				"google geolocate",
+			"get the latitude": 				"google geolocate",
+			"get the latitude of": 				"google geolocate",
+			"get the latitude for": 			"google geolocate",
+			"find the latitude": 				"google geolocate",
+			"find the latitude of": 			"google geolocate",
+			"find the latitude for": 			"google geolocate",
+			"what is the latitude": 			"google geolocate",
+			"what is the latitude of": 			"google geolocate",
+			"what is the latitude for": 		"google geolocate",
+			"get longitude": 					"google geolocate",
+			"get longitude of": 				"google geolocate",
+			"get longitude for": 				"google geolocate",
+			"get the longitude": 				"google geolocate",
+			"get the longitude of": 			"google geolocate",
+			"get the longitude for": 			"google geolocate",
+			"find the longitude": 				"google geolocate",
+			"find the longitude of": 			"google geolocate",
+			"find the longitude for": 			"google geolocate",
+			"what is the longitude": 			"google geolocate",
+			"what is the longitude of": 		"google geolocate",
+			"what is the longitude for": 		"google geolocate",
+			"get a map": 						"google geolocate",
+			"get a map of": 					"google geolocate",
+			"get a map for": 					"google geolocate",
+			"get me a map": 					"google geolocate",
+			"get me a map of": 					"google geolocate",
+			"get me a map for": 				"google geolocate",
+			"find me a map": 					"google geolocate",
+			"find me a map of": 				"google geolocate",
+			"find me a map for": 				"google geolocate",
+
 			"search google directions": 		"search google directions",
 			"how do i get": 					"search google directions",
 			"how do i go": 						"search google directions",
@@ -1344,6 +1447,10 @@
 			"look up a place called": 			"search google places",
 			"look up a place named": 			"search google places",
 			"look up a place by the name": 		"search google places",
+			"search for a place": 				"search google places",
+			"search for a place called": 		"search google places",
+			"search for a place named": 		"search google places",
+			"search for a place by the name": 	"search google places",
 			"look for a place": 				"search google places",
 			"look for a place called": 			"search google places",
 			"look for a place named": 			"search google places",
@@ -1563,7 +1670,7 @@
 					// send random message
 						var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
 						var responseHTML = "<h2>" + message + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML, followup: false})
+						callback({icon: icon, auto: true, message: message, html: responseHTML, followup: false})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1580,7 +1687,7 @@
 					// send random message
 						var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
 						var responseHTML = "<h2>" + message + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML, followup: false})
+						callback({icon: icon, auto: true, message: message, html: responseHTML, followup: false})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1597,7 +1704,7 @@
 					// send random message
 						var message = window.FUNCTION_LIBRARY.chooseRandom(messages)
 						var responseHTML = "<h2>" + message + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML, followup: false})
+						callback({icon: icon, auto: true, message: message, html: responseHTML, followup: false})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1610,7 +1717,7 @@
 
 					// clean up remainder
 						remainder = remainder.toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").trim()
-						var words = remainder.split(/\s/gi)
+						var words = remainder.split(/\s/gi) || []
 						var message = ""
 
 					// time of day
@@ -1634,13 +1741,18 @@
 						else if (words.includes("christmas")) {
 							message = "Merry Christmas to you too!"
 						}
-						else {
+						else if (remainder.length) {
 							message = "Happy " + remainder + " to you too!"
+						}
+
+					// default
+						else {
+							message = "Hello!"
 						}
 
 					// response
 						var responseHTML = "<h2>" + message + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML, followup: false})
+						callback({icon: icon, auto: true, message: message, html: responseHTML, followup: false})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -1895,7 +2007,7 @@
 					// response
 						var message = ""
 						var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + (name || url) + "</h2></a>"
-						callback({icon: icon, message: message, html: responseHTML, url: url})
+						callback({icon: icon, auto: true, message: message, html: responseHTML, url: url})
 
 					// open window
 						window.open(url, "_blank")
@@ -1989,7 +2101,7 @@
 						}
 						
 					// response
-						callback({icon: icon, message: "", html: responseHTML, followup: false, time: time})
+						callback({icon: icon, auto: true, message: "", html: responseHTML, followup: false, time: time})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2144,7 +2256,7 @@
 					// success
 						var message = key + " is now " + value
 						var responseHTML = "<h2>" + key + " = " + value + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML})
+						callback({icon: icon, auto: true, message: message, html: responseHTML})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2216,9 +2328,8 @@
 								var popup = window.open(url, null, "height=500,width=500,status=yes,toolbar=no,menubar=no,location=no")
 
 							// response
-								var message = "Complete the authorization flow for " + host
 								var responseHTML = "<h2>activating <b>" + host + "</b> in external popup</h2>"
-								callback({icon: icon, message: message, html: responseHTML})
+								callback({icon: icon, auto: true, message: "", html: responseHTML})
 
 							// periodically attempt to fetch authorization from the server
 								window.FUNCTION_LIBRARY.fetchPeriodically("getAuthorization", host, function(data) {
@@ -2230,7 +2341,7 @@
 										window.FUNCTION_LIBRARY.changeConfiguration({key: host, value: value})
 										
 										var responseHTML = "<h2>" + host + " authorized</h2>until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()
-										callback({icon: icon, message: "", html: responseHTML})
+										callback({icon: icon, auto: true, message: "", html: responseHTML})
 
 										popup.close()
 									}
@@ -2291,7 +2402,7 @@
 											window.FUNCTION_LIBRARY.changeConfiguration({key: host, value: value})
 
 											var responseHTML = "<h2>" + host + " authorized</h2>until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()
-											callback({icon: icon, message: "", html: responseHTML})
+											callback({icon: icon, auto: true, message: "", html: responseHTML})
 									}
 									catch (error) {
 										callback({icon: icon, error: true, message: "I couldn't reauthorize " + host, html: "<h2>Error: unable to reauthorize:</h2>" + host})
@@ -2302,7 +2413,7 @@
 					// already authorized
 						else {
 							var responseHTML = "<h2>" + host + " authorized</h2>until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()
-							callback({icon: icon, message: "", html: responseHTML})
+							callback({icon: icon, auto: true, message: "", html: responseHTML})
 						}
 				}
 				catch (error) {
@@ -2335,7 +2446,7 @@
 						if (remainder && remainder.trim()) {
 							// then
 								if (remainder.trim() == "then" && window.CONTEXT_LIBRARY.lastResponseTime) {
-									var date = window.CONTEXT_LIBRARY.lastResponseTime.getTime()
+									var date = window.CONTEXT_LIBRARY.lastResponseTime
 								}
 
 							// other
@@ -2400,7 +2511,7 @@
 						if (remainder && remainder.trim()) {
 							// then
 								if (remainder == "then" && window.CONTEXT_LIBRARY.lastResponseTime) {
-									var date = window.CONTEXT_LIBRARY.lastResponseTime.getTime()
+									var date = window.CONTEXT_LIBRARY.lastResponseTime
 								}
 
 							// alarm
@@ -2429,6 +2540,70 @@
 
 					// get time
 						var number = new Date(date).getTime() - new Date().getTime()
+						var segments = []
+						var days = Math.floor(Math.abs(number) / (1000 * 60 * 60 * 24))
+						if (days) { segments.push(days + " day" + (days == 1 ? "" : "s")) }
+						var hours = Math.floor(Math.abs(number) / (1000 * 60 * 60) % 24)
+						if (hours) { segments.push(hours + " hour" + (hours == 1 ? "" : "s")) }
+						var minutes = Math.floor(Math.abs(number) / (1000 * 60) % 60)
+						if (minutes) { segments.push(minutes + " minute" + (minutes == 1 ? "" : "s")) }
+						var seconds = Math.floor(Math.abs(number) / (1000) % 60)
+						if (seconds) { segments.push(seconds + " second" + (seconds == 1 ? "" : "s")) }
+
+					// response
+						var time = new Date(date)
+						var message = segments.join(", ")
+						var responseHTML = (time.toLocaleString() + " - " + new Date().toLocaleString()) + "<h2>" + message + "</h2>"
+						callback({icon: icon, message: message, html: responseHTML, number: number, time: time})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get time since": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4c5;"
+
+					// no remainder
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What time or date should I calculate?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
+					// remainder?
+						if (remainder && remainder.trim()) {
+							// then
+								if (remainder == "then" && window.CONTEXT_LIBRARY.lastResponseTime) {
+									var date = window.CONTEXT_LIBRARY.lastResponseTime
+								}
+
+							// alarm
+								else if (remainder.includes("alarm") || remainder.includes("timer")) {
+									var index = null
+									var words = remainder.split(/\s/gi)
+									for (var i in words) {
+										words[i] = window.FUNCTION_LIBRARY.getDigits(words[i])
+										if (!isNaN(words[i])) {
+											index = Number(words[i])
+										}
+									}
+
+									if (!index || !window.CONTEXT_LIBRARY.alarms[index - 1]) {
+										callback({icon: icon, error: true, message: "I couldn't find that alarm.", html: "<h2>Error: invalid alarm</h2>"})
+										return
+									}
+									var date = new Date(window.CONTEXT_LIBRARY.alarms[index - 1])
+								}
+
+							// getDateTime
+								else {
+									var date = window.FUNCTION_LIBRARY.getDateTime(remainder, true)
+								}
+						}
+
+					// get time
+						var number = new Date().getTime() - new Date(date).getTime()
 						var segments = []
 						var days = Math.floor(Math.abs(number) / (1000 * 60 * 60 * 24))
 						if (days) { segments.push(days + " day" + (days == 1 ? "" : "s")) }
@@ -3691,12 +3866,7 @@
 
 					// no locale
 						if (!locale) {
-							window.CONTEXT_LIBRARY.flow = "get the weather"
-							window.CONTEXT_LIBRARY["get the weather"] = {
-								locale: null
-							}
-
-							callback({icon: icon, error: true, message: "What city should I get the weather for?", html: "What <b>city</b> should I get the weather for?"})
+							callback({icon: icon, error: true, message: "What city should I get the weather for?", html: "<h2>Error: missing configuration:</h2><li>city</li>"})
 							return
 						}
 					
@@ -3820,16 +3990,284 @@
 
 								// response
 									callback({icon: icon, message: message, html: responseHTML, url: url})
-
-								// end flow
-									window.CONTEXT_LIBRARY.flow = null
-									delete window.CONTEXT_LIBRARY["get the weather"]
 							}
 							catch (error) {
 								var location = (locale || remainder.trim() || window.CONFIGURATION_LIBRARY["city"] || window.CONFIGURATION_LIBRARY["zip code"])
 								callback({icon: icon, error: true, message: "I was unable to get the weather for " + location, html: "<h2>Error: unable to access the weather for that location:</h2>" + location})
 							}
 						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get sunrise": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f305;"
+
+					// missing config?
+						if ((!window.CONFIGURATION_LIBRARY["latitude"] || !window.CONFIGURATION_LIBRARY["longitude"]) && !window.CONFIGURATION_LIBRARY["google api key"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "<h2>Error: missing configuration:</h2><li>google api key</li>"})
+							return
+						}
+
+					// remainder
+						remainder = " " + remainder.replace(/[?!;'"_\(\)\$\%]/gi,"").toLowerCase().trim()
+
+					// split at keywords
+						var date = remainder.split(/ on /gi)
+							date = (date[1] || date[0]).split(/ in /gi)[0].trim()
+
+						var locale = remainder.split(/ in /gi)
+							locale = (locale[1] || locale[0]).split(/ on /gi)[0].trim()
+
+					// specific date
+						if (date && date.trim() && date !== locale) {
+							// then
+								if (date.trim() == "then" && window.CONTEXT_LIBRARY.lastResponseTime) {
+									date = window.CONTEXT_LIBRARY.lastResponseTime
+								}
+
+							// other
+								else {
+									date = window.FUNCTION_LIBRARY.getDateTime(date)
+								}
+						}
+
+					// get longitude & latitude from locale
+						if (locale && locale.trim() && !isNaN(locale.split(/,\s?/gi)[0]) && !isNaN(locale.split(/,\s?/gi)[1])) {
+							var latitude  = Number(locale.split(/,\s?/gi)[0])
+							var longitude = Number(locale.split(/,\s?/gi)[1])
+						}
+
+					// get longitude & latitude from configuration
+						else if (window.CONFIGURATION_LIBRARY["latitude"] && window.CONFIGURATION_LIBRARY["longitude"]) {
+							var latitude  = Number(window.CONFIGURATION_LIBRARY["latitude"])
+							var longitude = Number(window.CONFIGURATION_LIBRARY["longitude"])
+						}
+
+					// get longitude & latitude from locale via Google Geolocation API
+						else {
+							// remainder
+								if (locale && locale.trim()) {
+									locale = locale
+								}
+
+							// city
+								else if (window.CONFIGURATION_LIBRARY["city"]) {
+									locale = window.CONFIGURATION_LIBRARY["city"]
+								}
+
+							// zip code
+								else if (window.CONFIGURATION_LIBRARY["zip code"]) {
+									locale = window.CONFIGURATION_LIBRARY["zip code"]
+								}
+
+							// no location?
+								else {
+									callback({icon: icon, error: true, message: "What city should I get the sunrise for?", html: "<h2>Error: missing configuration:</h2><li>city</li>"})
+									return
+								}
+
+							// options
+								var options = {
+									url: "https://maps.googleapis.com/maps/api/geocode/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&address=" + locale
+								}
+
+							// proxy to server
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										// no results?
+											if (!response || !response.results || !response.results[0] || !response.results[0].geometry || !response.results[0].geometry.location) {
+												callback({icon: icon, error: true, message: "I couldn't geolocate that.", html: "<h2>Error: unable to geolocate:</h2>" + remainder})
+												return
+											}
+
+										// geolocation
+											var latitude  = Number(response.results[0].geometry.location.lat.toFixed(7))
+											var longitude = Number(response.results[0].geometry.location.lng.toFixed(7))
+
+										// rerun this function
+											window.ACTION_LIBRARY["get sunrise"](latitude + ", " + longitude + (date ? " on " + date.toLocaleDateString() : ""), callback)
+											return
+									}
+									catch (error) {
+										callback({icon: icon, error: true, message: "I was unable to geolocate " + location, html: "<h2>Error: unable to access geolocation:</h2>" + location})
+									}
+								})
+						}
+
+					// get sunrise & sunset
+						if (latitude && longitude) {
+							// build options
+								var options = {
+									url: "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude + "&date=" + (date ? new Date(date).toLocaleDateString() : "today")
+								}
+
+							// proxy to server
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										// convert times
+											var msOffset = new Date(date || null).getTimezoneOffset() * 60 * 1000
+											var sunrise = new Date(new Date(new Date(date || null).toLocaleDateString() + " " + response.results.sunrise).getTime()     - msOffset)
+												var sunriseString = sunrise.toLocaleTimeString()
+											var noon    = new Date(new Date(new Date(date || null).toLocaleDateString() + " " + response.results.solar_noon).getTime()  - msOffset)
+												var noonString = noon.toLocaleTimeString()
+											var sunset  = new Date(new Date(new Date(date || null).toLocaleDateString() + " " + response.results.sunset).getTime()      - msOffset)
+												var sunsetString = sunset.toLocaleTimeString()
+
+										// response
+											var message = "Sunrise is at " + sunriseString + ". Noon is at " + noonString + ". Sunset is at " + sunsetString + "."
+											var url = "https://sunrise-sunset.org/search?location=" + latitude + "," + longitude
+											var responseHTML = "<a target='_blank' href='" + url + "'><h2>sunrise</h2></a>" +
+												"<li>sunrise: " + sunriseString + "</li>" +
+												"<li>noon: " + noonString + "</li>" +
+												"<li>sunset: " + sunsetString + "</li>"
+											callback({icon: icon, message: message, html: responseHTML, url: url, time: sunrise})
+
+									}
+									catch (error) {
+										callback({icon: icon, error: true, message: "I was unable to find the sunrise.", html: "<h2>Error: unable to access sunrise:</h2>" + latitude + ", " + longitude})
+									}
+								})
+						}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get sunset": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f305;"
+
+					// missing config?
+						if ((!window.CONFIGURATION_LIBRARY["latitude"] || !window.CONFIGURATION_LIBRARY["longitude"]) && !window.CONFIGURATION_LIBRARY["google api key"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "<h2>Error: missing configuration:</h2><li>google api key</li>"})
+							return
+						}
+
+					// remainder
+						remainder = " " + remainder.replace(/[?!;'"_\(\)\$\%]/gi,"").toLowerCase().trim()
+
+					// split at keywords
+						var date = remainder.split(/ on /gi)
+							date = (date[1] || date[0]).split(/ in /gi)[0].trim()
+
+						var locale = remainder.split(/ in /gi)
+							locale = (locale[1] || locale[0]).split(/ on /gi)[0].trim()
+
+					// specific date
+						if (date && date.trim() && date !== locale) {
+							// then
+								if (date.trim() == "then" && window.CONTEXT_LIBRARY.lastResponseTime) {
+									date = window.CONTEXT_LIBRARY.lastResponseTime
+								}
+
+							// other
+								else {
+									date = window.FUNCTION_LIBRARY.getDateTime(date)
+								}
+						}
+
+					// get longitude & latitude from locale
+						if (locale && locale.trim() && !isNaN(locale.split(/,\s?/gi)[0]) && !isNaN(locale.split(/,\s?/gi)[1])) {
+							var latitude  = Number(locale.split(/,\s?/gi)[0])
+							var longitude = Number(locale.split(/,\s?/gi)[1])
+						}
+
+					// get longitude & latitude from configuration
+						else if (window.CONFIGURATION_LIBRARY["latitude"] && window.CONFIGURATION_LIBRARY["longitude"]) {
+							var latitude  = Number(window.CONFIGURATION_LIBRARY["latitude"])
+							var longitude = Number(window.CONFIGURATION_LIBRARY["longitude"])
+						}
+
+					// get longitude & latitude from locale via Google Geolocation API
+						else {
+							// remainder
+								if (locale && locale.trim()) {
+									locale = locale
+								}
+
+							// city
+								else if (window.CONFIGURATION_LIBRARY["city"]) {
+									locale = window.CONFIGURATION_LIBRARY["city"]
+								}
+
+							// zip code
+								else if (window.CONFIGURATION_LIBRARY["zip code"]) {
+									locale = window.CONFIGURATION_LIBRARY["zip code"]
+								}
+
+							// no location?
+								else {
+									callback({icon: icon, error: true, message: "What city should I get the sunset for?", html: "<h2>Error: missing configuration:</h2><li>city</li>"})
+									return
+								}
+
+							// options
+								var options = {
+									url: "https://maps.googleapis.com/maps/api/geocode/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&address=" + locale
+								}
+
+							// proxy to server
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										// no results?
+											if (!response || !response.results || !response.results[0] || !response.results[0].geometry || !response.results[0].geometry.location) {
+												callback({icon: icon, error: true, message: "I couldn't geolocate that.", html: "<h2>Error: unable to geolocate:</h2>" + remainder})
+												return
+											}
+
+										// geolocation
+											var latitude  = Number(response.results[0].geometry.location.lat.toFixed(7))
+											var longitude = Number(response.results[0].geometry.location.lng.toFixed(7))
+
+										// rerun this function
+											window.ACTION_LIBRARY["get sunset"](latitude + ", " + longitude + (date ? " on " + date.toLocaleDateString() : ""), callback)
+											return
+									}
+									catch (error) {
+										callback({icon: icon, error: true, message: "I was unable to geolocate " + location, html: "<h2>Error: unable to access geolocation:</h2>" + location})
+									}
+								})
+						}
+
+					// get sunrise & sunset
+						if (latitude && longitude) {
+							// build options
+								var options = {
+									url: "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude + "&date=" + (date ? new Date(date).toLocaleDateString() : "today")
+								}
+
+							// proxy to server
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										// convert times
+											var msOffset = new Date(date || null).getTimezoneOffset() * 60 * 1000
+											var sunrise = new Date(new Date(new Date(date || null).toLocaleDateString() + " " + response.results.sunrise).getTime()     - msOffset)
+												var sunriseString = sunrise.toLocaleTimeString()
+											var noon    = new Date(new Date(new Date(date || null).toLocaleDateString() + " " + response.results.solar_noon).getTime()  - msOffset)
+												var noonString = noon.toLocaleTimeString()
+											var sunset  = new Date(new Date(new Date(date || null).toLocaleDateString() + " " + response.results.sunset).getTime()      - msOffset)
+												var sunsetString = sunset.toLocaleTimeString()
+
+										// response
+											var message = "Sunrise is at " + sunriseString + ". Noon is at " + noonString + ". Sunset is at " + sunsetString + "."
+											var url = "https://sunrise-sunset.org/search?location=" + latitude + "," + longitude
+											var responseHTML = "<a target='_blank' href='" + url + "'><h2>sunset</h2></a>" +
+												"<li>sunrise: " + sunriseString + "</li>" +
+												"<li>noon: " + noonString + "</li>" +
+												"<li>sunset: " + sunsetString + "</li>"
+											callback({icon: icon, message: message, html: responseHTML, url: url, time: sunset})
+
+									}
+									catch (error) {
+										callback({icon: icon, error: true, message: "I was unable to find the sunset.", html: "<h2>Error: unable to access sunset:</h2>" + latitude + ", " + longitude})
+									}
+								})
+						}
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -5114,7 +5552,7 @@
 						var task = components[1] ? components[1] : components[0]
 
 					// no task?
-						if (!task) {
+						if (!task || list == task) {
 							callback({icon: icon, error: true, message: "I couldn't identify that item.", html: "<h2>Error: missing or invalid item:</h2>" + remainder})
 							return
 						}
@@ -5776,6 +6214,60 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
+			"google geolocate": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4cd;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "<h2>Error: missing configuration:</h2><li>google api key</li>"})
+							return
+						}
+
+					// no remainder
+						remainder = remainder.trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
+					// options
+						var options = {
+							url: "https://maps.googleapis.com/maps/api/geocode/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&address=" + remainder
+						}
+
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// no results?
+									if (!response || !response.results || !response.results[0] || !response.results[0].geometry || !response.results[0].geometry.location) {
+										callback({icon: icon, error: true, message: "I couldn't geolocate that.", html: "<h2>Error: unable to geolocate:</h2>" + remainder})
+										return
+									}
+
+								// geolocation
+									var latitude  = Number(response.results[0].geometry.location.lat.toFixed(7))
+									var longitude = Number(response.results[0].geometry.location.lng.toFixed(7))
+									var iframe = "<iframe src='https://maps.google.com/maps?q=" + latitude + "," + longitude + "&z=12&output=embed' width='600' height='400' frameborder='0' allowfullscreen></iframe>"
+
+								// message & link
+									var message = remainder + " is " + Math.abs(latitude) + " degrees " + (latitude > 0 ? "North" : latitude < 0 ? "South" : "") + ", " + Math.abs(longitude) + " degrees " + (longitude > 0 ? "East" : longitude < 0 ? "West" : "")
+									var url = "https://www.google.com/maps/@" + latitude + "," + longitude +",12z"
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + remainder + "</h2></a>" + iframe
+
+								// response
+									callback({icon: icon, message: message, html: responseHTML, url: url})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
 			"search google directions": function(remainder, callback) {
 				try {
 					// icon
@@ -5816,18 +6308,26 @@
 									}
 
 								// format response
-									var distance = response.routes[0].legs[0].distance.text
-									var duration = response.routes[0].legs[0].duration.text
-									var steps = response.routes[0].legs[0].steps.map(function(step) {
+									var route = response.routes[0]
+									var distance = route.legs[0].distance.text
+									var duration = route.legs[0].duration.text
+									var origin = route.legs[0].start_address
+									var destination = route.legs[0].end_address
+									var steps = route.legs[0].steps.map(function(step) {
 										return "<li><b>" + step.distance.text + " (" + step.duration.text + ")" + "</b><br>" + step.html_instructions + "</li>"
 									}) || []
+
+								// geolocation
+									var latitude  = Number(route.legs[0].end_location.lat.toFixed(7))
+									var longitude = Number(route.legs[0].end_location.lng.toFixed(7))
+									var iframe = "<iframe src='https://maps.google.com/maps?q=" + latitude + "," + longitude + "&z=12&output=embed' width='600' height='400' frameborder='0' allowfullscreen></iframe>"
 
 								// message & link
 									var message = origin + " to " + destination + " is " + distance + " for " + duration + "."
 									var url = "https://www.google.com/maps/dir/" + origin + "/" + destination
 									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + origin + " to " + destination + "</h2></a>" +
 										"<i>" + distance + " for " + duration + "</i><b2>" +
-										"<ol>" + steps.join("") + "</ol>"
+										"<ol>" + steps.join("") + "</ol>" + iframe
 
 								// response
 									callback({icon: icon, message: message, html: responseHTML, url: url})
@@ -5898,6 +6398,11 @@
 													var openHours = ""
 												}
 
+											// geolocation
+												var latitude  = Number(place.geometry.location.lat.toFixed(7))
+												var longitude = Number(place.geometry.location.lng.toFixed(7))
+												var iframe = "<iframe src='https://maps.google.com/maps?q=" + latitude + "," + longitude + "&z=12&output=embed' width='600' height='400' frameborder='0' allowfullscreen></iframe>"
+
 											// message & html
 												var message = "I found " + place.name + " at " + (place.formatted_address || "an unknown address") + ". " + openNow
 												var url = place.url
@@ -5906,7 +6411,7 @@
 													"<li>" + (place.formatted_phone_number || "<i>no phone number found</i>") + "</li>" +
 													"<li>" + (place.website ? ("<a target='_blank' href='" + place.website + "'>" + place.website + "</a>") : "<i>no website found</i>") + "</li>" + 
 													"<li>hours: " + (openHours || "<i>no hours found</i>") + "</li>" +
-													"</ul>"
+													"</ul>" + iframe
 
 											// response
 												callback({icon: icon, message: message, html: responseHTML, url: url})
@@ -6231,6 +6736,7 @@
 									}
 									catch (error) {
 										window.CONTEXT_LIBRARY.flow = null
+										delete window.CONTEXT_LIBRARY["play true or false"]
 										callback({icon: icon, error: true, message: "I don't know any fun facts.", html: "<h2>Error: unable to access trivia</h2>"})
 									}
 								})
@@ -6800,12 +7306,14 @@
 												}
 												catch (error) {
 													window.CONTEXT_LIBRARY.flow = null
+													delete window.CONTEXT_LIBRARY["play hangman"]
 													callback({icon: icon, error: true, message: "I couldn't access the random word API.", html: "<h2>Error: unable to access random word API</h2>"})
 												}
 											})
 									}
 									catch (error) {
 										window.CONTEXT_LIBRARY.flow = null
+										delete window.CONTEXT_LIBRARY["play hangman"]
 										callback({icon: icon, error: true, message: "I couldn't access the random word API.", html: "<h2>Error: unable to access random word API</h2>"})
 									}
 								})

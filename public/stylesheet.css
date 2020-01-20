@@ -432,12 +432,16 @@
 			border-radius: 0px 0px 5px 5px;
 		}
 
-	/* error */
+	/* special action bar */
 		.stream-history-error .stream-history-action-name {
 			background-color: #d03a3a;
 		}
 
-	/* special types */
+		.stream-history-auto .stream-history-action-name {
+			background-color: #0093c4;
+		}
+
+	/* special response components */
 		.stream-history h2 {
 			margin-top: 10px;
 			margin-bottom: 10px;

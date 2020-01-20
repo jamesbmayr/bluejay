@@ -47,7 +47,7 @@ window.addEventListener("load", function() {
 
 		/* error library */
 			var ERROR_LIBRARY = window.ERROR_LIBRARY = {
-				"stop-phrases": ["quit this game", "quit this", "quit", "abort this", "abort", "stop this", "stop", "stop talking", "stop speaking", "please stop", "shut up", "never mind", "forget it", "forget that"],
+				"stop-phrases": ["quit this game", "quit this", "quit", "abort this", "abort", "stop this", "stop", "stop talking", "stop speaking", "please stop", "shut up", "never mind", "nevermind", "forget it", "forget that"],
 				"noaction-responses": ["I'm not sure I follow.", "I don't understand.", "What does that mean?", "I don't know that one.", "I don't get it.", "I'm sorry, can you try that again?", "Can you repeat that?", "Please say that again.", "Wait, what was your question?", "I'll need you to repeat that.", "What am I supposed to do?"],
 				"error-responses": ["Something went wrong.", "I couldn't do that.", "Let's try that again later.", "Sorry, I have failed you.", "I'm not sure what happened.", "I ran into an error.", "That's an error.", "That didn't go the way I expected.", "Sorry, I couldn't complete that action.", "I blame the developers for this failure."],
 			}
@@ -316,7 +316,7 @@ window.addEventListener("load", function() {
 
 		/* getDateTime */
 			FUNCTION_LIBRARY.getDateTime = getDateTime
-			function getDateTime(timePhrase) {
+			function getDateTime(timePhrase, past) {
 				try {
 					// clean up
 						timePhrase = timePhrase.toLowerCase().trim()
@@ -345,17 +345,34 @@ window.addEventListener("load", function() {
 							// get ms
 								var date = new Date(time).getTime() || new Date(new Date().toDateString() + " " + time).getTime()
 							
-							// in the past?
-								if (new Date().getTime() > date) {
-									// 12 hours ahead
-										if (!time.includes("PM") && !time.includes("AM") && new Date().getTime() < date + (1000 * 60 * 60 * 12)) {
-											date = date + (1000 * 60 * 60 * 12)
-										}
+							// force past?
+								if (past) {
+									if (new Date().getTime() < date) {
+										// 12 hours back
+											if (!time.includes("PM") && !time.includes("AM") && new Date().getTime() > date - (1000 * 60 * 60 * 12)) {
+												date = date - (1000 * 60 * 60 * 12)
+											}
 
-									// in the past & am/pm specified? 24 hours ahead
-										else if (new Date().getTime() < date + (1000 * 60 * 60 * 24)) {
-											date = date + (1000 * 60 * 60 * 24)
-										}
+										// in the past & am/pm specified? 24 hours ahead
+											else if (new Date().getTime() > date - (1000 * 60 * 60 * 24)) {
+												date = date - (1000 * 60 * 60 * 24)
+											}
+									}
+								}
+
+							// force future
+								else {
+									if (new Date().getTime() > date) {
+										// 12 hours ahead
+											if (!time.includes("PM") && !time.includes("AM") && new Date().getTime() < date + (1000 * 60 * 60 * 12)) {
+												date = date + (1000 * 60 * 60 * 12)
+											}
+
+										// in the past & am/pm specified? 24 hours ahead
+											else if (new Date().getTime() < date + (1000 * 60 * 60 * 24)) {
+												date = date + (1000 * 60 * 60 * 24)
+											}
+									}
 								}
 
 							return new Date(date)
@@ -984,7 +1001,7 @@ window.addEventListener("load", function() {
 							VOICE_LIBRARY.synthesizer.pause()
 							VOICE_LIBRARY.synthesizer.cancel()
 
-						createHistory(phrase || "stop", action, "", {icon: "&#x1f6ab;", message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop", followup: false})
+						createHistory(phrase || "stop", action, "", {icon: "&#x1f6ab;", auto: true, message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop", followup: false})
 					}
 
 				// no action
@@ -1002,7 +1019,7 @@ window.addEventListener("load", function() {
 								if (typeof response === undefined || response === null) {
 									var message = ERROR_LIBRARY["error-responses"][ERROR_LIBRARY["error-index"]]
 									ERROR_LIBRARY["error-index"] = (ERROR_LIBRARY["error-index"] == ERROR_LIBRARY["error-responses"].length - 1) ? 0 : (ERROR_LIBRARY["error-index"] + 1)
-									var response = {message: message, html: message, followup: followup}
+									var response = {icon: "&#x1f6a9;", error: true, message: message, html: message, followup: followup}
 								}
 
 							// followup?
@@ -1065,7 +1082,7 @@ window.addEventListener("load", function() {
 					
 				// visuals
 					var historyBlock = document.createElement("div")
-						historyBlock.className = "stream-history" + (response.error ? " stream-history-error" : "")
+						historyBlock.className = "stream-history" + (response.error ? " stream-history-error" : "") + (response.auto ? " stream-history-auto" : "")
 
 					var phraseBlock = document.createElement("div")
 						phraseBlock.className = "stream-history-phrase"
@@ -1154,7 +1171,7 @@ window.addEventListener("load", function() {
 				// loop through timers to check (and send a message)
 					for (var i = 0; i < CONTEXT_LIBRARY.alarms.length; i++) {
 						if (CONTEXT_LIBRARY.alarms[i] && CONTEXT_LIBRARY.alarms[i] <= timeNow) {
-							createHistory("...", "alarm", "", {icon: "&#x23F0;", message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "<h2>alarm #" + (i + 1) + ": <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b></h2>", followup: false})
+							createHistory("...", "alarm", "", {icon: "&#x23f0;", auto: true, message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "<h2>alarm #" + (i + 1) + ": <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b></h2>", followup: false, auto: true})
 							CONTEXT_LIBRARY.alarms[i] = null
 						}
 					}
@@ -1169,7 +1186,7 @@ window.addEventListener("load", function() {
 				// check if startListening is set and in the past
 					if (CONTEXT_LIBRARY.startListening && CONTEXT_LIBRARY.startListening <= timeNow) {
 						FUNCTION_LIBRARY.changeWhistleOn({forceOn: true})
-						createHistory("...", "start listening", "", {icon: "&#x1f50a;", message: "", html: "<h2>whistle detection turned on at <b>" + new Date(CONTEXT_LIBRARY.startListening).toLocaleString() + "</b></h2>", followup: false})
+						createHistory("...", "start listening", "", {icon: "&#x1f50a;", auto: true, message: "", html: "<h2>whistle detection turned on at <b>" + new Date(CONTEXT_LIBRARY.startListening).toLocaleString() + "</b></h2>", followup: false})
 						CONTEXT_LIBRARY.startListening = null
 					}
 			}
@@ -1331,7 +1348,7 @@ window.addEventListener("load", function() {
 				// set timeout
 					if (!silent) {
 						var timeout = setTimeout(function() {
-							FUNCTION_LIBRARY.createHistory("...", "API request", "", {icon: "&#x231b;", message: "I'm fetching that now.", html: "querying the API...", followup: false})
+							FUNCTION_LIBRARY.createHistory("...", "API request", "", {icon: "&#x231b;", auto: true, message: "I'm fetching that now.", html: "querying the API...", followup: false})
 						}, CONFIGURATION_LIBRARY.settings["fetch-interval"])
 					}
 
