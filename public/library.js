@@ -1618,77 +1618,121 @@
 			"on sonos switch off": 				"turn off sonos device",
 			"on sonos flip off": 				"turn off sonos device",
 			"on sonos deactivate": 				"turn off sonos device",
+			"on sonos mute": 					"turn off sonos device",
 			"turn off player": 					"turn off sonos device",
 			"switch off player": 				"turn off sonos device",
 			"flip off player": 					"turn off sonos device",
 			"deactivate player": 				"turn off sonos device",
+			"mute player": 						"turn off sonos device",
 			"turn off players": 				"turn off sonos device",
 			"switch off players": 				"turn off sonos device",
 			"flip off players": 				"turn off sonos device",
 			"deactivate players": 				"turn off sonos device",
+			"mute players": 					"turn off sonos device",
 			"turn off all players": 			"turn off sonos device",
 			"switch off all players": 			"turn off sonos device",
 			"flip off all players": 			"turn off sonos device",
 			"deactivate all players": 			"turn off sonos device",
+			"mute all players": 				"turn off sonos device",
 			"turn off speaker": 				"turn off sonos device",
 			"switch off speaker": 				"turn off sonos device",
 			"flip off speaker": 				"turn off sonos device",
 			"deactivate speaker": 				"turn off sonos device",
+			"mute speaker": 					"turn off sonos device",
 			"turn off speakers": 				"turn off sonos device",
 			"switch off speakers": 				"turn off sonos device",
 			"flip off speakers": 				"turn off sonos device",
 			"deactivate speakers": 				"turn off sonos device",
+			"mute speakers": 					"turn off sonos device",
 			"turn off all speakers": 			"turn off sonos device",
 			"switch off all speakers": 			"turn off sonos device",
 			"flip off all speakers": 			"turn off sonos device",
 			"deactivate all speakers": 			"turn off sonos device",
+			"mute all speakers": 				"turn off sonos device",
 			"turn off the player in the": 		"turn off sonos device",
 			"switch off the player in the": 	"turn off sonos device",
 			"flip off the player in the": 		"turn off sonos device",
 			"deactivate the player in the": 	"turn off sonos device",
+			"mute the player in the": 			"turn off sonos device",
 			"turn off the speaker in the": 		"turn off sonos device",
 			"switch off the speaker in the": 	"turn off sonos device",
 			"flip off the speaker in the": 		"turn off sonos device",
 			"deactivate the speaker in the": 	"turn off sonos device",
+			"mute the speaker in the": 			"turn off sonos device",
 
 			"turn on sonos device": 			"turn on sonos device",
 			"turn on sonos devices": 			"turn on sonos device",
 			"on sonos turn on": 				"turn on sonos device",
 			"on sonos switch on": 				"turn on sonos device",
 			"on sonos flip on": 				"turn on sonos device",
-			"on sonos deactivate": 				"turn on sonos device",
+			"on sonos activate": 				"turn on sonos device",
+			"on sonos unmute": 					"turn on sonos device",
 			"turn on player": 					"turn on sonos device",
 			"switch on player": 				"turn on sonos device",
 			"flip on player": 					"turn on sonos device",
 			"activate player": 					"turn on sonos device",
+			"unmute player": 					"turn on sonos device",
 			"turn on players": 					"turn on sonos device",
 			"switch on players": 				"turn on sonos device",
 			"flip on players": 					"turn on sonos device",
 			"activate players": 				"turn on sonos device",
+			"unmute players": 					"turn on sonos device",
 			"turn on all players": 				"turn on sonos device",
 			"switch on all players": 			"turn on sonos device",
 			"flip on all players": 				"turn on sonos device",
-			"deactivate all players": 			"turn on sonos device",
+			"activate all players": 			"turn on sonos device",
+			"unmute all players": 				"turn on sonos device",
 			"turn on speaker": 					"turn on sonos device",
 			"switch on speaker": 				"turn on sonos device",
 			"flip on speaker": 					"turn on sonos device",
 			"activate speaker": 				"turn on sonos device",
+			"unmute speaker": 					"turn on sonos device",
 			"turn on speakers": 				"turn on sonos device",
 			"switch on speakers": 				"turn on sonos device",
 			"flip on speakers": 				"turn on sonos device",
 			"activate speakers": 				"turn on sonos device",
+			"unmute speakers": 					"turn on sonos device",
 			"turn on all speakers": 			"turn on sonos device",
 			"switch on all speakers": 			"turn on sonos device",
 			"flip on all speakers": 			"turn on sonos device",
 			"activate all speakers": 			"turn on sonos device",
+			"unmute all speakers": 				"turn on sonos device",
 			"turn on the player in the": 		"turn on sonos device",
 			"switch on the player in the": 		"turn on sonos device",
 			"flip on the player in the": 		"turn on sonos device",
 			"activate the player in the": 		"turn on sonos device",
+			"unmute the player in the": 		"turn on sonos device",
 			"turn on the speaker in the": 		"turn on sonos device",
 			"switch on the speaker in the": 	"turn on sonos device",
 			"flip on the speaker in the": 		"turn on sonos device",
 			"activate the speaker in the": 		"turn on sonos device",
+			"unmute the speaker in the": 		"turn on sonos device",
+
+			"turn up sonos device": 			"turn up sonos device",
+			"turn up the speaker in": 			"turn up sonos device",
+			"turn up the speaker in the": 		"turn up sonos device",
+			"turn up the speakers in": 			"turn up sonos device",
+			"turn up the speakers in the": 		"turn up sonos device",
+			"turn up all speakers": 			"turn up sonos device",
+			"turn up the player in": 			"turn up sonos device",
+			"turn up the player in the": 		"turn up sonos device",
+			"turn up the players in": 			"turn up sonos device",
+			"turn up the players in the": 		"turn up sonos device",
+			"turn up all players": 				"turn up sonos device",
+			"turn up the volume": 				"turn up sonos device",
+
+			"turn down sonos device": 			"turn down sonos device",
+			"turn down the speaker in": 		"turn down sonos device",
+			"turn down the speaker in the": 	"turn down sonos device",
+			"turn down the speakers in": 		"turn down sonos device",
+			"turn down the speakers in the": 	"turn down sonos device",
+			"turn down all speakers": 			"turn down sonos device",
+			"turn down the player in": 			"turn down sonos device",
+			"turn down the player in the": 		"turn down sonos device",
+			"turn down the players in": 		"turn down sonos device",
+			"turn down the players in the": 	"turn down sonos device",
+			"turn down all players": 			"turn down sonos device",
+			"turn down the volume": 			"turn down sonos device",
 
 			"pause sonos device": 				"pause sonos device",
 			"pause sonos devices": 				"pause sonos device",
@@ -1704,9 +1748,11 @@
 			"stop music": 						"pause sonos device",
 			"on sonos pause device": 			"pause sonos device",
 			"on sonos pause devices": 			"pause sonos device",
+			"on sonos pause all": 				"pause sonos device",
 			"on sonos pause all devices": 		"pause sonos device",
 			"on sonos stop device": 			"pause sonos device",
 			"on sonos stop devices": 			"pause sonos device",
+			"on sonos stop all": 				"pause sonos device",
 			"on sonos stop all devices": 		"pause sonos device",
 
 			"play sonos device": 				"play sonos device",
@@ -1723,9 +1769,11 @@
 			"start music": 						"play sonos device",
 			"on sonos play device": 			"play sonos device",
 			"on sonos play devices": 			"play sonos device",
+			"on sonos play all": 				"play sonos device",
 			"on sonos play all devices": 		"play sonos device",
 			"on sonos start device": 			"play sonos device",
 			"on sonos start devices": 			"play sonos device",
+			"on sonos start all": 				"play sonos device",
 			"on sonos start all devices": 		"play sonos device",
 
 			"play next on sonos": 				"play next on sonos",
@@ -1734,6 +1782,9 @@
 			"next track": 						"play next on sonos",
 			"play next track": 					"play next on sonos",
 			"play the next track": 				"play next on sonos",
+			"next song": 						"play next on sonos",
+			"play next song": 					"play next on sonos",
+			"play the next song": 				"play next on sonos",
 			"on sonos play the next track": 	"play next on sonos",
 			"on sonos play the next song": 		"play next on sonos",
 			"on sonos skip this track": 		"play next on sonos",
@@ -1747,6 +1798,9 @@
 			"previous track": 					"play previous on sonos",
 			"play previous track": 				"play previous on sonos",
 			"play the previous track": 			"play previous on sonos",
+			"previous song": 					"play previous on sonos",
+			"play previous song": 				"play previous on sonos",
+			"play the previous song": 			"play previous on sonos",
 			"on sonos play the previous track": "play previous on sonos",
 			"on sonos play the previous song": 	"play previous on sonos",
 			"on sonos go back": 				"play previous on sonos",
@@ -7869,7 +7923,7 @@
 									}
 
 								// get devices
-									window.CONFIGURATION_LIBRARY["api.sonos.com"].devices = {}
+									var devices = {}
 									var householdKeys = Object.keys(households)
 									for (var i in householdKeys) {
 										// build options
@@ -7885,14 +7939,14 @@
 														for (var p in response.players) {
 															var player = response.players[p]
 																player.type = "player"
-															window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[player.id] = player
+															devices[player.id] = player
 														}
 
 													// groups
 														for (var g in response.groups) {
 															var group = response.groups[g]
 																group.type = "group"
-															window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[group.id] = group
+															devices[group.id] = group
 														}
 
 													// unempty
@@ -7902,7 +7956,6 @@
 														if (!householdKeys.filter(function(key) { return households[key].empty }).length) {
 															// devices
 																var deviceKeys = Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices)
-																var devices = window.CONFIGURATION_LIBRARY["api.sonos.com"].devices
 
 															// save devices to configuration library
 																var value = window.CONFIGURATION_LIBRARY["api.sonos.com"]
@@ -8024,10 +8077,16 @@
 
 					// identify state
 						if (["on", "active", "powered", "unmuted", "unmute"].includes(desiredState)) {
-							desiredState = {muted: false}
+							desiredState = {volumeDelta: 10}
 						}
 						else if (["off", "inactive", "unpowered", "muted", "mute"].includes(desiredState)) {
-							desiredState = {muted: true}
+							desiredState = {volumeDelta: -100}
+						}
+						else if (["up", "more", "louder", "higher"].includes(desiredState)) {
+							desiredState = {volumeDelta: 10}
+						}
+						else if (["down", "less", "quieter", "lower", "softer"].includes(desiredState)) {
+							desiredState = {volumeDelta: -10}
 						}
 						else if (!isNaN(desiredState)) {
 							desiredState = {volume: desiredState}
@@ -8058,7 +8117,15 @@
 							responseHTML += "<li>" + window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[deviceIds[i]].name + ": " + JSON.stringify(desiredState) + "</li>"
 						}
 						responseHTML += "</ul>"
-						var messageState = (desiredState.muted === true) ? "muted" : (desiredState.muted === false) ? "unmuted" : desiredState.volume ? (desiredState.volume + " percent") : "unknown"
+						var messageState = 	(desiredState.muted === true) ? "muted" :
+											(desiredState.muted === false) ? "unmuted" :
+											(desiredState.volume) ? (desiredState.volume + " percent") :
+											(desiredState.volumeDelta) ? (Math.abs(desiredState.volumeDelta) + " percent " + (desiredState.volumeDelta > 0 ? " louder" : "quieter")) :
+											(desiredState.playing === true) ? "playing" :
+											(desiredState.playing === false) ? "paused" :
+											(desiredState.next) ? "the next track" : 
+											(desiredState.previous) ? "the previous track" : 
+											"unknown"
 
 					// response
 						var message = "Okay, I set " + deviceName + " to " + messageState
@@ -8082,16 +8149,11 @@
 									var url = "https://api.ws.sonos.com/control/api/v1/groups/" + groupIds[i] + "/playback/skipToPreviousTrack"
 								}
 
-							// volume (no mute option)
-								else if (desiredState.muted === false) {
-									desiredState.volume = 10
-									var url = "https://api.ws.sonos.com/control/api/v1/groups/" + groupIds[i] + "/groupVolume"
+							// volume (relative vs. absolute)
+								else if (!isNaN(desiredState.volumeDelta)) {
+									var url = "https://api.ws.sonos.com/control/api/v1/groups/" + groupIds[i] + "/groupVolume/relative"
 								}
-								else if (desiredState.muted === true) {
-									desiredState.volume = 0
-									var url = "https://api.ws.sonos.com/control/api/v1/groups/" + groupIds[i] + "/groupVolume"
-								}
-								else {
+								else if (!isNaN(desiredState.volume)) {
 									var url = "https://api.ws.sonos.com/control/api/v1/groups/" + groupIds[i] + "/groupVolume"
 								}
 
@@ -8118,10 +8180,18 @@
 
 					// actually attempt to set the desiredState for each device
 						for (var i in deviceIds) {
+							// volume (relative vs. absolute)
+								if (!isNaN(desiredState.volumeDelta)) {
+									var url = "https://api.ws.sonos.com/control/api/v1/players/" + deviceIds[i] + "/playerVolume/relative"
+								}
+								else if (!isNaN(desiredState.volume)) {
+									var url = "https://api.ws.sonos.com/control/api/v1/players/" + deviceIds[i] + "/playerVolume"
+								}
+
 							// build options
 								var options = {
 									method: "post",
-									url: "https://api.ws.sonos.com/control/api/v1/players/" + deviceIds[i] + "/playerVolume",
+									url: url,
 									Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token,
 									body: desiredState
 								}
@@ -8147,7 +8217,7 @@
 			"turn off sonos device": function(remainder, callback) {
 				try {
 					// proxy to set sonos devices
-						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all") + " to off", callback)
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all speakers") + " to off", callback)
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -8156,7 +8226,25 @@
 			"turn on sonos device": function(remainder, callback) {
 				try {
 					// proxy to set sonos devices
-						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all") + " to on", callback)
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all speakers") + " to on", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"turn up sonos device": function(remainder, callback) {
+				try {
+					// proxy to set sonos devices
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all speakers") + " to up", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"turn down sonos device": function(remainder, callback) {
+				try {
+					// proxy to set sonos devices
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all speakers") + " to down", callback)
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -8165,7 +8253,7 @@
 			"pause sonos device": function(remainder, callback) {
 				try {
 					// proxy to set sonos devices
-						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all") + " to pause", callback)
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all speakers") + " to pause", callback)
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -8174,7 +8262,7 @@
 			"play sonos device": function(remainder, callback) {
 				try {
 					// proxy to set sonos devices
-						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all") + " to play", callback)
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all speakers") + " to play", callback)
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -8183,7 +8271,7 @@
 			"play next on sonos": function(remainder, callback) {
 				try {
 					// proxy to set sonos devices
-						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all") + " to next", callback)
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all speakers") + " to next", callback)
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -8192,7 +8280,7 @@
 			"play previous on sonos": function(remainder, callback) {
 				try {
 					// proxy to set sonos devices
-						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all") + " to previous", callback)
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all speakers") + " to previous", callback)
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
