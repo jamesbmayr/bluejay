@@ -1203,6 +1203,47 @@
 			"create event on my calendar named": "add event",
 			"create an event on my calendar named": "add event",
 
+			"get event": 						"get event",
+			"get an event": 					"get event",
+			"get events": 						"get event",
+			"get all events": 					"get event",
+			"get event called": 				"get event",
+			"get an event called": 				"get event",
+			"get events called": 				"get event",
+			"get all events called": 			"get event",
+			"get event named": 					"get event",
+			"get an event named": 				"get event",
+			"get events named": 				"get event",
+			"get all events named": 			"get event",
+			"find event": 						"get event",
+			"find an event": 					"get event",
+			"find events": 						"get event",
+			"find all events": 					"get event",
+			"find event called": 				"get event",
+			"find an event called": 			"get event",
+			"find events called": 				"get event",
+			"find all events called": 			"get event",
+			"find event named": 				"get event",
+			"find an event named": 				"get event",
+			"find events named": 				"get event",
+			"find all events named": 			"get event",
+			"search for event": 				"get event",
+			"search for an event": 				"get event",
+			"search for events": 				"get event",
+			"search for all events": 			"get event",
+			"search for event called": 			"get event",
+			"search for an event called": 		"get event",
+			"search for events called": 		"get event",
+			"search for all events called": 	"get event",
+			"search for event named": 			"get event",
+			"search for an event named": 		"get event",
+			"search for events named": 			"get event",
+			"search for all events named": 		"get event",
+			"when is": 							"get event",
+			"when is the event": 				"get event",
+			"when is the event called": 		"get event",
+			"when is the event named": 			"get event",
+
 			"get a list": 						"get a list",
 			"get my list": 						"get a list",
 			"get the list": 					"get a list",
@@ -5587,7 +5628,7 @@
 						}
 
 					// remainder
-						remainder = " " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						remainder = " " + remainder.replace(/[?!.,:;'"_\(\)\$\%]/gi,"").toLowerCase().trim()
 
 					// split at keywords
 						var startDate = remainder.replace(/[?!,;'"_\(\)\$\%]/gi,"").split(/ from | starting at | start date | start time | between | for /gi)
@@ -5635,6 +5676,62 @@
 									var message = response.message + eventList.join(" ... ")
 									var url = "https://calendar.google.com"
 									var responseHTML = "<a target='_blank' href='" + url + "'><h2>upcoming events</h2></a><ul>" + eventItems.join("") + "</ul>"
+									callback({icon: icon, message: message, html: responseHTML, url: url, time: time})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to fetch your calendar.", html: "<h2>Error: unable to get calendar:</h2>" + error})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get event": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4c5;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
+							return
+						}
+
+					// remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !	remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
+					// build options
+						var options = {
+							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=findEvent&name=" + remainder
+						}
+						
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// create list
+									var eventList = []
+									var eventItems = []
+									if (response.events) {
+										for (var i = 0; i < response.events.length; i++) {
+											var event = response.events[i]
+											var startTime = new Date(event.startTime).toLocaleString()
+											var endTime = new Date(event.endTime).toLocaleString()
+
+											eventList.push(event.title + " from " + startTime + " until " + endTime + " at " + (event.location || "unknown location"))
+											eventItems.push("<li><b>" + event.title + "</b><p>" + startTime + " - " + endTime + "<br><a target='_blank' href='https://www.google.com/maps/?q=" + event.location + "'>" + event.location + "</a><br>" + event.description + "</p></li>")
+										}
+									}
+
+								// response
+									var time = response.events && response.events.length ? new Date(response.events[0].startTime) : null
+									var message = response.message + eventList.join(" ... ")
+									var url = "https://calendar.google.com/calendar/r/search?q=" + remainder
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + remainder + "</h2></a><ul>" + eventItems.join("") + "</ul>"
 									callback({icon: icon, message: message, html: responseHTML, url: url, time: time})
 							}
 							catch (error) {
