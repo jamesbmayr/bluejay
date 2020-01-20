@@ -4034,6 +4034,9 @@
 									date = window.FUNCTION_LIBRARY.getDateTime(date)
 								}
 						}
+						else {
+							date = null
+						}
 
 					// get longitude & latitude from locale
 						if (locale && locale.trim() && !isNaN(locale.split(/,\s?/gi)[0]) && !isNaN(locale.split(/,\s?/gi)[1])) {
@@ -4042,7 +4045,7 @@
 						}
 
 					// get longitude & latitude from configuration
-						else if (window.CONFIGURATION_LIBRARY["latitude"] && window.CONFIGURATION_LIBRARY["longitude"]) {
+						else if (!locale.trim() && window.CONFIGURATION_LIBRARY["latitude"] && window.CONFIGURATION_LIBRARY["longitude"]) {
 							var latitude  = Number(window.CONFIGURATION_LIBRARY["latitude"])
 							var longitude = Number(window.CONFIGURATION_LIBRARY["longitude"])
 						}
@@ -4066,7 +4069,7 @@
 
 							// no location?
 								else {
-									callback({icon: icon, error: true, message: "What city should I get the sunrise for?", html: "<h2>Error: missing configuration:</h2><li>city</li>"})
+									callback({icon: icon, error: true, message: "What city should I search for?", html: "<h2>Error: missing configuration:</h2><li>city</li>"})
 									return
 								}
 
@@ -4093,7 +4096,7 @@
 											return
 									}
 									catch (error) {
-										callback({icon: icon, error: true, message: "I was unable to geolocate " + location, html: "<h2>Error: unable to access geolocation:</h2>" + location})
+										callback({icon: icon, error: true, message: "I was unable to geolocate " + locale, html: "<h2>Error: unable to access geolocation:</h2>" + locale})
 									}
 								})
 						}
@@ -4120,7 +4123,7 @@
 										// response
 											var message = "Sunrise is at " + sunriseString + ". Noon is at " + noonString + ". Sunset is at " + sunsetString + "."
 											var url = "https://sunrise-sunset.org/search?location=" + latitude + "," + longitude
-											var responseHTML = "<a target='_blank' href='" + url + "'><h2>sunrise</h2></a>" +
+											var responseHTML = "<a target='_blank' href='" + url + "'><h2>times for " + (latitude + ", " + longitude) + "</h2></a>" +
 												"<li>sunrise: " + sunriseString + "</li>" +
 												"<li>noon: " + noonString + "</li>" +
 												"<li>sunset: " + sunsetString + "</li>"
@@ -4128,7 +4131,7 @@
 
 									}
 									catch (error) {
-										callback({icon: icon, error: true, message: "I was unable to find the sunrise.", html: "<h2>Error: unable to access sunrise:</h2>" + latitude + ", " + longitude})
+										callback({icon: icon, error: true, message: "I was unable to find the sunrise and sunset.", html: "<h2>Error: unable to access sunrise & sunset:</h2>" + latitude + ", " + longitude})
 									}
 								})
 						}
@@ -4170,6 +4173,9 @@
 									date = window.FUNCTION_LIBRARY.getDateTime(date)
 								}
 						}
+						else {
+							date = null
+						}
 
 					// get longitude & latitude from locale
 						if (locale && locale.trim() && !isNaN(locale.split(/,\s?/gi)[0]) && !isNaN(locale.split(/,\s?/gi)[1])) {
@@ -4178,7 +4184,7 @@
 						}
 
 					// get longitude & latitude from configuration
-						else if (window.CONFIGURATION_LIBRARY["latitude"] && window.CONFIGURATION_LIBRARY["longitude"]) {
+						else if (!locale.trim() && window.CONFIGURATION_LIBRARY["latitude"] && window.CONFIGURATION_LIBRARY["longitude"]) {
 							var latitude  = Number(window.CONFIGURATION_LIBRARY["latitude"])
 							var longitude = Number(window.CONFIGURATION_LIBRARY["longitude"])
 						}
@@ -4202,7 +4208,7 @@
 
 							// no location?
 								else {
-									callback({icon: icon, error: true, message: "What city should I get the sunset for?", html: "<h2>Error: missing configuration:</h2><li>city</li>"})
+									callback({icon: icon, error: true, message: "What city should I search for?", html: "<h2>Error: missing configuration:</h2><li>city</li>"})
 									return
 								}
 
@@ -4229,7 +4235,7 @@
 											return
 									}
 									catch (error) {
-										callback({icon: icon, error: true, message: "I was unable to geolocate " + location, html: "<h2>Error: unable to access geolocation:</h2>" + location})
+										callback({icon: icon, error: true, message: "I was unable to geolocate " + locale, html: "<h2>Error: unable to access geolocation:</h2>" + locale})
 									}
 								})
 						}
@@ -4256,7 +4262,7 @@
 										// response
 											var message = "Sunrise is at " + sunriseString + ". Noon is at " + noonString + ". Sunset is at " + sunsetString + "."
 											var url = "https://sunrise-sunset.org/search?location=" + latitude + "," + longitude
-											var responseHTML = "<a target='_blank' href='" + url + "'><h2>sunset</h2></a>" +
+											var responseHTML = "<a target='_blank' href='" + url + "'><h2>times for " + (latitude + ", " + longitude) + "</h2></a>" +
 												"<li>sunrise: " + sunriseString + "</li>" +
 												"<li>noon: " + noonString + "</li>" +
 												"<li>sunset: " + sunsetString + "</li>"
@@ -4264,7 +4270,7 @@
 
 									}
 									catch (error) {
-										callback({icon: icon, error: true, message: "I was unable to find the sunset.", html: "<h2>Error: unable to access sunset:</h2>" + latitude + ", " + longitude})
+										callback({icon: icon, error: true, message: "I was unable to find the sunrise and sunset.", html: "<h2>Error: unable to access sunrise & sunset:</h2>" + latitude + ", " + longitude})
 									}
 								})
 						}
