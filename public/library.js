@@ -1587,6 +1587,173 @@
 			"i want to guess your word": 		"play hangman",
 
 		// SONOS
+			"get sonos devices": 				"get sonos devices",
+			"get all sonos devices": 			"get sonos devices",
+			"get my sonos devices": 			"get sonos devices",
+			"on sonos get devices": 			"get sonos devices",
+			"on sonos get my devices": 			"get sonos devices",
+			"on sonos get all devices": 		"get sonos devices",
+			"on sonos get the devices": 		"get sonos devices",
+			"on sonos get all the devices": 	"get sonos devices",
+			"on sonos get all of the devices": 	"get sonos devices",
+			"on sonos get status": 				"get sonos devices",
+			"on sonos whats the situation": 	"get sonos devices",
+			"on sonos what is the situation": 	"get sonos devices",
+			"on sonos give me a status report": "get sonos devices",
+			"on sonos report": 					"get sonos devices",
+			"on sonos tell me the situation": 	"get sonos devices",
+
+			"set sonos devices": 				"set sonos devices",
+			"set sonos device": 				"set sonos devices",
+			"on sonos set": 					"set sonos devices",
+			"on sonos update": 					"set sonos devices",
+			"on sonos turn": 					"set sonos devices",
+			"on sonos change": 					"set sonos devices",
+			"on sonos alter": 					"set sonos devices",
+			"on sonos make": 					"set sonos devices",
+
+			"turn off sonos device": 			"turn off sonos device",
+			"turn off sonos devices": 			"turn off sonos device",
+			"on sonos turn off": 				"turn off sonos device",
+			"on sonos switch off": 				"turn off sonos device",
+			"on sonos flip off": 				"turn off sonos device",
+			"on sonos deactivate": 				"turn off sonos device",
+			"turn off player": 					"turn off sonos device",
+			"switch off player": 				"turn off sonos device",
+			"flip off player": 					"turn off sonos device",
+			"deactivate player": 				"turn off sonos device",
+			"turn off players": 				"turn off sonos device",
+			"switch off players": 				"turn off sonos device",
+			"flip off players": 				"turn off sonos device",
+			"deactivate players": 				"turn off sonos device",
+			"turn off all players": 			"turn off sonos device",
+			"switch off all players": 			"turn off sonos device",
+			"flip off all players": 			"turn off sonos device",
+			"deactivate all players": 			"turn off sonos device",
+			"turn off speaker": 				"turn off sonos device",
+			"switch off speaker": 				"turn off sonos device",
+			"flip off speaker": 				"turn off sonos device",
+			"deactivate speaker": 				"turn off sonos device",
+			"turn off speakers": 				"turn off sonos device",
+			"switch off speakers": 				"turn off sonos device",
+			"flip off speakers": 				"turn off sonos device",
+			"deactivate speakers": 				"turn off sonos device",
+			"turn off all speakers": 			"turn off sonos device",
+			"switch off all speakers": 			"turn off sonos device",
+			"flip off all speakers": 			"turn off sonos device",
+			"deactivate all speakers": 			"turn off sonos device",
+			"turn off the player in the": 		"turn off sonos device",
+			"switch off the player in the": 	"turn off sonos device",
+			"flip off the player in the": 		"turn off sonos device",
+			"deactivate the player in the": 	"turn off sonos device",
+			"turn off the speaker in the": 		"turn off sonos device",
+			"switch off the speaker in the": 	"turn off sonos device",
+			"flip off the speaker in the": 		"turn off sonos device",
+			"deactivate the speaker in the": 	"turn off sonos device",
+
+			"turn on sonos device": 			"turn on sonos device",
+			"turn on sonos devices": 			"turn on sonos device",
+			"on sonos turn on": 				"turn on sonos device",
+			"on sonos switch on": 				"turn on sonos device",
+			"on sonos flip on": 				"turn on sonos device",
+			"on sonos deactivate": 				"turn on sonos device",
+			"turn on player": 					"turn on sonos device",
+			"switch on player": 				"turn on sonos device",
+			"flip on player": 					"turn on sonos device",
+			"activate player": 					"turn on sonos device",
+			"turn on players": 					"turn on sonos device",
+			"switch on players": 				"turn on sonos device",
+			"flip on players": 					"turn on sonos device",
+			"activate players": 				"turn on sonos device",
+			"turn on all players": 				"turn on sonos device",
+			"switch on all players": 			"turn on sonos device",
+			"flip on all players": 				"turn on sonos device",
+			"deactivate all players": 			"turn on sonos device",
+			"turn on speaker": 					"turn on sonos device",
+			"switch on speaker": 				"turn on sonos device",
+			"flip on speaker": 					"turn on sonos device",
+			"activate speaker": 				"turn on sonos device",
+			"turn on speakers": 				"turn on sonos device",
+			"switch on speakers": 				"turn on sonos device",
+			"flip on speakers": 				"turn on sonos device",
+			"activate speakers": 				"turn on sonos device",
+			"turn on all speakers": 			"turn on sonos device",
+			"switch on all speakers": 			"turn on sonos device",
+			"flip on all speakers": 			"turn on sonos device",
+			"activate all speakers": 			"turn on sonos device",
+			"turn on the player in the": 		"turn on sonos device",
+			"switch on the player in the": 		"turn on sonos device",
+			"flip on the player in the": 		"turn on sonos device",
+			"activate the player in the": 		"turn on sonos device",
+			"turn on the speaker in the": 		"turn on sonos device",
+			"switch on the speaker in the": 	"turn on sonos device",
+			"flip on the speaker in the": 		"turn on sonos device",
+			"activate the speaker in the": 		"turn on sonos device",
+
+			"pause sonos device": 				"pause sonos device",
+			"pause sonos devices": 				"pause sonos device",
+			"pause all sonos devices": 			"pause sonos device",
+			"pause sonos": 						"pause sonos device",
+			"pause the music": 					"pause sonos device",
+			"pause music": 						"pause sonos device",
+			"stop sonos device": 				"pause sonos device",
+			"stop sonos devices": 				"pause sonos device",
+			"stop all sonos devices": 			"pause sonos device",
+			"stop sonos": 						"pause sonos device",
+			"stop the music": 					"pause sonos device",
+			"stop music": 						"pause sonos device",
+			"on sonos pause device": 			"pause sonos device",
+			"on sonos pause devices": 			"pause sonos device",
+			"on sonos pause all devices": 		"pause sonos device",
+			"on sonos stop device": 			"pause sonos device",
+			"on sonos stop devices": 			"pause sonos device",
+			"on sonos stop all devices": 		"pause sonos device",
+
+			"play sonos device": 				"play sonos device",
+			"play sonos devices": 				"play sonos device",
+			"play all sonos devices": 			"play sonos device",
+			"play sonos": 						"play sonos device",
+			"play the music": 					"play sonos device",
+			"play music": 						"play sonos device",
+			"start sonos device": 				"play sonos device",
+			"start sonos devices": 				"play sonos device",
+			"start all sonos devices": 			"play sonos device",
+			"start sonos": 						"play sonos device",
+			"start the music": 					"play sonos device",
+			"start music": 						"play sonos device",
+			"on sonos play device": 			"play sonos device",
+			"on sonos play devices": 			"play sonos device",
+			"on sonos play all devices": 		"play sonos device",
+			"on sonos start device": 			"play sonos device",
+			"on sonos start devices": 			"play sonos device",
+			"on sonos start all devices": 		"play sonos device",
+
+			"play next on sonos": 				"play next on sonos",
+			"skip track": 						"play next on sonos",
+			"skip this song": 					"play next on sonos",
+			"next track": 						"play next on sonos",
+			"play next track": 					"play next on sonos",
+			"play the next track": 				"play next on sonos",
+			"on sonos play the next track": 	"play next on sonos",
+			"on sonos play the next song": 		"play next on sonos",
+			"on sonos skip this track": 		"play next on sonos",
+			"on sonos skip this song": 			"play next on sonos",
+			"on sonos skip to the next track": 	"play next on sonos",
+			"on sonos skip to the next song": 	"play next on sonos",
+
+			"play previous on sonos": 			"play previous on sonos",
+			"go back a track": 					"play previous on sonos",
+			"go back a song": 					"play previous on sonos",
+			"previous track": 					"play previous on sonos",
+			"play previous track": 				"play previous on sonos",
+			"play the previous track": 			"play previous on sonos",
+			"on sonos play the previous track": "play previous on sonos",
+			"on sonos play the previous song": 	"play previous on sonos",
+			"on sonos go back": 				"play previous on sonos",
+			"on sonos go back a track": 		"play previous on sonos",
+			"on sonos go back a song": 			"play previous on sonos",
+			"on sonos skip to the previous track": "play previous on sonos",
+			"on sonos skip to the previous song": "play previous on sonos",
 
 		// Wink
 			"get wink devices": 				"get wink devices",
@@ -1608,6 +1775,8 @@
 			"on wink report": 					"get wink devices",
 			"on wink tell me the situation": 	"get wink devices",
 
+			"set wink devices": 				"set wink devices",
+			"set wink device": 					"set wink devices",
 			"on wink set": 						"set wink devices",
 			"on wink update": 					"set wink devices",
 			"on wink turn": 					"set wink devices",
@@ -1615,6 +1784,8 @@
 			"on wink alter": 					"set wink devices",
 			"on wink make": 					"set wink devices",
 
+			"turn off wink device": 			"turn off wink device",
+			"turn off wink devices": 			"turn off wink device",
 			"on wink turn off": 				"turn off wink device",
 			"on wink switch off": 				"turn off wink device",
 			"on wink flip off": 				"turn off wink device",
@@ -1624,6 +1795,8 @@
 			"flip off": 						"turn off wink device",
 			"deactivate": 						"turn off wink device",
 
+			"turn on wink device": 				"turn on wink device",
+			"turn on wink devices": 			"turn on wink device",
 			"on wink turn on": 					"turn on wink device",
 			"on wink switch on": 				"turn on wink device",
 			"on wink flip on": 					"turn on wink device",
@@ -7650,6 +7823,381 @@
 			},
 	
 		// SONOS
+			"get sonos devices": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f3b6;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["api.sonos.com"] || !window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token || !window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration || window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration < new Date().getTime()) {
+							// attempt to reauthorize
+								window.ACTION_LIBRARY["authorize platform"]("sonos", function(response) {
+									callback(response)
+									
+									// now authorized? re-run this function
+										if (window.CONFIGURATION_LIBRARY["api.sonos.com"] && window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration >= new Date().getTime()) {
+											window.ACTION_LIBRARY["get sonos devices"](remainder, callback)
+										}
+								})
+								return
+						}
+
+					// build options
+						var options = {
+							url: "https://api.ws.sonos.com/control/api/v1/households",
+							Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token
+						}
+
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// no households
+									if (!response.households || !response.households.length) {
+										callback({icon: icon, error: true, message: "I couldn't find any Sonos devices.", html: "<h2>Error: no devices found</h2>"})
+										return
+									}
+
+								// devices
+									window.CONFIGURATION_LIBRARY["api.sonos.com"].devices = window.CONFIGURATION_LIBRARY["api.sonos.com"].devices || {}
+
+								// households
+									var households = {}
+									for (var i in response.households) {
+										households[response.households[i].id] = {
+											empty: true
+										}
+									}
+
+								// get devices
+									window.CONFIGURATION_LIBRARY["api.sonos.com"].devices = {}
+									var householdKeys = Object.keys(households)
+									for (var i in householdKeys) {
+										// build options
+											var options = {
+												url: "https://api.ws.sonos.com/control/api/v1/households/" + householdKeys[i] + "/groups",
+												Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token
+											}
+
+										// proxy
+											window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+												try {
+													// players
+														for (var p in response.players) {
+															var player = response.players[p]
+																player.type = "player"
+															window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[player.id] = player
+														}
+
+													// groups
+														for (var g in response.groups) {
+															var group = response.groups[g]
+																group.type = "group"
+															window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[group.id] = group
+														}
+
+													// unempty
+														delete households[householdKeys[i]].empty
+
+													// last one?
+														if (!householdKeys.filter(function(key) { return households[key].empty }).length) {
+															// devices
+																var deviceKeys = Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices)
+																var devices = window.CONFIGURATION_LIBRARY["api.sonos.com"].devices
+
+															// save devices to configuration library
+																var value = window.CONFIGURATION_LIBRARY["api.sonos.com"]
+																	value.devices = devices
+																window.FUNCTION_LIBRARY.changeConfiguration({key: "api.sonos.com", value: value})
+
+															// html
+																var responseHTML = "<h2>Sonos devices</h2><ul>"
+																for (var d in devices) {
+																	responseHTML += "<li><b>" + devices[d].name + "</b> - [" + (devices[d].playbackState ? devices[d].playbackState.toLowerCase().replace("playback_state_", "") : "connected") + "]<br>" + devices[d].type + "</li>"
+																}
+																responseHTML += "</ul>"
+
+															// response
+																var message = "I found " + Object.keys(devices).length + " device" + (Object.keys(devices).length == 1 ? "" : "s") + " on Sonos."
+																callback({icon: icon, message: message, html: responseHTML})
+														}
+												}
+												catch (error) {
+													callback({icon: icon, error: true, message: "I was unable to get some Sonos devices.", html: "<h2>Error: unable to get some Sonos devices:</h2>" + error})
+												}
+											})
+									}
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get Sonos devices.", html: "<h2>Error: unable to get Sonos devices:</h2>" + error})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"set sonos devices": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f3b6;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["api.sonos.com"] || !window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token || !window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration || window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration < new Date().getTime()) {
+							// attempt to reauthorize
+								window.ACTION_LIBRARY["authorize platform"]("sonos", function(response) {
+									callback(response)
+									
+									// now authorized? re-run this function
+										if (window.CONFIGURATION_LIBRARY["api.sonos.com"] && window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration >= new Date().getTime()) {
+											window.ACTION_LIBRARY["get sonos devices"](remainder, callback)
+										}
+								})
+								return
+						}
+
+					// missing devices?
+						else if (!window.CONFIGURATION_LIBRARY["api.sonos.com"].devices || !Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices).length) {
+							// get devices first
+								window.ACTION_LIBRARY["get sonos devices"](null, function(response) {
+									callback(response)
+									
+									// devices set? re-run this function
+										if (window.CONFIGURATION_LIBRARY["api.sonos.com"].devices && Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices).length) {
+											window.ACTION_LIBRARY["set sonos devices"](remainder, callback)
+										}
+								})
+								return
+						}
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I adjust?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
+					// split remainder
+						var components = remainder.split(/ to | become | into | at /gi)
+						var deviceName = components[0].trim().replace(/the /gi,"")
+						var desiredState = window.FUNCTION_LIBRARY.getDigits(components[1].replace("percent","").trim())
+
+					// replace number words with numbers
+						deviceName = deviceName.split(/\s/gi)
+						for (var word in deviceName) {
+							deviceName[word] = window.FUNCTION_LIBRARY.getDigits(deviceName[word])
+						}
+						deviceName = deviceName.join(" ")
+
+					// identify devices
+						var deviceIds = []
+						var groupIds = []
+						if (["players", "speakers", "groups", "all players", "all speakers", "all groups", "all the players", "all the speakers", "all the groups", "all", "everything", "volume", "the volume"].includes(deviceName)) {
+							var ids = Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices).filter(function(d) {
+								return window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[d].type == "group"
+							}) || []
+							for (var i in ids) {
+								groupIds.push(ids[i])
+							}
+						}
+						else {
+							deviceNames = deviceName.split(" and ")
+							for (var i in deviceNames) {
+								var deviceId = Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices).find(function(d) {
+									return window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[d].name.toLowerCase() == deviceNames[i]
+								}) || null
+								if (deviceId) {
+									if (window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[deviceId].type == "group") {
+										groupIds.push(deviceId)
+									}
+									else {
+										deviceIds.push(deviceId)
+									}
+								}
+							}
+						}
+
+					// no devices?
+						if (!deviceIds.length && !groupIds.length) {
+							callback({icon: icon, error: true, message: "I couldn't identify that device.", html: "<h2>Error: unable to identify device:</h2>" + deviceName})
+							return
+						}
+
+					// identify state
+						if (["on", "active", "powered", "unmuted", "unmute"].includes(desiredState)) {
+							desiredState = {muted: false}
+						}
+						else if (["off", "inactive", "unpowered", "muted", "mute"].includes(desiredState)) {
+							desiredState = {muted: true}
+						}
+						else if (!isNaN(desiredState)) {
+							desiredState = {volume: desiredState}
+						}
+						else if (["play", "playing"].includes(desiredState)) {
+							desiredState = {playing: true}
+						}
+						else if (["paused", "pause", "stop"].includes(desiredState)) {
+							desiredState = {playing: false}
+						}
+						else if (["next track", "next", "skip", "forward"].includes(desiredState)) {
+							desiredState = {next: true}
+						}
+						else if (["previous track", "previous", "back"].includes(desiredState)) {
+							desiredState = {previous: true}
+						}
+						else {
+							callback({icon: icon, error: true, message: "I couldn't understand that desired state.", html: "<h2>Error: unable to set state:</h2>" + desiredState})
+							return
+						}
+
+					// generate message & html
+						var responseHTML = "<h2>Sonos devices updated</h2><ul>"
+						for (var i in groupIds) {
+							responseHTML += "<li>" + window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[groupIds[i]].name + ": " + JSON.stringify(desiredState) + "</li>"
+						}
+						for (var i in deviceIds) {
+							responseHTML += "<li>" + window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[deviceIds[i]].name + ": " + JSON.stringify(desiredState) + "</li>"
+						}
+						responseHTML += "</ul>"
+						var messageState = (desiredState.muted === true) ? "muted" : (desiredState.muted === false) ? "unmuted" : desiredState.volume ? (desiredState.volume + " percent") : "unknown"
+
+					// response
+						var message = "Okay, I set " + deviceName + " to " + messageState
+						callback({icon: icon, message: message, html: responseHTML})
+
+					// group ? --> attempt to set desiredState
+						for (var i in groupIds) {
+							// play / pause
+								if (desiredState.playing === true) {
+									var url = "https://api.ws.sonos.com/control/api/v1/groups/" + groupIds[i] + "/playback/play"
+								}
+								else if (desiredState.playing === false) {
+									var url = "https://api.ws.sonos.com/control/api/v1/groups/" + groupIds[i] + "/playback/pause"
+								}
+
+							// next / previous
+								else if (desiredState.next === true) {
+									var url = "https://api.ws.sonos.com/control/api/v1/groups/" + groupIds[i] + "/playback/skipToNextTrack"
+								}
+								else if (desiredState.previous === true) {
+									var url = "https://api.ws.sonos.com/control/api/v1/groups/" + groupIds[i] + "/playback/skipToPreviousTrack"
+								}
+
+							// volume (no mute option)
+								else if (desiredState.muted === false) {
+									desiredState.volume = 10
+									var url = "https://api.ws.sonos.com/control/api/v1/groups/" + groupIds[i] + "/groupVolume"
+								}
+								else if (desiredState.muted === true) {
+									desiredState.volume = 0
+									var url = "https://api.ws.sonos.com/control/api/v1/groups/" + groupIds[i] + "/groupVolume"
+								}
+								else {
+									var url = "https://api.ws.sonos.com/control/api/v1/groups/" + groupIds[i] + "/groupVolume"
+								}
+
+							// build options
+								var options = {
+									method: "post",
+									url: url,
+									Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token,
+									body: desiredState
+								}
+
+							// proxy
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										if (response.errors && response.errors.length) {
+											callback({icon: icon, error: true, message: "I was unable to update a device.", html: "<h2>Error: Sonos responded with these errors:</h2><li>" + response.errors.join("</li><li>") + "</li>"})
+										}
+									}
+									catch (error) {
+										callback({icon: icon, error: true, message: "I was unable to update a device.", html: "<h2>Error: Sonos responded with these errors:</h2><li>" + error + "</li>"})
+									}
+								}, true)
+						}
+
+					// actually attempt to set the desiredState for each device
+						for (var i in deviceIds) {
+							// build options
+								var options = {
+									method: "post",
+									url: "https://api.ws.sonos.com/control/api/v1/players/" + deviceIds[i] + "/playerVolume",
+									Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token,
+									body: desiredState
+								}
+
+							// proxy
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										if (response.errors && response.errors.length) {
+											callback({icon: icon, error: true, message: "I was unable to update a device.", html: "<h2>Error: Sonos responded with these errors:</h2><li>" + response.errors.join("</li><li>") + "</li>"})
+										}
+									}
+									catch (error) {
+										callback({icon: icon, error: true, message: "I was unable to update a device.", html: "<h2>Error: Sonos responded with these errors:</h2><li>" + error + "</li>"})
+									}
+								}, true)
+						}
+						
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"turn off sonos device": function(remainder, callback) {
+				try {
+					// proxy to set sonos devices
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all") + " to off", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"turn on sonos device": function(remainder, callback) {
+				try {
+					// proxy to set sonos devices
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all") + " to on", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"pause sonos device": function(remainder, callback) {
+				try {
+					// proxy to set sonos devices
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all") + " to pause", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"play sonos device": function(remainder, callback) {
+				try {
+					// proxy to set sonos devices
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all") + " to play", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"play next on sonos": function(remainder, callback) {
+				try {
+					// proxy to set sonos devices
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all") + " to next", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"play previous on sonos": function(remainder, callback) {
+				try {
+					// proxy to set sonos devices
+						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all") + " to previous", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
 
 		// Wink
 			"get wink devices": function(remainder, callback) {
@@ -7875,10 +8423,10 @@
 						}
 
 					// identify state
-						if (desiredState == "on" || desiredState == "active" || desiredState == "powered") {
+						if (["on", "active", "powered"].includes(desiredState)) {
 							desiredState = {powered: true}
 						}
-						else if (desiredState == "off" || desiredState == "inactive" || desiredState == "unpowered") {
+						else if (["off", "inactive", "unpowered"].includes(desiredState)) {
 							desiredState = {powered: false}
 						}
 						else if (!isNaN(desiredState) && group == "temperature") {
