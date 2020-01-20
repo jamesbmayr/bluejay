@@ -1352,6 +1352,39 @@
 			"when is the address for": 			"get address",
 			"when is the address of": 			"get address",
 
+			"draft email": 						"draft email",
+			"draft an email": 					"draft email",
+			"write email": 						"draft email",
+			"write an email": 					"draft email",
+			"compose email": 					"draft email",
+			"compose an email": 				"draft email",
+			"create email": 					"draft email",
+			"create an email": 					"draft email",
+			"draft message": 					"draft email",
+			"draft an message": 				"draft email",
+			"write message": 					"draft email",
+			"write an message": 				"draft email",
+			"compose message": 					"draft email",
+			"compose an message": 				"draft email",
+			"create message": 					"draft email",
+			"create an message": 				"draft email",
+			"draft email to": 					"draft email",
+			"draft an email to": 				"draft email",
+			"write email to": 					"draft email",
+			"write an email to": 				"draft email",
+			"compose email to": 				"draft email",
+			"compose an email to": 				"draft email",
+			"create email to": 					"draft email",
+			"create an email to": 				"draft email",
+			"draft message to": 				"draft email",
+			"draft an message to": 				"draft email",
+			"write message to": 				"draft email",
+			"write an message to": 				"draft email",
+			"compose message to": 				"draft email",
+			"compose an message to": 			"draft email",
+			"create message to": 				"draft email",
+			"create an message to": 			"draft email",
+
 			"log gratitude": 					"log gratitude",
 			"i feel grateful for": 				"log gratitude",
 			"i am grateful for": 				"log gratitude",
@@ -6460,6 +6493,108 @@
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get contacts.", html: "<h2>Error: unable to get contacts:</h2>" + error})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"draft email": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4e8;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google apps script"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google apps script.", html: "<h2>Error: missing configuration:</h2><li>google apps script</li>"})
+							return
+						}
+
+					// enter flow
+						window.CONTEXT_LIBRARY.flow = "draft email"
+						window.CONTEXT_LIBRARY["draft email"] = window.CONTEXT_LIBRARY["draft email"] || {
+							recipient: null,
+							subject: null,
+							body: null,
+						}
+
+					// check what's missing
+						var nextParameter = null
+						for (var i in window.CONTEXT_LIBRARY["draft email"]) {
+							if (!window.CONTEXT_LIBRARY["draft email"][i]) {
+								nextParameter = i
+								break
+							}
+						}
+
+					// something missing
+						if (nextParameter && remainder) {
+							// clean remainder
+								remainder = remainder.trim()
+
+							// add it
+								if (nextParameter == "recipient") {
+									remainder = remainder.split(/ and |,\s?/gi).join(",")
+								}
+
+								window.CONTEXT_LIBRARY["draft email"][nextParameter] = remainder
+
+							// get new nextParameter
+								var nextParameter = null
+								for (var i in window.CONTEXT_LIBRARY["draft email"]) {
+									if (!window.CONTEXT_LIBRARY["draft email"][i]) {
+										nextParameter = i
+										break
+									}
+								}
+						}
+
+					// still something missing
+						if (nextParameter) {
+							// response
+								var message = "What is the " + nextParameter + "?"
+								var responseHTML = "<h2>" + nextParameter + " = ?</h2>" + 
+									"<ul>" + Object.keys(window.CONTEXT_LIBRARY["draft email"]).map(function(key) {
+										return "<li><b>" + key + ":</b> " + (window.CONTEXT_LIBRARY["draft email"][key] || "?") + "</li>"
+									}).join("") + "</ul>"
+								callback({icon: icon, message: message, html: responseHTML})
+								return
+						}
+
+					// build options
+						var options = {
+							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=draftEmail" +
+								"&recipient=" + encodeURI(window.CONTEXT_LIBRARY["draft email"].recipient) +
+								"&subject=" + encodeURI(window.CONTEXT_LIBRARY["draft email"].subject) +
+								"&body=" + encodeURI(window.CONTEXT_LIBRARY["draft email"].body)
+						}
+						
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// not successful?
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to draft the email.", html: "<h2>Error: unable to draft email:</h2><pre style='text-align: left'>" + JSON.stringify(window.CONTEXT_LIBRARY["draft email"], null, '\t') + "</pre>"})
+										return
+									}
+
+								// response
+									var message = response.message + " ... " + response.draft.subject + " to " + response.draft.recipient.split(",").join(" and ")
+									var url = "https://mail.google.com/mail/u/0/#drafts"
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>new email draft</h2></a><ul>" +
+										"<li><b>to</b><br>" + response.draft.recipient + "</li>" +
+										"<li><b>subject</b><br>" + response.draft.subject + "</li>" +
+										"<li><b>body</b><br>" + response.draft.body + "</li>" +
+										"</ul>"
+									callback({icon: icon, message: message, html: responseHTML, url: url})
+
+								// end flow
+									window.CONTEXT_LIBRARY.flow = null
+									delete window.CONTEXT_LIBRARY["draft email"]
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to draft email.", html: "<h2>Error: unable to draft email:</h2>" + error})
 							}
 						})
 				}
