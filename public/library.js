@@ -257,6 +257,22 @@
 			"what is the time": 				"get the time",
 			"whats the time": 					"get the time",
 			"tell me the time": 				"get the time",
+			"what time is it now": 				"get the time",
+			"what time is it right now": 		"get the time",
+			"get the time here": 				"get the time",
+			"what time is it here": 			"get the time",
+			"what is the time here": 			"get the time",
+			"whats the time here": 				"get the time",
+			"tell me the time here": 			"get the time",
+			"what time is it now here": 		"get the time",
+			"what time is it right now here": 	"get the time",
+			"get the time in": 					"get the time",
+			"what time is it in": 				"get the time",
+			"what is the time in": 				"get the time",
+			"whats the time in": 				"get the time",
+			"tell me the time in": 				"get the time",
+			"what time is it now in": 			"get the time",
+			"what time is it right now in": 	"get the time",
 
 			"get the day": 						"get the day",
 			"get the day on": 					"get the day",
@@ -1499,6 +1515,37 @@
 			"how can you say": 					"google translate",
 			"how to say": 						"google translate",
 
+			"search google timezone": 			"search google timezone",
+			"search google timezones": 			"search google timezone",
+			"search google time zone": 			"search google timezone",
+			"search google time zones": 		"search google timezone",
+			"what timezone is": 				"search google timezone",
+			"what time zone is": 				"search google timezone",
+			"what is the timezone": 			"search google timezone",
+			"what is the timezone in": 			"search google timezone",
+			"what is the timezone for":			"search google timezone",
+			"what is the timezone of": 			"search google timezone",
+			"whats the timezone": 				"search google timezone",
+			"whats the timezone in": 			"search google timezone",
+			"whats the timezone for":			"search google timezone",
+			"whats the timezone of": 			"search google timezone",
+			"get the timezone": 				"search google timezone",
+			"get the timezone in": 				"search google timezone",
+			"get the timezone for":				"search google timezone",
+			"get the timezone of": 				"search google timezone",
+			"what is the time zone": 			"search google timezone",
+			"what is the time zone in": 		"search google timezone",
+			"what is the time zone for":		"search google timezone",
+			"what is the time zone of": 		"search google timezone",
+			"whats the time zone": 				"search google timezone",
+			"whats the time zone in": 			"search google timezone",
+			"whats the time zone for":			"search google timezone",
+			"whats the time zone of": 			"search google timezone",
+			"get the time zone": 				"search google timezone",
+			"get the time zone in": 			"search google timezone",
+			"get the time zone for":			"search google timezone",
+			"get the time zone of": 			"search google timezone",
+
 		// games
 			"play more or less": 				"play more or less",
 			"lets play more or less": 			"play more or less",
@@ -2427,11 +2474,93 @@
 					// icon
 						var icon = "&#x1f553;"
 
-					// response
-						var time = new Date()
-						var message = time.toLocaleTimeString()
-						var responseHTML = "The time is <h2>" + message + "</h2>"
-						callback({icon: icon, message: message, html: responseHTML, time: time})
+					// remainder
+						remainder = remainder.replace(/[?!:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+
+					// no remainder --> get time here
+						if (!remainder || !remainder.trim()) {
+							var time = new Date()
+							var message = time.toLocaleTimeString()
+							var responseHTML = "The time is <h2>" + message + "</h2>"
+							callback({icon: icon, message: message, html: responseHTML, time: time})
+							return
+						}
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "<h2>Error: missing configuration:</h2><li>google api key</li>"})
+							return
+						}
+
+					// get longitude & latitude from locale
+						if (!isNaN(remainder.split(/,\s?/gi)[0]) && !isNaN(remainder.split(/,\s?/gi)[1])) {
+							var latitude  = Number(remainder.split(/,\s?/gi)[0])
+							var longitude = Number(remainder.split(/,\s?/gi)[1])
+
+							getTimeZone(latitude, longitude, callback)
+							return
+						}
+
+					// geolocation
+						// options
+							var options = {
+								url: "https://maps.googleapis.com/maps/api/geocode/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&address=" + remainder
+							}
+
+						// proxy request to server
+							window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+								try {
+									// no results?
+										if (!response || !response.results || !response.results[0] || !response.results[0].geometry || !response.results[0].geometry.location) {
+											callback({icon: icon, error: true, message: "I couldn't geolocate that.", html: "<h2>Error: unable to geolocate:</h2>" + remainder})
+											return
+										}
+
+									// geolocation
+										var latitude  = Number(response.results[0].geometry.location.lat.toFixed(7))
+										var longitude = Number(response.results[0].geometry.location.lng.toFixed(7))
+										getTimeZone(latitude, longitude, callback)
+										return
+								}
+								catch (error) {
+									callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
+								}
+							})
+
+					// getTimeZone
+						function getTimeZone(latitude, longitude, callback) {
+							// options
+								var options = {
+									url: "https://maps.googleapis.com/maps/api/timezone/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&location=" + latitude + "," + longitude + "&timestamp=" + Math.floor(new Date().getTime() / 1000)
+								}
+
+							// proxy request
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										// no results
+											if (!response.timeZoneName) {
+												callback({icon: icon, error: true, message: "I couldn't find that timezone.", html: "<h2>Error: unable to access Google Time Zone:</h2>" + response})
+												return
+											}
+
+										// date
+											var timeZoneName = response.timeZoneName
+											var timeZoneLocation = response.timeZoneId
+											var timeZoneOffsetMS = (response.rawOffset + response.dstOffset) * 1000
+											var currentTimeZoneOffsetMS = (new Date().getTimezoneOffset() * 60) * 1000 * -1
+											var differenceMS = timeZoneOffsetMS - currentTimeZoneOffsetMS
+											
+										// response
+											var time = new Date(new Date().getTime() + differenceMS)
+											var message = time.toLocaleTimeString()
+											var responseHTML = "The <b>" + timeZoneName + "</b> is <h2>" + message + "</h2><i>" + timeZoneLocation + "</i>"
+											callback({icon: icon, message: message, html: responseHTML, time: time})
+									}
+									catch (error) {
+										callback({icon: icon, error: true, message: "I couldn't find that timezone.", html: "<h2>Error: unable to access Google Time Zone:</h2>" + error})
+									}
+								})
+						}
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
@@ -2617,7 +2746,7 @@
 					// response
 						var time = new Date(date)
 						var message = segments.join(", ")
-						var responseHTML = (time.toLocaleString() + " - " + new Date().toLocaleString()) + "<h2>" + message + "</h2>"
+						var responseHTML = (new Date().toLocaleString() + " - " + time.toLocaleString()) + "<h2>" + message + "</h2>"
 						callback({icon: icon, message: message, html: responseHTML, number: number, time: time})
 				}
 				catch (error) {
@@ -6623,6 +6752,99 @@
 								callback({icon: icon, error: true, message: "I was unable to translate that phrase.", html: "<h2>Error: unable to get translation:</h2>" + error})
 							}
 						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"search google timezone": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x231a;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "<h2>Error: missing configuration:</h2><li>google api key</li>"})
+							return
+						}
+
+					// no remainder
+						remainder = remainder.replace(/[?!:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What city should I get the timezone for?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
+					// get longitude & latitude from locale
+						if (!isNaN(remainder.split(/,\s?/gi)[0]) && !isNaN(remainder.split(/,\s?/gi)[1])) {
+							var latitude  = Number(remainder.split(/,\s?/gi)[0])
+							var longitude = Number(remainder.split(/,\s?/gi)[1])
+
+							getTimeZone(latitude, longitude, callback)
+							return
+						}
+
+					// geolocation
+						// options
+							var options = {
+								url: "https://maps.googleapis.com/maps/api/geocode/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&address=" + remainder
+							}
+
+						// proxy request to server
+							window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+								try {
+									// no results?
+										if (!response || !response.results || !response.results[0] || !response.results[0].geometry || !response.results[0].geometry.location) {
+											callback({icon: icon, error: true, message: "I couldn't geolocate that.", html: "<h2>Error: unable to geolocate:</h2>" + remainder})
+											return
+										}
+
+									// geolocation
+										var latitude  = Number(response.results[0].geometry.location.lat.toFixed(7))
+										var longitude = Number(response.results[0].geometry.location.lng.toFixed(7))
+										getTimeZone(latitude, longitude, callback)
+										return
+								}
+								catch (error) {
+									callback({icon: icon, error: true, message: "I was unable to get search results.", html: "<h2>Error: unable to get search results:</h2>" + error})
+								}
+							})
+
+					// getTimeZone
+						function getTimeZone(latitude, longitude, callback) {
+							// options
+								var options = {
+									url: "https://maps.googleapis.com/maps/api/timezone/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&location=" + latitude + "," + longitude + "&timestamp=" + Math.floor(new Date().getTime() / 1000)
+								}
+
+							// proxy request
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										// no results
+											if (!response.timeZoneName) {
+												callback({icon: icon, error: true, message: "I couldn't find that timezone.", html: "<h2>Error: unable to access Google Time Zone:</h2>" + response})
+												return
+											}
+
+										// date
+											var timeZoneName = response.timeZoneName
+											var timeZoneLocation = response.timeZoneId
+											var timeZoneOffsetMS = (response.rawOffset + response.dstOffset) * 1000
+											var currentTimeZoneOffsetMS = (new Date().getTimezoneOffset() * 60) * 1000 * -1
+											var differenceMS = timeZoneOffsetMS - currentTimeZoneOffsetMS
+											var number = Math.round(differenceMS / 1000 / 60 / 60)
+											
+										// response
+											var message = (timeZoneLocation || "That location") + " is " + timeZoneName + " and is " + (!number ? "the same as" : (Math.abs(number) + " hour" + (Math.abs(number) == 1 ? " " : "s ") + (number < 0 ? "behind" : "ahead of"))) + " your current timezone."
+											var responseHTML = "<h2>" + timeZoneName + "</h2>" +
+												(!number ? "same as" : (Math.abs(number) + " hour" + (Math.abs(number) == 1 ? " " : "s ") + (number < 0 ? "behind" : "ahead of"))) + " current timezone"
+											callback({icon: icon, message: message, html: responseHTML, number: number})
+									}
+									catch (error) {
+										callback({icon: icon, error: true, message: "I couldn't find that timezone.", html: "<h2>Error: unable to access Google Time Zone:</h2>" + error})
+									}
+								})
+						}
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
