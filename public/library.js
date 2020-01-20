@@ -1450,6 +1450,7 @@
 
 		// Google APIs
 			"search google": 					"search google",
+			"search google for": 				"search google",
 			"look this up on google": 			"search google",
 			"do a google search": 				"search google",
 			"do a google search for": 			"search google",
@@ -1882,6 +1883,16 @@
 			"on sonos go back a song": 			"play previous on sonos",
 			"on sonos skip to the previous track": "play previous on sonos",
 			"on sonos skip to the previous song": "play previous on sonos",
+
+			"get now playing on sonos": 		"get now playing on sonos",
+			"what is playing on sonos": 		"get now playing on sonos",
+			"whats playing on sonos": 			"get now playing on sonos",
+			"what is this song": 				"get now playing on sonos",
+			"whats this song": 					"get now playing on sonos",
+			"what song is this": 				"get now playing on sonos",
+			"what is this track": 				"get now playing on sonos",
+			"whats this track": 				"get now playing on sonos",
+			"what track is this": 				"get now playing on sonos",
 
 		// Wink
 			"get wink devices": 				"get wink devices",
@@ -6787,9 +6798,9 @@
 									var results = []
 									for (var i in response.items) {
 										var responseMessage = response.items[i].title + " " + response.items[i].snippet
-										var url = "https://www.google.com?q=" + word
-										var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + word + "</h2></a>" +
-											"<p><a target='_blank' href='" + response.items[i].link + "'><b>" + response.items[i].title + "</b></a><br>" + response.items[i].snippet + "</p>"
+										var url = response.items[i].link
+										var responseHTML = "<a target='_blank' href='https://www.google.com/search?q=" + word + "'><h2>" + word + "</h2></a>" +
+											"<p><a target='_blank' href='" + url + "'><b>" + response.items[i].title + "</b></a><br>" + response.items[i].snippet + "</p>"
 
 										results.push({icon: icon, message: responseMessage, html: responseHTML, url: url, word: word})
 									}
@@ -8150,7 +8161,7 @@
 									var households = {}
 									for (var i in response.households) {
 										households[response.households[i].id] = {
-											empty: true
+											checked: false
 										}
 									}
 
@@ -8181,11 +8192,11 @@
 															devices[group.id] = group
 														}
 
-													// unempty
-														delete households[householdKeys[i]].empty
+													// check
+														households[householdKeys[i]].checked = true
 
 													// last one?
-														if (!householdKeys.filter(function(key) { return households[key].empty }).length) {
+														if (!householdKeys.filter(function(key) { return !households[key].checked }).length) {
 															// devices
 																var deviceKeys = Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices)
 
@@ -8513,6 +8524,100 @@
 				try {
 					// proxy to set sonos devices
 						window.ACTION_LIBRARY["set sonos devices"]((remainder.trim() || "all speakers") + " to previous", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get now playing on sonos": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f3b6;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["api.sonos.com"] || !window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token || !window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration || window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration < new Date().getTime()) {
+							// attempt to reauthorize
+								window.ACTION_LIBRARY["authorize platform"]("sonos", function(response) {
+									callback(response)
+									
+									// now authorized? re-run this function
+										if (window.CONFIGURATION_LIBRARY["api.sonos.com"] && window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration >= new Date().getTime()) {
+											window.ACTION_LIBRARY["get sonos devices"](remainder, callback)
+										}
+								})
+								return
+						}
+
+					// missing devices?
+						else if (!window.CONFIGURATION_LIBRARY["api.sonos.com"].devices || !Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices).length) {
+							// get devices first
+								window.ACTION_LIBRARY["get sonos devices"](null, function(response) {
+									callback(response)
+									
+									// devices set? re-run this function
+										if (window.CONFIGURATION_LIBRARY["api.sonos.com"].devices && Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices).length) {
+											window.ACTION_LIBRARY["set sonos devices"](remainder, callback)
+										}
+								})
+								return
+						}
+
+					// identify groups
+						var groups = []
+						for (var i in window.CONFIGURATION_LIBRARY["api.sonos.com"].devices) {
+							if (window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[i].type == "group") {
+								groups.push({
+									checked: false,
+									id: window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[i].id,
+									name: window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[i].name,
+									nowPlaying: null
+								})
+							}
+						}
+
+					// loop through groups
+						for (var i in groups) {
+							// build options
+								var options = {
+									url: "https://api.ws.sonos.com/control/api/v1/groups/" + groups[i].id + "/playbackMetadata",
+									Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token
+								}
+
+							// proxy to server
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										// save info
+											groups[i].checked = true
+											groups[i].nowPlaying = response
+
+										// last one?
+											if (!groups.filter(function(group) { return !group.checked }).length) {
+												// build message & html
+													var message = ""
+													var responseHTML = ""
+													for (var j in groups) {
+														var track = groups[j].nowPlaying.currentItem ? groups[j].nowPlaying.currentItem.track || null : null
+														var word = track.name
+
+														message += word + (track.artist ? " by " + track.artist.name : "") + " is playing on " + groups[j].name + " ... "
+
+														responseHTML += "<h2>" + groups[j].name + "</h2><table>" +
+															"<tr><th rowspan='4'><img src='" + track.imageUrl + "'></th><td><h2>" + word + "</h2></a></td></tr>" + 
+															"<tr>" + 								"<td>by <b>" + (track.artist ? track.artist.name : "???") + "</b></td></tr>" +
+															"<tr>" + 								"<td>from <b>" + (track.album ? track.album.name : "???") + "</b></td></tr>" +
+															"<tr>" + 								"<td>via <b>" + (track.service ? track.service.name : "???") + "</b></td></tr>" +
+														"</table>"
+													}
+
+												// response
+													callback({icon: icon, message: message, html: responseHTML, word: word})
+											}
+									}
+									catch (error) {
+										callback({icon: icon, error: true, message: "I was unable to get that Sonos group.", html: "<h2>Error: unable to get Sonos group:</h2>" + error})
+									}
+								})
+						}
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
