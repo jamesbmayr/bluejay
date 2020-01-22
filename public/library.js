@@ -377,6 +377,20 @@
 			"wake me up at": 					"set alarm",
 			"alert me at": 						"set alarm",
 
+			"get alarms": 						"get alarms",
+			"get all alarms": 					"get alarms",
+			"get my alarms": 					"get alarms",
+			"when are my alarms": 				"get alarms",
+			"what alarms do i have": 			"get alarms",
+			"get alarm": 						"get alarms",
+			"get my alarm": 					"get alarms",
+			"when is my alarm": 				"get alarms",
+			"what alarm do i have": 			"get alarms",
+			"get timer": 						"get alarms",
+			"get my timer": 					"get alarms",
+			"when is my timer": 				"get alarms",
+			"what timer do i have": 			"get alarms",
+
 			"cancel alarm": 					"cancel alarm",
 			"turn off alarm": 					"cancel alarm",
 			"deactivate alarm": 				"cancel alarm",
@@ -3153,6 +3167,34 @@
 								var responseHTML = "<h2>alarm #" + window.CONTEXT_LIBRARY.alarms.length + ": <b>" + time.toLocaleString() + "</b></h2>"
 								callback({icon: icon, message: message, html: responseHTML, time: time})
 						}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get alarms": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x23f0;"
+
+					// loop through alarms
+						var time = null
+						var message = "Here are your upcoming alarms: "
+						var responseHTML = "<h2>all upcoming alarms</h2><ul>"
+						for (var i = 0; i < window.CONTEXT_LIBRARY.alarms.length; i++) {
+							var alarmTime = new Date(window.CONTEXT_LIBRARY.alarms[i])
+							if (alarmTime.getTime() > new Date().getTime()) {
+								if (!time) {
+									time = alarmTime.getTime()
+								}
+								message += " ... alarm " + (i + 1) + ": " + alarmTime.toLocaleTimeString()
+								responseHTML += "<li><b>alarm #" + (i + 1) + ":</b> " + alarmTime.toLocaleString() + "</li>"
+							}
+						}
+						responseHTML += "</ul>"
+
+					// response
+						callback({icon: icon, message: message, html: responseHTML, time: time})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
