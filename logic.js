@@ -194,6 +194,10 @@
 							return "text/" + extension
 						break
 
+						case "md":
+							return "text/html"
+						break
+
 						case "txt":
 						default:
 							return "text/plain"

@@ -76,6 +76,17 @@
 			"list functions": 					"list actions",
 			"list commands": 					"list actions",
 
+			"explain self": 					"explain self",
+			"how do you work": 					"explain self",
+			"how do i set up": 					"explain self",
+			"set up an integration": 			"explain self",
+			"set up an api": 					"explain self",
+			"why do you exist": 				"explain self",
+			"how does this work": 				"explain self",
+			"explain this": 					"explain self",
+			"what are you": 					"explain self",
+			"what is your purpose": 			"explain self",
+
 			"repeat this": 						"repeat this",
 			"repeat after me": 					"repeat this",
 			"say what i say": 					"repeat this",
@@ -2176,6 +2187,22 @@
 								"</details>"
 							}).join("")
 						callback({icon: icon, message: message, html: responseHTML})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"explain self": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f426;"
+
+					// send response
+						var message = "Bluejay is an action-voice engine by James Mayr. Here's how I work and how you can customize me."
+						var url = "/README.md"
+						var responseHTML = "<a target='_blank' href='" + url + "'><h2>readme</h2></a>" +
+						"<iframe src='" + url + "' width='600' height='400' frameborder='0'></iframe>"
+						callback({icon: icon, message: message, html: responseHTML, url: url})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
