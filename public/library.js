@@ -1,4 +1,4 @@
-z/* phrase library */
+/* phrase library */
 	window.PHRASE_LIBRARY = {
 		// casual responses
 			"thank you": 						"receive gratitude",
@@ -875,6 +875,12 @@ z/* phrase library */
 			"get a nutrition answer": 			"get nutrition answer",
 			"get a nutrition answer about": 	"get nutrition answer",
 			"get a nutrition answer for": 		"get nutrition answer",
+			"get me nutrition answer": 			"get nutrition answer",
+			"get me nutrition answer about": 	"get nutrition answer",
+			"get me nutrition answer for": 		"get nutrition answer",
+			"get me a nutrition answer": 		"get nutrition answer",
+			"get me a nutrition answer about": 	"get nutrition answer",
+			"get me a nutrition answer for": 	"get nutrition answer",
 			"do a nutrition search": 			"get nutrition answer",
 			"do a nutrition search for": 		"get nutrition answer",
 			"do a nutrition search about": 		"get nutrition answer",
@@ -2237,7 +2243,7 @@ z/* phrase library */
 						var escapeCount = 10
 						while (randomActions.length < 3 && escapeCount) {
 							escapeCount--
-							var randomAction = window.FUNCTION_LIBRARY.chooseRandom(actionList)
+							var randomAction = window.FUNCTION_LIBRARY.chooseRandom(suggestableActionList)
 							if (!randomActions.includes(randomAction)) {
 								randomActions.push(randomAction)
 							} 
