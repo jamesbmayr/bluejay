@@ -960,7 +960,7 @@ window.addEventListener("load", function() {
 						var remainder = []
 						
 						do {
-							var action = PHRASE_LIBRARY[phraseText.join(" ").toLowerCase().replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"")] || null
+							var action = PHRASE_LIBRARY[phraseText.join(" ").toLowerCase().replace(/[?!.,:;'"\-_\/\(\)\$\%]/gi,"")] || null
 							
 							if (!action) {
 								remainder.unshift(phraseText.pop())
