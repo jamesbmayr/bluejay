@@ -1927,6 +1927,27 @@
 			"whats this track": 				"get now playing on sonos",
 			"what track is this": 				"get now playing on sonos",
 
+			"get favorites on sonos": 			"get favorites on sonos",
+			"on sonos get favorites": 			"get favorites on sonos",
+			"get sonos favorites": 				"get favorites on sonos",
+			"get my favorites on sonos": 		"get favorites on sonos",
+			"on sonos get my favorites": 		"get favorites on sonos",
+			"get my sonos favorites": 			"get favorites on sonos",
+			"what are my sonos favorites": 		"get favorites on sonos",
+			"list favorites on sonos": 			"get favorites on sonos",
+			"list my favorites on sonos": 		"get favorites on sonos",
+			"list sonos favorites": 			"get favorites on sonos",
+			"list my sonos favorites": 			"get favorites on sonos",
+
+			"play favorite on sonos": 			"play favorite on sonos",
+			"play this on sonos": 				"play favorite on sonos",
+			"on sonos play": 					"play favorite on sonos",
+			"on sonos play this": 				"play favorite on sonos",
+			"on sonos play this favorite": 		"play favorite on sonos",
+			"on sonos play favorite": 			"play favorite on sonos",
+			"on sonos play favorite number": 	"play favorite on sonos",
+			"on sonos play number": 			"play favorite on sonos",
+
 		// Wink
 			"get wink devices": 				"get wink devices",
 			"get all wink devices": 			"get wink devices",
@@ -8324,12 +8345,10 @@
 
 													// last one?
 														if (!householdKeys.filter(function(key) { return !households[key].checked }).length) {
-															// devices
-																var deviceKeys = Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices)
-
 															// save devices to configuration library
 																var value = window.CONFIGURATION_LIBRARY["api.sonos.com"]
 																	value.devices = devices
+																	value.households = households
 																window.FUNCTION_LIBRARY.changeConfiguration({key: "api.sonos.com", value: value})
 
 															// html
@@ -8372,7 +8391,7 @@
 									
 									// now authorized? re-run this function
 										if (window.CONFIGURATION_LIBRARY["api.sonos.com"] && window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration >= new Date().getTime()) {
-											window.ACTION_LIBRARY["get sonos devices"](remainder, callback)
+											window.ACTION_LIBRARY["set sonos devices"](remainder, callback)
 										}
 								})
 								return
@@ -8671,7 +8690,7 @@
 									
 									// now authorized? re-run this function
 										if (window.CONFIGURATION_LIBRARY["api.sonos.com"] && window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration >= new Date().getTime()) {
-											window.ACTION_LIBRARY["get sonos devices"](remainder, callback)
+											window.ACTION_LIBRARY["get now playing on sonos"](remainder, callback)
 										}
 								})
 								return
@@ -8685,7 +8704,7 @@
 									
 									// devices set? re-run this function
 										if (window.CONFIGURATION_LIBRARY["api.sonos.com"].devices && Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices).length) {
-											window.ACTION_LIBRARY["set sonos devices"](remainder, callback)
+											window.ACTION_LIBRARY["get now playing on sonos"](remainder, callback)
 										}
 								})
 								return
@@ -8747,6 +8766,237 @@
 										callback({icon: icon, error: true, message: "I was unable to get that Sonos group.", html: "<h2>Error: unable to get Sonos group:</h2>" + error})
 									}
 								})
+						}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get favorites on sonos": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f3b6;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["api.sonos.com"] || !window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token || !window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration || window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration < new Date().getTime()) {
+							// attempt to reauthorize
+								window.ACTION_LIBRARY["authorize platform"]("sonos", function(response) {
+									callback(response)
+									
+									// now authorized? re-run this function
+										if (window.CONFIGURATION_LIBRARY["api.sonos.com"] && window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration >= new Date().getTime()) {
+											window.ACTION_LIBRARY["get favorites on sonos"](remainder, callback)
+										}
+								})
+								return
+						}
+
+					// missing households?
+						else if (!window.CONFIGURATION_LIBRARY["api.sonos.com"].households || !Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].households).length) {
+							// get households first
+								window.ACTION_LIBRARY["get sonos devices"](null, function(response) {
+									callback(response)
+									
+									// devices set? re-run this function
+										if (window.CONFIGURATION_LIBRARY["api.sonos.com"].households && Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].households).length) {
+											window.ACTION_LIBRARY["get favorites on sonos"](remainder, callback)
+										}
+								})
+								return
+						}
+
+					// loop through households to uncheck
+						var households = window.CONFIGURATION_LIBRARY["api.sonos.com"].households
+						for (var i in households) {
+							households[i].checked = false
+						}
+
+					// loop through households
+						var favorites = []
+						for (var i in households) {
+							// build options
+								var options = {
+									responseType: "json",
+									url: "https://api.ws.sonos.com/control/api/v1/households/" + i + "/favorites",
+									Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token
+								}
+
+							// proxy to server
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										// save info
+											households[i].checked = true
+
+											if (response.items) {
+												favorites = favorites.concat(response.items)
+											}
+
+										// last one?
+											if (!Object.keys(households).filter(function(id) { return !households[id].checked }).length) {
+												// sort favorites
+													if (favorites && favorites.length > 1) {
+														favorites = favorites.sort(function(a,b) {
+															return Number(a.id) - Number(b.id)
+														})
+													}
+
+												// save favorites to configuration library
+													var value = window.CONFIGURATION_LIBRARY["api.sonos.com"]
+														value.favorites = favorites
+													window.FUNCTION_LIBRARY.changeConfiguration({key: "api.sonos.com", value: value})
+
+												// build message & html
+													var message = "I found " + favorites.length + " favorite item" + (favorites.length == 1 ? "" : "s") + " on Sonos."
+													var responseHTML = "<h2>Sonos favorites</h2><ul>"
+													for (var f in favorites) {															
+														responseHTML += "<li><b>#" + favorites[f].id + ": </b>" + favorites[f].name + "<br><i>" + favorites[f].description + "</i></li>"
+													}
+													responseHTML += "</ul>"
+
+												// response
+													callback({icon: icon, message: message, html: responseHTML})
+											}
+									}
+									catch (error) {
+										callback({icon: icon, error: true, message: "I was unable to get that Sonos household.", html: "<h2>Error: unable to get Sonos household:</h2>" + error})
+									}
+								})
+						}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"play favorite on sonos": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f3b6;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["api.sonos.com"] || !window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token || !window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration || window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration < new Date().getTime()) {
+							// attempt to reauthorize
+								window.ACTION_LIBRARY["authorize platform"]("sonos", function(response) {
+									callback(response)
+									
+									// now authorized? re-run this function
+										if (window.CONFIGURATION_LIBRARY["api.sonos.com"] && window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration && window.CONFIGURATION_LIBRARY["api.sonos.com"].expiration >= new Date().getTime()) {
+											window.ACTION_LIBRARY["play favorite on sonos"](remainder, callback)
+										}
+								})
+								return
+						}
+
+					// missing devices?
+						else if (!window.CONFIGURATION_LIBRARY["api.sonos.com"].devices || !Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices).length) {
+							// get devices first
+								window.ACTION_LIBRARY["get sonos devices"](null, function(response) {
+									callback(response)
+									
+									// devices set? re-run this function
+										if (window.CONFIGURATION_LIBRARY["api.sonos.com"].devices && Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices).length) {
+											window.ACTION_LIBRARY["play favorite on sonos"](remainder, callback)
+										}
+								})
+								return
+						}
+
+					// missing favorites?
+						else if (!window.CONFIGURATION_LIBRARY["api.sonos.com"].favorites || !Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].favorites).length) {
+							// get favorites first
+								window.ACTION_LIBRARY["get favorites on sonos"](null, function(response) {
+									callback(response)
+									
+									// devices set? re-run this function
+										if (window.CONFIGURATION_LIBRARY["api.sonos.com"].favorites && Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].favorites).length) {
+											window.ACTION_LIBRARY["play favorite on sonos"](remainder, callback)
+										}
+								})
+								return
+						}
+
+					// remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I play?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
+					// get numbers
+						var words = remainder.toLowerCase().split(/\s/gi)
+						for (var i in words) {
+							words[i] = window.FUNCTION_LIBRARY.getDigits(words[i].trim())
+						}
+						words = words.join("").replace(/\s/gi,"")
+
+					// get favorite id
+						var favorite = null
+						if (isNaN(words)) {
+							favorite = window.CONFIGURATION_LIBRARY["api.sonos.com"].favorites.find(function(favorite) {
+								return favorite.name.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().replace(/\s/gi,"") == words
+							}) || null
+						}
+						else if (!isNaN(words)) {
+							favorite = window.CONFIGURATION_LIBRARY["api.sonos.com"].favorites.find(function(favorite) {
+								return favorite.id.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().replace(/\s/gi,"") == words
+							}) || null
+						}
+
+					// not found?
+						if (!favorite) {
+							callback({icon: icon, error: true, message: "I couldn't find that favorite.", html: "<h2>Error: invalid favorite name or id:</h2>" + remainder})
+							return
+						}
+
+					// groupIds
+						var groupIds = []
+						var ids = Object.keys(window.CONFIGURATION_LIBRARY["api.sonos.com"].devices).filter(function(d) {
+							return window.CONFIGURATION_LIBRARY["api.sonos.com"].devices[d].type == "group"
+						}) || []
+						for (var i in ids) {
+							groupIds.push(ids[i])
+						}
+
+					// no devices?
+						if (!groupIds.length) {
+							callback({icon: icon, error: true, message: "I couldn't find any groups.", html: "<h2>Error: unable to find groups.</h2>"})
+							return
+						}
+
+					// respond
+						var message = "Now playing " + favorite.name
+						var responseHTML = "<h2>#" + favorite.id + ": " + favorite.name + "</h2>" + 
+							favorite.description + 
+							(favorite.imageUrl ? ("<br><img src='" + favorite.imageUrl + "'>") : "")
+						callback({icon: icon, message: message, html: responseHTML})
+
+					// loop through groups
+						for (var i in groupIds) {
+							// build options
+								var options = {
+									method: "post",
+									responseType: "json",
+									url: "https://api.ws.sonos.com/control/api/v1/groups/" + groupIds[i] + "/favorites",
+									Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token,
+									body: {
+										favoriteId: favorite.id,
+										playOnCompletion: true,
+										playModes: {
+											shuffle: true
+										}
+									}
+								}
+
+							// proxyRequest
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										if (response.errors && response.errors.length) {
+											callback({icon: icon, error: true, message: "I was unable to update a device.", html: "<h2>Error: Sonos responded with these errors:</h2><li>" + response.errors.join("</li><li>") + "</li>"})
+										}
+									}
+									catch (error) {
+										callback({icon: icon, error: true, message: "I was unable to update a device.", html: "<h2>Error: Sonos responded with these errors:</h2><li>" + error + "</li>"})
+									}
+								}, true)
 						}
 				}
 				catch (error) {

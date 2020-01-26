@@ -277,7 +277,7 @@ window.addEventListener("load", function() {
 
 					// run through number word library
 						numberWord = numberWord.toLowerCase().trim()
-						if (NUMBER_WORD_LIBRARY[numberWord]) {
+						if (!isNaN(NUMBER_WORD_LIBRARY[numberWord])) {
 							return NUMBER_WORD_LIBRARY[numberWord]
 						}
 
