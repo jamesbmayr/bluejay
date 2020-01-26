@@ -1,4 +1,4 @@
-/* phrase library */
+z/* phrase library */
 	window.PHRASE_LIBRARY = {
 		// casual responses
 			"thank you": 						"receive gratitude",
@@ -5486,7 +5486,7 @@
 											// add to existing message & html
 												if (response.data && response.data.length) {
 													// bridge
-														message += " ... There are " + response.data.length + " alerts... "
+														message += " ... There are " + response.data.length + " alert" + (response.data.length == 1 ? "" : "s") + " ... "
 														responseHTML += "<br><hr><a target='_blank' href='" + url + "/alerts'><h2>alerts</h2></a><ul>"
 													
 													// loop through alerts
