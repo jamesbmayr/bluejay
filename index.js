@@ -100,10 +100,13 @@
 											response.writeHead(200, {
 												"Content-Type": "text/html; charset=utf-8"
 											})
-											request.post = JSON.parse(request.get.embeddedPost)
+											request.post = JSON.parse(request.get.embeddedPost) || {}
+											request.post.responseType = "json"
+
 											main.proxyRequest(request, function (data) {
 												main.setAuthorization(request, db, data, function (authorizationResults) {
 													request.authorizationResults = authorizationResults
+													
 													main.renderHTML(request, "./public/authorization.html", function (html) {
 														response.end(html)
 													})

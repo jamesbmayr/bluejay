@@ -456,7 +456,7 @@
 					if (protocol == "http") {
 						if (method !== "get" || request.post["Authorization"]) {
 							var apiRequest = http.request(options, function (apiResponse) {
-								proxyResponse(apiResponse, request.post.asIs, callback)
+								proxyResponse(apiResponse, request.post.responseType, callback)
 							}).on("error", callback)
 							apiRequest.write(body)
 							apiRequest.end()
@@ -465,16 +465,16 @@
 							http.get(request.post.url, function (apiResponse) {
 								if (apiResponse.headers.location && apiResponse.headers.location.indexOf("https://") == 0) {
 									https.get(apiResponse.headers.location, function(apiReResponse) {
-										proxyResponse(apiReResponse, request.post.asIs, callback)
+										proxyResponse(apiReResponse, request.post.responseType, callback)
 									})
 								}
 								else if (apiResponse.headers.location && apiResponse.headers.location.indexOf("http://") == 0) {
 									http.get(apiResponse.headers.location, function(apiReResponse) {
-										proxyResponse(apiReResponse, request.post.asIs, callback)
+										proxyResponse(apiReResponse, request.post.responseType, callback)
 									})
 								}
 								else {
-									proxyResponse(apiResponse, request.post.asIs, callback)
+									proxyResponse(apiResponse, request.post.responseType, callback)
 								}
 							}).on("error", callback)
 						}
@@ -482,7 +482,7 @@
 					else if (protocol == "https") {
 						if (method !== "get" || request.post["Authorization"]) {
 							var apiRequest = https.request(options, function (apiResponse) {
-								proxyResponse(apiResponse, request.post.asIs, callback)
+								proxyResponse(apiResponse, request.post.responseType, callback)
 							}).on("error", callback)
 							apiRequest.write(body)
 							apiRequest.end()
@@ -491,16 +491,16 @@
 							https.get(request.post.url, function (apiResponse) {
 								if (apiResponse.headers.location && apiResponse.headers.location.indexOf("https://") == 0) {
 									https.get(apiResponse.headers.location, function(apiReResponse) {
-										proxyResponse(apiReResponse, request.post.asIs, callback)
+										proxyResponse(apiReResponse, request.post.responseType, callback)
 									})
 								}
 								else if (apiResponse.headers.location && apiResponse.headers.location.indexOf("http://") == 0) {
 									http.get(apiResponse.headers.location, function(apiReResponse) {
-										proxyResponse(apiReResponse, request.post.asIs, callback)
+										proxyResponse(apiReResponse, request.post.responseType, callback)
 									})
 								}
 								else {
-									proxyResponse(apiResponse, request.post.asIs, callback)
+									proxyResponse(apiResponse, request.post.responseType, callback)
 								}
 							}).on("error", callback)
 						}
@@ -519,7 +519,7 @@
 
 	/* proxyResponse */
 		module.exports.proxyResponse = proxyResponse
-		function proxyResponse(apiResponse, asIs, callback) {
+		function proxyResponse(apiResponse, responseType, callback) {
 			try {
 				// collect data
 					var apiData = ""
@@ -529,35 +529,27 @@
 					apiResponse.on("end", function() { 
 						try {
 							logStatus("proxy response:\n" + apiData)
-							// as is
-								if (asIs) {
-									var responseData = String(apiData)
-									callback(responseData)
-								}
-
+							
 							// try json
-								else {
+								if (responseType == "json") {
 									var responseData = JSON.parse(apiData)
 									callback(responseData)
 								}
-						} catch (error) {
-							try {
-								// try xml
-									if (apiData.includes("<") || apiData.includes(">")) {
-										var responseData = parseXML(apiData)
-										callback(responseData)
-									}
 
-								// back to as is
-									else {
-										var responseData = String(apiData)
-										callback(responseData)
-									}
-							}
-							catch (error) {
-								// as is or error
-									callback(responseData || error)	
-							}
+							// try xml
+								else if (responseType == "xml") {
+									var responseData = parseXML(apiData)
+									callback(responseData)
+								}
+
+							// as is
+								else {
+									var responseData = String(apiData)
+									callback(responseData)
+								}
+						}
+						catch (error) {
+							callback(responseData || error)	
 						}
 					})
 			}

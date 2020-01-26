@@ -603,6 +603,8 @@
 			"find a definition for": 			"get definition",
 			"find definition for": 				"get definition",
 			"find the meaning of": 				"get definition",
+			"find the definition of": 			"get definition",
+			"find a definition for": 			"get definition",
 			"define": 							"get definition",
 			"define the word": 					"get definition",
 			"look up the word": 				"get definition",
@@ -896,6 +898,8 @@
 			"look up the book": 				"get a book",
 			"look up a book": 					"get a book",
 			"look for a book": 					"get a book",
+			"look up a book on goodreads": 		"get a book",
+			"look for a book on goodreads": 	"get a book",
 			"look up a book called": 			"get a book",
 			"look up this book": 				"get a book",
 			"tell me about the book": 			"get a book",
@@ -1291,6 +1295,10 @@
 			"whats on my list": 				"get a list",
 			"what is on the list": 				"get a list",
 			"whats on the list": 				"get a list",
+			"whats on my todo list": 			"get a list",
+			"whats on my to do list": 			"get a list",
+			"what is on my todo list": 			"get a list",
+			"what is on my to do list": 		"get a list",
 
 			"add an item to a list": 			"add an item to a list",
 			"add an item to the": 				"add an item to a list",
@@ -2780,6 +2788,7 @@
 								var url = "https://" + host + platforms[name].reauthPath + "?grant_type=refresh_token&refresh_token=" + refresh_token
 								var options = {
 									method: "post",
+									responseType: "json",
 									url: url,
 									"Authorization": "Basic " + platforms[name].stateSecret(key, secret),
 									"Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
@@ -2857,6 +2866,7 @@
 					// geolocation
 						// options
 							var options = {
+								responseType: "json",
 								url: "https://maps.googleapis.com/maps/api/geocode/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&address=" + remainder
 							}
 
@@ -2884,6 +2894,7 @@
 						function getTimeZone(latitude, longitude, callback) {
 							// options
 								var options = {
+									responseType: "json",
 									url: "https://maps.googleapis.com/maps/api/timezone/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&location=" + latitude + "," + longitude + "&timestamp=" + Math.floor(new Date().getTime() / 1000)
 								}
 
@@ -3736,6 +3747,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://api.datamuse.com/words?rel_rhy=" + word
 						}
 
@@ -3788,6 +3800,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://api.datamuse.com/words?rel_syn=" + word
 						}
 
@@ -3840,6 +3853,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://api.datamuse.com/words?rel_ant=" + word
 						}
 
@@ -3892,6 +3906,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://api.datamuse.com/words?md=d&sp=" + word
 						}
 
@@ -3947,7 +3962,7 @@
 
 					// options
 						var options = {
-							asIs: true,
+							responseType: null,
 							url: "https://www.etymonline.com/word/" + word
 						}
 
@@ -4032,7 +4047,7 @@
 
 					// options
 						var options = {
-							asIs: true,
+							responseType: null,
 							url: "https://www.thefreedictionary.com/_/partner.aspx?Set=idioms&Word=" + word
 						}
 
@@ -4120,6 +4135,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://icanhazdadjoke.com/slack"
 						}
 
@@ -4148,6 +4164,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en"
 						}
 
@@ -4182,6 +4199,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://fortunecookieapi.herokuapp.com/v1/fortunes?limit=1000&skip=0&page=1"
 						}
 
@@ -4221,6 +4239,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://jokes.guyliangilsing.me/retrieveJokes.php?type=yomama"
 						}
 
@@ -4268,6 +4287,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=" + word
 						}
 
@@ -4293,6 +4313,7 @@
 							
 							// options
 								var options = {
+									responseType: "json",
 									url: "https://en.wikipedia.org/w/api.php?action=parse&format=json&utf8=1&page=" + response.query.search[0].title
 								}
 
@@ -4382,6 +4403,7 @@
 					
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://api.openweathermap.org/data/2.5/forecast?appid=" + window.CONFIGURATION_LIBRARY["open weather api"] + (isNaN(locale) ? ("&q=" + locale) : "&zip=" + locale) + ",us&mode=json&units=imperial"
 						}
 
@@ -4585,6 +4607,7 @@
 
 							// options
 								var options = {
+									responseType: "json",
 									url: "https://maps.googleapis.com/maps/api/geocode/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&address=" + locale
 								}
 
@@ -4615,6 +4638,7 @@
 						if (latitude && longitude) {
 							// build options
 								var options = {
+									responseType: "json",
 									url: "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude + "&date=" + (date ? new Date(date).toLocaleDateString() : "today")
 								}
 
@@ -4724,6 +4748,7 @@
 
 							// options
 								var options = {
+									responseType: "json",
 									url: "https://maps.googleapis.com/maps/api/geocode/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&address=" + locale
 								}
 
@@ -4754,6 +4779,7 @@
 						if (latitude && longitude) {
 							// build options
 								var options = {
+									responseType: "json",
 									url: "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude + "&date=" + (date ? new Date(date).toLocaleDateString() : "today")
 								}
 
@@ -4809,6 +4835,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://api.spoonacular.com/recipes/guessNutrition?apiKey=" + window.CONFIGURATION_LIBRARY["spoonacular api"] + "&title=" + remainder
 						}
 
@@ -4867,6 +4894,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://api.spoonacular.com/recipes/quickAnswer?apiKey=" + window.CONFIGURATION_LIBRARY["spoonacular api"] + "&q=" + remainder
 						}
 
@@ -4913,6 +4941,7 @@
 
 					// options
 						var options = {
+							responseType: "xml",
 							url: "https://www.goodreads.com/search.xml?key=" + window.CONFIGURATION_LIBRARY["goodreads api"] + "&q=" + remainder
 						}
 
@@ -5004,6 +5033,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://mourits.xyz:2096/?q=" + search
 						}
 
@@ -5065,6 +5095,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://www.alphavantage.co/query?apikey=" + window.CONFIGURATION_LIBRARY["alphavantage api"] + "&function=SYMBOL_SEARCH&keywords=" + remainder
 						}
 
@@ -5098,6 +5129,7 @@
 									var symbol = allMatches[window.CONTEXT_LIBRARY["alphavantage attempt counter"]]["1. symbol"]
 									var name = allMatches[window.CONTEXT_LIBRARY["alphavantage attempt counter"]]["2. name"]
 									var options = {
+										responseType: "json",
 										url: "https://www.alphavantage.co/query?apikey=" + window.CONFIGURATION_LIBRARY["alphavantage api"] + "&function=TIME_SERIES_DAILY&symbol=" + symbol
 									}
 
@@ -5213,6 +5245,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://www.omdbapi.com/?apikey=" + window.CONFIGURATION_LIBRARY["omdb api"] + "&s=" + remainder
 						}
 
@@ -5234,6 +5267,7 @@
 										// options
 											var id = response.Search[i].imdbID
 											var options = {
+												responseType: "json",
 												url: "https://www.omdbapi.com/?apikey=" + window.CONFIGURATION_LIBRARY["omdb api"] + "&plot=full&i=" + id
 											}
 
@@ -5366,7 +5400,7 @@
 
 					// options
 						var options = {
-							asIs: true,
+							responseType: null,
 							url: feeds[remainder] || window.CONFIGURATION_LIBRARY[remainder]
 						}
 
@@ -5580,6 +5614,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=listWish&item=" + item + "&cost=" + cost + "&type=" + type
 						}
 						
@@ -5620,6 +5655,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getBalance&account=" + remainder
 						}
 						
@@ -5676,6 +5712,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=logPurchase&category=" + category + "&description=" + description + "&amount=" + amount
 						}
 						
@@ -5731,6 +5768,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=fetchEvents" + (startDate ? "&startDate=" + startDate.toLocaleString() : "") + (endDate ? "&endDate=" + endDate.toLocaleString() : "")
 						}
 						
@@ -5787,6 +5825,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=findEvent&name=" + remainder
 						}
 						
@@ -5912,6 +5951,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=addEvent" +
 								"&title=" + window.CONTEXT_LIBRARY["add event"].title +
 								"&startDate=" + window.CONTEXT_LIBRARY["add event"].startDate +
@@ -5966,14 +6006,11 @@
 
 					// no remainder
 						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
-						if (!remainder || !remainder.trim()) {
-							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
-							return
-						}
 
 					// build options
 						var list = remainder
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getList" + (list ? ("&list=" + list) : "")
 						}
 						
@@ -6131,6 +6168,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=addTask" + (list ? "&list=" + list : "") + "&task=" + task
 						}
 						
@@ -6270,6 +6308,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getContacts&name=" + remainder
 						}
 
@@ -6377,6 +6416,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getContacts&name=" + remainder
 						}
 
@@ -6451,6 +6491,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getContacts&name=" + remainder
 						}
 
@@ -6533,6 +6574,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getContacts&name=" + remainder
 						}
 
@@ -6615,6 +6657,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=getContacts&name=" + remainder
 						}
 
@@ -6741,6 +6784,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script"] + "&action=draftEmail" +
 								"&recipient=" + encodeURI(window.CONTEXT_LIBRARY["draft email"].recipient) +
 								"&subject=" + encodeURI(window.CONTEXT_LIBRARY["draft email"].subject) +
@@ -6799,6 +6843,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google apps script 2"] + "&text=" + remainder
 						}
 						
@@ -6851,6 +6896,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: window.CONFIGURATION_LIBRARY["google custom search"] + "&key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&q=" + word
 						}
 
@@ -6908,6 +6954,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://maps.googleapis.com/maps/api/geocode/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&address=" + remainder
 						}
 
@@ -6969,6 +7016,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://maps.googleapis.com/maps/api/directions/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&origin=" + origin + "&destination=" + destination
 						}
 
@@ -7035,6 +7083,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&inputtype=textquery&fields=place_id&input=" + remainder
 						}
 
@@ -7050,6 +7099,7 @@
 								// second trip, with place_id
 									var place_id = response.candidates[0].place_id
 									var options = {
+										responseType: "json",
 										url: "https://maps.googleapis.com/maps/api/place/details/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&inputtype=textquery&fields=name,photo,url,website,formatted_phone_number,formatted_address,geometry,opening_hours&place_id=" + place_id
 									}
 
@@ -7130,6 +7180,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://www.googleapis.com/youtube/v3/search?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&part=snippet&type=video&videoEmbeddable=true&maxResults=10&order=viewCount&q=" + word
 						}
 
@@ -7265,6 +7316,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://translation.googleapis.com/language/translate/v2?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&q=" + phrase + "&target=" + languageCode
 						}
 
@@ -7326,6 +7378,7 @@
 					// geolocation
 						// options
 							var options = {
+								responseType: "json",
 								url: "https://maps.googleapis.com/maps/api/geocode/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&address=" + remainder
 							}
 
@@ -7353,6 +7406,7 @@
 						function getTimeZone(latitude, longitude, callback) {
 							// options
 								var options = {
+									responseType: "json",
 									url: "https://maps.googleapis.com/maps/api/timezone/json?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&location=" + latitude + "," + longitude + "&timestamp=" + Math.floor(new Date().getTime() / 1000)
 								}
 
@@ -7474,6 +7528,7 @@
 						if (window.CONTEXT_LIBRARY.flow !== "play true or false") {
 							// options
 								var options = {
+									responseType: "json",
 									url: "https://opentdb.com/api.php?amount=10&type=boolean"
 								}
 
@@ -8022,7 +8077,7 @@
 						if (window.CONTEXT_LIBRARY.flow !== "play hangman") {
 							// get a random key
 								var options = {
-									asIs: true,
+									responseType: null,
 									url: "http://random-word-api.herokuapp.com/key"
 								}
 
@@ -8031,6 +8086,7 @@
 									try {
 										// options
 											var options = {
+												responseType: "json",
 												url: "http://random-word-api.herokuapp.com/word?key=" + String(response) + "&number=100"
 											}
 
@@ -8210,6 +8266,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: "https://api.ws.sonos.com/control/api/v1/households",
 							Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token
 						}
@@ -8240,6 +8297,7 @@
 									for (var i in householdKeys) {
 										// build options
 											var options = {
+												responseType: "json",
 												url: "https://api.ws.sonos.com/control/api/v1/households/" + householdKeys[i] + "/groups",
 												Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token
 											}
@@ -8472,6 +8530,7 @@
 							// build options
 								var options = {
 									method: "post",
+									responseType: "json",
 									url: url,
 									Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token,
 									body: desiredState
@@ -8503,6 +8562,7 @@
 							// build options
 								var options = {
 									method: "post",
+									responseType: "json",
 									url: url,
 									Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token,
 									body: desiredState
@@ -8648,6 +8708,7 @@
 						for (var i in groups) {
 							// build options
 								var options = {
+									responseType: "json",
 									url: "https://api.ws.sonos.com/control/api/v1/groups/" + groups[i].id + "/playbackMetadata",
 									Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.sonos.com"].access_token
 								}
@@ -8715,6 +8776,7 @@
 
 					// build options
 						var options = {
+							responseType: "json",
 							url: "https://api.wink.com/users/me/wink_devices?client_id=" + window.CONFIGURATION_LIBRARY["wink key"] + "&client_secret=" + window.CONFIGURATION_LIBRARY["wink secret"],
 							Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.wink.com"].access_token
 						}
@@ -8950,6 +9012,7 @@
 							// build options
 								var options = {
 									method: "put",
+									responseType: "json",
 									url: "https://api.wink.com/" + window.CONFIGURATION_LIBRARY["api.wink.com"].devices[deviceIds[i]].type + "s/" + deviceIds[i] + "/desired_state?client_id=" + window.CONFIGURATION_LIBRARY["wink key"] + "&client_secret=" + window.CONFIGURATION_LIBRARY["wink secret"],
 									Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["api.wink.com"].access_token,
 									body: {
@@ -9019,6 +9082,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							"User-Agent": "web:bluejay:v1 (by /u/quargy)",
 							Authorization: "Bearer " + window.CONFIGURATION_LIBRARY["www.reddit.com"].access_token,
 							url: "https://oauth.reddit.com/r/" + (subreddits.includes(selection) ? selection : "all")
@@ -9112,6 +9176,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/unitconverter?quantity=" + quantity + "&from=" + fromUnit + "&to=" + toUnit
 						}
 
@@ -9172,6 +9237,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/factorfinder?number=" + input
 						}
 
@@ -9227,6 +9293,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/chordanalyzer?notes=" + encodeURIComponent(input)
 						}
 
@@ -9273,6 +9340,7 @@
 
 					// options
 						var options = {
+							responseType: "json",
 							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/wordshuffler?word=" + word
 						}
 
