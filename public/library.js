@@ -1036,6 +1036,43 @@
 			"what is the plot of the film": 	"get a movie",
 			"tell me about the film": 			"get a movie",
 
+			"get metro predictions": 			"get metro predictions",
+			"get subway predictions": 			"get metro predictions",
+			"get bus predictions": 				"get metro predictions",
+			"get train predictions": 			"get metro predictions",
+			"get rail predictions": 			"get metro predictions",
+			"get trolley predictions": 			"get metro predictions",
+			"get tram predictions": 			"get metro predictions",
+			"get ferry predictions": 			"get metro predictions",
+			"get me metro predictions": 		"get metro predictions",
+			"get me subway predictions": 		"get metro predictions",
+			"get me bus predictions": 			"get metro predictions",
+			"get me train predictions": 		"get metro predictions",
+			"get me rail predictions": 			"get metro predictions",
+			"get me trolley predictions": 		"get metro predictions",
+			"get me tram predictions": 			"get metro predictions",
+			"get me ferry predictions": 		"get metro predictions",
+			"get metro predictions for the": 	"get metro predictions",
+			"get subway predictions for the": 	"get metro predictions",
+			"get bus predictions for the": 		"get metro predictions",
+			"get train predictions for the": 	"get metro predictions",
+			"get rail predictions for the": 	"get metro predictions",
+			"get trolley predictions for the": 	"get metro predictions",
+			"get tram predictions for the": 	"get metro predictions",
+			"get ferry predictions for the": 	"get metro predictions",
+			"get me metro predictions for the": "get metro predictions",
+			"get me subway predictions for the": "get metro predictions",
+			"get me bus predictions for the": 	"get metro predictions",
+			"get me train predictions for the": "get metro predictions",
+			"get me rail predictions for the": 	"get metro predictions",
+			"get me trolley predictions for the": "get metro predictions",
+			"get me tram predictions for the": 	"get metro predictions",
+			"get me ferry predictions for the": "get metro predictions",
+			"when is the next": 				"get metro predictions",
+			"tell me about route": 				"get metro predictions",
+			"what is the status of the": 		"get metro predictions",
+			"whats the status of the": 			"get metro predictions",
+
 		// news & blogs
 			"get the latest post": 				"get the latest post",
 			"get me the latest post": 			"get the latest post",
@@ -5353,6 +5390,127 @@
 							}
 						})
 
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get metro predictions": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f687;"
+
+					// remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I search for?", html: "<h2>Error: invalid search</h2>"})
+							return
+						}
+
+					// number words
+						var route = remainder.split(/\s/gi)
+						for (var i in route) {
+							route[i] = window.FUNCTION_LIBRARY.getDigits(route[i].trim())
+							if (["line", "route", "metro", "subway", "bus", "train", "rail", "trolley", "tram", "ferry"].includes(route[i])) {
+								route[i] = ""
+							}
+						}
+						route = route.join("").trim()
+
+					// letter
+						if (isNaN(route)) {
+							route = route[0].toUpperCase() + route.slice(1)
+						}
+
+					// build options
+						var options = {
+							responseType: "json",
+							url: "https://api-v3.mbta.com/predictions?sort=stop_sequence&include=stop&filter[route]=" + route
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// no data
+									if (!response.data || !response.data.length || !response.included || !response.included.length) {
+										callback({icon: icon, error: true, message: "I couldn't find any vehicles on that route.", html: "<h2>Error: invalid route:</h2>" + remainder})
+										return
+									}
+
+								// stops
+									var stops = {}
+									for (var i in response.included) {
+										stops[response.included[i].id] = response.included[i]
+									}
+
+								// vehicles
+									var inbound = []
+									var outbound = []
+									for (var i in response.data) {
+										var item = response.data[i]
+										var stop = stops[item.relationships.stop.data.id]
+										var stopName = stop.attributes.name || (stop.attributes.on_street + " @ " + stop.attributes.at_street)
+
+										var listItem = "<li><b>" + stopName + ":</b><br>" +
+											(item.attributes.arrival_time ? ("arrival: " + new Date(item.attributes.arrival_time).toLocaleTimeString()) : "") +
+											(item.attributes.arrival_time && item.attributes.departure_time ? "<br>" : "") + 
+											(item.attributes.departure_time ? ("departure: " + new Date(item.attributes.departure_time).toLocaleTimeString()) : "") +
+											"</li>"
+
+										if (item.attributes.direction_id == 1) {
+											outbound.push(listItem)
+										}
+										else {
+											inbound.push(listItem)
+										}
+									}
+
+								// response
+									var routeName = response.data[0].relationships.route.data.id
+									var message = "Here's what I found for the " + routeName + " route: "
+									var url = "https://mbta.com/schedules/" + routeName
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>Route: " + routeName + "</h2></a>" + "<table>" +
+										"<tr><th>in</th><th>out</th></tr>" +
+										"<tr style='vertical-align: top; text-align: left;'><td><ul>" + inbound.join("") + "</ul></td><td><ul>" + outbound.join("") + "</ul></td></tr>" +
+										"</table>"
+
+								// alerts
+									var options = {
+										responseType: "json",
+										url: "https://api-v3.mbta.com/alerts?filter[route]=" + route
+									}
+
+								// proxy to server
+									window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+										try {
+											// add to existing message & html
+												if (response.data && response.data.length) {
+													// bridge
+														message += " ... There are " + response.data.length + " alerts... "
+														responseHTML += "<br><hr><a target='_blank' href='" + url + "/alerts'><h2>alerts</h2></a><ul>"
+													
+													// loop through alerts
+														for (var i in response.data) {
+															message += (response.data[i].attributes.short_header || response.data[i].attributes.header) + " ... "
+															responseHTML += "<li><b>" + (response.data[i].attributes.short_header || response.data[i].attributes.header) + "</b><br><i>" + response.data[i].attributes.description + "</i></li>"
+														}
+
+													// finish list
+														responseHTML += "</ul>"
+												}
+
+											// send response
+												callback({icon: icon, message: message, html: responseHTML, url: url})
+										}
+										catch (error) {
+											callback({icon: icon, message: message, html: responseHTML, url: url})
+										}
+									})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to get metro predictions.", html: "<h2>Error: unable to access metro API:</h2>" + error})
+							}
+						})
 				}
 				catch (error) {
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})

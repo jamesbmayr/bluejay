@@ -350,6 +350,11 @@ Other actions involve fetching information from an external API. Several of thes
 <li>"get the sunset" → https://api.sunrise-sunset.org/json?lat=<b>{lat}</b>&lng=<b>{long}</b>&date=<b>{date}</b></li>
 </ul>
 
+<h4>MBTA API</h4>
+<ul>
+<li>"get metro predictions" → https://api-v3.mbta.com/predictions?sort=stop_sequence&include=stop&filter[route]=<b>{id}</b> & https://api-v3.mbta.com/alerts?filter[route]=<b>{id}</b></li>
+</ul>
+
 <h4>JamesMayr.com</h4>
 <ul>
 <li><i>(Note: These are Firebase Custom Functions I created, adapted from my own projects.)</i></li>
@@ -657,6 +662,8 @@ function authorize(event) {
 <li>"get sonos devices" → https://api.ws.sonos.com/control/api/v1/households & https://api.ws.sonos.com/control/api/v1/households/<b>{id}</b>/groups</li>
 <li>"set sonos devices" → https://api.ws.sonos.com/control/api/v1/groups/<b>{id}</b>/playback/play & https://api.ws.sonos.com/control/api/v1/groups/<b>{id}</b>/playback/pause & https://api.ws.sonos.com/control/api/v1/groups/<b>{id}</b>/playback/skipToNextTrack & https://api.ws.sonos.com/control/api/v1/groups/<b>{id}</b>/playback/skipToPreviousTrack & https://api.ws.sonos.com/control/api/v1/groups/<b>{id}</b>/groupVolume/relative & https://api.ws.sonos.com/control/api/v1/groups/<b>{id}</b>/groupVolume & https://api.ws.sonos.com/control/api/v1/players/<b>{id}</b>/playerVolume/relative & https://api.ws.sonos.com/control/api/v1/players/<b>{id}</b>/playerVolume</li>
 <li>"get now playing on sonos" → https://api.ws.sonos.com/control/api/v1/groups/<b>{id}</b>/playbackMetadata</li>
+<li>"get favorites on sonos" → https://api.ws.sonos.com/control/api/v1/households/<b>{id}</b>/favorites</li>
+<li>"play favorite on sonos" → https://api.ws.sonos.com/control/api/v1/groups/<b>{id}</b>/favorites</li>
 </ul>
 </li>
 <li>setup:
