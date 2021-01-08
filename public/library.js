@@ -1737,6 +1737,65 @@
 			"i want to guess a word": 			"play hangman",
 			"i want to guess your word": 		"play hangman",
 
+		// IFTTT
+			"trigger i f t t t": 				"trigger ifttt",
+			"trigger ifttt": 					"trigger ifttt",
+			"trigger if this then that": 		"trigger ifttt",
+			"i f t t t": 						"trigger ifttt",
+			"ifttt": 							"trigger ifttt",
+			"if this then that": 				"trigger ifttt",
+			"run i f t t t command": 			"trigger ifttt",
+			"run ifttt command": 				"trigger ifttt",
+			"run if this then that command": 	"trigger ifttt",
+			"run i f t t t action": 			"trigger ifttt",
+			"run ifttt action": 				"trigger ifttt",
+			"run if this then that action": 	"trigger ifttt",
+			"on i f t t t do": 					"trigger ifttt",
+			"on ifttt do": 						"trigger ifttt",
+			"on if this then that do": 			"trigger ifttt",
+			"do i f t t t action": 				"trigger ifttt",
+			"do ifttt action": 					"trigger ifttt",
+			"do if this then that action": 		"trigger ifttt",
+			"set ifttt devices": 				"trigger ifttt",
+			"set ifttt device": 				"trigger ifttt",
+			"on ifttt set": 					"trigger ifttt",
+			"on ifttt update": 					"trigger ifttt",
+			"on ifttt turn": 					"trigger ifttt",
+			"on ifttt change": 					"trigger ifttt",
+			"on ifttt alter": 					"trigger ifttt",
+			"on ifttt make": 					"trigger ifttt",
+
+			"turn on ifttt device": 			"turn on ifttt device",
+			"turn on ifttt devices": 			"turn on ifttt device",
+			"on ifttt turn on": 				"turn on ifttt device",
+			"on ifttt switch on": 				"turn on ifttt device",
+			"on ifttt flip on": 				"turn on ifttt device",
+			"on ifttt activate": 				"turn on ifttt device",
+			"turn on": 							"turn on ifttt device",
+			"switch on": 						"turn on ifttt device",
+			"flip on": 							"turn on ifttt device",
+			"activate": 						"turn on ifttt device",
+
+			"turn off ifttt device": 			"turn off ifttt device",
+			"turn off ifttt devices": 			"turn off ifttt device",
+			"on ifttt turn off": 				"turn off ifttt device",
+			"on ifttt switch off": 				"turn off ifttt device",
+			"on ifttt flip off": 				"turn off ifttt device",
+			"on ifttt deactivate": 				"turn off ifttt device",
+			"turn off": 						"turn off ifttt device",
+			"switch off": 						"turn off ifttt device",
+			"flip off": 						"turn off ifttt device",
+			"deactivate": 						"turn off ifttt device",
+
+			"toggle ifttt device": 				"toggle ifttt device",
+			"toggle ifttt devices": 			"toggle ifttt device",
+			"on ifttt toggle": 					"toggle ifttt device",
+			"on ifttt toggle": 					"toggle ifttt device",
+			"on ifttt flip": 					"toggle ifttt device",
+			"toggle": 							"toggle ifttt device",
+			"switch": 							"toggle ifttt device",
+			"flip": 							"toggle ifttt device",
+
 		// SONOS
 			"get sonos devices": 				"get sonos devices",
 			"get all sonos devices": 			"get sonos devices",
@@ -2026,21 +2085,13 @@
 			"on wink switch off": 				"turn off wink device",
 			"on wink flip off": 				"turn off wink device",
 			"on wink deactivate": 				"turn off wink device",
-			"turn off": 						"turn off wink device",
-			"switch off": 						"turn off wink device",
-			"flip off": 						"turn off wink device",
-			"deactivate": 						"turn off wink device",
-
+			
 			"turn on wink device": 				"turn on wink device",
 			"turn on wink devices": 			"turn on wink device",
 			"on wink turn on": 					"turn on wink device",
 			"on wink switch on": 				"turn on wink device",
 			"on wink flip on": 					"turn on wink device",
 			"on wink activate": 				"turn on wink device",
-			"turn on": 							"turn on wink device",
-			"switch on": 						"turn on wink device",
-			"flip on": 							"turn on wink device",
-			"activate": 						"turn on wink device",
 
 		// Reddit
 			"get a reddit post": 				"get a reddit post",
@@ -5124,7 +5175,6 @@
 									callback(firstResult)
 							}
 							catch (error) {
-								console.log(error)
 								callback({icon: icon, error: true, message: "I couldn't find that book.", html: "<h2>Error: unable to access openlibrary</h2>"})
 							}
 						})
@@ -8471,6 +8521,152 @@
 				}
 			},
 	
+		// IFTTT
+			"trigger ifttt": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f916;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["ifttt key"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for ifttt key.", html: "<h2>Error: missing configuration:</h2><li>ifttt key</li>"})
+							return
+						}
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What action should I run?", html: "<h2>Error: invalid action</h2>"})
+							return
+						}
+
+					// extract words
+						var words = remainder.toLowerCase().split(/\s|_/gi)
+						if (words[0] == "bluejay") {
+							words.shift()
+						}
+
+					// build options
+						var options = {
+							method: "POST",
+							responseType: "text",
+							url: "https://maker.ifttt.com/trigger/bluejay_" + words.join("_") + "/with/key/" + window.CONFIGURATION_LIBRARY["ifttt key"]
+						}
+
+					// proxy
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// no congratulations?
+									if (!response.includes("Congratulations!")) {
+										callback({icon: icon, error: true, message: "There was an issue triggering that IFTTT action.", html: "<h2>Error: IFTTT response:</h2>" + response})
+										return
+									}
+
+								// specific or general?
+									var the = ["all", "every", "each", "some"].includes(words[0]) ? "" : "the "
+
+								// type
+									if (words[words.length - 1] == "on") {
+										var message = "I turned on " + the + words.slice(0,-1).join(" ")
+									}
+									else if (words[words.length - 1] == "off") {
+										var message = "I turned off " + the + words.slice(0,-1).join(" ")
+									}
+									else if (words[words.length - 1] == "toggle") {
+										var message = "I toggled " + the + words.slice(0,-1).join(" ")
+									}
+
+								// html
+									var responseHTML = "<h2><a href='https://ifttt.com/home' target='_blank'>IFTTT</a> action: <b><code>" + words.join("_") + "</code></b></h2>"
+
+								// response
+									callback({icon: icon, message: message, html: responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to trigger that IFTTT action.", html: "<h2>Error: unable to trigger IFTTT action:</h2>" + error})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"turn on ifttt device": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f916;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["ifttt key"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for ifttt key.", html: "<h2>Error: missing configuration:</h2><li>ifttt key</li>"})
+							return
+						}
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What action should I run?", html: "<h2>Error: invalid action</h2>"})
+							return
+						}
+
+					// proxy to ifttt action
+						window.ACTION_LIBRARY["trigger ifttt"](remainder.replace(/^the\s/i,"") + " on", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"turn off ifttt device": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f916;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["ifttt key"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for ifttt key.", html: "<h2>Error: missing configuration:</h2><li>ifttt key</li>"})
+							return
+						}
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What action should I run?", html: "<h2>Error: invalid action</h2>"})
+							return
+						}
+
+					// proxy to ifttt action
+						window.ACTION_LIBRARY["trigger ifttt"](remainder.replace(/^the\s/i,"") + " off", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"toggle ifttt device": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f916;"
+
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["ifttt key"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for ifttt key.", html: "<h2>Error: missing configuration:</h2><li>ifttt key</li>"})
+							return
+						}
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What action should I run?", html: "<h2>Error: invalid action</h2>"})
+							return
+						}
+
+					// proxy to ifttt action
+						window.ACTION_LIBRARY["trigger ifttt"](remainder.replace(/^the\s/i,"") + " toggle", callback)
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+
 		// SONOS
 			"get sonos devices": function(remainder, callback) {
 				try {

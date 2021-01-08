@@ -334,10 +334,10 @@ Other actions involve fetching information from an external API. Several of thes
 <li>"get a book" → http://openlibrary.org/search.json?q=<b>{search}</b></li>
 </ul>
 
-<!-- <h4>Mourits</h4>
+<h4>Mourits</h4>
 <ul>
 <li>"find lyrics" → https://mourits.xyz:2096/?q=<b>{search}</b></li>
-</ul> -->
+</ul>
 
 <h4>OpenTrivia Database</h4>
 <ul>
@@ -378,6 +378,31 @@ Other actions involve fetching information from an external API. Several of thes
 <blockquote>
 Other APIs will require you to create a developer account and add your credentials into LocalStorage, either using the "change configuration" action or by uploading a JSON file through the interface.
 <br><br>
+
+<h4>IFTTT</h4>
+<ul>
+<li>actions:
+<ul>
+<li>"trigger ifttt" → https://maker.ifttt.com/trigger/bluejay_<b>{command}</b>/with/key/<b>{ifttt key}</b></li>
+<li>"turn on ifttt device" → https://maker.ifttt.com/trigger/bluejay_<b>{command}</b>_on/with/key/<b>{ifttt key}</b></li>
+<li>"turn off ifttt device" → https://maker.ifttt.com/trigger/bluejay_<b>{command}</b>_off/with/key/<b>{ifttt key}</b></li>
+<li>"toggle ifttt device" → https://maker.ifttt.com/trigger/bluejay_<b>{command}</b>_toggle/with/key/<b>{ifttt key}</b></li>
+</ul>
+</li>
+<li>setup:
+<ol>
+<li>Create a free account: <a target="_blank" href="https://ifttt.com">https://ifttt.com</a></li>
+<li>Connect your other accounts, such as Philips Hue or SmartLife.</li>
+<li>Navigate to <a target="_blank" href="https://ifttt.com/create">https://ifttt.com/create</a> to create a new applet.</li>
+<li>For "THIS" use the <b>Webhooks</b> service. Select <b>Receive a web request.</b>. Name the event: bluejay_<b>{command}</b>. Your command should use underscores instead of spaces, and it should end with "on", "off", or "toggle". Example: <b>bluejay_kitchen_lights_on</b></li>
+<li>For "THAT" select your external service, then select the action from the available list, and select any settings within the menus.</li>
+<li>Save this and finish.</li>
+<li>After creating your commands, go to the Webhooks settings at <a target="_blank" href="https://ifttt.com/maker_webhooks/settings">https://ifttt.com/maker_webhooks/settings</a>. Your key is the last part of the URL shown: https://maker.ifttt.com/use/<b>{your key}</b>.</li>
+<li>Save your key in bluejay as <code>ifttt key</code>.</li>
+</ol>
+</li>
+</ul>
+<br>
 
 <h4>Open Weather</h4>
 <ul>
