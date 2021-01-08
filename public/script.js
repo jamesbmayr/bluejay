@@ -69,7 +69,7 @@ window.addEventListener("load", function() {
 					"voice-delay": 100,
 					"voice-volume": 100,
 					"fetch-interval": 3000,
-					"fetch-abandon": 10
+					"fetch-abandon": 100
 				}
 			}
 

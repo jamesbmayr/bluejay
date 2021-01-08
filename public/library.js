@@ -890,12 +890,12 @@
 
 			"get a book": 						"get a book",
 			"get me a book": 					"get a book",
-			"search goodreads": 				"get a book",
-			"search goodreads for": 			"get a book",
-			"on goodreads search": 				"get a book",
-			"on goodreads search for": 			"get a book",
-			"on goodreads look up": 			"get a book",
-			"on goodreads look for": 			"get a book",
+			"search library": 					"get a book",
+			"search open library for": 			"get a book",
+			"on open library search": 			"get a book",
+			"on open library search for": 		"get a book",
+			"on open library look up": 			"get a book",
+			"on open library look for": 		"get a book",
 			"find the book": 					"get a book",
 			"find a book": 						"get a book",
 			"get the book": 					"get a book",
@@ -904,8 +904,8 @@
 			"look up the book": 				"get a book",
 			"look up a book": 					"get a book",
 			"look for a book": 					"get a book",
-			"look up a book on goodreads": 		"get a book",
-			"look for a book on goodreads": 	"get a book",
+			"look up a book on open library": 	"get a book",
+			"look for a book on open library": 	"get a book",
 			"look up a book called": 			"get a book",
 			"look up this book": 				"get a book",
 			"tell me about the book": 			"get a book",
@@ -2110,6 +2110,81 @@
 			"make new words from": 				"shuffle word",
 			"find anagrams for": 				"shuffle word",
 			"find anagrams of": 				"shuffle word",
+
+			"convert base": 					"convert base",
+			"convert bases": 					"convert base",
+			"do a base conversion": 			"convert base",
+			"do base conversion": 				"convert base",
+			"perform a base conversion": 		"convert base",
+			"perform base conversion": 			"convert base",
+			"change base for number": 			"convert base",
+			"change bases for number": 			"convert base",
+			"convert base for number":			"convert base",
+			"convert bases for number": 		"convert base",
+			"do a base conversion for number": 	"convert base",
+			"do base conversion for number": 	"convert base",
+			"perform a base conversion for number": "convert base",
+			"perform base conversion for number": "convert base",
+			"change base for number": 			"convert base",
+			"change bases for number": 			"convert base",
+			"change base 4 number": 			"convert base",
+			"change bases 4 number": 			"convert base",
+			"convert base 4 number":			"convert base",
+			"convert bases 4 number": 		"convert base",
+			"do a base conversion 4 number": 	"convert base",
+			"do base conversion 4 number": 	"convert base",
+			"perform a base conversion 4 number": "convert base",
+			"perform base conversion 4 number": "convert base",
+			"change base 4 number": 			"convert base",
+			"change bases 4 number": 			"convert base",
+			"convert bass": 					"convert base",
+			"convert basses": 					"convert base",
+			"do a bass conversion": 			"convert base",
+			"do bass conversion": 				"convert base",
+			"perform a bass conversion": 		"convert base",
+			"perform bass conversion": 			"convert base",
+			"change bass for number": 			"convert base",
+			"change basses for number": 		"convert base",
+			"convert bass for number":			"convert base",
+			"convert basses for number": 		"convert base",
+			"do a bass conversion for number": 	"convert base",
+			"do bass conversion for number": 	"convert base",
+			"perform a bass conversion for number": "convert base",
+			"perform bass conversion for number": "convert base",
+			"change bass 4 number": 			"convert base",
+			"change basses 4 number": 		"convert base",
+			"change bass 4 number": 			"convert base",
+			"change basses 4 number": 		"convert base",
+			"convert bass 4 number":			"convert base",
+			"convert basses 4 number": 		"convert base",
+			"do a bass conversion 4 number": 	"convert base",
+			"do bass conversion 4 number": 	"convert base",
+			"perform a bass conversion 4 number": "convert base",
+			"perform bass conversion 4 number": "convert base",
+			"change bass 4 number": 			"convert base",
+			"change basses 4 number": 		"convert base",
+
+			"encrypt message": 					"encrypt message",
+			"encrypt this message": 			"encrypt message",
+			"encrypt text": 					"encrypt message",
+			"encrypt this text": 				"encrypt message",
+			"encrypt this": 					"encrypt message",
+			"encrypt": 							"encrypt message",
+			"do an encryption": 				"encrypt message",
+			"do an encryption for": 			"encrypt message",
+			"perform an encryption": 			"encrypt message",
+			"perform an encryption for": 		"encrypt message",
+
+			"decrypt message": 					"decrypt message",
+			"decrypt this message": 			"decrypt message",
+			"decrypt text": 					"decrypt message",
+			"decrypt this text": 				"decrypt message",
+			"decrypt this": 					"decrypt message",
+			"decrypt": 							"decrypt message",
+			"do a decryption": 					"decrypt message",
+			"do a decryption for": 				"decrypt message",
+			"perform a decryption": 			"decrypt message",
+			"perform a decryption for": 		"decrypt message",
 	}
 
 /* action library */
@@ -4135,7 +4210,11 @@
 								// loop through sections to extract relevant information
 									for (var i in sections) {
 										// get h2 --> phrase
-											var phrase = sections[i].querySelector("h2").innerText
+											var header = sections[i].querySelector("h2")
+											if (!header) {
+												continue
+											}
+											var phrase = header.innerText
 
 										// examples
 											var exampleBlocks = Array.from(sections[i].querySelectorAll(".illustration")) || []
@@ -4264,28 +4343,22 @@
 					// options
 						var options = {
 							responseType: "json",
-							url: "https://fortunecookieapi.herokuapp.com/v1/fortunes?limit=1000&skip=0&page=1"
+							url: "http://yerkee.com/api/fortune"
 						}
 
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
 								// fortunes
-									var fortunes = window.FUNCTION_LIBRARY.sortRandom(response)
+									var fortune = response.fortune.replace(/\n|\t/gi," ")
 
 								// all results
-									var results = []
-									for (var i in fortunes) {
-										var message = fortunes[i].message
-										var url = "https://fortunecookieapi.herokuapp.com"
-										var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + fortunes[i].message + "</h2></a>"
-										results.push({icon: icon, message: message, html: responseHTML, url: url})
-									}
+									var message = fortune
+									var url = "http://yerkee.com/"
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + fortune + "</h2></a>"
 
 								// send response
-									var firstResult = results.shift()
-									firstResult.results = results
-									callback(firstResult)
+									callback({icon: icon, message: message, html: responseHTML, url: url})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't know any fortunes.", html: "<h2>Error: unable to access fortunes</h2>"})
@@ -4304,15 +4377,15 @@
 					// options
 						var options = {
 							responseType: "json",
-							url: "https://jokes.guyliangilsing.me/retrieveJokes.php?type=yomama"
+							url: "https://evilinsult.com/generate_insult.php?lang=en&type=json"
 						}
 
 					// proxy request
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
 								// response
-									var message = response.joke
-									var responseHTML = "<h2>" + response.joke + "</h2>"
+									var message = response.insult
+									var responseHTML = "<h2>" + response.insult + "</h2>"
 									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
@@ -4990,12 +5063,6 @@
 					// icon
 						var icon = "&#x1f4da;"
 
-					// missing config?
-						if (!window.CONFIGURATION_LIBRARY["goodreads api"]) {
-							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for goodreads api.", html: "<h2>Error: missing configuration:</h2><li>goodreads api</li>"})
-							return
-						}
-
 					// no remainder
 						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
 						if (!remainder || !remainder.trim()) {
@@ -5005,15 +5072,14 @@
 
 					// options
 						var options = {
-							responseType: "xml",
-							url: "https://www.goodreads.com/search.xml?key=" + window.CONFIGURATION_LIBRARY["goodreads api"] + "&q=" + remainder
+							url: "http://openlibrary.org/search.json?q=" + remainder
 						}
 
 					// proxy request - have your people talk to my people
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
 								// get a list of books
-									var books = response.GoodreadsResponse.search.results.work
+									var books = JSON.parse(response).docs
 
 									if (!Array.isArray(books)) {
 										books = [books]
@@ -5023,39 +5089,30 @@
 									var results = []
 									for (var i in books) {
 										// get info
-											var coverImage = books[i].best_book.image_url
-											var title = books[i].best_book.title.replace(/\&amp\;/gi, "&")
-											var author = books[i].best_book.author.name.replace(/\&amp\;/gi, "&")
-											var rating = (typeof books[i].average_rating == "number") ? books[i].average_rating : null
-											var url = "https://www.goodreads.com/book/show/" + books[i].best_book.id._
+											var coverImage = "http://covers.openlibrary.org/b/olid/" + (books[i].cover_edition_key) + "-L.jpg"
+											var title = books[i].title.replace(/\&amp\;/gi, "&") + (books[i].subtitle ? ": " + books[i].subtitle.replace(/\&amp\;/gi, "&") : "")
+											var author = books[i].author_name ? books[i].author_name.join(" & ") : null
+											var url = "https://openlibrary.org" + books[i].key
 
 										// construct publication date
-											if (books[i].original_publication_month._ && books[i].original_publication_day._ && books[i].original_publication_year._) {
-												var publicationDate = ["January","February","March","April","May","June","July","August","September","October","November","December"][books[i].original_publication_month._ - 1] + " " + books[i].original_publication_day._ + ", " + books[i].original_publication_year._
-											}
-											else if (books[i].original_publication_month._ && books[i].original_publication_year._) {
-												var publicationDate = ["January","February","March","April","May","June","July","August","September","October","November","December"][books[i].original_publication_month._ - 1] + " " + books[i].original_publication_year._
-											}
-											else if (books[i].original_publication_year._) {
-												var publicationDate = books[i].original_publication_year._
-											}
-											else {
-												var publicationDate = null
-											}
+											var publicationDate = books[i].first_publish_year
+											var publisher = books[i].publisher ? books[i].publisher.join(", ") : null
 
 										// table
 											var responseHTML = "<table>" +
 												"<tr><th rowspan='4'><img src='" + coverImage + "'></th><td><a target='_blank' href='" + url + "'><h2>" + title + "</h2></a></td></tr>" + 
-												"<tr>" + 								"<td>" + author + "</td></tr>" +
-												"<tr>" + 								"<td>" + (publicationDate || "---") + "</td></tr>" +
-												"<tr>" + 								"<td>&#x2b50; " + (rating || "???") + "</td></tr>" +
+												"<tr>" + 								"<td>" + (author || "???") + "</td></tr>" +
+												"<tr>" + 								"<td>" + (publicationDate || "???") + "</td></tr>" +
+												"<tr>" + 								"<td>" + (publisher || "???") + "</td></tr>" +
 											"</table>"
 
 										// message
-											var message = title + " by " + author +
-												(publicationDate ? (" was published " + publicationDate) : "") +
-												(publicationDate && rating ? " and" : "") +
-												(rating ? (" has an average rating of " + rating + " star" + (rating == 1 ? "" : "s")) : "")
+											var message = title + 
+												(author ? " by " + author : "") +
+												(publicationDate || publisher ? " was published " +
+													(publicationDate ? (" in " + publicationDate) : "") +
+													(publisher ? (" by " + publisher) : "")
+												: "")
 
 										// add to results array
 											results.push({icon: icon, message: message, html: responseHTML, url: url})
@@ -5067,7 +5124,8 @@
 									callback(firstResult)
 							}
 							catch (error) {
-								callback({icon: icon, error: true, message: "I couldn't find that book.", html: "<h2>Error: unable to access goodreads</h2>"})
+								console.log(error)
+								callback({icon: icon, error: true, message: "I couldn't find that book.", html: "<h2>Error: unable to access openlibrary</h2>"})
 							}
 						})
 				}
@@ -7345,8 +7403,8 @@
 						var icon = "&#x1f4fa;"
 
 					// missing config?
-						if (!window.CONFIGURATION_LIBRARY["google api key"]) {
-							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for google api key.", html: "<h2>Error: missing configuration:</h2><li>google api key</li>"})
+						if (!window.CONFIGURATION_LIBRARY["youtube api key"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for youtube api key.", html: "<h2>Error: missing configuration:</h2><li>youtube api key</li>"})
 							return
 						}
 
@@ -7366,7 +7424,7 @@
 					// options
 						var options = {
 							responseType: "json",
-							url: "https://www.googleapis.com/youtube/v3/search?key=" + window.CONFIGURATION_LIBRARY["google api key"] + "&part=snippet&type=video&videoEmbeddable=true&maxResults=10&order=viewCount&q=" + word
+							url: "https://www.googleapis.com/youtube/v3/search?key=" + window.CONFIGURATION_LIBRARY["youtube api key"] + "&part=snippet&type=video&videoEmbeddable=true&maxResults=10&order=viewCount&q=" + word
 						}
 
 					// proxy request
@@ -8260,64 +8318,48 @@
 
 					// initialize game
 						if (window.CONTEXT_LIBRARY.flow !== "play hangman") {
-							// get a random key
+							// options
 								var options = {
-									responseType: null,
-									url: "http://random-word-api.herokuapp.com/key"
+									responseType: "json",
+									url: "http://random-word-api.herokuapp.com/word?number=100"
 								}
 
 							// proxy to server
 								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 									try {
-										// options
-											var options = {
-												responseType: "json",
-												url: "http://random-word-api.herokuapp.com/word?key=" + String(response) + "&number=100"
+										// get words between 6 and 12 letters long
+											if (!Array.isArray(response)) {
+												response = Array.from(response)
+											}
+											var words = response.filter(function(word) {
+												return 5 < word.length && word.length < 13
+											})
+
+										// pick a random word
+											var word = window.FUNCTION_LIBRARY.chooseRandom(words).toLowerCase().trim()
+											var visibleLetters = []
+											while (visibleLetters.length < word.length) {
+												visibleLetters.push("_")
 											}
 
-										// proxy to server
-											window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
-												try {
-													// get words between 6 and 12 letters long
-														if (!Array.isArray(response)) {
-															response = Array.from(response)
-														}
-														var words = response.filter(function(word) {
-															return 5 < word.length && word.length < 13
-														})
+										// start the flow
+											window.CONTEXT_LIBRARY.flow = "play hangman"
+											window.CONTEXT_LIBRARY["play hangman"] = {
+												word: word,
+												visibleLetters: visibleLetters,
+												guessedLetters: [],
+												wrongGuesses: 0,
+											}
 
-													// pick a random word
-														var word = window.FUNCTION_LIBRARY.chooseRandom(words).toLowerCase().trim()
-														var visibleLetters = []
-														while (visibleLetters.length < word.length) {
-															visibleLetters.push("_")
-														}
+										// gameState
+											var gameState = window.CONTEXT_LIBRARY["play hangman"]
 
-													// start the flow
-														window.CONTEXT_LIBRARY.flow = "play hangman"
-														window.CONTEXT_LIBRARY["play hangman"] = {
-															word: word,
-															visibleLetters: visibleLetters,
-															guessedLetters: [],
-															wrongGuesses: 0,
-														}
+										// message
+											var message = "The word is " + gameState.word.length + " letters long. Guess a letter."
+											var responseHTML = "<h2>" + gameState.visibleLetters.join(" ") + "</h2><pre>" + drawings[gameState.wrongGuesses] + "</pre>guesses: [" + gameState.guessedLetters.join(" ") + "]"
 
-													// gameState
-														var gameState = window.CONTEXT_LIBRARY["play hangman"]
-
-													// message
-														var message = "The word is " + gameState.word.length + " letters long. Guess a letter."
-														var responseHTML = "<h2>" + gameState.visibleLetters.join(" ") + "</h2><pre>" + drawings[gameState.wrongGuesses] + "</pre>guesses: [" + gameState.guessedLetters.join(" ") + "]"
-
-													// response
-														callback({icon: icon, message: message, html: responseHTML})
-												}
-												catch (error) {
-													window.CONTEXT_LIBRARY.flow = null
-													delete window.CONTEXT_LIBRARY["play hangman"]
-													callback({icon: icon, error: true, message: "I couldn't access the random word API.", html: "<h2>Error: unable to access random word API</h2>"})
-												}
-											})
+										// response
+											callback({icon: icon, message: message, html: responseHTML})
 									}
 									catch (error) {
 										window.CONTEXT_LIBRARY.flow = null
@@ -9789,4 +9831,165 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
+			"convert base": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f500;"
+
+					// no remainder
+						remainder = " " + remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I convert?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
+					// parameters
+						var newBase = remainder.split(/ into base | to base /gi)
+							newBase = (newBase[1] || newBase[0]).split(/ from base /gi)[0].trim()
+						var words = newBase.split(/\s/gi)
+							for (var i in words) {
+								words[i] = window.FUNCTION_LIBRARY.getDigits(words[i].trim())
+							}
+							newBase = Number(words.join("").replace(/[^0-9\.]/gi,"")) || 2
+
+						var oldBase = remainder.split(/ from base /gi)
+							oldBase = (oldBase[1] || oldBase[0]).split(/ into base | to base /gi)[0].trim()
+						var words = oldBase.split(/\s/gi)
+							for (var i in words) {
+								words[i] = window.FUNCTION_LIBRARY.getDigits(words[i].trim())
+							}
+							oldBase = Number(words.join("").replace(/[^0-9\.]/gi,"")) || 2
+						
+						var numberString = remainder.split(/ into base | to base | from base /gi)[0]
+							numberString = numberString.replace(/[^A-Za-z0-9]/gi,"") || 1
+
+					// options
+						var options = {
+							responseType: "json",
+							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/baseconverter?numberString=" + numberString + "&oldBase=" + oldBase + "&newBase=" + newBase
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// failure
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to convert from " + oldBase + "to" + newBase, html: "<h2>Error: unable to convert:</h2>" + response.message + "<br></br>" + numberString + " in base " + oldBase + " = <b>???</b> in base " + newBase})
+										return
+									}
+								
+								// get output
+									var outputNumberString = response.number
+
+								// response
+									var number = outputNumberString
+									var message = numberString + " in base " + oldBase + " is " + outputNumberString + " in base " + newBase
+									var responseHTML = "<h2>" + numberString + " in base " + oldBase + " = <b>" + outputNumberString + "</b> in base " + newBase + "</h2>"
+									callback({icon: icon, message: message, html: responseHTML, number: number})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to convert.", html: "<h2>Error: unable to access baseConverter</h2>"})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"encrypt message": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f510;"
+
+					// no remainder
+						remainder = " " + remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I encrypt?", html: "<h2>Error: invalid request</h2>"})
+							return
+						}
+
+					// parameters
+						var keyword = remainder.split(/ with key | with keyword | using key | using keyword | with secret | using secret /gi)
+							keyword = (keyword[1] || keyword[0]).split(/ a message | this message | secret message | this secret message /gi)[0].trim()
+
+						var messageText = remainder.split(/ a message | this message | secret message | this secret message /gi)
+							messageText = (messageText[1] || messageText[0]).split(/ with key | with keyword | using key | using keyword | with secret | using secret /gi)[0].trim()
+						
+					// options
+						var options = {
+							responseType: "json",
+							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/messageencrypter?action=encrypt&message=" + messageText.replace(/\s/gi, "") + "&keyword=" + keyword.replace(/\s/gi, "")
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// failure
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to encrypt your message.", html: "<h2>Error: unable to encrypt:</h2>" + response.message + "<br></br><li><b>message:</b> " + message + "</li></li><b>keyword:</b> " + keyword + "</li>"})
+										return
+									}
+
+								// response
+									var message = response.html
+									var responseHTML = "<h2>" + response.html + "</h2>"
+									callback({icon: icon, message: message, html: responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to encrypt.", html: "<h2>Error: unable to access messageEncrypter</h2>"})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"decrypt message": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f513;"
+
+					// no remainder
+						remainder = " " + remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What should I decrypt?", html: "<h2>Error: invalid request</h2>"})
+							return
+						}
+
+					// parameters
+						var keyword = remainder.split(/ with key | with keyword | using key | using keyword | with secret | using secret /gi)
+							keyword = (keyword[1] || keyword[0]).split(/ a message | this message | secret message | this secret message /gi)[0].trim()
+
+						var messageText = remainder.split(/ a message | this message | secret message | this secret message /gi)
+							messageText = (messageText[1] || messageText[0]).split(/ with key | with keyword | using key | using keyword | with secret | using secret /gi)[0].trim()
+						
+					// options
+						var options = {
+							responseType: "json",
+							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/messageencrypter?action=decrypt&message=" + messageText.replace(/\s/gi, "") + "&keyword=" + keyword.replace(/\s/gi, "")
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// failure
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to decrypt your message.", html: "<h2>Error: unable to decrypt:</h2>" + response.message + "<br></br><li><b>message:</b> " + message + "</li></li><b>keyword:</b> " + keyword + "</li>"})
+										return
+									}
+
+								// response
+									var message = response.html
+									var responseHTML = "<h2>" + response.html + "</h2>"
+									callback({icon: icon, message: message, html: responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to decrypt.", html: "<h2>Error: unable to access messageEncrypter</h2>"})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			}
 	}

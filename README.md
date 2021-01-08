@@ -313,14 +313,14 @@ Other actions involve fetching information from an external API. Several of thes
 <li>"get a quote" → http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en</li>
 </ul>
 
-<h4>FortuneCookie API</h4>
+<h4>Yerkee</h4>
 <ul>
-<li>"get a fortune" → https://fortunecookieapi.herokuapp.com/v1/fortunes?limit=1000&skip=0&page=1</li>
+<li>"get a fortune" → http://yerkee.com/api/fortune</li>
 </ul>
 
-<h4>GuyLiangilsing</h4>
+<h4>EvilInsult</h4>
 <ul>
-<li>"get an insult" → https://jokes.guyliangilsing.me/retrieveJokes.php?type=yomama</li>
+<li>"get an insult" → https://evilinsult.com/generate_insult.php?lang=en&type=json</li>
 </ul>
 
 <h4>Wikipedia</h4>
@@ -329,10 +329,15 @@ Other actions involve fetching information from an external API. Several of thes
 <li>"get this day in history" → https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=<b>{search}</b> & https://en.wikipedia.org/w/api.php?action=parse&format=json&utf8=1&page=<b>{search}</b></li>
 </ul>
 
-<h4>Mourits</h4>
+<h4>Open Library</h4>
+<ul>
+<li>"get a book" → http://openlibrary.org/search.json?q=<b>{search}</b></li>
+</ul>
+
+<!-- <h4>Mourits</h4>
 <ul>
 <li>"find lyrics" → https://mourits.xyz:2096/?q=<b>{search}</b></li>
-</ul>
+</ul> -->
 
 <h4>OpenTrivia Database</h4>
 <ul>
@@ -341,7 +346,7 @@ Other actions involve fetching information from an external API. Several of thes
 
 <h4>Random Word API</h4>
 <ul>
-<li>"play hangman" → http://random-word-api.herokuapp.com/key & http://random-word-api.herokuapp.com/word?key=<b>{key}</b>&number=100</li>
+<li>"play hangman" → http://random-word-api.herokuapp.com/word?number=100</li>
 </ul>
 
 <h4>Sunrise-Sunset</h4>
@@ -362,6 +367,9 @@ Other actions involve fetching information from an external API. Several of thes
 <li>"find factors" → https://us-central1-projects-3bd0e.cloudfunctions.net/factorfinder?number=<b>{search}</b></li>
 <li>"analyze chord" → https://us-central1-projects-3bd0e.cloudfunctions.net/chordanalyzer?notes=<b>{search}</b></li>
 <li>"shuffle word" → https://us-central1-projects-3bd0e.cloudfunctions.net/wordshuffler?word=<b>{search}</b></li>
+<li>"convert base" → https://us-central1-projects-3bd0e.cloudfunctions.net/baseconverter?numberString=<b>{quantity}</b>oldBase=<b>{oldBase}</b>&newBase=<b>{newBase}</b></li>
+<li>"encrypt message" → https://us-central1-projects-3bd0e.cloudfunctions.net/messageencrypter?action=encrypt&message=<b>{message}</b>&keyword=<b>{keyword}</b></li>
+<li>"decrypt message" → https://us-central1-projects-3bd0e.cloudfunctions.net/messageencrypter?action=decrypt&message=<b>{message}</b>&keyword=<b>{keyword}</b></li>
 </ul>
 </blockquote>
 <br>
@@ -399,22 +407,6 @@ Other APIs will require you to create a developer account and add your credentia
 <ol>
 <li>Create a free account: <a target="_blank" href="https://spoonacular.com/food-api/console">https://spoonacular.com/food-api/console</a></li>
 <li>Save your key as <code>spoonacular api</code>.</li>
-</ol>
-</li>
-</ul>
-<br>
-
-<h4>Goodreads</h4>
-<ul>
-<li>actions:
-<ul>
-<li>"search goodreads" → https://www.goodreads.com/search.xml?key=<b>{key}</b>&q=<b>{search}</b></li>
-</ul>
-</li>
-<li>setup:
-<ol>
-<li>Create a free account: <a target="_blank" href="https://www.goodreads.com/api/keys">https://www.goodreads.com/api/keys</a></li>
-<li>Save your key as <code>goodreads api</code>.</li>
 </ol>
 </li>
 </ul>
@@ -700,11 +692,8 @@ function authorize(event) {
    
     var link = bluejayUrl + "authorization?embeddedPost=" +
       encodeURIComponent(JSON.stringify(data))
-    var response = HtmlService.createHtmlOutput("Redirecting to&lt;br&gt;" +
-      "&lt;a href='" + link + "'&gt;" + link + "&lt;/a&gt;" +
-      "&lt;script&gt;window.onload = function() { " +
-      "window.location = '" + link + "'" +
-      " }&lt;/script&gt;")
+    var response = HtmlService.createHtmlOutput("Click to complete: &lt;br&gt;" +
+      "&lt;a target='_blank' href='" + link + "'&gt;" + link + "&lt;/a&gt;")
         response.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     return response
   }
