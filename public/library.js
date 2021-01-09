@@ -210,6 +210,14 @@
 			"set new volume": 					"change volume",
 			"set new volume at": 				"change volume",
 
+			"change brightness": 				"change brightness",
+			"change brightness to": 			"change brightness",
+			"change the brightness to": 		"change brightness",
+			"set brightness to": 				"change brightness",
+			"set the brightness to": 			"change brightness",
+			"set new brightness": 				"change brightness",
+			"set new brightness at": 			"change brightness",
+
 			"change listening duration": 		"change listening duration",
 			"change listening duration to": 	"change listening duration",
 			"change the listening duration to": "change listening duration",
@@ -2762,6 +2770,38 @@
 					// success
 						var message = "Volume set to " + newVolume + " percent"
 						var responseHTML = "<h2>volume: " + newVolume + "%</h2>"
+						callback({icon: icon, message: message, html: responseHTML})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"change brightness": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f506;"
+
+					// no remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What brightness should I set?", html: "<h2>Error: invalid query</h2>"})
+							return
+						}
+
+					// change brightness
+						var brightness = remainder.replace(/percent/gi, "").trim()
+							brightness = window.FUNCTION_LIBRARY.getDigits(brightness)
+						var newBrightness = window.FUNCTION_LIBRARY.changeBrightness({brightness: brightness})
+
+					// failure
+						if (newBrightness === false) {
+							callback({icon: icon, error: true, message: "I don't know that number.", html: "<h2>Error: invalid brightness:</h2>" + remainder})
+							return
+						}
+
+					// success
+						var message = "Brightness set to " + newBrightness + " percent"
+						var responseHTML = "<h2>brightness: " + newBrightness + "%</h2>"
 						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {

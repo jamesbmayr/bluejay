@@ -55,6 +55,7 @@ window.addEventListener("load", function() {
 		/* configurations */
 			var CONFIGURATION_LIBRARY = window.CONFIGURATION_LIBRARY = {
 				settings: {
+					"bluejay-id": null,
 					"state-interval": 100,
 					"whistle-on": true,
 					"whistle-fftsize": 512,
@@ -68,6 +69,7 @@ window.addEventListener("load", function() {
 					"voice": null,
 					"voice-delay": 100,
 					"voice-volume": 100,
+					"screen-brightness": 100,
 					"fetch-interval": 3000,
 					"fetch-abandon": 100
 				}
@@ -88,8 +90,11 @@ window.addEventListener("load", function() {
 				"inputs-recognition-duration": 	document.getElementById("inputs-recognition-duration"),
 				"inputs-voice": 				document.getElementById("inputs-voice"),
 				"inputs-voice-volume": 			document.getElementById("inputs-voice-volume"),
+				"inputs-screen-brightness": 	document.getElementById("inputs-screen-brightness"),
 
-				"stream": 						document.getElementById("stream")
+				"stream": 						document.getElementById("stream"),
+
+				"translucency": 				document.getElementById("translucency")
 			}
 
 		/* number word library */
@@ -509,9 +514,18 @@ window.addEventListener("load", function() {
 										CONFIGURATION_LIBRARY[i] = storedConfigs[i]
 									}
 							}
+
+							// create bluejay-id
+								if (!CONFIGURATION_LIBRARY.settings["bluejay-id"]) {
+									CONFIGURATION_LIBRARY.settings["bluejay-id"] = generateRandom()
+									window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+								}
 						}
 						catch (error) {}
 					}
+
+				// set brightness
+					setBrightness()
 			}
 
 		/* changeConfiguration */
@@ -553,6 +567,48 @@ window.addEventListener("load", function() {
 							} catch (error) {}
 					}
 				}
+			}
+
+		/* changeBrightness */
+			ELEMENT_LIBRARY["inputs-screen-brightness"].addEventListener("change", changeBrightness)
+			FUNCTION_LIBRARY.changeBrightness = changeBrightness
+			function changeBrightness(event) {
+				// via input
+					if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-screen-brightness"].id) {
+						// set brightness
+							CONFIGURATION_LIBRARY.settings["screen-brightness"] = Math.max(0, Math.min(100, Number(ELEMENT_LIBRARY["inputs-screen-brightness"].value)))
+							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+							setBrightness()
+					}
+
+				// via action
+					else if (event.brightness !== undefined) {
+						// if not a number
+							if (isNaN(Number(event.brightness))) {
+								return false
+							}
+
+						// otherwise
+							else {
+								var newBrightness = Math.round(Math.max(0, Math.min(100, Number(event.brightness))))
+								ELEMENT_LIBRARY["inputs-screen-brightness"].value = newBrightness
+								CONFIGURATION_LIBRARY.settings["screen-brightness"] = newBrightness
+								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+								setBrightness()
+								return newBrightness
+							}
+					}
+
+				// otherwise
+					else {
+						return false
+					}
+			}
+
+		/* setBrightness */
+			FUNCTION_LIBRARY.setBrightness = setBrightness
+			function setBrightness() {
+				ELEMENT_LIBRARY["translucency"].style.opacity = Math.max(0, Math.min(1, 1 - (CONFIGURATION_LIBRARY.settings["screen-brightness"] / 100)))
 			}
 
 		/* iterateState */
