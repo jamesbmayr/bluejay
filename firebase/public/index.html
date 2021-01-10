@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>bluejay</title>
+		<link rel="shortcut icon" href="logo.png">
+		<link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="stylesheet.css">
+		<meta charset="UTF-8"/>
+		<meta name="description" content="bluejay is an action-voice engine by James Mayr"/>
+		<meta name="author" content="James Mayr"/>
+		<meta property="og:title" content="bluejay"/>
+		<meta property="og:url" content="https://jamesmayr.com/bluejay/"/>
+		<meta property="og:description" content="bluejay is an action-voice engine by is a Javascript web demo by James Mayr"/>
+		<meta property="og:image" content="https://jamesmayr.com/resources/j.png"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+		<script src="library.js"></script>
+		<script src="script.js"></script>
+		<script defer src="/__/firebase/8.2.2/firebase-app.js"></script>
+		<script defer src="/__/firebase/init.js"></script>
+	</head>
+	<body>
+		<a id="j-logo" href="https://jamesmayr.com" target="_blank"></a>
+		<div id="overlay">
+			<button id="overlay-button"></button>
+		</div>
+		<div id="inputs">
+			<details id="inputs-advanced">
+				<summary id="inputs-advanced-toggle">&equiv;</summary>
+				<div id="inputs-advanced-inner">
+					<label id="inputs-configuration-label-outer"><span>upload</span><label id="inputs-configuration-label">&#8613;<input type="file" id="inputs-configuration"></label></label>
+					<br>
+					<label id="inputs-screen-brightness-label"><span>brightness</span><input id="inputs-screen-brightness" type="number" value="100" min="0" max="100" step="1"></label>
+					<label id="inputs-whistle-on-label"><span>on</span><input id="inputs-whistle-on" type="checkbox" checked></label>
+					<label id="inputs-recognition-duration-label"><span>listen</span><input id="inputs-recognition-duration" type="number" value="10" min="1" max="60" step="1"><span> sec</span></label>
+					<label id="inputs-voice-label"><span>voice</span><select id="inputs-voice">
+						<option value="null" selected>none</option>
+					</select></label>
+					<label id="inputs-voice-volume-label"><span>volume</span><input id="inputs-voice-volume" type="number" value="100" min="0" max="100" step="1"></label>
+				</div>
+			</details>
+			<div id="inputs-main">
+				<button id="inputs-audio"></button>
+				<form id="inputs-form" action="javascript:;">
+					<input id="inputs-text" type="text" autocomplete="off">
+				</form>
+				<div id="inputs-countdown-outer">
+					<div id="inputs-countdown"></div>
+				</div>
+			</div>
+		</div>
+		<div id="stream"></div>
+		<div id="translucency"></div>
+	</body>
+</html>
