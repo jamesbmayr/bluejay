@@ -62,7 +62,15 @@ This leverages the speech synthesis functionality of the device to transform res
 <li>Option 2: annoying, then easy
 <ol>
 <li>On chrome://flags/#unsafely-treat-insecure-origin-as-secure, add <code>localhost</code> in the text field and set the select to Enabled.</li>
-<li>Create a security certificate for localhost. <i>(optional, to remove the red warning)</i></li>
+<li>Create a security certificate for localhost. <i>(optional, to remove the red warning)</i> You can do that with this command, from <a target="_blank" href="https://letsencrypt.org/docs/certificates-for-localhost/">https://letsencrypt.org/docs/certificates-for-localhost/</a>
+<br>
+<pre>openssl req -x509 -out localhost.crt -keyout localhost.key \
+  -newkey rsa:2048 -nodes -sha256 \
+  -subj '/CN=localhost' -extensions EXT -config <( \
+   printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")</pre>
+<br>
+Then use your computer's Keychain Access or equivalent to Alsways Trust this certificate.
+</li>
 <li>Open <a href="https://localhost:3000" target="_blank">https://localhost:3000</a> in your browser. <i>Note: on startup, Chrome may show you a reminder that you are treating localhost as https.</i></li>
 </ol>
 </li>
@@ -200,7 +208,7 @@ Each response should include the following components:
 <ul>
 <li><code>PHRASE_LIBRARY</code>: the object populated by <code>library.js</code> containing all key-value pairs of spoken phrase to action name.</li>
 <li><code>ACTION_LIBRARY</code>: the object populated by <code>library.js</code> containing all the actions that can be invoked by the user.</li>
-<li><code>FUNCTION_LIBRARY</code>: the list of helper functions used throughout the front-end, such as <code>getAverage</code> and <code>sortRandom</code>; all of the form handlers, such as <code>changeWhistleOn</code> and <code>changeRecognitionDuration</code>; all of the <code>initialize</code> functions for the other libraries, such as <code>initializeAudio</code> and <code>initializeRecognition</code>; all of the functions that communicate externally, such as <code>proxyRequest</code> and <code>fetchPeriodically</code>; and all of the functions described in this flow, such as <code>matchPhrase</code> and <code>createHistory</code>. Basically, this is all functions except the ones users invoke in the <code>ACTION_LIBRARY</code>.</li>
+<li><code>FUNCTION_LIBRARY</code>: the list of helper functions used throughout the front-end, such as <code>getAverage</code> and <code>sortRandom</code>; all of the form handlers, such as <code>changeWhistleOn</code> and <code>changeRecognitionDuration</code>; all of the <code>initialize</code> functions for the other libraries, such as <code>initializeAudio</code> and <code>initializeRecognition</code>; all of the functions that communicate externally, such as <code>proxyRequest</code> and <code>sendPost</code>; and all of the functions described in this flow, such as <code>matchPhrase</code> and <code>createHistory</code>. Basically, this is all functions except the ones users invoke in the <code>ACTION_LIBRARY</code>.</li>
 <li><code>ELEMENT_LIBRARY</code>: an object to more easily access DOM elements, such as the settings inputs.</li>
 <li><code>AUDIO_LIBRARY</code>: the object containing all data and functions powering the whistle detection.</li>
 <li><code>SOUND_LIBRARY</code>: the object containing all information powering the chirp sound.</li>
@@ -602,12 +610,11 @@ Finally, some APIs require Oauth, because you could be writing information to a 
 <li>The external platform then redirects the popup to the <code>redirect</code> parameter, which must match the one on file in your developer settings. Believe it or not, I'm using a Google Apps Script for this. The platform will send the authorization <code>code</code> as a query parameter.</li>
 <li>I have a Google Apps Script that captures and logs this request. It splits the <code>state</code> parameter into the bluejay url and the platform API <code>secret</code>, and uses the authorization <code>code</code> parameter sent from the platform.</li>
 <li>The Google Apps Script page returns a tiny HTML page with a &lt;script&gt; that automatically redirects to bluejay's <code>/authorization</code> endpoint, with an <code>embeddedPost</code> parameter.</li>
-<li>The bluejay server parses this request's <code>embeddedPost</code> parameter and sends an API request to the external platform with the authorization <code>code</code> received earlier.</li>
+<li>This page sends uses proxyRequest to send the <code>embeddedPost</code>  to the bluejay server, which sends an API request to the external platform with the authorization <code>code</code> received earlier.</li>
 <li>The platform finally responds with the actual <code>access_token</code>, <code>refresh_token</code>, and <code>expiration</code>.</li>
-<li>The bluejay server saves the results of this to a tiny, temporary "database" - an Object in application memory - under the user's session id.</li>
-<li>The main bluejay window has actually been short-polling the server this whole time, and now that there is a value set in the "database" for the user's session id, the page finally gets a success response: the <code>access_token</code>, <code>refresh_token</code>, and <code>expiration</code>.</li>
-<li>On the front-end, bluejay saves these values to <code>CONFIGURATION_LIBRARY</code>.</li>
-<li>It also automatically closes the popup window from before.</li>
+<li>The bluejay server sends these results back to the /authorization page, which immediately stores them in localStorage.</li>
+<li>The main bluejay window has actually been checking localStorage this whole time, and now that there is a value set for this data, the page finally saves these values to <code>CONFIGURATION_LIBRARY</code>.</li>
+<li>It also announces that it was a success, and automatically closes the popup window from before.</li>
 </ol>
 <br>
 
@@ -657,10 +664,10 @@ function authorize(event) {
     var link = bluejayUrl + "authorization?embeddedPost=" +
       encodeURIComponent(JSON.stringify(data))
     var response = HtmlService.createHtmlOutput("Redirecting to&lt;br&gt;" +
-      "&lt;a href='" + link + "'&gt;" + link + "&lt;/a&gt;" +
-      "&lt;script&gt;window.onload = function() { " +
-        "window.location = '" + link + "'" +
-        " }&lt;/script&gt;")
+      "&lt;a href='" + link + "'&gt;" + link + "&lt;/a&gt;" + 
+      "&lt;script&gt;window.onload = function() { " + 
+      "window.location = '" + link + "'" + 
+      " }&lt;/script&gt;")
         response.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     return response
   }
@@ -717,8 +724,11 @@ function authorize(event) {
    
     var link = bluejayUrl + "authorization?embeddedPost=" +
       encodeURIComponent(JSON.stringify(data))
-    var response = HtmlService.createHtmlOutput("Click to complete: &lt;br&gt;" +
-      "&lt;a target='_blank' href='" + link + "'&gt;" + link + "&lt;/a&gt;")
+    var response = HtmlService.createHtmlOutput("Redirecting to&lt;br&gt;" +
+      "&lt;a href='" + link + "'&gt;" + link + "&lt;/a&gt;" + 
+      "&lt;script&gt;window.onload = function() { " + 
+      "window.location = '" + link + "'" + 
+      " }&lt;/script&gt;")
         response.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     return response
   }

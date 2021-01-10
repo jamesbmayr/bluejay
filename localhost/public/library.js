@@ -2969,36 +2969,59 @@
 								var responseHTML = "<h2>activating <b>" + host + "</b> in external popup</h2>"
 								callback({icon: icon, auto: true, message: "", html: responseHTML})
 
-							// periodically attempt to fetch authorization from the server
-								window.FUNCTION_LIBRARY.fetchPeriodically("getAuthorization", host, function(data) {
+							// periodically attempt to read authorization from localStorage (set by popup)
+								var authChecks = 0
+								var authCheckLoop = setInterval(function() {
 									try {
-										var value = window.CONFIGURATION_LIBRARY[host] || {}
-											value.access_token = data.access_token
-											value.refresh_token = data.refresh_token
-											value.expiration = new Date().getTime() + (data.expires_in * 1000)
-										window.FUNCTION_LIBRARY.changeConfiguration({key: host, value: value})
-										
-										var responseHTML = "<h2>" + host + " authorized</h2>until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()
-										callback({icon: icon, auto: true, message: "", html: responseHTML})
+										// check configuration
+											var configuration = JSON.parse(localStorage.CONFIGURATION_LIBRARY)
 
-										popup.close()
+										// not present
+											if (!configuration[host]) {
+												authChecks++
+												
+												if (authChecks > 100) {
+													clearInterval(authCheckLoop)
+													var message = "I was not able to authorize " + host
+													var responseHTML = "<h2>unable to authorize " + host + "</h2>"
+													callback({icon: icon, error: true, message: message, html: responseHTML})
+													popup.close()
+												}
+
+												return
+											}
+										
+										// present --> set to config library
+											clearInterval(authCheckLoop)
+											CONFIGURATION_LIBRARY[host] = configuration[host]
+
+										// show success
+											var message = host + " authorized"
+											var responseHTML = "<h2>" + host + " authorized</h2>until " + new Date(CONFIGURATION_LIBRARY[host].expiration).toLocaleString()
+											callback({icon: icon, auto: true, message: message, html: responseHTML})
+
+										// close popup
+											popup.close()
 									}
 									catch (error) {}
-								})
+								}, 1000)
 
 							// THE BLUEJAY-OAUTH FLOW
 								// 1: parse the user response or look in the CONFIGURATION_LIBRARY for the platform's key, secret, and redirect
 								// 2: create a popup to the platform's auth screen; the "state" query param includes bluejay url and platform API key and/or secret
 								// 3: user goes through and completes the auth flow
-								// 4: external platform redirects the popup based the redirect param (currently a Google Apps Script); auth code is a param of this page
+								// 4: external platform redirects the popup based on the redirect param (currently a Google Apps Script); auth code is a param of this page
 								// 5: Google Apps Script logs this and uses the "state" param and the new auth code to generate a bluejay link to /authorization
 								// 6: the page auto-redirects to the /authorization url, with an embeddedPost parameter
-								// 7: bluejay server interprets this param and sends an API request to external platform with the auth code
-								// 8: platform responds with the actual access token (and refresh token)
-								// 9: bluejay server saves the results of this to the db, specifically under the user's session id
-								// 10: the main window had been requesting this data the whole time, and now it gets a success response
-								// 11: bluejay saves these values to CONFIGURATION_LIBRARY and localStorage
-								// 12: subsequent Sonos API calls can include the access_token
+								// 7: this page sends a proxyRequest to the bluejay server
+								// 8: bluejay server sends the API request to external platform with the auth code
+								// 9: platform responds with the actual access token (and refresh token)
+								// 10: bluejay server sends this back to /authorization
+								// 11: that page saves the credentials to localStorage
+								// 12: the main bluejay page has been checking localStorage every second
+								// 13: bluejay now sees the values and updates CONFIGURATION_LIBRARY
+								// 14: subsequent Sonos API calls can include the access_token
+								// 15: otherwise, after 120 seconds, bluejay gives up and says the authorization failed
 						}
 
 					// expired
@@ -3027,7 +3050,7 @@
 							// proxy request
 								window.FUNCTION_LIBRARY.proxyRequest(options, function(data) {
 									try {
-										// invaild response
+										// invalid response
 											if (!data.access_token) {
 												callback({icon: icon, error: true, message: "I couldn't reauthorize " + host, html: "<h2>Error: unable to reauthorize:</h2>" + host})
 												return

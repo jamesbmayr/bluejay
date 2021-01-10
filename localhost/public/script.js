@@ -1400,6 +1400,7 @@ window.addEventListener("load", function() {
 			function proxyRequest(options, callback, silent) {
 				// set action for server
 					options.action = "proxyRequest"
+					options["bluejay-id"] = CONFIGURATION_LIBRARY.settings["bluejay-id"]
 
 				// set timeout
 					if (!silent) {
@@ -1413,29 +1414,5 @@ window.addEventListener("load", function() {
 						if (timeout) { clearInterval(timeout) }
 						callback(response)
 					})
-			}
-
-		/* fetchPeriodically */
-			FUNCTION_LIBRARY.fetchPeriodically = fetchPeriodically
-			function fetchPeriodically(action, key, callback) {
-				// set escape counter
-					var abandonCounter = CONFIGURATION_LIBRARY.settings["fetch-abandon"]
-
-				// create loop
-					var fetchLoop = setInterval(function() {
-						if (abandonCounter) {
-							abandonCounter--
-							// request data from server
-								FUNCTION_LIBRARY.sendPost({action: action, key: key}, function(data) {
-									if (data.success && data.data) {
-										clearInterval(fetchLoop)
-										callback(data.data)
-									}
-								})
-						}
-						else {
-							clearInterval(fetchLoop)
-						}
-					}, CONFIGURATION_LIBRARY.settings["fetch-interval"])
 			}
 })

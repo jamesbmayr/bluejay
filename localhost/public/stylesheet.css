@@ -9,7 +9,7 @@
 		--shadow-size: 10px;
 		--transition-time: 0.5s;
 		--border-size: 5px;
-		--gutter-size: 10vw;
+		--gutter-size: 5vw;
 		--big-button-size: 100px;
 		--border-radius: 5px;
 		--small-font-size: 15px;
@@ -46,14 +46,28 @@
 			height: 32px;
 			width: 32px;
 			cursor: pointer;
-			z-index: 1000;
+			z-index: 0;
 			outline: none;
 			transition: var(--transition-time);
 		}
 
 		#j-logo:hover, #j-logo:focus {
 			filter: drop-shadow(0 0 var(--shadow-size) var(--dark-gray));
-		}	
+		}
+
+	/* translucency */
+		#translucency {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			background-color: var(--dark-gray);
+			opacity: 0;
+			transition: var(--transition-time);
+			pointer-events: none;
+			z-index: 1000000;
+		}
 
 /*** overlay ***/
 	#overlay {
@@ -113,7 +127,7 @@
 
 /*** inputs ***/
 	#inputs {
-		background-color: var(--light-gray);
+		background-color: transparent;
 		width: calc(100% - 2 * var(--gutter-size));
 		height: calc(var(--big-button-size) * 2);
 		position: fixed;
@@ -570,17 +584,3 @@
 			background-color: var(--dark-gray);
 			border-radius: var(--border-radius);
 		}
-
-/*** translucency ***/
-	#translucency {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		background-color: var(--dark-gray);
-		opacity: 0;
-		transition: var(--transition-time);
-		pointer-events: none;
-		z-index: 1000000;
-	}
