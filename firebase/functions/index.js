@@ -318,10 +318,14 @@
 
 /*** handle requests ***/
 	/* sendPost */
-		exports.sendPost = functions.https.onRequest(function(REQUEST, RESPONSE) {
+		exports.sendPost = FUNCTIONS.https.onRequest(function(REQUEST, RESPONSE) {
 			try {
+				REQUEST.post = REQUEST.body || REQUEST.query
+				if (typeof REQUEST.post !== "object") {
+					REQUEST.post = JSON.parse(REQUEST.post)
+				}
 				proxyRequest(REQUEST, function(data) {
-					RESPONSE.end(data)
+					RESPONSE.end(JSON.stringify(data))
 				})
 			}
 			catch (error) {

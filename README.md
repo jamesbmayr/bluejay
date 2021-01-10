@@ -42,20 +42,34 @@ This leverages the speech synthesis functionality of the device to transform res
 <hr>
 <h2>SET-UP</h2>
 <blockquote>
-<h3>back-end</h3>
+<h3>back-end: localhost</h3>
 <ol>
 <li>Download and install the latest version of nodeJS.</li>
 <li>Download the bluejay .zip, open it, and move the files to the folder of your choice.</li>
-<li>Navigate to this location in Terminal.</li>
+<li>Navigate to this location in Terminal, then to the folder <code>localhost</code>.</li>
 <li><code>npm start</code></li>
+</ol>
+
+<h3>back-end: Firebase</h3>
+<ol>
+<li>Alternately, create a new project on <a target="_blank" href="https://firebase.google.com/">Google Firebase</a>.</li>
+<li>This may incur minimal costs (pennies). If you want to use Firebase to call external APIs, such as to fetch information or control smart devices, Google requires a pay-as-you-go plan.</li>
+<li>Download and install the latest version of Firebase.</li>
+<li>Download the bluejay .zip, open it, and move the files to the folder of your choice.</li>
+<li>Navigate to this location in Terminal, then to the folder <code>firebase</code>.</li>
+<li><code>firebase init</code></li>
+<li>Follow the prompts to set up your Firebase project.</li>
+<li><code>firebase deploy</code></li>
+<li>When the project is deployed, the logs will indicate the url of your Firebase project.</li>
 </ol>
 
 <h3>front-end</h3>
 <ol>
 <li>Download and install the latest version of Google Chrome. <i>Note: Safari and Firefox do not support SpeechRecognition API.</i></li>
+<li>If you have deployed using Firebase, simply navigate to the url of your project. Otherwise, read on...</li>
 <li>Option 1: easy, then annoying
 <ol>
-<li>In <code>logic.js</code>, in <code>getEnvironment</code>, set <code>ssl</code> to <code>false</code> (line 74).</li>
+<li>In <code>index.js</code>, in <code>getEnvironment</code>, set <code>ssl</code> to <code>false</code>.</li>
 <li>Open http://localhost:3000 in your browser. <i>Note: since this is not https, the webpage will constantly ask you to grant audio permissions.</i></li>
 </ol>
 </li>
