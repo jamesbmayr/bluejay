@@ -50,37 +50,38 @@
 
 							// proxyRequest
 								proxyRequest(get.embeddedPost, function(response) {
-									// fail response
-										response = JSON.parse(response)
-										if (!response || response.success === false || response.error) {
-											document.getElementById("heading").innerText = response ? response.message || response.error : "No server response."
-											document.getElementById("heading").style.color = "#d03a3a"
-											return false
-										}
+									try {
+										// fail response
+											response = JSON.parse(response)
+											if (!response || response.success === false || response.error) {
+												document.getElementById("heading").innerText = response ? response.message || response.error : "No server response."
+												document.getElementById("heading").style.color = "#d03a3a"
+												return false
+											}
 
-									// get configuration
-										var configuration = getConfiguration()
-										if (!configuration) {
-											document.getElementById("heading").innerText = "Invalid bluejay configuration."
-											document.getElementById("heading").style.color = "#d03a3a"
-											return false
-										}
+										// get configuration
+											var configuration = getConfiguration()
+											if (!configuration) {
+												document.getElementById("heading").innerText = "Invalid bluejay configuration."
+												document.getElementById("heading").style.color = "#d03a3a"
+												return false
+											}
 
-									// set configuration
-										configuration[host] = response
-										configuration[host].expiration = new Date().getTime() + (configuration[host].expires_in * 1000)
-										window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(configuration))
+										// set configuration
+											configuration[host] = response
+											configuration[host].expiration = new Date().getTime() + (configuration[host].expires_in * 1000)
+											window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(configuration))
 
-									// update message
-										document.getElementById("heading").innerText = "Authorization Saved! You may now close this window."
-										document.getElementById("heading").style.color = "#0093c4"
-
-									// close window
-										setTimeout(function() {
-											window.close()
-										}, 3000)
+										// update message
+											document.getElementById("heading").innerText = "Authorization Saved! You may now close this window."
+											document.getElementById("heading").style.color = "#0093c4"
+									} catch (error) {
+										document.getElementById("heading").innerText = "Invalid server response."
+										document.getElementById("heading").style.color = "#d03a3a"
+										return false
+									}
 								})
-						} catch (error) { console.log(error) }
+						} catch (error) {}
 					}
 
 				/* proxyRequest */
@@ -102,7 +103,7 @@
 								sendPost(options, function(response) {
 									callback(response)
 								})
-						} catch (error) { console.log(error) }
+						} catch (error) {}
 					}
 
 				/* getConfiguration */
@@ -130,7 +131,7 @@
 						try {
 							// create request object and send to server
 								var request = new XMLHttpRequest()
-									request.open("POST", location.pathname, true)
+									request.open("POST", "../sendPost", true)
 									request.onload = function() {
 										if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
 											callback(JSON.parse(request.responseText) || {success: false, message: "unknown error"})
@@ -140,7 +141,7 @@
 										}
 									}
 									request.send(JSON.stringify(options))
-						} catch (error) { console.log(error) }
+						} catch (error) {}
 					}
 			})
 		</script>

@@ -2980,7 +2980,7 @@
 											if (!configuration[host]) {
 												authChecks++
 												
-												if (authChecks > 100) {
+												if (authChecks >= CONFIGURATION_LIBRARY.settings["fetch-abandon"]) {
 													clearInterval(authCheckLoop)
 													var message = "I was not able to authorize " + host
 													var responseHTML = "<h2>unable to authorize " + host + "</h2>"
@@ -5215,9 +5215,9 @@
 										// table
 											var responseHTML = "<table>" +
 												"<tr><th rowspan='4'><img src='" + coverImage + "'></th><td><a target='_blank' href='" + url + "'><h2>" + title + "</h2></a></td></tr>" + 
-												"<tr>" + 								"<td>" + (author || "???") + "</td></tr>" +
-												"<tr>" + 								"<td>" + (publicationDate || "???") + "</td></tr>" +
-												"<tr>" + 								"<td>" + (publisher || "???") + "</td></tr>" +
+												"<tr>" + 								"<td>" + (author || "?") + "</td></tr>" +
+												"<tr>" + 								"<td>" + (publicationDate || "?") + "</td></tr>" +
+												"<tr>" + 								"<td>" + (publisher || "?") + "</td></tr>" +
 											"</table>"
 
 										// message
@@ -8329,7 +8329,7 @@
 								var playerSum = getBestBlackjackSum("player")
 
 							// html
-								var dealerHTML = gameState.roundWinner ? ("<li>[" + (gameState.dealer.facedown[0].name == 10 ? "10" : String(gameState.dealer.facedown[0].name).slice(0,1)) + gameState.dealer.facedown[0].symbol  + "]</li>" ): "<li>[???]</li>"
+								var dealerHTML = gameState.roundWinner ? ("<li>[" + (gameState.dealer.facedown[0].name == 10 ? "10" : String(gameState.dealer.facedown[0].name).slice(0,1)) + gameState.dealer.facedown[0].symbol  + "]</li>" ): "<li>[?]</li>"
 								for (var i in gameState.dealer.faceup) {
 									dealerHTML += "<li>[" + (gameState.dealer.faceup[i].name == 10 ? "10" : String(gameState.dealer.faceup[i].name).slice(0,1)) + gameState.dealer.faceup[i].symbol + "]</li>"
 								}
@@ -9217,9 +9217,9 @@
 
 														responseHTML += "<h2>" + groups[j].name + "</h2><table>" +
 															"<tr><th rowspan='4'><img src='" + track.imageUrl + "'></th><td><h2>" + word + "</h2></a></td></tr>" + 
-															"<tr>" + 								"<td>by <b>" + (track.artist ? track.artist.name : "???") + "</b></td></tr>" +
-															"<tr>" + 								"<td>from <b>" + (track.album ? track.album.name : "???") + "</b></td></tr>" +
-															"<tr>" + 								"<td>via <b>" + (track.service ? track.service.name : "???") + "</b></td></tr>" +
+															"<tr>" + 								"<td>by <b>" + (track.artist ? track.artist.name : "?") + "</b></td></tr>" +
+															"<tr>" + 								"<td>from <b>" + (track.album ? track.album.name : "?") + "</b></td></tr>" +
+															"<tr>" + 								"<td>via <b>" + (track.service ? track.service.name : "?") + "</b></td></tr>" +
 														"</table>"
 													}
 
@@ -9900,7 +9900,7 @@
 							try {
 								// failure
 									if (!response.success) {
-										callback({icon: icon, error: true, message: "I was unable to convert from " + fromUnit + "to" + toUnit, html: "<h2>Error: unable to convert:</h2>" + response.message + "<br></br>" + quantity + " " + fromUnit + " = <b>???</b> " + toUnit})
+										callback({icon: icon, error: true, message: "I was unable to convert from " + fromUnit + "to" + toUnit, html: "<h2>Error: unable to convert:</h2>" + response.message + "<br></br>" + quantity + " " + fromUnit + " = <b>?</b> " + toUnit})
 										return
 									}
 								
@@ -10133,7 +10133,7 @@
 							try {
 								// failure
 									if (!response.success) {
-										callback({icon: icon, error: true, message: "I was unable to convert from " + oldBase + "to" + newBase, html: "<h2>Error: unable to convert:</h2>" + response.message + "<br></br>" + numberString + " in base " + oldBase + " = <b>???</b> in base " + newBase})
+										callback({icon: icon, error: true, message: "I was unable to convert from " + oldBase + "to" + newBase, html: "<h2>Error: unable to convert:</h2>" + response.message + "<br></br>" + numberString + " in base " + oldBase + " = <b>?</b> in base " + newBase})
 										return
 									}
 								

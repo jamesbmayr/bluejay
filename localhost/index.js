@@ -105,11 +105,11 @@
 									try {
 										RESPONSE.writeHead(200, {"Content-Type": "image/png"})
 										FS.readFile("./public/logo.png", function (error, file) {
-											if (error) { _404(REQUEST, RESPONSE, error) }
+											if (error) { _403(REQUEST, RESPONSE, error) }
 											else { RESPONSE.end(file, "binary") }
 										})
 									}
-									catch (error) {_404(REQUEST, RESPONSE, error)}
+									catch (error) {_403(REQUEST, RESPONSE, error)}
 								break
 
 							// chirp
@@ -117,11 +117,11 @@
 									try {
 										RESPONSE.writeHead(200, {"Content-Type": "audio/ogg"})
 										FS.readFile("./public/chirp.ogg", function (error, file) {
-											if (error) { _404(REQUEST, RESPONSE, error) }
+											if (error) { _403(REQUEST, RESPONSE, error) }
 											else { RESPONSE.end(file, "binary") }
 										})
 									}
-									catch (error) {_404(REQUEST, RESPONSE, error)}
+									catch (error) {_403(REQUEST, RESPONSE, error)}
 								break
 
 							// css
@@ -129,11 +129,11 @@
 									try {
 										RESPONSE.writeHead(200, {"Content-Type": "text/css"})
 										FS.readFile("./public/stylesheet.css", function (error, file) {
-											if (error) { _404(REQUEST, RESPONSE, error) }
+											if (error) { _403(REQUEST, RESPONSE, error) }
 											else { RESPONSE.end(file, "binary") }
 										})
 									}
-									catch (error) {_404(REQUEST, RESPONSE, error)}
+									catch (error) {_403(REQUEST, RESPONSE, error)}
 								break
 
 							// js
@@ -141,22 +141,22 @@
 									try {
 										RESPONSE.writeHead(200, {"Content-Type": "text/javascript"})
 										FS.readFile("./public/script.js", function (error, file) {
-											if (error) { _404(REQUEST, RESPONSE, error) }
+											if (error) { _403(REQUEST, RESPONSE, error) }
 											else { RESPONSE.end(file, "binary") }
 										})
 									}
-									catch (error) {_404(REQUEST, RESPONSE, error)}
+									catch (error) {_403(REQUEST, RESPONSE, error)}
 								break
 
 								case (/library[.]js$/i).test(REQUEST.url):
 									try {
 										RESPONSE.writeHead(200, {"Content-Type": "text/javascript"})
 										FS.readFile("./public/library.js", function (error, file) {
-											if (error) { _404(REQUEST, RESPONSE, error) }
+											if (error) { _403(REQUEST, RESPONSE, error) }
 											else { RESPONSE.end(file, "binary") }
 										})
 									}
-									catch (error) {_404(REQUEST, RESPONSE, error)}
+									catch (error) {_403(REQUEST, RESPONSE, error)}
 								break
 						
 							// home
@@ -164,28 +164,28 @@
 									try {
 										RESPONSE.writeHead(200, {"Content-Type": "text/html; charset=utf-8"})
 										FS.readFile("./public/index.html", function (error, file) {
-											if (error) { _404(REQUEST, RESPONSE, error) }
+											if (error) { _403(REQUEST, RESPONSE, error) }
 											else { RESPONSE.end(file, "binary") }
 										})
 									}
-									catch (error) {_404(REQUEST, RESPONSE, error)}
+									catch (error) {_403(REQUEST, RESPONSE, error)}
 								break
 
 							// authorization
 								case (/^\/authorization\/?$/).test(REQUEST.url):
 									try {
 										RESPONSE.writeHead(200, {"Content-Type": "text/html; charset=utf-8"})
-										FS.readFile("./public/authorization.html", function (error, file) {
-											if (error) { _404(REQUEST, RESPONSE, error) }
+										FS.readFile("./public/authorization/index.html", function (error, file) {
+											if (error) { _403(REQUEST, RESPONSE, error) }
 											else { RESPONSE.end(file) }
 										})
 									}
-									catch (error) {_404(REQUEST, RESPONSE, error)}
+									catch (error) {_403(REQUEST, RESPONSE, error)}
 								break
 
 							// other
 								default:
-									_404(REQUEST, RESPONSE, "not found")
+									_403(REQUEST, RESPONSE, "not found")
 								break
 						}
 					}
@@ -207,28 +207,11 @@
 			catch (error) {_403(REQUEST, RESPONSE, "unable to " + arguments.callee.name)}
 		}
 
-	/* _302 */
-		function _302(REQUEST, RESPONSE, data) {
-			logStatus("redirecting to " + (data || "/"))
-			RESPONSE.writeHead(302, { Location: data || "../../../../" })
-			RESPONSE.end()
-		}
-
 	/* _403 */
 		function _403(REQUEST, RESPONSE, data) {
 			logError(data)
 			RESPONSE.writeHead(403, {"Content-Type": "application/json"})
 			RESPONSE.end( JSON.stringify({success: false, error: data}) )
-		}
-
-	/* _404 */
-		function _404(REQUEST, RESPONSE, data) {
-			logError(data)
-			RESPONSE.writeHead(404, {"Content-Type": "text/html; charset=utf-8"})
-			FS.readFile("./public/_404.html", function (error, file) {
-				if (error) { _403(REQUEST, RESPONSE, data) }
-				else { RESPONSE.end(file) }
-			})
 		}
 
 /*** logging ***/

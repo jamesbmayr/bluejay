@@ -7,9 +7,11 @@ window.addEventListener("load", function() {
 
 		/* triggers */
 			if ((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i).test(navigator.userAgent)) {
+				var MOBILE = true
 				var ON = { click: "touchstart", mousedown: "touchstart", mousemove: "touchmove", mouseup: "touchend" }
 			}
 			else {
+				var MOBILE = false
 				var ON = { click:      "click", mousedown:  "mousedown", mousemove: "mousemove", mouseup:  "mouseup" }
 			}
 
@@ -71,7 +73,7 @@ window.addEventListener("load", function() {
 					"voice-volume": 100,
 					"screen-brightness": 100,
 					"fetch-interval": 3000,
-					"fetch-abandon": 100
+					"fetch-abandon": 120
 				}
 			}
 
@@ -216,39 +218,41 @@ window.addEventListener("load", function() {
 
 	/*** application ***/
 		/* initializeApplication */
-			ELEMENT_LIBRARY["overlay-button"].addEventListener(ON.click, initializeApplication)
+			ELEMENT_LIBRARY["overlay-button"].addEventListener("click", initializeApplication)
 			FUNCTION_LIBRARY.initializeApplication = initializeApplication
 			function initializeApplication(event) {
-				if (!INITIALIZED) {
-					// hide overlay
-						INITIALIZED = true
-						ELEMENT_LIBRARY["overlay"].setAttribute("invisible", true)
+				try {
+					if (!INITIALIZED) {
+						// audio
+							AUDIO_LIBRARY.audio = new window.AudioContext()
 
-					// focus on input
-						ELEMENT_LIBRARY["inputs-text"].focus()
+						// hide overlay
+							INITIALIZED = true
+							ELEMENT_LIBRARY["overlay"].setAttribute("invisible", true)
 
-					// preload errors
-						ERROR_LIBRARY["noaction-index"] = Math.floor(Math.random() * ERROR_LIBRARY["noaction-responses"].length)
-						ERROR_LIBRARY["error-index"]    = Math.floor(Math.random() * ERROR_LIBRARY["error-responses"].length)
+						// preload errors
+							ERROR_LIBRARY["noaction-index"] = Math.floor(Math.random() * ERROR_LIBRARY["noaction-responses"].length)
+							ERROR_LIBRARY["error-index"]    = Math.floor(Math.random() * ERROR_LIBRARY["error-responses"].length)
 
-					// preload sounds
-						initializeSounds()
+						// configuration
+							initializeConfiguration()
 
-					// audio
-						initializeAudio()
+						// audio
+							initializeAudio()	
 
-					// recognition
-						initializeRecognition()
+						// preload sounds
+							initializeSounds()
 
-					// synthesizer
-						initializeVoices()
+						// recognition
+							initializeRecognition()
 
-					// configuration
-						initializeConfiguration()
+						// synthesizer
+							initializeVoices()
 
-					// loop
-						CONTEXT_LIBRARY.loop = setInterval(iterateState, CONFIGURATION_LIBRARY["state-interval"])
-				}
+						// loop
+							CONTEXT_LIBRARY.loop = setInterval(iterateState, CONFIGURATION_LIBRARY["state-interval"])
+					}
+				} catch (error) {}
 			}
 
 		/* getAverage */
@@ -423,21 +427,25 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.generateRandom = generateRandom
 			function generateRandom(set, length) {
 				try {
-					set = set || "0123456789abcdefghijklmnopqrstuvwxyz"
-					length = length || 32
+					// parameters
+						set = set || "0123456789abcdefghijklmnopqrstuvwxyz"
+						length = length || 32
 					
-					var output = ""
-					for (var i = 0; i < length; i++) {
-						output += (set[Math.floor(Math.random() * set.length)])
-					}
-
-					if ((/[a-zA-Z]/).test(set)) {
-						while (!(/[a-zA-Z]/).test(output[0])) {
-							output = (set[Math.floor(Math.random() * set.length)]) + output.substring(1)
+					// loop to build
+						var output = ""
+						for (var i = 0; i < length; i++) {
+							output += (set[Math.floor(Math.random() * set.length)])
 						}
-					}
 
-					return output
+					// start with letter
+						if ((/[a-zA-Z]/).test(set)) {
+							while (!(/[a-zA-Z]/).test(output[0])) {
+								output = (set[Math.floor(Math.random() * set.length)]) + output.substring(1)
+							}
+						}
+
+					// return
+						return output
 				}
 				catch (error) {
 					return null
@@ -448,15 +456,16 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.chooseRandom = chooseRandom
 			function chooseRandom(options) {
 				try {
-					if (!Array.isArray(options)) {
-						return false
-					}
-					else {
+					// not array --> return
+						if (!Array.isArray(options)) {
+							return options
+						}
+					
+					// pick a random array element
 						return options[Math.floor(Math.random() * options.length)]
-					}
 				}
 				catch (error) {
-					return false
+					return options
 				}
 			}
 
@@ -464,20 +473,29 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.sortRandom = sortRandom
 			function sortRandom(array) {
 				try {
-					var output = JSON.parse(JSON.stringify(array))
+					// not array --> return
+						if (!Array.isArray(array)) {
+							return array
+						}
 
-					var x = output.length
-					while (x > 0) {
-						var y = Math.floor(Math.random() * x)
-						x = x - 1
-						var temp = output[x]
-						output[x] = output[y]
-						output[y] = temp
-					}
-					return output
+					// copy
+						var output = JSON.parse(JSON.stringify(array))
+
+					// shuffle
+						var x = output.length
+						while (x > 0) {
+							var y = Math.floor(Math.random() * x)
+							x = x - 1
+							var temp = output[x]
+							output[x] = output[y]
+							output[y] = temp
+						}
+
+					// return
+						return output
 				}
 				catch (error) {
-					return null
+					return array
 				}
 			}
 
@@ -485,143 +503,155 @@ window.addEventListener("load", function() {
 		/* initializeConfiguration */
 			FUNCTION_LIBRARY.initializeConfiguration = initializeConfiguration
 			function initializeConfiguration() {
-				// get localStorage
-					var storedConfigs = window.localStorage.getItem("CONFIGURATION_LIBRARY")
+				try {
+					// get localStorage
+						var storedConfigs = window.localStorage.getItem("CONFIGURATION_LIBRARY")
 
-				// if it exists, try writing to global variable
-					if (storedConfigs) {
-						try {
-							storedConfigs = JSON.parse(storedConfigs)
-							for (var i in storedConfigs) {
-								// built-in settings
-									if (i == "settings") {
-										for (var j in storedConfigs.settings) {
-											CONFIGURATION_LIBRARY.settings[j] = storedConfigs.settings[j]
+					// if it exists, try writing to global variable
+						if (storedConfigs) {
+							try {
+								storedConfigs = JSON.parse(storedConfigs)
+								for (var i in storedConfigs) {
+									// built-in settings
+										if (i == "settings") {
+											for (var j in storedConfigs.settings) {
+												CONFIGURATION_LIBRARY.settings[j] = storedConfigs.settings[j]
 
-											if (ELEMENT_LIBRARY["inputs-" + j]) {
-												if (j == "whistle-on") {
-													ELEMENT_LIBRARY["inputs-" + j].checked = CONFIGURATION_LIBRARY.settings[j]
-												}
-												else {
-													ELEMENT_LIBRARY["inputs-" + j].value = CONFIGURATION_LIBRARY.settings[j]
+												if (ELEMENT_LIBRARY["inputs-" + j]) {
+													if (j == "whistle-on") {
+														ELEMENT_LIBRARY["inputs-" + j].checked = CONFIGURATION_LIBRARY.settings[j]
+													}
+													else {
+														ELEMENT_LIBRARY["inputs-" + j].value = CONFIGURATION_LIBRARY.settings[j]
+													}
 												}
 											}
 										}
-									}
 
-								// custom
-									else {
-										CONFIGURATION_LIBRARY[i] = storedConfigs[i]
+									// custom
+										else {
+											CONFIGURATION_LIBRARY[i] = storedConfigs[i]
+										}
+								}
+
+								// create bluejay-id
+									if (!CONFIGURATION_LIBRARY.settings["bluejay-id"]) {
+										CONFIGURATION_LIBRARY.settings["bluejay-id"] = generateRandom()
+										window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
 									}
 							}
-
-							// create bluejay-id
-								if (!CONFIGURATION_LIBRARY.settings["bluejay-id"]) {
-									CONFIGURATION_LIBRARY.settings["bluejay-id"] = generateRandom()
-									window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-								}
+							catch (error) {}
 						}
-						catch (error) {}
-					}
 
-				// set brightness
-					setBrightness()
+					// set brightness
+						setBrightness()
+				} catch (error) {}
 			}
 
 		/* changeConfiguration */
 			FUNCTION_LIBRARY.changeConfiguration = changeConfiguration
 			function changeConfiguration(event) {
-				// missing key or value
-					if (!event.key || !event.value) {
-						return false
-					}
+				try {
+					// missing key or value
+						if (!event.key || !event.value) {
+							return false
+						}
 
-				// protect settings
-					else if (event.key.toLowerCase().trim() == "settings") {
-						return false
-					}
+					// protect settings
+						else if (event.key.toLowerCase().trim() == "settings") {
+							return false
+						}
 
-				// update config
-					else {
-						CONFIGURATION_LIBRARY[event.key] = event.value
-						window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-						return true
-					}
+					// update config
+						else {
+							CONFIGURATION_LIBRARY[event.key] = event.value
+							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+							return true
+						}
+				} catch (error) {}
 			}
 
 		/* uploadConfiguration */
 			ELEMENT_LIBRARY["inputs-configuration"].addEventListener("change", uploadConfiguration)
 			FUNCTION_LIBRARY.uploadConfiguration = uploadConfiguration
 			function uploadConfiguration(event) {
-				if (ELEMENT_LIBRARY["inputs-configuration"].value && ELEMENT_LIBRARY["inputs-configuration"].value.length) {
-					var reader = new FileReader()
-					reader.readAsText(event.target.files[0])
-					reader.onload = function(event) {
-						// data
-							var data = String(event.target.result)
-							try {
-								data = JSON.parse(data)
-								for (var i in data) {
-									changeConfiguration({key: i, value: data[i]})
-								}
-							} catch (error) {}
+				try {
+					if (ELEMENT_LIBRARY["inputs-configuration"].value && ELEMENT_LIBRARY["inputs-configuration"].value.length) {
+						var reader = new FileReader()
+						reader.readAsText(event.target.files[0])
+						reader.onload = function(event) {
+							// data
+								var data = String(event.target.result)
+								try {
+									data = JSON.parse(data)
+									for (var i in data) {
+										changeConfiguration({key: i, value: data[i]})
+									}
+								} catch (error) {}
+						}
 					}
-				}
+				} catch (error) {}
 			}
 
 		/* changeBrightness */
 			ELEMENT_LIBRARY["inputs-screen-brightness"].addEventListener("change", changeBrightness)
 			FUNCTION_LIBRARY.changeBrightness = changeBrightness
 			function changeBrightness(event) {
-				// via input
-					if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-screen-brightness"].id) {
-						// set brightness
-							CONFIGURATION_LIBRARY.settings["screen-brightness"] = Math.max(0, Math.min(100, Number(ELEMENT_LIBRARY["inputs-screen-brightness"].value)))
-							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-							setBrightness()
-					}
-
-				// via action
-					else if (event.brightness !== undefined) {
-						// if not a number
-							if (isNaN(Number(event.brightness))) {
-								return false
-							}
-
-						// otherwise
-							else {
-								var newBrightness = Math.round(Math.max(0, Math.min(100, Number(event.brightness))))
-								ELEMENT_LIBRARY["inputs-screen-brightness"].value = newBrightness
-								CONFIGURATION_LIBRARY.settings["screen-brightness"] = newBrightness
+				try {
+					// via input
+						if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-screen-brightness"].id) {
+							// set brightness
+								CONFIGURATION_LIBRARY.settings["screen-brightness"] = Math.max(0, Math.min(100, Number(ELEMENT_LIBRARY["inputs-screen-brightness"].value)))
 								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
 								setBrightness()
-								return newBrightness
-							}
-					}
+						}
 
-				// otherwise
-					else {
-						return false
-					}
+					// via action
+						else if (event.brightness !== undefined) {
+							// if not a number
+								if (isNaN(Number(event.brightness))) {
+									return false
+								}
+
+							// otherwise
+								else {
+									var newBrightness = Math.round(Math.max(0, Math.min(100, Number(event.brightness))))
+									ELEMENT_LIBRARY["inputs-screen-brightness"].value = newBrightness
+									CONFIGURATION_LIBRARY.settings["screen-brightness"] = newBrightness
+									window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+									setBrightness()
+									return newBrightness
+								}
+						}
+
+					// otherwise
+						else {
+							return false
+						}
+				} catch (error) {}
 			}
 
 		/* setBrightness */
 			FUNCTION_LIBRARY.setBrightness = setBrightness
 			function setBrightness() {
-				ELEMENT_LIBRARY["translucency"].style.opacity = Math.max(0, Math.min(1, 1 - (CONFIGURATION_LIBRARY.settings["screen-brightness"] / 100)))
+				try {
+					ELEMENT_LIBRARY["translucency"].style.opacity = Math.max(0, Math.min(1, 1 - (CONFIGURATION_LIBRARY.settings["screen-brightness"] / 100)))
+				} catch (error) {}
 			}
 
 		/* iterateState */
 			FUNCTION_LIBRARY.iterateState = iterateState
 			function iterateState(event) {
-				// analyze audio
-					FUNCTION_LIBRARY.analyzeAudio()
+				try {
+					// analyze audio
+						FUNCTION_LIBRARY.analyzeAudio()
 
-				// check if we should restart listening
-					FUNCTION_LIBRARY.checkStartListening()
+					// check if we should restart listening
+						FUNCTION_LIBRARY.checkStartListening()
 
-				// update timers
-					FUNCTION_LIBRARY.checkAlarms()
+					// update timers
+						FUNCTION_LIBRARY.checkAlarms()
+				} catch (error) {}
 			}
 
 	/*** whistling ***/
@@ -645,35 +675,36 @@ window.addEventListener("load", function() {
 		/* initializeAudio */
 			FUNCTION_LIBRARY.initializeAudio = initializeAudio
 			function initializeAudio() {
-				// audio context
-					AUDIO_LIBRARY.audio = new window.AudioContext
+				try {
+					// audio exists?
+						if (!AUDIO_LIBRARY.audio) {
+							AUDIO_LIBRARY.audio = new window.AudioContext()
+						}
 
-				// analyzer
-					AUDIO_LIBRARY.analyzer = AUDIO_LIBRARY.audio.createAnalyser()
-					AUDIO_LIBRARY.analyzer.fftSize = CONFIGURATION_LIBRARY.settings["whistle-fftsize"]
+					// analyzer
+						AUDIO_LIBRARY.analyzer = AUDIO_LIBRARY.audio.createAnalyser()
+						AUDIO_LIBRARY.analyzer.fftSize = CONFIGURATION_LIBRARY.settings["whistle-fftsize"]
 
-				// input
-					AUDIO_LIBRARY.input = {
-						bufferLength: AUDIO_LIBRARY.analyzer.frequencyBinCount,
-						pitches: [],
-						minimum: null,
-						maximum: null,
-						extremes: 0,
-						lastCrossUp: null,
-						lastCrossDown: null,
-						lastExtreme: null,
-						waveLengths: null,
-						data: null
-					}
-					AUDIO_LIBRARY.input.data = new Float32Array(AUDIO_LIBRARY.input.bufferLength)
+					// input
+						AUDIO_LIBRARY.input = {
+							bufferLength: AUDIO_LIBRARY.analyzer.frequencyBinCount,
+							pitches: [],
+							minimum: null,
+							maximum: null,
+							extremes: 0,
+							lastCrossUp: null,
+							lastCrossDown: null,
+							lastExtreme: null,
+							waveLengths: null,
+							data: null
+						}
+						AUDIO_LIBRARY.input.data = new Float32Array(AUDIO_LIBRARY.input.bufferLength)
 
-				// microphone
-					if (navigator.mediaDevices) {
-						navigator.mediaDevices.getUserMedia({audio: true, video: false}).then(function(stream) {
-							AUDIO_LIBRARY.microphone = AUDIO_LIBRARY.audio.createMediaStreamSource(stream)
-							AUDIO_LIBRARY.microphone.connect(AUDIO_LIBRARY.analyzer)
-						})
-					}
+					// microphone
+						if (navigator.mediaDevices) {
+							FUNCTION_LIBRARY.changeWhistleListen(true)
+						}
+				} catch (error) {}
 			}
 
 		/* changeWhistleOn */
@@ -701,9 +732,58 @@ window.addEventListener("load", function() {
 							window.CONTEXT_LIBRARY.startListening = null
 						}
 
-					// actually stop listening
+					// actually start listening for whistles (if not currently listening for words)
+						if (!event.forceOn && CONFIGURATION_LIBRARY.settings["whistle-on"] && !RECOGNITION_LIBRARY.active) {
+							FUNCTION_LIBRARY.changeWhistleListen(true)
+							return
+						}
+
+					// actually stop listening for whistles
 						if (!CONFIGURATION_LIBRARY.settings["whistle-on"]) {
-							FUNCTION_LIBRARY.stopRecognizing(false)
+							FUNCTION_LIBRARY.changeWhistleListen(false)
+						}
+				} catch (error) {}
+			}
+
+		/* changeWhistleListen */
+			FUNCTION_LIBRARY.changeWhistleListen = changeWhistleListen
+			function changeWhistleListen(activate) {
+				try {
+					//  no audio
+						if (!AUDIO_LIBRARY.audio) {
+							return false
+						}
+
+					// activate
+						if (activate && CONFIGURATION_LIBRARY.settings["whistle-on"] && !AUDIO_LIBRARY.microphone) {
+							navigator.mediaDevices.getUserMedia({audio: true, video: false}).then(function(stream) {
+								// remove microphone connection if it exists
+									if (AUDIO_LIBRARY.microphone) {
+										changeWhistleListen(false)
+									}
+
+								// create new microphone connection & connect to analyzer
+									AUDIO_LIBRARY.microphone = AUDIO_LIBRARY.audio.createMediaStreamSource(stream)
+									AUDIO_LIBRARY.microphone.connect(AUDIO_LIBRARY.analyzer)
+							})
+							return
+						}
+
+					// deactivate
+						if (AUDIO_LIBRARY.microphone) {
+							// remove tracks (streams)
+								AUDIO_LIBRARY.microphone.mediaStream.getTracks().forEach(function(track) {
+									track.enabled = false
+									track.stop()
+								})
+
+							// disconnect from analyzer
+								AUDIO_LIBRARY.microphone.disconnect()
+
+							// delete in a bunch of ways just in case
+								delete AUDIO_LIBRARY.microphone.mediaStream
+								delete AUDIO_LIBRARY.microphone
+								AUDIO_LIBRARY.microphone = null
 						}
 				} catch (error) {}
 			}
@@ -711,249 +791,268 @@ window.addEventListener("load", function() {
 		/* analyzeAudio */
 			FUNCTION_LIBRARY.analyzeAudio = analyzeAudio
 			function analyzeAudio(event) {
-				if (AUDIO_LIBRARY.audio && CONFIGURATION_LIBRARY.settings["whistle-on"] && !RECOGNITION_LIBRARY.active) {
-					// refresh data
-						AUDIO_LIBRARY.input.lastFrequencyCounter += CONFIGURATION_LIBRARY.settings["state-interval"]
-						AUDIO_LIBRARY.analyzer.getFloatTimeDomainData(AUDIO_LIBRARY.input.data)
+				try {
+					if (AUDIO_LIBRARY.audio && AUDIO_LIBRARY.microphone && CONFIGURATION_LIBRARY.settings["whistle-on"] && !RECOGNITION_LIBRARY.active) {
+						// refresh data
+							AUDIO_LIBRARY.input.lastFrequencyCounter += CONFIGURATION_LIBRARY.settings["state-interval"]
+							AUDIO_LIBRARY.analyzer.getFloatTimeDomainData(AUDIO_LIBRARY.input.data)
 
-					// figure out some values
-						AUDIO_LIBRARY.input.minimum       = 0
-						AUDIO_LIBRARY.input.maximum       = 0
-						AUDIO_LIBRARY.input.extremes      = 0
-						AUDIO_LIBRARY.input.lastCrossUp   = null
-						AUDIO_LIBRARY.input.lastCrossDown = null
-						AUDIO_LIBRARY.input.lastExtreme   = null
-						AUDIO_LIBRARY.input.wavelengths   = []
+						// figure out some values
+							AUDIO_LIBRARY.input.minimum       = 0
+							AUDIO_LIBRARY.input.maximum       = 0
+							AUDIO_LIBRARY.input.extremes      = 0
+							AUDIO_LIBRARY.input.lastCrossUp   = null
+							AUDIO_LIBRARY.input.lastCrossDown = null
+							AUDIO_LIBRARY.input.lastExtreme   = null
+							AUDIO_LIBRARY.input.wavelengths   = []
 
-					// calculate wavelength from up-cross to up-cross and from down-cross to down-cross (past midpoint)
-						for (var t = 1; t < AUDIO_LIBRARY.input.bufferLength; t++) {
-							if (AUDIO_LIBRARY.input.data[t - 1] < 0 && AUDIO_LIBRARY.input.data[t] >= 0) { // cross up
-								AUDIO_LIBRARY.input.wavelengths.push(t - AUDIO_LIBRARY.input.lastCrossUp)
-								AUDIO_LIBRARY.input.lastCrossUp = t
-							}
-							else if (AUDIO_LIBRARY.input.data[t - 1] >= 0 && AUDIO_LIBRARY.input.data[t] < 0) { // cross down
-								AUDIO_LIBRARY.input.wavelengths.push(t - AUDIO_LIBRARY.input.lastCrossDown)
-								AUDIO_LIBRARY.input.lastCrossDown = t
-							}
+						// calculate wavelength from up-cross to up-cross and from down-cross to down-cross (past midpoint)
+							for (var t = 1; t < AUDIO_LIBRARY.input.bufferLength; t++) {
+								if (AUDIO_LIBRARY.input.data[t - 1] < 0 && AUDIO_LIBRARY.input.data[t] >= 0) { // cross up
+									AUDIO_LIBRARY.input.wavelengths.push(t - AUDIO_LIBRARY.input.lastCrossUp)
+									AUDIO_LIBRARY.input.lastCrossUp = t
+								}
+								else if (AUDIO_LIBRARY.input.data[t - 1] >= 0 && AUDIO_LIBRARY.input.data[t] < 0) { // cross down
+									AUDIO_LIBRARY.input.wavelengths.push(t - AUDIO_LIBRARY.input.lastCrossDown)
+									AUDIO_LIBRARY.input.lastCrossDown = t
+								}
 
-							if (AUDIO_LIBRARY.input.data[t] > AUDIO_LIBRARY.input.maximum) { // new maximum
-								AUDIO_LIBRARY.input.maximum = AUDIO_LIBRARY.input.data[t]
-							}
-							else if (AUDIO_LIBRARY.input.data[t] < AUDIO_LIBRARY.input.minimum) { // new minimum
-								AUDIO_LIBRARY.input.minimum = AUDIO_LIBRARY.input.data[t]
-							}
-						}
-
-					// calculate number of changes in direction within 10% of max or min
-						for (var t = 0; t < AUDIO_LIBRARY.input.bufferLength; t++) {
-							if      ((AUDIO_LIBRARY.input.data[t] > AUDIO_LIBRARY.input.maximum * 0.7) && (!AUDIO_LIBRARY.input.lastExtreme || AUDIO_LIBRARY.input.lastExtreme == "min")) {
-							 	AUDIO_LIBRARY.input.lastExtreme = "max"
-								AUDIO_LIBRARY.input.extremes++
-							}
-							else if ((AUDIO_LIBRARY.input.data[t] < AUDIO_LIBRARY.input.minimum * 0.7) && (!AUDIO_LIBRARY.input.lastExtreme || AUDIO_LIBRARY.input.lastExtreme == "max")) {
-							 	AUDIO_LIBRARY.input.lastExtreme = "min"
-								AUDIO_LIBRARY.input.extremes++
-							}
-						}
-
-					// remove the first two waves, as they'll be a partial crossup and partial crossdown
-						AUDIO_LIBRARY.input.wavelengths = AUDIO_LIBRARY.input.wavelengths.slice(2)
-						AUDIO_LIBRARY.input.extremes   -= 2
-
-					// collapse complex waves down to simple waves
-						var complexity = Math.round(AUDIO_LIBRARY.input.wavelengths.length / AUDIO_LIBRARY.input.extremes)
-
-					// calculate the frequency & note (sample rate is usually 44100 Hz)
-						var frequency 	= AUDIO_LIBRARY.audio.sampleRate / FUNCTION_LIBRARY.getAverage(AUDIO_LIBRARY.input.wavelengths) / complexity
-
-					// if within range and enough energy
-						if (complexity == 1 // simple waves are whistles
-							&& CONFIGURATION_LIBRARY.settings["whistle-frequency-minimum"] <= frequency && frequency <= CONFIGURATION_LIBRARY.settings["whistle-frequency-maximum"] // frequency within whistle range
-							&& AUDIO_LIBRARY.input.minimum <= -CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] && CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] <= AUDIO_LIBRARY.input.maximum) { // energy spikes above/below thresholds
-							// convert frequency to quantized pitch
-								var pitch = Math.round(69 + 12 * Math.log2(frequency / 440))
-						}
-						else {
-							var pitch = null
-						}
-
-					// update pitches array
-						AUDIO_LIBRARY.input.pitches.push(pitch)
-						var pitchCount = 1000 / CONFIGURATION_LIBRARY.settings["state-interval"] // store 1 second of pitches
-						while (AUDIO_LIBRARY.input.pitches.length > pitchCount) {
-							AUDIO_LIBRARY.input.pitches.shift()
-						}
-
-					// get difference
-						if (pitch) {
-							var biggest = -1000 // arbitrarily small
-							var smallest = 1000 // arbitrarily big
-							for (var i in AUDIO_LIBRARY.input.pitches) {
-								if (!AUDIO_LIBRARY.input.pitches[i]) {}
-								else {
-									if (AUDIO_LIBRARY.input.pitches[i] > biggest) {
-										biggest = AUDIO_LIBRARY.input.pitches[i]
-									}
-									if (AUDIO_LIBRARY.input.pitches[i] < smallest) {
-										smallest = AUDIO_LIBRARY.input.pitches[i]
-									}
+								if (AUDIO_LIBRARY.input.data[t] > AUDIO_LIBRARY.input.maximum) { // new maximum
+									AUDIO_LIBRARY.input.maximum = AUDIO_LIBRARY.input.data[t]
+								}
+								else if (AUDIO_LIBRARY.input.data[t] < AUDIO_LIBRARY.input.minimum) { // new minimum
+									AUDIO_LIBRARY.input.minimum = AUDIO_LIBRARY.input.data[t]
 								}
 							}
-							var difference = Math.abs(biggest - smallest)
 
-							if (CONFIGURATION_LIBRARY.settings["whistle-interval-minimum"] <= difference && difference <= CONFIGURATION_LIBRARY.settings["whistle-interval-maximum"]) { // minor 2nd to perfect 4th
-								FUNCTION_LIBRARY.startRecognizing({chirp: true})
+						// calculate number of changes in direction within 10% of max or min
+							for (var t = 0; t < AUDIO_LIBRARY.input.bufferLength; t++) {
+								if      ((AUDIO_LIBRARY.input.data[t] > AUDIO_LIBRARY.input.maximum * 0.7) && (!AUDIO_LIBRARY.input.lastExtreme || AUDIO_LIBRARY.input.lastExtreme == "min")) {
+								 	AUDIO_LIBRARY.input.lastExtreme = "max"
+									AUDIO_LIBRARY.input.extremes++
+								}
+								else if ((AUDIO_LIBRARY.input.data[t] < AUDIO_LIBRARY.input.minimum * 0.7) && (!AUDIO_LIBRARY.input.lastExtreme || AUDIO_LIBRARY.input.lastExtreme == "max")) {
+								 	AUDIO_LIBRARY.input.lastExtreme = "min"
+									AUDIO_LIBRARY.input.extremes++
+								}
 							}
-						}
-				}
+
+						// remove the first two waves, as they'll be a partial crossup and partial crossdown
+							AUDIO_LIBRARY.input.wavelengths = AUDIO_LIBRARY.input.wavelengths.slice(2)
+							AUDIO_LIBRARY.input.extremes   -= 2
+
+						// collapse complex waves down to simple waves
+							var complexity = Math.round(AUDIO_LIBRARY.input.wavelengths.length / AUDIO_LIBRARY.input.extremes)
+
+						// calculate the frequency & note (sample rate is usually 44100 Hz)
+							var frequency 	= AUDIO_LIBRARY.audio.sampleRate / FUNCTION_LIBRARY.getAverage(AUDIO_LIBRARY.input.wavelengths) / complexity
+
+						// if within range and enough energy
+							if (complexity == 1 // simple waves are whistles
+								&& CONFIGURATION_LIBRARY.settings["whistle-frequency-minimum"] <= frequency && frequency <= CONFIGURATION_LIBRARY.settings["whistle-frequency-maximum"] // frequency within whistle range
+								&& AUDIO_LIBRARY.input.minimum <= -CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] && CONFIGURATION_LIBRARY.settings["whistle-energy-threshold"] <= AUDIO_LIBRARY.input.maximum) { // energy spikes above/below thresholds
+								// convert frequency to quantized pitch
+									var pitch = Math.round(69 + 12 * Math.log2(frequency / 440))
+							}
+							else {
+								var pitch = null
+							}
+
+						// update pitches array
+							AUDIO_LIBRARY.input.pitches.push(pitch)
+							var pitchCount = 1000 / CONFIGURATION_LIBRARY.settings["state-interval"] // store 1 second of pitches
+							while (AUDIO_LIBRARY.input.pitches.length > pitchCount) {
+								AUDIO_LIBRARY.input.pitches.shift()
+							}
+
+						// get difference
+							if (pitch) {
+								var biggest = -1000 // arbitrarily small
+								var smallest = 1000 // arbitrarily big
+								for (var i in AUDIO_LIBRARY.input.pitches) {
+									if (!AUDIO_LIBRARY.input.pitches[i]) {}
+									else {
+										if (AUDIO_LIBRARY.input.pitches[i] > biggest) {
+											biggest = AUDIO_LIBRARY.input.pitches[i]
+										}
+										if (AUDIO_LIBRARY.input.pitches[i] < smallest) {
+											smallest = AUDIO_LIBRARY.input.pitches[i]
+										}
+									}
+								}
+								var difference = Math.abs(biggest - smallest)
+
+								if (CONFIGURATION_LIBRARY.settings["whistle-interval-minimum"] <= difference && difference <= CONFIGURATION_LIBRARY.settings["whistle-interval-maximum"]) { // minor 2nd to perfect 4th
+									FUNCTION_LIBRARY.startRecognizing({chirp: true})
+								}
+							}
+					}
+				} catch (error) {}
 			}
 
 	/*** recognition ***/
 		/* initializeRecognition */
 			FUNCTION_LIBRARY.initializeRecognition = initializeRecognition
 			function initializeRecognition() {
-				// statuses
-					RECOGNITION_LIBRARY.active = false
-					RECOGNITION_LIBRARY.time = 0
-					RECOGNITION_LIBRARY.wait = null
-					RECOGNITION_LIBRARY.countdown = null
+				try {
+					// statuses
+						RECOGNITION_LIBRARY.active = false
+						RECOGNITION_LIBRARY.time = 0
+						RECOGNITION_LIBRARY.wait = null
+						RECOGNITION_LIBRARY.countdown = null
 
-				// create speech recognition
-					RECOGNITION_LIBRARY.recognition = new window.speechRecognition()
-					RECOGNITION_LIBRARY.recognition.onsoundend = stopRecognizing
-					RECOGNITION_LIBRARY.recognition.onresult = matchPhrase
+					// create speech recognition
+						RECOGNITION_LIBRARY.recognition = new window.speechRecognition()
+						RECOGNITION_LIBRARY.recognition.onsoundend = stopRecognizing
+						RECOGNITION_LIBRARY.recognition.onnomatch = matchPhrase
+						RECOGNITION_LIBRARY.recognition.onresult = matchPhrase
+				} catch (error) {}
 			}
 
 		/* changeRecognitionDuration */
 			ELEMENT_LIBRARY["inputs-recognition-duration"].addEventListener("change", changeRecognitionDuration)
 			FUNCTION_LIBRARY.changeRecognitionDuration = changeRecognitionDuration
 			function changeRecognitionDuration(event) {
-				// via input
-					if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-recognition-duration"].id) {
-						// set duration
-							CONFIGURATION_LIBRARY.settings["recognition-duration"] = Math.max(1, Math.min(60, Number(ELEMENT_LIBRARY["inputs-recognition-duration"].value)))
-							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-					}
-
-				// via action
-					else if (event.duration !== undefined) {
-						// if not a number
-							if (isNaN(Number(event.duration))) {
-								return false
-							}
-
-						// otherwise
-							else {
-								var newDuration = Math.round(Math.max(1, Math.min(60, Number(event.duration))))
-								ELEMENT_LIBRARY["inputs-recognition-duration"].value = newDuration
-								CONFIGURATION_LIBRARY.settings["recognition-duration"] = newDuration
+				try {
+					// via input
+						if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-recognition-duration"].id) {
+							// set duration
+								CONFIGURATION_LIBRARY.settings["recognition-duration"] = Math.max(1, Math.min(60, Number(ELEMENT_LIBRARY["inputs-recognition-duration"].value)))
 								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-								return newDuration
-							}
-					}
+						}
 
-				// otherwise
-					else {
-						return false
-					}
+					// via action
+						else if (event.duration !== undefined) {
+							// if not a number
+								if (isNaN(Number(event.duration))) {
+									return false
+								}
+
+							// otherwise
+								else {
+									var newDuration = Math.round(Math.max(1, Math.min(60, Number(event.duration))))
+									ELEMENT_LIBRARY["inputs-recognition-duration"].value = newDuration
+									CONFIGURATION_LIBRARY.settings["recognition-duration"] = newDuration
+									window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+									return newDuration
+								}
+						}
+
+					// otherwise
+						else {
+							return false
+						}
+				} catch (error) {}
 			}
 
 		/* changeRecognizing */
-			ELEMENT_LIBRARY["inputs-audio"].addEventListener(ON.click, changeRecognizing)
+			ELEMENT_LIBRARY["inputs-audio"].addEventListener(ON.click, changeRecognizing, {passive: true})
 			FUNCTION_LIBRARY.changeRecognizing = changeRecognizing
 			function changeRecognizing(event) {
-				// manual stop (don't transcribe)
-					if (RECOGNITION_LIBRARY.active) {
-						FUNCTION_LIBRARY.stopRecognizing(false)
-					}
+				try {
+					// manual stop (don't transcribe)
+						if (RECOGNITION_LIBRARY.active) {
+							FUNCTION_LIBRARY.stopRecognizing(false)
+						}
 
-				// manual start
-					else {
-						FUNCTION_LIBRARY.startRecognizing({chirp: false})
-					}
+					// manual start
+						else {
+							FUNCTION_LIBRARY.startRecognizing({chirp: false})
+						}
+				} catch (error) {}
 			}
 
 		/* startRecognizing */
 			FUNCTION_LIBRARY.startRecognizing = startRecognizing
 			function startRecognizing(event) {
-				if (!RECOGNITION_LIBRARY.active) {
-					// disable input
-						ELEMENT_LIBRARY["inputs-text"].setAttribute("disabled", true)
+				try {
+					if (!RECOGNITION_LIBRARY.active) {
+						// disable input
+							ELEMENT_LIBRARY["inputs-text"].setAttribute("disabled", true)
 
-					// clear whistle history
-						AUDIO_LIBRARY.input.lastFrequency = 0
-						AUDIO_LIBRARY.input.lastFrequencyCounter = 0
+						// clear whistle history
+							AUDIO_LIBRARY.input.lastFrequency = 0
+							AUDIO_LIBRARY.input.lastFrequencyCounter = 0
 
-					// synthesizer
-						VOICE_LIBRARY.synthesizer.pause()
-						VOICE_LIBRARY.synthesizer.cancel()
+						// synthesizer
+							VOICE_LIBRARY.synthesizer.pause()
+							VOICE_LIBRARY.synthesizer.cancel()
 
-					// chirp
-						var chirpDelay = 0
-						if (event && event.chirp && SOUND_LIBRARY.chirp) {
-							try {
-								SOUND_LIBRARY.chirp.pause()
-								SOUND_LIBRARY.chirp.currentTime = 0
-								SOUND_LIBRARY.chirp.play()
-								var chirpDelay = SOUND_LIBRARY.chirpDuration
-							} catch (error) {}
-						}
-					
-					// set global
-						RECOGNITION_LIBRARY.active = true
+						// chirp
+							var chirpDelay = 0
+							if (!MOBILE && event && event.chirp && SOUND_LIBRARY.chirp) {
+								try {
+									SOUND_LIBRARY.chirp.pause()
+									SOUND_LIBRARY.chirp.currentTime = 0
+									SOUND_LIBRARY.chirp.play()
+									var chirpDelay = SOUND_LIBRARY.chirpDuration
+								} catch (error) {}
+							}
 
-					// set countdown failsafe
-						RECOGNITION_LIBRARY.wait = setTimeout(function() {
-							try {
-								RECOGNITION_LIBRARY.recognition.start()
-							} catch (error) {}
+						// close microphone
+							if (AUDIO_LIBRARY.microphone) {
+								FUNCTION_LIBRARY.changeWhistleListen(false)
+							}
 
-							RECOGNITION_LIBRARY.time = 0
-							RECOGNITION_LIBRARY.countdown = setInterval(FUNCTION_LIBRARY.countdownRecognizing, CONFIGURATION_LIBRARY.settings["recognition-interval"])
-						}, chirpDelay)
-				}
+						// set global
+							RECOGNITION_LIBRARY.active = true
+
+						// set countdown failsafe
+							RECOGNITION_LIBRARY.wait = setTimeout(function() {
+								try {
+									RECOGNITION_LIBRARY.recognition.start()
+								} catch (error) {}
+
+								RECOGNITION_LIBRARY.time = 0
+								RECOGNITION_LIBRARY.countdown = setInterval(FUNCTION_LIBRARY.countdownRecognizing, CONFIGURATION_LIBRARY.settings["recognition-interval"])
+							}, chirpDelay)
+					}
+				} catch (error) {}
 			}
 
 		/* countdownRecognizing */
 			FUNCTION_LIBRARY.countdownRecognizing = countdownRecognizing
 			function countdownRecognizing(event) {
-				// add to time
-					RECOGNITION_LIBRARY.time += CONFIGURATION_LIBRARY.settings["recognition-interval"]
+				try {
+					// add to time
+						RECOGNITION_LIBRARY.time += CONFIGURATION_LIBRARY.settings["recognition-interval"]
 
-				// update bar width
-					ELEMENT_LIBRARY["inputs-countdown"].style.width = (CONFIGURATION_LIBRARY.settings["recognition-duration"] * 1000 - RECOGNITION_LIBRARY.time) / (CONFIGURATION_LIBRARY.settings["recognition-duration"] * 1000) * 100 + "%"
+					// update bar width
+						ELEMENT_LIBRARY["inputs-countdown"].style.width = (CONFIGURATION_LIBRARY.settings["recognition-duration"] * 1000 - RECOGNITION_LIBRARY.time) / (CONFIGURATION_LIBRARY.settings["recognition-duration"] * 1000) * 100 + "%"
 
-				// stop when duration is reached
-					if (RECOGNITION_LIBRARY.time >= CONFIGURATION_LIBRARY.settings["recognition-duration"] * 1000) {
-						FUNCTION_LIBRARY.stopRecognizing(true)
-					}
+					// stop when duration is reached
+						if (RECOGNITION_LIBRARY.time >= CONFIGURATION_LIBRARY.settings["recognition-duration"] * 1000) {
+							FUNCTION_LIBRARY.stopRecognizing(true)
+						}
+				} catch (error) {}
 			}
 
 		/* stopRecognizing */
 			FUNCTION_LIBRARY.stopRecognizing = stopRecognizing
 			function stopRecognizing(continuable) {
-				// cancel countdown
-					clearInterval(RECOGNITION_LIBRARY.wait)
-					clearInterval(RECOGNITION_LIBRARY.countdown)
+				try {
+					// cancel countdown
+						clearInterval(RECOGNITION_LIBRARY.wait)
+						clearInterval(RECOGNITION_LIBRARY.countdown)
 
-				// unset global
-					RECOGNITION_LIBRARY.active = false
+					// unset global
+						RECOGNITION_LIBRARY.active = false
 
-				// button & text bar
-					ELEMENT_LIBRARY["inputs-countdown"].style.width = "0%"
-					ELEMENT_LIBRARY["inputs-text"].removeAttribute("disabled")
-					ELEMENT_LIBRARY["inputs-text"].focus()
+					// button & text bar
+						ELEMENT_LIBRARY["inputs-countdown"].style.width = "0%"
+						ELEMENT_LIBRARY["inputs-text"].removeAttribute("disabled")
 
-				// continue
-					if (continuable) {
-						RECOGNITION_LIBRARY.recognition.stop()
-					}
+					// continuable ? stop --> matching
+						if (continuable) {
+							RECOGNITION_LIBRARY.recognition.stop()
+						}
 
-				// abort
-					else {
-						RECOGNITION_LIBRARY.recognition.stop()
-						RECOGNITION_LIBRARY.recognition.abort()
-					}
+					// not continuable ? abort --> no matching --> listen for whistles
+						else {
+							RECOGNITION_LIBRARY.recognition.abort()
+							FUNCTION_LIBRARY.changeWhistleListen(true)
+						}
+				} catch (error) {}
 			}
 
 	/*** phrases ***/
@@ -961,458 +1060,518 @@ window.addEventListener("load", function() {
 			ELEMENT_LIBRARY["inputs-form"].addEventListener("submit", submitPhrase)
 			FUNCTION_LIBRARY.submitPhrase = submitPhrase
 			function submitPhrase(event) {
-				// get text
-					var phrase = ELEMENT_LIBRARY["inputs-text"].value || ""
+				try {
+					// get text
+						var phrase = ELEMENT_LIBRARY["inputs-text"].value || ""
 
-				// clear text / bar
-					ELEMENT_LIBRARY["inputs-text"].value = ""
-					ELEMENT_LIBRARY["inputs-countdown"].style.width = "0%"
+					// clear text / bar
+						ELEMENT_LIBRARY["inputs-text"].value = ""
+						ELEMENT_LIBRARY["inputs-countdown"].style.width = "0%"
 
-				// submit to match
-					FUNCTION_LIBRARY.matchPhrase({
-						inputType: "written",
-						results: [[{transcript: phrase}]]
-					})
+					// submit to match
+						FUNCTION_LIBRARY.matchPhrase({
+							inputType: "written",
+							results: [[{transcript: phrase}]]
+						})
+				} catch (error) {}
 			}
 
 		/* matchPhrase */
 			FUNCTION_LIBRARY.matchPhrase = matchPhrase
 			function matchPhrase(event) {
-				// cancel countdown
-					clearInterval(RECOGNITION_LIBRARY.countdown)
+				try {
+					// cancel countdown
+						clearInterval(RECOGNITION_LIBRARY.countdown)
 
-				// get phrase
-					if (!event || !event.results || !event.results[0] || !event.results[0][0] || !event.results[0][0].transcript) {
-						return false
-					}
-					else {
+					// no detected phrases --> stop as not continuable (--> abort --> listen for whistles)
+						if (!event || !event.results || !event.results[0] || !event.results[0][0] || !event.results[0][0].transcript) {
+							FUNCTION_LIBRARY.stopRecognizing(false)
+							return false
+						}
+					
+					// get phrase
 						var phrase = event.results[0][0].transcript
-					}
 
-				// followup
-					var followup = (event.inputType == "written") ? false : true					
+					// followup
+						var followup = (event.inputType == "written") ? false : true					
 
-				// match phrase to stop command
-					if (ERROR_LIBRARY["stop-phrases"].includes(phrase.trim())) {
-						var action = "stop"
-						var remainder = []
-						    followup = false
-					}
+					// match phrase to stop command
+						if (ERROR_LIBRARY["stop-phrases"].includes(phrase.trim())) {
+							var action = "stop"
+							var remainder = []
+							    followup = false
+						}
 
-				// last word is cancel
-					else if (phrase.toLowerCase().includes("cancel") && phrase.toLowerCase().trim().lastIndexOf("cancel") == phrase.trim().length - 6) {
-						return false
-					}
+					// last word is cancel --> listen for whistles
+						else if (phrase.toLowerCase().includes("cancel") && phrase.toLowerCase().trim().lastIndexOf("cancel") == phrase.trim().length - 6) {
+							FUNCTION_LIBRARY.changeWhistleListen(true)
+							return false
+						}
 
-				// existing flow?
-					else if (CONTEXT_LIBRARY.flow) {
-						var action = CONTEXT_LIBRARY.flow
-						var remainder = phrase.split(/\s/gi)
-					}
+					// existing flow?
+						else if (CONTEXT_LIBRARY.flow) {
+							var action = CONTEXT_LIBRARY.flow
+							var remainder = phrase.split(/\s/gi)
+						}
 
-				// match phrase to an action in the library
-					else {
-						var phraseText = phrase.split(/\s/gi)
-						var remainder = []
-						
-						do {
-							var action = PHRASE_LIBRARY[phraseText.join(" ").toLowerCase().replace(/[?!.,:;'"\-_\/\(\)\$\%]/gi,"")] || null
+					// match phrase to an action in the library
+						else {
+							var phraseText = phrase.split(/\s/gi)
+							var remainder = []
 							
-							if (!action) {
-								remainder.unshift(phraseText.pop())
-							}
-						} while ((!action || !ACTION_LIBRARY[action]) && phraseText.length)
+							do {
+								var action = PHRASE_LIBRARY[phraseText.join(" ").toLowerCase().replace(/[?!.,:;'"\-_\/\(\)\$\%]/gi,"")] || null
+								
+								if (!action) {
+									remainder.unshift(phraseText.pop())
+								}
+							} while ((!action || !ACTION_LIBRARY[action]) && phraseText.length)
 
-						// no action, but lastIncompleteAction
-							if ((!action || !ACTION_LIBRARY[action]) && CONTEXT_LIBRARY.lastIncompleteAction && ACTION_LIBRARY[CONTEXT_LIBRARY.lastIncompleteAction]) {
-								action = CONTEXT_LIBRARY.lastIncompleteAction
-							}
-					}
+							// no action, but lastIncompleteAction
+								if ((!action || !ACTION_LIBRARY[action]) && CONTEXT_LIBRARY.lastIncompleteAction && ACTION_LIBRARY[CONTEXT_LIBRARY.lastIncompleteAction]) {
+									action = CONTEXT_LIBRARY.lastIncompleteAction
+								}
+						}
 
-				// enact phrase
-					FUNCTION_LIBRARY.enactPhrase(phrase, action, (remainder.join(" ") || ""), followup)
+					// enact phrase
+						FUNCTION_LIBRARY.enactPhrase(phrase, action, (remainder.join(" ") || ""), followup)
+				} catch (error) {}
 			}
 
 		/* enactPhrase */
 			FUNCTION_LIBRARY.enactPhrase = enactPhrase
 			function enactPhrase(phrase, action, remainder, followup) {
-				// stop phrase
-					if (action == "stop") {
-						// end flow
-							var previousFlow = CONTEXT_LIBRARY.flow
-							CONTEXT_LIBRARY.flow = null
-							if (previousFlow) {
-								delete CONTEXT_LIBRARY[previousFlow]
-							}
-
-						// end lastIncompleteAction
-							CONTEXT_LIBRARY.lastIncompleteAction = null
-
-						// end videos
-							if (CONTEXT_LIBRARY.lastResponseVideo) {
-								stopVideo(CONTEXT_LIBRARY.lastResponseVideo)
-							}
-						
-						// stop speaking
-							VOICE_LIBRARY.synthesizer.pause()
-							VOICE_LIBRARY.synthesizer.cancel()
-
-						createHistory(phrase || "stop", action, "", {icon: "&#x1f6ab;", auto: true, message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop", followup: false})
-					}
-
-				// no action
-					else if (!action || !ACTION_LIBRARY[action]) {
-						var message = ERROR_LIBRARY["noaction-responses"][ERROR_LIBRARY["noaction-index"]]
-
-						ERROR_LIBRARY["noaction-index"] = (ERROR_LIBRARY["noaction-index"] == ERROR_LIBRARY["noaction-responses"].length - 1) ? 0 : (ERROR_LIBRARY["noaction-index"] + 1)
-						createHistory(phrase, "no action", "", {icon: "&#x1f6a9;", error: true, message: message, html: message, followup: followup})
-					}
-
-				// phrase & action
-					else {
-						ACTION_LIBRARY[action](remainder, function(response) {
-							// no response
-								if (typeof response === undefined || response === null) {
-									var message = ERROR_LIBRARY["error-responses"][ERROR_LIBRARY["error-index"]]
-									ERROR_LIBRARY["error-index"] = (ERROR_LIBRARY["error-index"] == ERROR_LIBRARY["error-responses"].length - 1) ? 0 : (ERROR_LIBRARY["error-index"] + 1)
-									var response = {icon: "&#x1f6a9;", error: true, message: message, html: message, followup: followup}
+				try {
+					// stop phrase
+						if (action == "stop") {
+							// end flow
+								var previousFlow = CONTEXT_LIBRARY.flow
+								CONTEXT_LIBRARY.flow = null
+								if (previousFlow) {
+									delete CONTEXT_LIBRARY[previousFlow]
 								}
 
-							// followup?
-								if (followup === false) {
-									response.followup = false
-								}
-								else if (response.followup === false) {
-									response.followup = false
-								}
-								else {
-									response.followup = true
-								}
+							// end lastIncompleteAction
+								CONTEXT_LIBRARY.lastIncompleteAction = null
 
-							// history
-								createHistory(phrase, action, remainder, response)
-						})
-					}
+							// end videos
+								if (CONTEXT_LIBRARY.lastResponseVideo) {
+									stopVideo(CONTEXT_LIBRARY.lastResponseVideo)
+								}
+							
+							// stop speaking
+								VOICE_LIBRARY.synthesizer.pause()
+								VOICE_LIBRARY.synthesizer.cancel()
+
+							createHistory(phrase || "stop", action, "", {icon: "&#x1f6ab;", auto: true, message: "", html: previousFlow ? ("ended flow: " + previousFlow) : "stop", followup: false})
+						}
+
+					// no action
+						else if (!action || !ACTION_LIBRARY[action]) {
+							var message = ERROR_LIBRARY["noaction-responses"][ERROR_LIBRARY["noaction-index"]]
+
+							ERROR_LIBRARY["noaction-index"] = (ERROR_LIBRARY["noaction-index"] == ERROR_LIBRARY["noaction-responses"].length - 1) ? 0 : (ERROR_LIBRARY["noaction-index"] + 1)
+							createHistory(phrase, "no action", "", {icon: "&#x1f6a9;", error: true, message: message, html: message, followup: followup})
+						}
+
+					// phrase & action
+						else {
+							ACTION_LIBRARY[action](remainder, function(response) {
+								// no response
+									if (typeof response === undefined || response === null) {
+										var message = ERROR_LIBRARY["error-responses"][ERROR_LIBRARY["error-index"]]
+										ERROR_LIBRARY["error-index"] = (ERROR_LIBRARY["error-index"] == ERROR_LIBRARY["error-responses"].length - 1) ? 0 : (ERROR_LIBRARY["error-index"] + 1)
+										var response = {icon: "&#x1f6a9;", error: true, message: message, html: message, followup: followup}
+									}
+
+								// followup?
+									if (followup === false) {
+										response.followup = false
+									}
+									else if (response.followup === false) {
+										response.followup = false
+									}
+									else {
+										response.followup = true
+									}
+
+								// history
+									createHistory(phrase, action, remainder, response)
+							})
+						}
+				} catch (error) {}
 			}
 
 	/*** stream output ***/
 		/* createHistory */
 			FUNCTION_LIBRARY.createHistory = createHistory
 			function createHistory(phrase, action, remainder, response) {
-				// context
-					CONTEXT_LIBRARY.lastResponseIcon = response.icon
-					CONTEXT_LIBRARY.lastResponseMessage = response.message
-					CONTEXT_LIBRARY.lastResponseHTML = response.html
+				try {
+					// context
+						CONTEXT_LIBRARY.lastResponseIcon = response.icon
+						CONTEXT_LIBRARY.lastResponseMessage = response.message
+						CONTEXT_LIBRARY.lastResponseHTML = response.html
 
-					if (response.error) {
-						CONTEXT_LIBRARY.lastIncompleteAction = action
-					}
-					else {
-						CONTEXT_LIBRARY.lastIncompleteAction = null
-					}
+						if (response.error) {
+							CONTEXT_LIBRARY.lastIncompleteAction = action
+						}
+						else {
+							CONTEXT_LIBRARY.lastIncompleteAction = null
+						}
 
-					if (!["no action", "stop", "repeat that", "do that again", "get next result"].includes(action)) {
-						CONTEXT_LIBRARY.lastPhrase = phrase
-						CONTEXT_LIBRARY.lastAction = action
-						CONTEXT_LIBRARY.lastRemainder = remainder
-					}
+						if (!["no action", "stop", "repeat that", "do that again", "get next result"].includes(action)) {
+							CONTEXT_LIBRARY.lastPhrase = phrase
+							CONTEXT_LIBRARY.lastAction = action
+							CONTEXT_LIBRARY.lastRemainder = remainder
+						}
 
-					if (response.number) {
-						CONTEXT_LIBRARY.lastResponseNumber = response.number
-					}
-					if (response.time) {
-						CONTEXT_LIBRARY.lastResponseTime = response.time
-					}
-					if (response.word) {
-						CONTEXT_LIBRARY.lastResponseWord = response.word
-					}
-					if (response.url) {
-						CONTEXT_LIBRARY.lastResponseURL = response.url
-					}
-					if (response.video) {
-						CONTEXT_LIBRARY.lastResponseVideo = response.video
-					}
-					if (response.results) {
-						CONTEXT_LIBRARY.lastResults = response.results
-					}
-					
-				// visuals
-					var historyBlock = document.createElement("div")
-						historyBlock.className = "stream-history" + (response.error ? " stream-history-error" : "") + (response.auto ? " stream-history-auto" : "")
+						if (response.number) {
+							CONTEXT_LIBRARY.lastResponseNumber = response.number
+						}
+						if (response.time) {
+							CONTEXT_LIBRARY.lastResponseTime = response.time
+						}
+						if (response.word) {
+							CONTEXT_LIBRARY.lastResponseWord = response.word
+						}
+						if (response.url) {
+							CONTEXT_LIBRARY.lastResponseURL = response.url
+						}
+						if (response.video) {
+							CONTEXT_LIBRARY.lastResponseVideo = response.video
+						}
+						if (response.results) {
+							CONTEXT_LIBRARY.lastResults = response.results
+						}
+						
+					// visuals
+						var historyBlock = document.createElement("div")
+							historyBlock.className = "stream-history" + (response.error ? " stream-history-error" : "") + (response.auto ? " stream-history-auto" : "")
 
-					var phraseBlock = document.createElement("div")
-						phraseBlock.className = "stream-history-phrase"
-						phraseBlock.innerText = phrase || ""
-					historyBlock.appendChild(phraseBlock)
+						var phraseBlock = document.createElement("div")
+							phraseBlock.className = "stream-history-phrase"
+							phraseBlock.innerText = phrase || ""
+						historyBlock.appendChild(phraseBlock)
 
-					var actionBlock = document.createElement("div")
-						actionBlock.className = "stream-history-action"
-					historyBlock.appendChild(actionBlock)
+						var actionBlock = document.createElement("div")
+							actionBlock.className = "stream-history-action"
+						historyBlock.appendChild(actionBlock)
 
-						var actionIconBlock = document.createElement("div")
-							actionIconBlock.className = "stream-history-action-icon"
-							actionIconBlock.innerHTML = response.icon || ""
-						actionBlock.appendChild(actionIconBlock)
+							var actionIconBlock = document.createElement("div")
+								actionIconBlock.className = "stream-history-action-icon"
+								actionIconBlock.innerHTML = response.icon || ""
+							actionBlock.appendChild(actionIconBlock)
 
-						var actionNameBlock = document.createElement("div")
-							actionNameBlock.className = "stream-history-action-name"
-							actionNameBlock.innerText = action || ""
-						actionBlock.appendChild(actionNameBlock)
+							var actionNameBlock = document.createElement("div")
+								actionNameBlock.className = "stream-history-action-name"
+								actionNameBlock.innerText = action || ""
+							actionBlock.appendChild(actionNameBlock)
 
-						var actionTimeBlock = document.createElement("div")
-							actionTimeBlock.className = "stream-history-action-time"
-							actionTimeBlock.innerText = new Date().toLocaleTimeString()
-						actionBlock.appendChild(actionTimeBlock)
+							var actionTimeBlock = document.createElement("div")
+								actionTimeBlock.className = "stream-history-action-time"
+								actionTimeBlock.innerText = new Date().toLocaleTimeString()
+							actionBlock.appendChild(actionTimeBlock)
 
-					var responseBlock = document.createElement("div")
-						responseBlock.className = "stream-history-response"
-						responseBlock.innerHTML = response.html || ""
-					historyBlock.appendChild(responseBlock)
+						var responseBlock = document.createElement("div")
+							responseBlock.className = "stream-history-response"
+							responseBlock.innerHTML = response.html || ""
+						historyBlock.appendChild(responseBlock)
 
-				// prepend to stream
-					ELEMENT_LIBRARY["stream"].prepend(historyBlock)
+					// prepend to stream
+						ELEMENT_LIBRARY["stream"].prepend(historyBlock)
 
-				// speak
-					if (response.message) {
-						FUNCTION_LIBRARY.voiceResponse(response)
-					}
+					// followup?
+						if (!response.message && response.followup) {
+							FUNCTION_LIBRARY.startRecognizing()
+						}
 
-				// followup
-					else if (response.followup) {
-						FUNCTION_LIBRARY.startRecognizing()
-					}
+					// speak
+						else {
+							// reactivate microphone
+								FUNCTION_LIBRARY.changeWhistleListen(true)
+
+							// speak
+								if (response.message) {
+									FUNCTION_LIBRARY.voiceResponse(response)
+								}
+						}
+				} catch (error) {}
 			}
 
 		/* stopVideo */
 			FUNCTION_LIBRARY.stopVideo = stopVideo
 			function stopVideo(id) {
-				// find element
-					var video = document.getElementById(id)
+				try {
+					// find element
+						var video = document.getElementById(id)
 
-				// no video
-					if (!video) {
-						return false
-					}
+					// no video
+						if (!video) {
+							return false
+						}
 
-				// youtube iframe --> reload without autoplay
-					if (video.tagName.toLowerCase() == "iframe" && video.src.includes("youtube")) {
-						video.src = video.src.replace("autoplay=1","autoplay=0")
-						return true
-					}
+					// youtube iframe --> reload without autoplay
+						if (video.tagName.toLowerCase() == "iframe" && video.src.includes("youtube")) {
+							video.src = video.src.replace("autoplay=1","autoplay=0")
+							return true
+						}
+				} catch (error) {}
 			}
 
 		/* restartVideo */
 			FUNCTION_LIBRARY.restartVideo = restartVideo
 			function restartVideo(id) {
-				// find element
-					var video = document.getElementById(id)
+				try {
+					// find element
+						var video = document.getElementById(id)
 
-				// no video
-					if (!video) {
-						return false
-					}
+					// no video
+						if (!video) {
+							return false
+						}
 
-				// youtube iframe --> reload with autoplay
-					if (video.tagName.toLowerCase() == "iframe" && video.src.includes("youtube")) {
-						video.src = video.src.includes("autoplay=1") ? video.src : video.src.includes("autoplay=0") ? video.src.replace("autoplay=0", "autoplay=1") : (video.src + "?autoplay=1")
-					}
+					// youtube iframe --> reload with autoplay
+						if (video.tagName.toLowerCase() == "iframe" && video.src.includes("youtube")) {
+							video.src = video.src.includes("autoplay=1") ? video.src : video.src.includes("autoplay=0") ? video.src.replace("autoplay=0", "autoplay=1") : (video.src + "?autoplay=1")
+						}
+				} catch (error) {}
 			}
 
 		/* checkAlarms */
 			FUNCTION_LIBRARY.checkAlarms = checkAlarms
 			function checkAlarms() {
-				// current time
-					var timeNow = new Date().getTime()
+				try {
+					// current time
+						var timeNow = new Date().getTime()
 
-				// loop through timers to check (and send a message)
-					for (var i = 0; i < CONTEXT_LIBRARY.alarms.length; i++) {
-						if (CONTEXT_LIBRARY.alarms[i] && CONTEXT_LIBRARY.alarms[i] <= timeNow) {
-							createHistory("...", "alarm", "", {icon: "&#x23f0;", auto: true, message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "<h2>alarm #" + (i + 1) + ": <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b></h2>", followup: false, auto: true})
-							CONTEXT_LIBRARY.alarms[i] = null
+					// loop through timers to check (and send a message)
+						for (var i = 0; i < CONTEXT_LIBRARY.alarms.length; i++) {
+							if (CONTEXT_LIBRARY.alarms[i] && CONTEXT_LIBRARY.alarms[i] <= timeNow) {
+								createHistory("...", "alarm", "", {icon: "&#x23f0;", auto: true, message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "<h2>alarm #" + (i + 1) + ": <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b></h2>", followup: false, auto: true})
+								CONTEXT_LIBRARY.alarms[i] = null
+							}
 						}
-					}
+				} catch (error) {}
 			}
 
 		/* checkStartListening */
 			FUNCTION_LIBRARY.checkStartListening = checkStartListening
 			function checkStartListening() {
-				// current time
-					var timeNow = new Date().getTime()
+				try {
+					// current time
+						var timeNow = new Date().getTime()
 
-				// check if startListening is set and in the past
-					if (CONTEXT_LIBRARY.startListening && CONTEXT_LIBRARY.startListening <= timeNow) {
-						FUNCTION_LIBRARY.changeWhistleOn({forceOn: true})
-						createHistory("...", "start listening", "", {icon: "&#x1f50a;", auto: true, message: "", html: "<h2>whistle detection turned on at <b>" + new Date(CONTEXT_LIBRARY.startListening).toLocaleString() + "</b></h2>", followup: false})
-						CONTEXT_LIBRARY.startListening = null
-					}
+					// check if startListening is set and in the past
+						if (CONTEXT_LIBRARY.startListening && CONTEXT_LIBRARY.startListening <= timeNow) {
+							FUNCTION_LIBRARY.changeWhistleOn({forceOn: true})
+							createHistory("...", "start listening", "", {icon: "&#x1f50a;", auto: true, message: "", html: "<h2>whistle detection turned on at <b>" + new Date(CONTEXT_LIBRARY.startListening).toLocaleString() + "</b></h2>", followup: false})
+							CONTEXT_LIBRARY.startListening = null
+						}
+				} catch (error) {}
 			}
 
 	/*** voices ***/
 		/* initializeVoices */
 			FUNCTION_LIBRARY.initializeVoices = initializeVoices
 			function initializeVoices() {
-				// create synthesizer
-					VOICE_LIBRARY.synthesizer = window.speechSynthesis
+				try {
+					// clear options
+						ELEMENT_LIBRARY["inputs-voice"].innerHTML = ""
 
-				// clear options
-					ELEMENT_LIBRARY["inputs-voice"].innerHTML = ""
-
-				// default (no voice)
-					var option = document.createElement("option")
-						option.innerText = "no voice"
-						option.value = null
-					ELEMENT_LIBRARY["inputs-voice"].appendChild(option)
-
-				// get all voices
-					VOICE_LIBRARY.voices = VOICE_LIBRARY.voices || {}
-					var voiceList = VOICE_LIBRARY.synthesizer.getVoices()
-					for (var i in voiceList) {
-						VOICE_LIBRARY.voices[voiceList[i].name.toLowerCase().trim()] = voiceList[i]
-					}
-
-				// loop through voices
-					for (var i in VOICE_LIBRARY.voices) {
+					// default (no voice)
 						var option = document.createElement("option")
-							option.innerText = i
-							option.value = i
+							option.innerText = "no voice"
+							option.value = null
 						ELEMENT_LIBRARY["inputs-voice"].appendChild(option)
-					}
 
-				// select first voice
-					if (voiceList.length) {
-						ELEMENT_LIBRARY["inputs-voice"].value = voiceList[0].name.toLowerCase().trim()
-						CONFIGURATION_LIBRARY.settings["voice"] =voiceList[0].name.toLowerCase().trim()
-					}
+					// create synthesizer
+						VOICE_LIBRARY.voices = {}
+						VOICE_LIBRARY.synthesizer = window.speechSynthesis
+						VOICE_LIBRARY.synthesizer.onvoiceschanged = loadVoices
+
+					// load voices
+						if (!VOICE_LIBRARY.voices || !Object.keys(VOICE_LIBRARY.voices).length) {
+							loadVoices() // force voices to load
+						}
+				} catch (error) {}
+			}
+
+		/* loadVoices */
+			FUNCTION_LIBRARY.loadVoices = loadVoices
+			function loadVoices(event) {
+				try {
+					// get voices
+						var voiceList = window.speechSynthesis.getVoices() || {}
+						if (!voiceList || !voiceList.length) {
+							return false
+						}
+
+					// save voices
+						for (var i in voiceList) {
+							VOICE_LIBRARY.voices[voiceList[i].name.toLowerCase().trim()] = voiceList[i]
+						}
+
+					// loop through voices to create options
+						for (var i in VOICE_LIBRARY.voices) {
+							var option = document.createElement("option")
+								option.innerText = i
+								option.value = i
+							ELEMENT_LIBRARY["inputs-voice"].appendChild(option)
+						}
+
+					// select voice from configuration
+						if (CONFIGURATION_LIBRARY.settings["voice"] && VOICE_LIBRARY.voices[CONFIGURATION_LIBRARY.settings["voice"]]) {
+							ELEMENT_LIBRARY["inputs-voice"].value = CONFIGURATION_LIBRARY.settings["voice"]
+						}
+
+					// or else select first voice
+						else if (voiceList.length) {
+							ELEMENT_LIBRARY["inputs-voice"].value = voiceList[0].name.toLowerCase().trim()
+							CONFIGURATION_LIBRARY.settings["voice"] = voiceList[0].name.toLowerCase().trim()
+						}
+				} catch (error) {}
 			}
 
 		/* changeVoice */
 			ELEMENT_LIBRARY["inputs-voice"].addEventListener("change", changeVoice)
 			FUNCTION_LIBRARY.changeVoice = changeVoice
 			function changeVoice(event) {
-				// via select
-					if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-voice"].id && VOICE_LIBRARY.voices[ELEMENT_LIBRARY["inputs-voice"].value.toLowerCase()]) {
-						// set voice from library
-							CONFIGURATION_LIBRARY.settings["voice"] = ELEMENT_LIBRARY["inputs-voice"].value.toLowerCase()
-							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-					}
-
-				// via action
-					else if (event.name) {
-						// if voice exists
-							if (VOICE_LIBRARY.voices[event.name]) {
-								CONFIGURATION_LIBRARY.settings["voice"] = event.name
+				try {
+					// via select
+						if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-voice"].id && VOICE_LIBRARY.voices[ELEMENT_LIBRARY["inputs-voice"].value.toLowerCase()]) {
+							// set voice from library
+								CONFIGURATION_LIBRARY.settings["voice"] = ELEMENT_LIBRARY["inputs-voice"].value.toLowerCase()
 								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-								ELEMENT_LIBRARY["inputs-voice"].value = event.name
-								return event.name
-							}
+						}
 
-						// otherwise
-							else {
-								return false
-							}
-					}
+					// via action
+						else if (event.name) {
+							// if voice exists
+								if (VOICE_LIBRARY.voices[event.name]) {
+									CONFIGURATION_LIBRARY.settings["voice"] = event.name
+									window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+									ELEMENT_LIBRARY["inputs-voice"].value = event.name
+									return event.name
+								}
+
+							// otherwise
+								else {
+									return false
+								}
+						}
+				} catch (error) {}
 			}
 
 		/* changeVoiceVolume */
 			ELEMENT_LIBRARY["inputs-voice-volume"].addEventListener("change", changeVoiceVolume)
 			FUNCTION_LIBRARY.changeVoiceVolume = changeVoiceVolume
 			function changeVoiceVolume(event) {
-				// via input
-					if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-voice-volume"].id) {
-						// set volume
-							CONFIGURATION_LIBRARY.settings["voice-volume"] = Math.max(0, Math.min(100, Number(ELEMENT_LIBRARY["inputs-voice-volume"].value)))
-							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-					}
-
-				// via action
-					else if (event.volume !== undefined) {
-						// if not a number
-							if (isNaN(Number(event.volume))) {
-								return false
-							}
-
-						// otherwise
-							else {
-								var newVolume = Math.round(Math.max(0, Math.min(100, Number(event.volume))))
-								ELEMENT_LIBRARY["inputs-voice-volume"].value = newVolume
-								CONFIGURATION_LIBRARY.settings["voice-volume"] = newVolume
+				try {
+					// via input
+						if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-voice-volume"].id) {
+							// set volume
+								CONFIGURATION_LIBRARY.settings["voice-volume"] = Math.max(0, Math.min(100, Number(ELEMENT_LIBRARY["inputs-voice-volume"].value)))
 								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-								return newVolume
-							}
-					}
+						}
 
-				// otherwise
-					else {
-						return false
-					}
+					// via action
+						else if (event.volume !== undefined) {
+							// if not a number
+								if (isNaN(Number(event.volume))) {
+									return false
+								}
+
+							// otherwise
+								else {
+									var newVolume = Math.round(Math.max(0, Math.min(100, Number(event.volume))))
+									ELEMENT_LIBRARY["inputs-voice-volume"].value = newVolume
+									CONFIGURATION_LIBRARY.settings["voice-volume"] = newVolume
+									window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+									return newVolume
+								}
+						}
+
+					// otherwise
+						else {
+							return false
+						}
+				} catch (error) {}
 			}
 
 		/* voiceResponse */
 			FUNCTION_LIBRARY.voiceResponse = voiceResponse
 			function voiceResponse(response) {
-				setTimeout(function() {
-					// remove previous utterances queued up
-						VOICE_LIBRARY.synthesizer.cancel()
+				try {
+					setTimeout(function() {
+						// remove previous utterances queued up
+							VOICE_LIBRARY.synthesizer.cancel()
 
-					// speak the transcript
-						if (CONFIGURATION_LIBRARY.settings["voice"] && VOICE_LIBRARY.voices[CONFIGURATION_LIBRARY.settings["voice"]]) {
-							// language
-								if (response.language) {
-									var voiceName = Object.keys(VOICE_LIBRARY.voices).find(function(key) {
-										return VOICE_LIBRARY.voices[key].lang == response.language || VOICE_LIBRARY.voices[key].lang.split("-")[0] == response.language
-									}) || null
-								}
+						// speak the transcript
+							if (CONFIGURATION_LIBRARY.settings["voice"] && VOICE_LIBRARY.voices[CONFIGURATION_LIBRARY.settings["voice"]]) {
+								// language
+									if (response.language) {
+										var voiceName = Object.keys(VOICE_LIBRARY.voices).find(function(key) {
+											return VOICE_LIBRARY.voices[key].lang == response.language || VOICE_LIBRARY.voices[key].lang.split("-")[0] == response.language
+										}) || null
+									}
 
-							// utterance
-								var utterance = new SpeechSynthesisUtterance(response.message)
-									utterance.voice = VOICE_LIBRARY.voices[voiceName || CONFIGURATION_LIBRARY.settings["voice"]]
-									utterance.volume = Math.max(0, Math.min(1, CONFIGURATION_LIBRARY.settings["voice-volume"] / 100))
-								if (response.followup) {
-									utterance.onend = FUNCTION_LIBRARY.startRecognizing
-								}
+								// utterance
+									var utterance = new SpeechSynthesisUtterance(response.message)
+										utterance.voice = VOICE_LIBRARY.voices[voiceName || CONFIGURATION_LIBRARY.settings["voice"]]
+										utterance.volume = Math.max(0, Math.min(1, CONFIGURATION_LIBRARY.settings["voice-volume"] / 100))
+									if (response.followup) {
+										utterance.onend = FUNCTION_LIBRARY.startRecognizing
+									}
 
-							// speak
-								VOICE_LIBRARY.synthesizer.speak(utterance)
-						}
-				}, CONFIGURATION_LIBRARY.settings["voice-delay"])
+								// speak
+									setTimeout(function() {
+										VOICE_LIBRARY.synthesizer.speak(utterance)
+									}, 1000)
+							}
+					}, CONFIGURATION_LIBRARY.settings["voice-delay"])
+				} catch (error) {}
 			}
 
 	/*** communication in/out ***/
 		/* sendPost */
 			FUNCTION_LIBRARY.sendPost = sendPost
 			function sendPost(options, callback) {
-				// create request object and send to server
-					var request = new XMLHttpRequest()
-						request.open("POST", "sendPost", true)
-						request.onload = function() {
-							if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-								callback(JSON.parse(request.responseText) || {success: false, message: "unknown error"})
+				try {
+					// create request object and send to server
+						var request = new XMLHttpRequest()
+							request.open("POST", "sendPost", true)
+							request.onload = function() {
+								if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+									callback(JSON.parse(request.responseText) || {success: false, message: "unknown error"})
+								}
+								else {
+									callback({success: false, readyState: request.readyState, message: request.status})
+								}
 							}
-							else {
-								callback({success: false, readyState: request.readyState, message: request.status})
-							}
-						}
-						request.send(JSON.stringify(options))
+							request.send(JSON.stringify(options))
+				} catch (error) {}
 			}
 
 		/* proxyRequest */
 			FUNCTION_LIBRARY.proxyRequest = proxyRequest
 			function proxyRequest(options, callback, silent) {
-				// set action for server
-					options.action = "proxyRequest"
-					options["bluejay-id"] = CONFIGURATION_LIBRARY.settings["bluejay-id"]
+				try {
+					// set action for server
+						options.action = "proxyRequest"
+						options["bluejay-id"] = CONFIGURATION_LIBRARY.settings["bluejay-id"]
 
-				// set timeout
-					if (!silent) {
-						var timeout = setTimeout(function() {
-							FUNCTION_LIBRARY.createHistory("...", "API request", "", {icon: "&#x231b;", auto: true, message: "I'm fetching that now.", html: "querying the API...", followup: false})
-						}, CONFIGURATION_LIBRARY.settings["fetch-interval"])
-					}
+					// set timeout
+						if (!silent) {
+							var timeout = setTimeout(function() {
+								FUNCTION_LIBRARY.createHistory("...", "API request", "", {icon: "&#x231b;", auto: true, message: "I'm fetching that now.", html: "querying the API...", followup: false})
+							}, CONFIGURATION_LIBRARY.settings["fetch-interval"])
+						}
 
-				// create request object and send to server, then clear timeout on response
-					sendPost(options, function(response) {
-						if (timeout) { clearInterval(timeout) }
-						callback(response)
-					})
+					// create request object and send to server, then clear timeout on response
+						sendPost(options, function(response) {
+							if (timeout) { clearInterval(timeout) }
+							callback(response)
+						})
+				} catch (error) {}
 			}
 })
