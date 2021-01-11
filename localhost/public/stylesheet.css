@@ -439,13 +439,14 @@
 			width: var(--medium-font-size);
 			height: var(--medium-font-size);
 			padding: calc(var(--border-size) * 2);
-			font-size: var(--medium-font-size);
+			font-size: calc(var(--medium-font-size) - var(--border-size));
+			text-align: center;
 			user-select: none;
 			-webkit-user-select: none;
 			-moz-user-select: none;
 			-ms-user-select: none;
 			-o-user-select: none;
-			line-height: 1.2;
+			line-height: 1.3;
 		}
 
 		.stream-history-action-name {
