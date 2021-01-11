@@ -667,7 +667,7 @@ window.addEventListener("load", function() {
 							audio.volume = 0.5
 						SOUND_LIBRARY.chirp = audio
 						setTimeout(function() {
-							SOUND_LIBRARY.chirpDuration = audio.duration * 1000
+							SOUND_LIBRARY.chirpDuration = audio.duration * 1000 + 500
 						}, CONFIGURATION_LIBRARY.settings["voice-delay"])
 				} catch (error) {}
 			}
@@ -980,7 +980,7 @@ window.addEventListener("load", function() {
 
 						// chirp
 							var chirpDelay = 0
-							if (!MOBILE && event && event.chirp && SOUND_LIBRARY.chirp) {
+							if (event && event.chirp && SOUND_LIBRARY.chirp) {
 								try {
 									SOUND_LIBRARY.chirp.pause()
 									SOUND_LIBRARY.chirp.currentTime = 0
