@@ -1515,8 +1515,8 @@ window.addEventListener("load", function() {
 										}) || null
 									}
 
-								// utterance
-									var utterance = new SpeechSynthesisUtterance(response.message)
+								// utterance (add filler for mobile due to inconsistent speech start / audio start)
+									var utterance = new SpeechSynthesisUtterance((MOBILE ? "bluejay message: " : "") + response.message)
 										utterance.voice = VOICE_LIBRARY.voices[voiceName || CONFIGURATION_LIBRARY.settings["voice"]]
 										utterance.volume = Math.max(0, Math.min(1, CONFIGURATION_LIBRARY.settings["voice-volume"] / 100))
 									if (response.followup) {
