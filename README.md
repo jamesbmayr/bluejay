@@ -325,6 +325,11 @@ Other actions involve fetching information from an external API. Several of thes
 <li>"get definition" → https://api.datamuse.com/words?md=d&sp=<b>{search}</b></li>
 </ul>
 
+<h4>PoetryDB</h4>
+<ul>
+<li>"get a poem" → https://poetrydb.org/random</li>
+</ul>
+
 <h4>ICanHazDadJoke</h4>
 <ul>
 <li>"get a joke" → https://icanhazdadjoke.com/slack</li>
@@ -338,6 +343,11 @@ Other actions involve fetching information from an external API. Several of thes
 <h4>Yerkee</h4>
 <ul>
 <li>"get a fortune" → http://yerkee.com/api/fortune</li>
+</ul>
+
+<h4>Complimentr</h4>
+<ul>
+<li>"get a compliment" → https://complimentr.com/api</li>
 </ul>
 
 <h4>EvilInsult</h4>
@@ -405,7 +415,7 @@ Other APIs will require you to create a developer account and add your credentia
 <ul>
 <li>actions:
 <ul>
-<li>"trigger ifttt" → https://maker.ifttt.com/trigger/bluejay_<b>{command}</b>/with/key/<b>{ifttt key}</b></li>
+<li>"trigger ifttt" → https://maker.ifttt.com/trigger/bluejay_<b>{command}</b>/with/key/<b>{ifttt key}</b> with optional body <code>{"value1": number}</code></li>
 <li>"turn on ifttt device" → https://maker.ifttt.com/trigger/bluejay_<b>{command}</b>_on/with/key/<b>{ifttt key}</b></li>
 <li>"turn off ifttt device" → https://maker.ifttt.com/trigger/bluejay_<b>{command}</b>_off/with/key/<b>{ifttt key}</b></li>
 <li>"toggle ifttt device" → https://maker.ifttt.com/trigger/bluejay_<b>{command}</b>_toggle/with/key/<b>{ifttt key}</b></li>
@@ -431,6 +441,9 @@ Other APIs will require you to create a developer account and add your credentia
 <li>actions:
 <ul>
 <li>"get the weather" → https://api.openweathermap.org/data/2.5/forecast?appid=<b>{key}</b>&q=<b>{search}</b>,us&mode=json&units=imperial</li>
+<li>"get todays weather" → https://api.openweathermap.org/data/2.5/forecast?appid=<b>{key}</b>&q=<b>{search}</b>,us&mode=json&units=imperial</li>
+<li>"get tomorrows weather" → https://api.openweathermap.org/data/2.5/forecast?appid=<b>{key}</b>&q=<b>{search}</b>,us&mode=json&units=imperial</li>
+<li>"get a days weather" → https://api.openweathermap.org/data/2.5/forecast?appid=<b>{key}</b>&q=<b>{search}</b>,us&mode=json&units=imperial</li>
 </ul>
 </li>
 <li>setup:

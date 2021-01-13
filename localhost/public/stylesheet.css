@@ -35,16 +35,14 @@
 
 	/* j-logo */
 		#j-logo {
-			position: absolute;
-			top: 14px;
-			right: 8px;
+			display: inline-block;
 			background-color: transparent;
 			background-image: url("https://jamesmayr.com/resources/j.png");
 			background-repeat: no-repeat;
 			background-size: cover;
 			background-position: center center;
-			height: 32px;
-			width: 32px;
+			height: calc(var(--medium-font-size) - var(--border-size));
+			width: calc(var(--medium-font-size) - var(--border-size));
 			cursor: pointer;
 			z-index: 0;
 			outline: none;
@@ -129,9 +127,9 @@
 	#inputs {
 		background-color: transparent;
 		width: calc(100% - 2 * var(--gutter-size));
-		height: calc(var(--big-button-size) * 2);
+		height: var(--big-button-size);
 		position: fixed;
-		top: 0;
+		top: var(--gutter-size);
 		left: var(--gutter-size);
 		text-align: center;
 	}
@@ -139,7 +137,7 @@
 	/* inputs-main */
 		#inputs-main {
 			position: absolute;
-			bottom: 0;
+			top: calc(var(--big-button-size) / 4);
 			left: 50%;
 			transform: translateX(-50%);
 			height: auto;
@@ -149,7 +147,7 @@
 		#inputs-audio {
 			z-index: 5;
 			position: absolute;
-			bottom: calc(-1 * var(--big-button-size) / 4);
+			top: calc(var(--big-button-size) / -4);
 			left: 0;
 			border-radius: 100%;
 			border: var(--border-size) solid var(--dark-gray);
@@ -231,16 +229,32 @@
 		}
 
 		#inputs-advanced {
-			float: left;
-			padding: var(--border-size);
+			position: absolute;
+			top: calc(var(--big-button-size) * 3 / 4);
+			left: 0;
+			padding: var(--border-size) 0;
 			height: auto;
-			width: calc(100% - 2 * var(--border-size));
+			width: 100%;
+			pointer-events: none;
+		}
+
+		#inputs-advanced-background {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: var(--light-gray);
+			z-index: -1;
+			filter: blur(var(--shadow-size));
+			opacity: 0.5;
+			pointer-events: none;
 		}
 
 		#inputs-advanced-toggle {
 			position: absolute;
 			z-index: 3;
-			bottom: 0;
+			top: calc(-1 * (var(--medium-font-size) + 4 * var(--border-size)));
 			right: 0;
 			height: var(--medium-font-size);
 			width: var(--medium-font-size);
@@ -261,6 +275,7 @@
 			-ms-user-select: none;
 			-o-user-select: none;
 			transition: var(--transition-time);
+			pointer-events: all;
 		}
 
 		#inputs-advanced-toggle:hover, #inputs-advanced[open] #inputs-advanced-toggle {
@@ -268,16 +283,11 @@
 		}
 
 		#inputs-advanced-inner {
-			position: absolute;
+			float: right;
 			text-align: right;
-			bottom: calc(var(--big-button-size) / 2);
-			right: 0;
 			width: calc(100% - var(--big-button-size));
 			height: auto;
-			padding: 0 calc(2 * var(--border-size)) 0 0;
-			max-height: calc(var(--big-button-size) + var(--big-button-size) / 2 - var(--border-size));
-			overflow-x: hidden;
-			overflow-y: scroll;
+			pointer-events: none;
 		}
 
 		#inputs-advanced label {
@@ -285,8 +295,8 @@
 			font-size: var(--small-font-size);
 			font-family: var(--font-family);
 			font-weight: bold;
-			color: var(--dark-gray);
-			background-color: var(--medium-gray);
+			color: var(--medium-gray);
+			background-color: var(--dark-gray);
 			border-radius: var(--border-radius);
 			padding: var(--border-size);
 			margin: 0 0 var(--border-size) var(--border-size);
@@ -298,6 +308,8 @@
 			-o-user-select: none;
 			height: calc(var(--small-font-size) + 2 * var(--border-size));
 			max-width: calc(100% - 3 * var(--border-size));
+			vertical-align: bottom;
+			pointer-events: all;
 		}
 
 		#inputs-advanced label span {
@@ -309,6 +321,7 @@
 			overflow: hidden;
 			white-space: nowrap;
 			text-overflow: ellipsis;
+			pointer-events: all;
 		}
 
 		#inputs-advanced input, #inputs-advanced select {
@@ -324,6 +337,7 @@
 			padding: var(--border-size);
 			margin: 0;
 			height: var(--small-font-size);
+			pointer-events: all;
 		}
 
 		#inputs-advanced input[type="checkbox"] {
@@ -373,6 +387,8 @@
 			font-weight: bold;
 			outline: none;
 			transition: var(--transition-time);
+			color: var(--dark-gray);
+			pointer-events: all;
 		}
 
 		#inputs-advanced #inputs-configuration-label:focus, #inputs-advanced #inputs-configuration-label:hover {
@@ -381,9 +397,9 @@
 
 /*** stream ***/
 	#stream {
-		height: calc(100% - var(--big-button-size) * 2);
+		height: calc(100% - var(--big-button-size) * 3 / 4 - var(--gutter-size));
 		width: calc(100% - 2 * var(--gutter-size));
-		margin: calc(var(--big-button-size) * 2) auto 0 auto;
+		margin: calc(var(--big-button-size) * 3 / 4 + var(--gutter-size)) auto 0 auto;
 		overflow-x: hidden;
 		overflow-y: scroll;
 	}

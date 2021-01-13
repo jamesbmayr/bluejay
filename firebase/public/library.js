@@ -109,11 +109,13 @@
 			"do that again": 					"do that again",
 			"one more time": 					"do that again",
 			"do that action again": 			"do that again",
+			"try again": 						"do that again",
 			"try that again": 					"do that again",
 			"try that action again": 			"do that again",
 			"do that one more time": 			"do that again",
 			"can you do that again": 			"do that again",
 			"again": 							"do that again",
+			"go again": 						"do that again",
 
 			"get next result": 					"get next result",
 			"get the next result": 				"get next result",
@@ -680,6 +682,32 @@
 			"whats the meaning of the saying": 	"get idiom",
 
 		// random content
+			"get a poem": 						"get a poem",
+			"read a poem": 						"get a poem",
+			"tell me a poem": 					"get a poem",
+			"read me a poem": 					"get a poem",
+			"know any poems": 					"get a poem",
+			"do you know any poems": 			"get a poem",
+			"say something poetic": 			"get a poem",
+			"be a poet": 						"get a poem",
+			"i could use a poem": 				"get a poem",
+			"tell a poem": 						"get a poem",
+			"tell us a poem": 					"get a poem",
+			"read us a poem": 					"get a poem",
+			"fetch a poem": 					"get a poem",
+			"fetch me a poem": 					"get a poem",
+			"tell me something poetic": 		"get a poem",
+			"get poetry": 						"get a poem",
+			"read poetry": 						"get a poem",
+			"tell me poetry": 					"get a poem",
+			"know any poetry": 					"get a poem",
+			"do you know any poetry": 			"get a poem",
+			"get some poetry": 					"get a poem",
+			"read us poetry": 					"get a poem",
+			"read us some poetry": 				"get a poem",
+			"fetch poetry": 					"get a poem",
+			"fetch me poetry": 					"get a poem",
+
 			"get a joke": 						"get a joke",
 			"tell me a joke": 					"get a joke",
 			"know any jokes": 					"get a joke",
@@ -725,6 +753,27 @@
 			"what is my fortune": 				"get a fortune",
 			"whats my fortune": 				"get a fortune",
 			"get my fortune": 					"get a fortune",
+
+			"get a compliment": 				"get a compliment",
+			"give a compliment": 				"get a compliment",
+			"get me a compliment": 				"get a compliment",
+			"give me a compliment": 			"get a compliment",
+			"compliment me": 					"get a compliment",
+			"get a complement": 				"get a compliment",
+			"give a complement": 				"get a compliment",
+			"get me a complement": 				"get a compliment",
+			"give me a complement": 			"get a compliment",
+			"complement me": 					"get a compliment",
+			"respect me": 						"get a compliment",
+			"say something supportive": 		"get a compliment",
+			"tell me something supportive": 	"get a compliment",
+			"be supportive": 					"get a compliment",
+			"say something nice": 				"get a compliment",
+			"tell me something nice": 			"get a compliment",
+			"be nice": 							"get a compliment",
+			"say something sweet": 				"get a compliment",
+			"tell me something sweet": 			"get a compliment",
+			"be sweet": 						"get a compliment",
 
 			"get an insult": 					"get an insult",
 			"insult me": 						"get an insult",
@@ -796,6 +845,78 @@
 			"will it rain": 					"get the weather",
 			"is it going to snow": 				"get the weather",
 			"will it snow": 					"get the weather",
+
+			"get todays weather": 				"get todays weather",
+			"get the weather for today": 		"get todays weather",
+			"get me the weather for today": 	"get todays weather",
+			"look up the weather for today": 	"get todays weather",
+			"whats the weather today": 			"get todays weather",
+			"what is the weather today": 		"get todays weather",
+			"what will the weather be today": 	"get todays weather",
+			"whats the weather going to be today": "get todays weather",
+			"what is the weather going to be today": "get todays weather",
+			"whats the weather gonna be today": "get todays weather",
+			"what is the weather gonna be today": "get todays weather",
+			"hows the weather today": 			"get todays weather",
+			"how is the weather today": 		"get todays weather",
+			"is it going to rain today": 		"get todays weather",
+			"will it rain today": 				"get todays weather",
+			"is it going to snow today": 		"get todays weather",
+			"will it snow today": 				"get todays weather",
+
+			"get tomorrows weather": 			"get tomorrows weather",
+			"get the weather for tomorrow": 	"get tomorrows weather",
+			"get me the weather for tomorrow": 	"get tomorrows weather",
+			"look up the weather for tomorrow": "get tomorrows weather",
+			"whats the weather tomorrow": 		"get tomorrows weather",
+			"what is the weather tomorrow": 	"get tomorrows weather",
+			"what will the weather be tomorrow": "get tomorrows weather",
+			"whats the weather going to be tomorrow": "get tomorrows weather",
+			"what is the weather going to be tomorrow": "get tomorrows weather",
+			"whats the weather gonna be tomorrow": "get tomorrows weather",
+			"what is the weather gonna be tomorrow": "get tomorrows weather",
+			"hows the weather tomorrow": 		"get tomorrows weather",
+			"how is the weather tomorrow": 		"get tomorrows weather",
+			"is it going to rain tomorrow": 	"get tomorrows weather",
+			"will it rain tomorrow": 			"get tomorrows weather",
+			"is it going to snow tomorrow": 	"get tomorrows weather",
+			"will it snow tomorrow": 			"get tomorrows weather",
+
+			"get a days weather": 				"get a days weather",
+			"get the weather this": 			"get a days weather",
+			"get the weather for this": 		"get a days weather",
+			"get me the weather for this": 		"get a days weather",
+			"look up the weather for this": 	"get a days weather",
+			"whats the weather this": 			"get a days weather",
+			"what is the weather this": 		"get a days weather",
+			"what will the weather be this": 	"get a days weather",
+			"whats the weather going to be this": "get a days weather",
+			"what is the weather going to be this": "get a days weather",
+			"whats the weather gonna be this": "get a days weather",
+			"what is the weather gonna be this": "get a days weather",
+			"hows the weather this": 			"get a days weather",
+			"how is the weather this": 			"get a days weather",
+			"is it going to rain this": 		"get a days weather",
+			"will it rain this": 				"get a days weather",
+			"is it going to snow this": 		"get a days weather",
+			"will it snow this": 				"get a days weather",
+			"get the weather on": 				"get a days weather",
+			"get the weather for on": 			"get a days weather",
+			"get me the weather for on": 		"get a days weather",
+			"look up the weather for on": 		"get a days weather",
+			"whats the weather on": 			"get a days weather",
+			"what is the weather on": 			"get a days weather",
+			"what will the weather be on": 		"get a days weather",
+			"whats the weather going to be on": "get a days weather",
+			"what is the weather going to be on": "get a days weather",
+			"whats the weather gonna be on": 	"get a days weather",
+			"what is the weather gonna be on": "get a days weather",
+			"hows the weather on": 				"get a days weather",
+			"how is the weather on": 				"get a days weather",
+			"is it going to rain on": 			"get a days weather",
+			"will it rain on": 					"get a days weather",
+			"is it going to snow on": 			"get a days weather",
+			"will it snow on": 					"get a days weather",
 
 			"get sunrise": 						"get sunrise",
 			"get the sunrise": 					"get sunrise",
@@ -1758,12 +1879,27 @@
 			"run i f t t t action": 			"trigger ifttt",
 			"run ifttt action": 				"trigger ifttt",
 			"run if this then that action": 	"trigger ifttt",
+			"trigger i f t t t set": 			"trigger ifttt",
+			"trigger ifttt set": 				"trigger ifttt",
+			"trigger if this then that set": 	"trigger ifttt",
+			"i f t t t set": 					"trigger ifttt",
+			"ifttt set": 						"trigger ifttt",
+			"if this then that set": 			"trigger ifttt",
+			"run i f t t t command set": 		"trigger ifttt",
+			"run ifttt command set": 			"trigger ifttt",
+			"run if this then that command set": "trigger ifttt",
+			"run i f t t t action set": 		"trigger ifttt",
+			"run ifttt action set": 			"trigger ifttt",
+			"run if this then that action set": "trigger ifttt",
 			"on i f t t t do": 					"trigger ifttt",
 			"on ifttt do": 						"trigger ifttt",
 			"on if this then that do": 			"trigger ifttt",
 			"do i f t t t action": 				"trigger ifttt",
 			"do ifttt action": 					"trigger ifttt",
 			"do if this then that action": 		"trigger ifttt",
+			"do i f t t t action set": 			"trigger ifttt",
+			"do ifttt action set": 				"trigger ifttt",
+			"do if this then that action set": 	"trigger ifttt",
 			"set ifttt devices": 				"trigger ifttt",
 			"set ifttt device": 				"trigger ifttt",
 			"on ifttt set": 					"trigger ifttt",
@@ -1772,6 +1908,10 @@
 			"on ifttt change": 					"trigger ifttt",
 			"on ifttt alter": 					"trigger ifttt",
 			"on ifttt make": 					"trigger ifttt",
+			"trigger change": 					"trigger ifttt",
+			"trigger command": 					"trigger ifttt",
+			"set": 								"trigger ifttt",
+			"switch": 							"trigger ifttt",
 
 			"turn on ifttt device": 			"turn on ifttt device",
 			"turn on ifttt devices": 			"turn on ifttt device",
@@ -1801,7 +1941,6 @@
 			"on ifttt toggle": 					"toggle ifttt device",
 			"on ifttt flip": 					"toggle ifttt device",
 			"toggle": 							"toggle ifttt device",
-			"switch": 							"toggle ifttt device",
 			"flip": 							"toggle ifttt device",
 
 		// SONOS
@@ -3867,17 +4006,23 @@
 
 					// startNumber
 						var startNumber = remainder.split(/ up from | down from | from | starting at | start at | between | for /gi)
-							startNumber = (startNumber[1] || startNumber[0]).split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)[0].trim()
+							startNumber = (startNumber[1] || startNumber[0]).split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through | with the word | using the word | with | using /gi)[0].trim()
 							startNumber = window.FUNCTION_LIBRARY.getDigits(startNumber)
 						if (startNumber == "that") { startNumber = Number(window.CONTEXT_LIBRARY.lastResponseNumber) }
 						if (!startNumber || isNaN(startNumber)) { startNumber = 1 }
 
 					// end number
 						var endNumber = remainder.split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through /gi)
-							endNumber = (endNumber[1] || endNumber[0]).split(/ up from | down from | starting at | start at | between | for /gi)[0].trim()
+							endNumber = (endNumber[1] || endNumber[0]).split(/ up from | down from | from | starting at | start at | between | for | with the word | using the word | with | using /gi)[0].trim()
 							endNumber = window.FUNCTION_LIBRARY.getDigits(endNumber)
 						if (endNumber == "that") { endNumber = Number(window.CONTEXT_LIBRARY.lastResponseNumber) }
 						if (!endNumber || isNaN(endNumber)) { endNumber = 100 }
+
+					// word
+						var countWord = remainder.split(/ with the word | using the word | with | using /gi)
+							countWord = (countWord[1] || "").split(/ and go to | and go until | up to | down to | to | until | ending at | end at | and | through | up from | down from | from | starting at | start at | between | for | with the word | using the word | with | using /gi)[0].trim()
+						if (countWord == "that") { countWord = Number(window.CONTEXT_LIBRARY.lastResponseWord) }
+						if (!countWord) { countWord = "" }
 
 					// up or down
 						var list = []
@@ -3893,7 +4038,7 @@
 						}
 
 					// message
-						var message = list.join("... ")
+						var message = countWord ? (list.join(" " + countWord + "... ") + "... " + countWord) : list.join("... ")
 						var responseHTML = "<h2>counting from <b>" + String(startNumber) + "</b> to <b>" + String(endNumber) + "</b></h2>"
 						callback({icon: icon, message: message, html: responseHTML})
 				}
@@ -4385,6 +4530,72 @@
 			},
 
 		// random content
+			"get a poem": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4c3;"
+
+					// remainder
+						var search = null
+						remainder = remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						if (remainder) {
+							remainder = remainder.split(/\s/gi)
+
+							// author
+								if (remainder[0] == "by") {
+									search = "author"
+									remainder.shift()
+									remainder = remainder.join(" ")
+								}
+
+							// title
+								else if (remainder[0] == "called" || remainder[0] == "titled") {
+									search = "title"
+									remainder.shift()
+									remainder = remainder.join(" ")
+								}
+						}
+
+					// options
+						var options = {
+							responseType: "json",
+							url: "https://poetrydb.org/" + (search ? (search + "/" + encodeURIComponent(remainder)) : "random")
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// error response
+									if (!response || response.status == 404) {
+										callback({icon: icon, error: true, message: "I couldn't find any poems like that.", html: "No poems found for <h2>" + remainder + "</h2>"})
+										return
+									}
+
+								// search
+									if (search && search == "author") {
+										var poem = window.FUNCTION_LIBRARY.chooseRandom(response)
+									}
+
+								// poem
+									else {
+										var poem = response[0]
+									}
+
+								// response
+									var message = poem.title + " ... by " + poem.author + " ... " + poem.lines.join(" ... ")
+									var url = "https://poetrydb.org/title/" + encodeURIComponent(poem.title)
+									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + poem.title + "</h2></a><a target='_blank' href='https://poetrydb.org/author/" + encodeURIComponent(poem.author) + "'><b>" + poem.author + "</b></a><br><br><div>" + poem.lines.join("</div><div>") + "</div>"
+									callback({icon: icon, message: message, html: responseHTML, url: url})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I don't know any poems.", html: "<h2>Error: unable to access poems</h2>"})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
 			"get a joke": function(remainder, callback) {
 				try {
 					// icon
@@ -4483,6 +4694,34 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
+			"get a compliment": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f44d;"
+
+					// options
+						var options = {
+							responseType: "json",
+							url: "https://complimentr.com/api"
+						}
+
+					// proxy request
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// response
+									var message = response.compliment
+									var responseHTML = "<h2>" + response.compliment + "</h2>"
+									callback({icon: icon, message: message, html: responseHTML})
+							}
+							catch (error) {
+								callback({icon, icon, error: true, message: "Uh... you're awesome.", html: "<h2>Error: unable to access compliments</h2>"})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
 			"get an insult": function(remainder, callback) {
 				try {
 					// icon
@@ -4503,7 +4742,7 @@
 									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
-								callback({icon, icon, error: true, message: "I don't know any insults.", html: "<h2>Error: unable to access insults</h2>"})
+								callback({icon, icon, error: true, message: "Uh... you suck.", html: "<h2>Error: unable to access insults</h2>"})
 							}
 						})
 				}
@@ -4778,6 +5017,112 @@
 								var location = (locale || remainder.trim() || window.CONFIGURATION_LIBRARY["city"] || window.CONFIGURATION_LIBRARY["zip code"])
 								callback({icon: icon, error: true, message: "I was unable to get the weather for " + location, html: "<h2>Error: unable to access the weather for that location:</h2>" + location})
 							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get todays weather": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x26c8;"
+
+					// get week's weather
+						window.ACTION_LIBRARY["get the weather"](remainder, function(responseData) {
+							// error? --> respond
+								if (responseData.error) {
+									callback(responseData)
+									return
+								}
+
+							// extract today
+								responseData.message = responseData.message.split(" ... ").slice(0, 3).join(" ... ")
+								callback(responseData)
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get tomorrows weather": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x26c8;"
+
+					// get week's weather
+						window.ACTION_LIBRARY["get the weather"](remainder, function(responseData) {
+							// error? --> respond
+								if (responseData.error) {
+									callback(responseData)
+									return
+								}
+
+							// extract tomorrow
+								responseData.message = responseData.message.split(" ... ")[0] + " tomorrow ... " + responseData.message.split(" ... ")[3]
+								callback(responseData)
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get a days weather": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x26c8;"
+
+					// no search
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "What day should I get the weather for?", html: "<h2>Error: no day</h2>"})
+							return
+						}
+
+					// remainder
+						remainder = " " + remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						var day = (remainder.split(/ for | in | at /gi)[0] || "").trim()
+						remainder = (remainder.split(/ for | in | at /gi)[1] || "").trim()
+
+					// get the day
+						if (day == "today") {
+							window.ACTION_LIBRARY["get todays weather"](remander, callback)
+							return
+						}
+						if (day == "tomorrow") {
+							window.ACTION_LIBRARY["get tomorrows weather"](remander, callback)
+							return
+						}
+						if (!["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "weekend"].includes(day)) {
+							callback({icon: icon, error: true, message: "I don't understand that day.", html: "<h2>Error: invalid day</h2>"})
+							return
+						}
+
+					// get week's weather
+						window.ACTION_LIBRARY["get the weather"](remainder, function(responseData) {
+							// error? --> respond
+								if (responseData.error) {
+									callback(responseData)
+									return
+								}
+
+							// weekend
+								if (day == "weekend") {
+									responseData.message = responseData.message.split(" ... ")[0] + " for the weekend ... " + (
+									responseData.message.split(" ... ").filter(function(chunk) {
+										return ["saturday", "sunday"].includes(chunk.split(/\s/g)[0].toLowerCase())
+									}).join(" ... ") || "Sorry, I couldn't get the weekend's forecast.")
+								}
+
+							// single day
+								else {
+									responseData.message = responseData.message.split(" ... ")[0] + " ... " + (
+									responseData.message.split(" ... ").find(function(chunk) {
+										return chunk.split(/\s/g)[0].toLowerCase() == day
+									}) || " Sorry, I couldn't get this " + day + "'s forecast.")
+								}
+
+							// respond
+								callback(responseData)
 						})
 				}
 				catch (error) {
@@ -8603,17 +8948,52 @@
 							return
 						}
 
-					// extract words
-						var words = remainder.toLowerCase().split(/\s|_/gi)
-						if (words[0] == "bluejay") {
-							words.shift()
+					// split remainder
+						var components = remainder.replace(/bluejay/gi, "").split(/ to | become | into | at /gi)
+						var deviceName = components[0].trim().replace(/the /gi,"")
+						var desiredState = components[1] ? window.FUNCTION_LIBRARY.getDigits(components[1].replace(/percent|per cent/gi, "").trim()) : null
+						var number = null
+
+					// replace number words with numbers
+						deviceName = deviceName.split(/\s/gi)
+						for (var word in deviceName) {
+							deviceName[word] = window.FUNCTION_LIBRARY.getDigits(deviceName[word])
+							if (deviceName[word] == "light") { // force pluralize to simplify the number of ifttt actions to make
+								deviceName[word] = "lights"
+							}
 						}
+						deviceName = deviceName.join(" ")
+
+					// identify state
+						if (["on", "active", "powered"].includes(desiredState)) {
+							desiredState = "on"
+						}
+						else if (["off", "inactive", "unpowered"].includes(desiredState)) {
+							desiredState = "off"
+						}
+						else if (["toggle"].includes(desiredState)) {
+							desiredState = "toggle"
+						}
+						else if (desiredState !== null && !isNaN(desiredState)) {
+							number = desiredState
+							desiredState = "to"
+						}
+						else {
+							desiredState = desiredState
+						}
+
+					// command
+						var command = deviceName.split(/\s/gi).join("_") + (desiredState ? ("_" + desiredState) : "")
 
 					// build options
 						var options = {
 							method: "POST",
 							responseType: "text",
-							url: "https://maker.ifttt.com/trigger/bluejay_" + words.join("_") + "/with/key/" + window.CONFIGURATION_LIBRARY["ifttt key"]
+							url: "https://maker.ifttt.com/trigger/bluejay_" + command + "/with/key/" + window.CONFIGURATION_LIBRARY["ifttt key"]
+						}
+
+						if (number !== null) {
+							options.body = {"value1": number}
 						}
 
 					// proxy
@@ -8626,21 +9006,27 @@
 									}
 
 								// specific or general?
-									var the = ["all", "every", "each", "some"].includes(words[0]) ? "" : "the "
+									var the = ["all", "every", "each", "some"].includes(deviceName.split(/\s/g)[0]) ? "" : "the "
 
 								// type
-									if (words[words.length - 1] == "on") {
-										var message = "I turned on " + the + words.slice(0,-1).join(" ")
+									if (desiredState == "on") {
+										var message = "I turned on " + the + deviceName
 									}
-									else if (words[words.length - 1] == "off") {
-										var message = "I turned off " + the + words.slice(0,-1).join(" ")
+									else if (desiredState == "off") {
+										var message = "I turned off " + the + deviceName
 									}
-									else if (words[words.length - 1] == "toggle") {
-										var message = "I toggled " + the + words.slice(0,-1).join(" ")
+									else if (desiredState == "toggle") {
+										var message = "I toggled " + the + deviceName
+									}
+									else if (desiredState == "to") {
+										var message = "I set " + the + deviceName + " to " + number
+									}
+									else {
+										var message = "I set " + the + deviceName
 									}
 
 								// html
-									var responseHTML = "<h2><a href='https://ifttt.com/home' target='_blank'>IFTTT</a> action: <b><code>" + words.join("_") + "</code></b></h2>"
+									var responseHTML = "<h2><a href='https://ifttt.com/home' target='_blank'>IFTTT</a> action: <b><code>" + command + (number ? "_" + number : "") + "</code></b></h2>"
 
 								// response
 									callback({icon: icon, message: message, html: responseHTML})
