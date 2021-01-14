@@ -76,6 +76,7 @@ This leverages the speech synthesis functionality of the device to transform res
 <li>Option 2: annoying, then easy
 <ol>
 <li>On chrome://flags/#unsafely-treat-insecure-origin-as-secure, add <code>localhost</code> in the text field and set the select to Enabled.</li>
+<li>On chrome://flags/#allow-insecure-localhost, switch to Enabled.</li>
 <li>Create a security certificate for localhost. <i>(optional, to remove the red warning)</i> You can do that with this command, from <a target="_blank" href="https://letsencrypt.org/docs/certificates-for-localhost/">https://letsencrypt.org/docs/certificates-for-localhost/</a>
 <br>
 <pre>openssl req -x509 -out localhost.crt -keyout localhost.key \
