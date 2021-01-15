@@ -683,6 +683,7 @@
 
 		// random content
 			"get a poem": 						"get a poem",
+			"get me a poem": 					"get a poem",
 			"read a poem": 						"get a poem",
 			"tell me a poem": 					"get a poem",
 			"read me a poem": 					"get a poem",
@@ -796,6 +797,31 @@
 			"yo mamas": 						"get an insult",
 			"yo momma": 						"get an insult",
 			"yo mommas": 						"get an insult",
+
+			"get a fact": 						"get a fact",
+			"get a fun fact": 					"get a fact",
+			"get a random fact": 				"get a fact",
+			"get a snapple fact": 				"get a fact",
+			"get me a fact": 					"get a fact",
+			"get me a fun fact": 				"get a fact",
+			"get me a random fact": 			"get a fact",
+			"get me a snapple fact": 			"get a fact",
+			"give me a fact": 					"get a fact",
+			"give me a fun fact": 				"get a fact",
+			"give me a random fact": 			"get a fact",
+			"give me a snapple fact": 			"get a fact",
+			"tell me a fact": 					"get a fact",
+			"tell me a fun fact": 				"get a fact",
+			"tell me a random fact": 			"get a fact",
+			"tell me a snapple fact": 			"get a fact",
+			"tell me something i dont know": 	"get a fact",
+			"what do you know": 				"get a fact",
+			"tell me something interesting": 	"get a fact",
+			"know anything interesting": 		"get a fact",
+			"do you know anything interesting": "get a fact",
+			"lets hear a fun fact": 			"get a fact",
+			"lets hear a random fact": 			"get a fact",
+			"lets hear a snapple fact": 		"get a fact",
 
 		// search content
 			"get a wikipedia entry": 			"get a wikipedia entry",
@@ -1837,10 +1863,8 @@
 
 			"play true or false": 				"play true or false",
 			"quiz me": 							"play true or false",
-			"tell me a fact": 					"play true or false",
-			"tell me a fun fact": 				"play true or false",
-			"give me a fact": 					"play true or false",
-			"give me a fun fact": 				"play true or false",
+			"ask me a question": 				"play true or false",
+			"ask me some trivia": 				"play true or false",
 			"lets do trivia": 					"play true or false",
 			"lets do some trivia": 				"play true or false",
 			"lets play trivia": 				"play true or false",
@@ -4571,21 +4595,25 @@
 										return
 									}
 
-								// search
+								// all results
+									var results = []
+									for (var i in response) {
+										var poem = response[i]
+										var message = poem.title + " ... by " + poem.author + " ... " + poem.lines.join(" ... ")
+										var url = "https://poetrydb.org/title/" + encodeURIComponent(poem.title)
+										var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + poem.title + "</h2></a><a target='_blank' href='https://poetrydb.org/author/" + encodeURIComponent(poem.author) + "'><b>" + poem.author + "</b></a><br><br><div>" + poem.lines.join("</div><div>") + "</div>"
+										results.push({icon: icon, message: message, html: responseHTML, url: url})
+									}
+								
+								// randomize for author
 									if (search && search == "author") {
-										var poem = window.FUNCTION_LIBRARY.chooseRandom(response)
+										results = FUNCTION_LIBRARY.sortRandom(results)
 									}
 
-								// poem
-									else {
-										var poem = response[0]
-									}
-
-								// response
-									var message = poem.title + " ... by " + poem.author + " ... " + poem.lines.join(" ... ")
-									var url = "https://poetrydb.org/title/" + encodeURIComponent(poem.title)
-									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + poem.title + "</h2></a><a target='_blank' href='https://poetrydb.org/author/" + encodeURIComponent(poem.author) + "'><b>" + poem.author + "</b></a><br><br><div>" + poem.lines.join("</div><div>") + "</div>"
-									callback({icon: icon, message: message, html: responseHTML, url: url})
+								// send response
+									var firstResult = results.shift()
+										firstResult.results = results
+									callback(firstResult)
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I don't know any poems.", html: "<h2>Error: unable to access poems</h2>"})
@@ -4743,6 +4771,70 @@
 							}
 							catch (error) {
 								callback({icon, icon, error: true, message: "Uh... you suck.", html: "<h2>Error: unable to access insults</h2>"})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"get a fact": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4d6;"
+
+					// options
+						var options = {
+							responseType: "html",
+							url: "https://www.snapple.com/real-facts"
+						}
+
+					// proxy request
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// parse page
+									response = response.match(/var\spageData\s=\s([\s\S]*?)\<\/script\>/)
+
+								// no results
+									if (!response || !response.length) {
+										callback({icon, icon, error: true, message: "Fun fact: I couldn't access Snapple Facts.", html: "<h2>Error: unable to access facts</h2>"})
+										return
+									}
+
+								// clean up
+									response = response[0].replace("var pageData =", "").replace("</script>", "").trim()
+									if (response.endsWith(";")) {
+										response = response.slice(0, -1).trim()
+									}
+
+								// no results
+									if (!response || !response.length) {
+										callback({icon, icon, error: true, message: "Fun fact: I couldn't access Snapple Facts.", html: "<h2>Error: unable to access facts</h2>"})
+										return
+									}
+
+								// parse
+									response = JSON.parse(response)
+
+								// all results
+									var results = []
+									for (var i in response) {
+										var url = "https://www.snapple.com/real-facts/" + response[i].n
+										var message = response[i].d
+										var responseHTML = response[i].c + "<a target='_blank' href='" + url + "'><h2>" + response[i].d + "</h2></a>"
+										results.push({icon: icon, message: message, html: responseHTML, url: url})
+									}
+
+								// randomize
+									results = FUNCTION_LIBRARY.sortRandom(results)
+
+								// send response
+									var firstResult = results.shift()
+										firstResult.results = results
+									callback(firstResult)
+							}
+							catch (error) {
+								callback({icon, icon, error: true, message: "Fun fact: I couldn't access Snapple Facts.", html: "<h2>Error: unable to access facts</h2>"})
 							}
 						})
 				}
@@ -5603,47 +5695,72 @@
 							return
 						}
 
-					// remove "by"
-						var search = remainder.replace(/ performed by | played by | written by | composed by | sung by | by /gi, " ")
-
-					// attempt counter
-						if (!window.CONTEXT_LIBRARY["lyrics attempt counter"]) {
-							window.CONTEXT_LIBRARY["lyrics attempt counter"] = 1
+					// missing config?
+						if (!window.CONFIGURATION_LIBRARY["stands4 id"] || !window.CONFIGURATION_LIBRARY["stands4 api key"]) {
+							callback({icon: icon, error: true, message: "I'm not authorized to do that yet. Set a configuration for stands4 id & stands4 api key.", html: "<h2>Error: missing configuration:</h2><li>stands4 id</li><li>stands4 api key</li>"})
+							return
 						}
+
+					// split at "by"
+						var search = remainder.split(/ performed by | played by | written by | composed by | sung by | by /gi)
+						var title = search[0]
+						var artist = search[1] || null
 
 					// options
 						var options = {
 							responseType: "json",
-							url: "https://mourits.xyz:2096/?q=" + search
+							url: "https://www.stands4.com/services/v2/lyrics.php?format=json&uid=" + window.CONFIGURATION_LIBRARY["stands4 id"] + "&tokenid=" + window.CONFIGURATION_LIBRARY["stands4 api key"] + "&term=" + title + (artist ? ("&artist=" + artist) : "")
 						}
 
 					// proxy to server
 						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
 							try {
 								// unsuccessful
-									if (!response.success || !response.result) {
-										// too long (fewer than 5 attempts)
-											if (window.CONTEXT_LIBRARY["lyrics attempt counter"] < 5) {
-												window.CONTEXT_LIBRARY["lyrics attempt counter"]++
-												window.ACTION_LIBRARY["get lyrics"](remainder, callback)
-												return
-											}
-
-										// other error
-											window.CONTEXT_LIBRARY["lyrics attempt counter"] = 0
-											callback({icon: icon, error: true, message: "I was unable to get lyrics for " + remainder, html: "<h2>Error: no results:</h2>" + response.error})
-											return
+									if (!response || !response.result || !response.result.length || !response.result[0]["song-link"]) {
+										callback({icon: icon, error: true, message: "I was unable to get lyrics for " + remainder, html: "<h2>Error: no results:</h2>"})
+										return
 									}
+
+								// data
+									var title = response.result[0].song
+									var artist = response.result[0].artist
+									var album = response.result[0].album
+									var url = "https://www.lyrics.com/db-print.php?id=" + response.result[0]["song-link"].split("/")[4]
+
+								// options (parse print view for lyrics)
+									var options = {
+										responseType: "html",
+										url: url
+									}
+
+								// proxy to server
+									window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+										try {
+											// parse page
+												response = response.match(/\<pre\sid\=\"lyric\-body\-text\"\sclass\=\"lyric\-body"\sstyle\=\"clear\:both\;\"\>([\s\S]*?)\<\/pre\>/)
+
+											// no results
+												if (!response || !response.length) {
+													callback({icon, icon, error: true, message: "I couldn't parse those lyrics.", html: "<h2>Error: unable to parse lyrics</h2><li>title: " + title + "</li><li>artist: " + artist + "</li><li>album: " + album + "</li>"})
+													return
+												}
+
+											// clean up
+												response = response[0].replace("<pre id=\"lyric-body-text\" class=\"lyric-body\" style=\"clear:both;\">", "").replace("</pre>", "").trim()
+												var lyrics = response.split(/\n/)
 								
-								// respond with answer
-									window.CONTEXT_LIBRARY["lyrics attempt counter"] = 0
-									
-									var message = response.result.lyrics.replace(/\[.*[^\]]\]/gi, "").trim().replace(/\n\n\n|\n\n|\n/gi, " ... ")
-									var url = response.result.source ? response.result.source.url : null
-									var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + response.song + "</h2></a>" +
-										"<h3>" + response.artist + "</h3>" +
-										"<p>" + response.result.lyrics.replace(/\n\n\n|\n\n|\n/gi, "<br>") + "</p>"
-									callback({icon: icon, message: message, html: responseHTML, url: url})
+											// respond with lyrics
+												var message = "Here are the lyrics for " + title + " by " + artist + ": ... " + lyrics.join(" ... ")
+												var responseHTML = "<a target='_blank' href='" + url + "'><h2>" + title + "</h2></a>" +
+													"<h3>by <b>" + artist + "</b></h3>" +
+													"<h3>from <b>" + album + "</b></h3>" +
+													"<p>" + lyrics.join("<br>") + "</p>"
+												callback({icon: icon, message: message, html: responseHTML, url: url})
+										}
+										catch (error) {
+											callback({icon: icon, error: true, message: "I was unable to get lyrics for " + remainder, html: "<h2>Error: unable to access lyrics:</h2>" + remainder})
+										}
+									})
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to get lyrics for " + remainder, html: "<h2>Error: unable to access lyrics:</h2>" + remainder})

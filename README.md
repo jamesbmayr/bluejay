@@ -303,6 +303,11 @@ Some actions can get information from a publicly accessible HTML page, or an XML
 <li>"define idiom" → https://www.thefreedictionary.com/_/partner.aspx?Set=idioms&Word=<b>{search}</b></li>
 </ul>
 
+<h4>Snapple Facts</h4>
+<ul>
+<li>"get a fact" → https://www.snapple.com/real-facts/</li>
+</ul>
+
 <h4>Various RSS Feeds</h4>
 <ul>
 <li>"get the latest post" →  RSS feeds</li>
@@ -356,6 +361,11 @@ Other actions involve fetching information from an external API. Several of thes
 <li>"get an insult" → https://evilinsult.com/generate_insult.php?lang=en&type=json</li>
 </ul>
 
+<h4>Trivia</h4>
+<ul>
+<li>"play true or false" → https://opentdb.com/api.php?amount=10&type=boolean</li>
+</ul>
+
 <h4>Wikipedia</h4>
 <ul>
 <li>"get a wikipedia entry" → https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=<b>{search}</b> & https://en.wikipedia.org/w/api.php?action=parse&format=json&utf8=1&page=<b>{search}</b></li>
@@ -365,11 +375,6 @@ Other actions involve fetching information from an external API. Several of thes
 <h4>Open Library</h4>
 <ul>
 <li>"get a book" → http://openlibrary.org/search.json?q=<b>{search}</b></li>
-</ul>
-
-<h4>Mourits</h4>
-<ul>
-<li>"find lyrics" → https://mourits.xyz:2096/?q=<b>{search}</b></li>
 </ul>
 
 <h4>OpenTrivia Database</h4>
@@ -500,6 +505,23 @@ Other APIs will require you to create a developer account and add your credentia
 <ol>
 <li>Create a free account: <a target="_blank" href="http://www.omdbapi.com/apikey.aspx">http://www.omdbapi.com/apikey.aspx</a></li>
 <li>Save your key as <code>omdb api</code>.</li>
+</ol>
+</li>
+</ul>
+<br>
+
+<h4>Stands4</h4>
+<ul>
+<li>actions:
+<ul>
+<li>"find lyrics" → https://www.stands4.com/services/v2/lyrics.php?format=json&uid=<b>{stands4 id}</b>&tokenid=<b>{stands4 api key}</b>&term=<b>{title search}</b>&artist=<b>{artist search}</b> → https://www.lyrics.com/db-print.php?id=<b>{song id}</b></li>
+</ul>
+</li>
+<li>setup:
+<ol>
+<li>Create a free account: <a target="_blank" href="https://www.lyrics.com/api.php">https://www.lyrics.com/api.php</a></li>
+<li>Save your user id as <code>stands4 uid</code>.</li>
+<li>Save your token as <code>stands4 api key</code>.</li>
 </ol>
 </li>
 </ul>

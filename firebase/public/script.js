@@ -29,6 +29,7 @@ window.addEventListener("load", function() {
 
 		/* context library */
 			var CONTEXT_LIBRARY = window.CONTEXT_LIBRARY = {
+				lastInteractionTime: new Date().getTime(),
 				lastPhrase: null,
 				lastAction: null,
 				lastRemainder: null,
@@ -73,12 +74,14 @@ window.addEventListener("load", function() {
 					"voice-volume": 100,
 					"screen-brightness": 100,
 					"fetch-interval": 3000,
-					"fetch-abandon": 120
+					"fetch-abandon": 120,
+					"dim-time": 1000 * 60 * 2
 				}
 			}
 
 		/* element library */
 			var ELEMENT_LIBRARY = window.ELEMENT_LIBRARY = {
+				"body": 						document.body,
 				"overlay": 						document.getElementById("overlay"),
 				"overlay-button": 				document.getElementById("overlay-button"),
 
@@ -230,6 +233,12 @@ window.addEventListener("load", function() {
 							INITIALIZED = true
 							ELEMENT_LIBRARY["overlay"].setAttribute("invisible", true)
 
+						// interaction
+							FUNCTION_LIBRARY.setLastInteraction()
+
+						// full screen
+							ELEMENT_LIBRARY.body.requestFullscreen()
+
 						// preload errors
 							ERROR_LIBRARY["noaction-index"] = Math.floor(Math.random() * ERROR_LIBRARY["noaction-responses"].length)
 							ERROR_LIBRARY["error-index"]    = Math.floor(Math.random() * ERROR_LIBRARY["error-responses"].length)
@@ -252,6 +261,36 @@ window.addEventListener("load", function() {
 						// loop
 							CONTEXT_LIBRARY.loop = setInterval(iterateState, CONFIGURATION_LIBRARY["state-interval"])
 					}
+				} catch (error) {}
+			}
+
+		/* setLastInteraction */
+			ELEMENT_LIBRARY["body"].addEventListener(ON.click, setLastInteraction)
+			ELEMENT_LIBRARY["inputs-text"].addEventListener("input", setLastInteraction)
+			FUNCTION_LIBRARY.setLastInteraction = setLastInteraction
+			function setLastInteraction(event) {
+				try {
+					// not initialized?
+						if (!INITIALIZED) {
+							return
+						}
+
+					// remember when last we interacted
+						CONTEXT_LIBRARY.lastInteractionTime = new Date().getTime()
+
+					// current brightness
+						var currentBrightness = (1 - Number(ELEMENT_LIBRARY["translucency"].style.opacity)) * 100
+
+					// if dimmed by user
+						if (!currentBrightness && CONFIGURATION_LIBRARY.settings["screen-brightness"] < 10) {
+							FUNCTION_LIBRARY.setBrightness(10)
+							return
+						}
+
+					// if dimmed from inactivity
+						if (currentBrightness < CONFIGURATION_LIBRARY.settings["screen-brightness"]) {
+							FUNCTION_LIBRARY.setBrightness(CONFIGURATION_LIBRARY.settings["screen-brightness"])
+						}
 				} catch (error) {}
 			}
 
@@ -544,7 +583,7 @@ window.addEventListener("load", function() {
 						}
 
 					// set brightness
-						setBrightness()
+						FUNCTION_LIBRARY.setBrightness()
 				} catch (error) {}
 			}
 
@@ -576,20 +615,31 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.uploadConfiguration = uploadConfiguration
 			function uploadConfiguration(event) {
 				try {
-					if (ELEMENT_LIBRARY["inputs-configuration"].value && ELEMENT_LIBRARY["inputs-configuration"].value.length) {
-						var reader = new FileReader()
-						reader.readAsText(event.target.files[0])
-						reader.onload = function(event) {
-							// data
-								var data = String(event.target.result)
-								try {
-									data = JSON.parse(data)
-									for (var i in data) {
-										changeConfiguration({key: i, value: data[i]})
-									}
-								} catch (error) {}
+					// interact
+						FUNCTION_LIBRARY.setLastInteraction()
+
+					// if file
+						if (ELEMENT_LIBRARY["inputs-configuration"].value && ELEMENT_LIBRARY["inputs-configuration"].value.length) {
+							// read
+								var reader = new FileReader()
+								reader.readAsText(event.target.files[0])
+
+							// then parse data
+								reader.onload = function(event) {
+									// data
+										var data = String(event.target.result)
+										try {
+											// get data & loop through to set configs
+												data = JSON.parse(data)
+												for (var i in data) {
+													changeConfiguration({key: i, value: data[i]})
+												}
+
+											// interact
+												FUNCTION_LIBRARY.setLastInteraction()
+										} catch (error) {}
+								}
 						}
-					}
 				} catch (error) {}
 			}
 
@@ -600,10 +650,13 @@ window.addEventListener("load", function() {
 				try {
 					// via input
 						if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-screen-brightness"].id) {
+							// interact
+								FUNCTION_LIBRARY.setLastInteraction()
+
 							// set brightness
 								CONFIGURATION_LIBRARY.settings["screen-brightness"] = Math.max(0, Math.min(100, Number(ELEMENT_LIBRARY["inputs-screen-brightness"].value)))
 								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-								setBrightness()
+								FUNCTION_LIBRARY.setBrightness()
 						}
 
 					// via action
@@ -619,7 +672,7 @@ window.addEventListener("load", function() {
 									ELEMENT_LIBRARY["inputs-screen-brightness"].value = newBrightness
 									CONFIGURATION_LIBRARY.settings["screen-brightness"] = newBrightness
 									window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
-									setBrightness()
+									FUNCTION_LIBRARY.setBrightness()
 									return newBrightness
 								}
 						}
@@ -633,9 +686,16 @@ window.addEventListener("load", function() {
 
 		/* setBrightness */
 			FUNCTION_LIBRARY.setBrightness = setBrightness
-			function setBrightness() {
+			function setBrightness(amount) {
 				try {
-					ELEMENT_LIBRARY["translucency"].style.opacity = Math.max(0, Math.min(1, 1 - (CONFIGURATION_LIBRARY.settings["screen-brightness"] / 100)))
+					// from touch / inactivity
+						if (amount !== undefined && amount !== null) {
+							ELEMENT_LIBRARY["translucency"].style.opacity = Math.max(0, Math.min(1, (100 - amount) / 100))
+							return
+						}
+
+					// from command / settings change
+						ELEMENT_LIBRARY["translucency"].style.opacity = Math.max(0, Math.min(1, 1 - (CONFIGURATION_LIBRARY.settings["screen-brightness"] / 100)))
 				} catch (error) {}
 			}
 
@@ -651,6 +711,11 @@ window.addEventListener("load", function() {
 
 					// update timers
 						FUNCTION_LIBRARY.checkAlarms()
+
+					// check if inactive
+						if (new Date().getTime() > CONTEXT_LIBRARY.lastInteractionTime + CONFIGURATION_LIBRARY.settings["dim-time"]) {
+							FUNCTION_LIBRARY.setBrightness(MOBILE ? 0 : 10)
+						}
 				} catch (error) {}
 			}
 
@@ -726,6 +791,8 @@ window.addEventListener("load", function() {
 
 					// toggle checkbox
 						else {
+							FUNCTION_LIBRARY.setLastInteraction()
+
 							CONFIGURATION_LIBRARY.settings["whistle-on"] = ELEMENT_LIBRARY["inputs-whistle-on"].checked || false
 							window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
 
@@ -883,6 +950,7 @@ window.addEventListener("load", function() {
 								var difference = Math.abs(biggest - smallest)
 
 								if (CONFIGURATION_LIBRARY.settings["whistle-interval-minimum"] <= difference && difference <= CONFIGURATION_LIBRARY.settings["whistle-interval-maximum"]) { // minor 2nd to perfect 4th
+									FUNCTION_LIBRARY.setLastInteraction()
 									FUNCTION_LIBRARY.startRecognizing({chirp: true})
 								}
 							}
@@ -916,6 +984,9 @@ window.addEventListener("load", function() {
 				try {
 					// via input
 						if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-recognition-duration"].id) {
+							// interact
+								FUNCTION_LIBRARY.setLastInteraction()
+
 							// set duration
 								CONFIGURATION_LIBRARY.settings["recognition-duration"] = Math.max(1, Math.min(60, Number(ELEMENT_LIBRARY["inputs-recognition-duration"].value)))
 								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
@@ -950,6 +1021,9 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.changeRecognizing = changeRecognizing
 			function changeRecognizing(event) {
 				try {
+					// interact
+						FUNCTION_LIBRARY.setLastInteraction()
+
 					// manual stop (don't transcribe)
 						if (RECOGNITION_LIBRARY.active) {
 							FUNCTION_LIBRARY.stopRecognizing(false)
@@ -1061,6 +1135,9 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.submitPhrase = submitPhrase
 			function submitPhrase(event) {
 				try {
+					// interact
+						FUNCTION_LIBRARY.setLastInteraction()
+
 					// get text
 						var phrase = ELEMENT_LIBRARY["inputs-text"].value || ""
 
@@ -1080,6 +1157,11 @@ window.addEventListener("load", function() {
 			FUNCTION_LIBRARY.matchPhrase = matchPhrase
 			function matchPhrase(event) {
 				try {
+					// interact
+						if (event && event.type == "result") {
+							FUNCTION_LIBRARY.setLastInteraction()
+						}
+
 					// cancel countdown
 						clearInterval(RECOGNITION_LIBRARY.countdown)
 
@@ -1438,10 +1520,15 @@ window.addEventListener("load", function() {
 			function changeVoice(event) {
 				try {
 					// via select
-						if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-voice"].id && VOICE_LIBRARY.voices[ELEMENT_LIBRARY["inputs-voice"].value.toLowerCase()]) {
+						if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-voice"].id) {
+							// interact
+								FUNCTION_LIBRARY.setLastInteraction()
+
 							// set voice from library
-								CONFIGURATION_LIBRARY.settings["voice"] = ELEMENT_LIBRARY["inputs-voice"].value.toLowerCase()
-								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+								if (VOICE_LIBRARY.voices[ELEMENT_LIBRARY["inputs-voice"].value.toLowerCase()]) {
+									CONFIGURATION_LIBRARY.settings["voice"] = ELEMENT_LIBRARY["inputs-voice"].value.toLowerCase()
+									window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
+								}
 						}
 
 					// via action
@@ -1469,6 +1556,9 @@ window.addEventListener("load", function() {
 				try {
 					// via input
 						if (event.target && event.target.id == ELEMENT_LIBRARY["inputs-voice-volume"].id) {
+							// interact
+								FUNCTION_LIBRARY.setLastInteraction()
+
 							// set volume
 								CONFIGURATION_LIBRARY.settings["voice-volume"] = Math.max(0, Math.min(100, Number(ELEMENT_LIBRARY["inputs-voice-volume"].value)))
 								window.localStorage.setItem("CONFIGURATION_LIBRARY", JSON.stringify(CONFIGURATION_LIBRARY))
