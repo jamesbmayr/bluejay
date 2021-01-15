@@ -387,6 +387,11 @@ Other actions involve fetching information from an external API. Several of thes
 <li>"play hangman" → http://random-word-api.herokuapp.com/word?number=100</li>
 </ul>
 
+<h4>Mad Libz</h4>
+<ul>
+<li>"play mad libs" → http://madlibz.herokuapp.com/api/random?minlength=5&maxlength=25</li>
+</ul>
+
 <h4>Sunrise-Sunset</h4>
 <ul>
 <li>"get the sunrise" → https://api.sunrise-sunset.org/json?lat=<b>{lat}</b>&lng=<b>{long}</b>&date=<b>{date}</b></li>
@@ -520,7 +525,7 @@ Other APIs will require you to create a developer account and add your credentia
 <li>setup:
 <ol>
 <li>Create a free account: <a target="_blank" href="https://www.lyrics.com/api.php">https://www.lyrics.com/api.php</a></li>
-<li>Save your user id as <code>stands4 uid</code>.</li>
+<li>Save your user id as <code>stands4 id</code>.</li>
 <li>Save your token as <code>stands4 api key</code>.</li>
 </ol>
 </li>

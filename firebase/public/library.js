@@ -1890,6 +1890,23 @@
 			"i want to guess a word": 			"play hangman",
 			"i want to guess your word": 		"play hangman",
 
+			"play mad libs": 					"play mad libs",
+			"lets play mad libs": 				"play mad libs",
+			"do mad libs": 						"play mad libs",
+			"lets do mad libs": 				"play mad libs",
+			"play a mad lib": 					"play mad libs",
+			"lets play a mad lib": 				"play mad libs",
+			"do a mad lib": 					"play mad libs",
+			"lets do a mad lib": 				"play mad libs",
+			"play madlibs": 					"play mad libs",
+			"lets play madlibs": 				"play mad libs",
+			"do madlibs": 						"play mad libs",
+			"lets do madlibs": 					"play mad libs",
+			"play a madlib": 					"play mad libs",
+			"lets play a madlib": 				"play mad libs",
+			"do a madlib": 						"play mad libs",
+			"lets do a madlib": 				"play mad libs",
+
 		// IFTTT
 			"trigger i f t t t": 				"trigger ifttt",
 			"trigger ifttt": 					"trigger ifttt",
@@ -9045,6 +9062,141 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
+			"play mad libs": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4dd;"
+
+					// remainder
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+
+					// initialize game
+						if (window.CONTEXT_LIBRARY.flow !== "play mad libs") {
+							// options
+								var options = {
+									responseType: "json",
+									url: "http://madlibz.herokuapp.com/api/random?minlength=5&maxlength=25"
+								}
+
+							// proxy to server
+								window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+									try {
+										// blanks
+											var blanks = []
+											for (var i = 0; i < response.blanks.length; i++) {
+												blanks.push({
+													index: i,
+													an: ["a", "e", "i", "o", "u"].includes(response.blanks[i][0]) || false,
+													type: response.blanks[i].replace(/s$/,""),
+													word: null
+												})
+											}
+										// start the flow
+											window.CONTEXT_LIBRARY.flow = "play mad libs"
+											window.CONTEXT_LIBRARY["play mad libs"] = {
+												currentIndex: null,
+												title: response.title,
+												blanks: blanks,
+												phrases: response.value
+											}
+
+										// gameState
+											var gameState = window.CONTEXT_LIBRARY["play mad libs"]
+
+										// blanks
+											var remainingBlanks = gameState.blanks.filter(function(i) { return !i.word })
+											var currentBlank = window.FUNCTION_LIBRARY.chooseRandom(remainingBlanks)
+											gameState.currentIndex = currentBlank.index
+
+										// message
+											var message = "Okay. Let's start with" + (currentBlank.an ? " an " : " a ") + " ... " + currentBlank.type
+
+										// html
+											var currentList = ""
+											for (var i = 0; i < gameState.blanks.length; i++) {
+												currentList += "<li>" + gameState.blanks[i].type + ": <b>" + (gameState.blanks[i].word || "") + "</b></li>"
+											}
+											var responseHTML = "<h2>word type: " + currentBlank.type + "</h2><ul>" + currentList + "</ul>"
+
+										// response
+											callback({icon: icon, message: message, html: responseHTML})
+									}
+									catch (error) {
+										window.CONTEXT_LIBRARY.flow = null
+										delete window.CONTEXT_LIBRARY["play mad libs"]
+										callback({icon: icon, error: true, message: "I couldn't access the Mad Libs API.", html: "<h2>Error: unable to access Mad Libs API</h2>"})
+									}
+								})
+						}
+
+					// hear a word --> add to list --> ask for another
+						else {
+							// no word
+								if (!remainder) {
+									callback({icon: icon, error: true, message: "I don't understand that word.", html: "<h2>Error: invalid word</h2>"})
+									return
+								}
+
+							// gameState
+								var gameState = window.CONTEXT_LIBRARY["play mad libs"]
+
+							// record word
+								gameState.blanks[gameState.currentIndex].word = remainder
+
+							// blanks
+								var remainingBlanks = gameState.blanks.filter(function(i) { return !i.word })
+
+							// remaining blanks
+								if (remainingBlanks && remainingBlanks.length) {
+									// current
+										var currentBlank = window.FUNCTION_LIBRARY.chooseRandom(remainingBlanks)
+										gameState.currentIndex = currentBlank.index
+
+									// message
+										var message = window.FUNCTION_LIBRARY.chooseRandom(["Now I need", "Give me", "Can I get", "What about", "How about", "Tell me", "Next do", "Think of", "Next we need", "Okay, and"]) + 
+											(currentBlank.an ? " an " : " a ") + " ... " + currentBlank.type
+
+									// html
+										var currentList = ""
+										for (var i = 0; i < gameState.blanks.length; i++) {
+											currentList += "<li>" + gameState.blanks[i].type + ": <b>" + (gameState.blanks[i].word || "") + "</b></li>"
+										}
+
+										var responseHTML = "<h2>next word type: " + currentBlank.type + "</h2><ul>" + currentList + "</ul>"
+
+									// response
+										callback({icon: icon, message: message, html: responseHTML})
+								}
+
+							// storytime
+								else {
+									// compute story
+										var story = []
+										for (var i = 0; i < gameState.blanks.length; i++) {
+											story.push(gameState.phrases[i])
+											
+											if (gameState.blanks[i]) {
+												story.push("<b>" + gameState.blanks[i].word + "</b>")
+											}
+										}
+
+									// message
+										var message = "Here's the story... " + gameState.title + " ... " + story.join(" ").replace(/\<\/b\>|\<b\>/gi, "")
+										var responseHTML = "<h2>" + gameState.title + "</h2><p>" + story.join("") + "</p>"
+
+									// response
+										callback({icon: icon, message: message, html: responseHTML})
+
+									// end flow
+										window.CONTEXT_LIBRARY.flow = null
+										delete window.CONTEXT_LIBRARY["play mad libs"]
+								}
+						}
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
 	
 		// IFTTT
 			"trigger ifttt": function(remainder, callback) {
@@ -9068,7 +9220,7 @@
 					// split remainder
 						var components = remainder.replace(/bluejay/gi, "").split(/ to | become | into | at /gi)
 						var deviceName = components[0].trim().replace(/the /gi,"")
-						var desiredState = components[1] ? window.FUNCTION_LIBRARY.getDigits(components[1].replace(/percent|per cent/gi, "").trim()) : null
+						var desiredState = components[1] ? window.FUNCTION_LIBRARY.getDigits(components[1].replace(/percent|per cent/gi, "").replace(/a\shundred/gi, "hundred").trim()) : null
 						var number = null
 
 					// replace number words with numbers
