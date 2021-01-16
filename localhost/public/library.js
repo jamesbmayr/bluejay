@@ -187,6 +187,21 @@
 			"open in a new window": 			"open",
 			"open in another window": 			"open",
 
+			"wait": 							"wait",
+			"wait for": 						"wait",
+			"wait about": 						"wait",
+			"in": 								"wait",
+			"in about": 						"wait",
+			"at": 								"wait",
+			"at about": 						"wait",
+			"wait until": 						"wait",
+			"wait till": 						"wait",
+			"when it is": 						"wait",
+			"when its": 						"wait",
+			"when the time is": 				"wait",
+			"when it has been": 				"wait",
+			"when its been": 					"wait",
+
 		// settings
 			"stop listening": 					"stop listening",
 			"stop listening to me": 			"stop listening",
@@ -2802,6 +2817,48 @@
 					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
 				}
 			},
+			"wait": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x23f1;"
+
+					// no remainder
+						remainder = remainder.trim()
+						if (!remainder || !remainder.trim()) {
+							callback({icon: icon, error: true, message: "How long should I wait, and what should I do?", html: "<h2>Error: invalid request</h2>"})
+							return
+						}
+
+					// split time vs. command
+						remainder = remainder.split(/(\sthen\s)?(i\swant\syou\sto\s|can\syou\s)?(do|run|perform|answer\sme|answer)\s/gi)
+						var timePhrase = remainder[0].trim()
+						var actionPhrase = remainder[remainder.length - 1].trim()
+						if (remainder.length < 2 || !timePhrase || !actionPhrase) {
+							callback({icon: icon, error: true, message: "How long should I wait, and what should I do?", html: "<h2>Error: invalid request</h2>"})
+							return
+						}
+
+					// hijack alarm
+						window.ACTION_LIBRARY["set alarm"](timePhrase, function(alarmResponse) {
+							// unable to set alarm
+								if (!alarmResponse || alarmResponse.error) {
+									callback({icon: icon, error: true, message: "I didn't understand. How long should I wait?", html: "<h2>Error: invalid time</h2><br>to run <b>" + actionPhrase + "</b>"})
+									return
+								}
+
+							// add action to alarm
+								window.CONTEXT_LIBRARY.alarms[window.CONTEXT_LIBRARY.alarms.length - 1].action = actionPhrase
+
+							// replace some things
+								var message = alarmResponse.message + " ... to do this action... " + actionPhrase
+								var responseHTML = alarmResponse.html + "<br><b><i>" + actionPhrase + "</i></b>"
+ 								callback({icon: icon, message: message, html: responseHTML, time: alarmResponse.time})
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
 
 		// settings
 			"stop listening": function(remainder, callback) {
@@ -3441,7 +3498,7 @@
 								}
 
 							// alarm
-								else if (remainder.includes("alarm") || remainder.includes("timer")) {
+								else if (remainder.includes("alarm") || remainder.includes("timer") || remainder.includes("action")) {
 									var index = null
 									var words = remainder.split(/\s/gi)
 									for (var i in words) {
@@ -3455,7 +3512,7 @@
 										callback({icon: icon, error: true, message: "I couldn't find that alarm.", html: "<h2>Error: invalid alarm</h2>"})
 										return
 									}
-									var date = new Date(window.CONTEXT_LIBRARY.alarms[index - 1])
+									var date = new Date(window.CONTEXT_LIBRARY.alarms[index - 1].time)
 								}
 
 							// getDateTime
@@ -3505,7 +3562,7 @@
 								}
 
 							// alarm
-								else if (remainder.includes("alarm") || remainder.includes("timer")) {
+								else if (remainder.includes("alarm") || remainder.includes("timer") || remainder.includes("action")) {
 									var index = null
 									var words = remainder.split(/\s/gi)
 									for (var i in words) {
@@ -3519,7 +3576,7 @@
 										callback({icon: icon, error: true, message: "I couldn't find that alarm.", html: "<h2>Error: invalid alarm</h2>"})
 										return
 									}
-									var date = new Date(window.CONTEXT_LIBRARY.alarms[index - 1])
+									var date = new Date(window.CONTEXT_LIBRARY.alarms[index - 1].time)
 								}
 
 							// getDateTime
@@ -3630,7 +3687,7 @@
 					// endTime
 						if (endTime && !isNaN(endTime)) {
 							// add alarm
-								window.CONTEXT_LIBRARY.alarms.push(endTime)
+								window.CONTEXT_LIBRARY.alarms.push({time: endTime})
 
 							// response
 								var time = new Date(endTime)
@@ -3648,18 +3705,26 @@
 					// icon
 						var icon = "&#x23f0;"
 
-					// loop through alarms
+					// current time
+						var timeNow = new Date().getTime()
+
+					// starting blocks
 						var time = null
-						var message = "Here are your upcoming alarms: "
-						var responseHTML = "<h2>all upcoming alarms</h2><ul>"
+						var message = "Here are your upcoming alarms and scheduled actions: "
+						var responseHTML = "<h2>all upcoming alarms & scheduled actions</h2><ul>"
+
+					// loop through alarms	
 						for (var i = 0; i < window.CONTEXT_LIBRARY.alarms.length; i++) {
-							var alarmTime = new Date(window.CONTEXT_LIBRARY.alarms[i])
-							if (alarmTime.getTime() > new Date().getTime()) {
-								if (!time) {
-									time = alarmTime.getTime()
+							var thisAlarm = window.CONTEXT_LIBRARY.alarms[i]
+							if (thisAlarm && thisAlarm.time) {
+								var alarmTime = new Date(thisAlarm.time)
+								if (alarmTime.getTime() > timeNow) {
+									if (!time) {
+										time = alarmTime.getTime()
+									}
+									message += " ... alarm " + (i + 1) + ": " + alarmTime.toLocaleTimeString() + (thisAlarm.action ? (" ... to do this action... " + thisAlarm.action) : "")
+									responseHTML += "<li><b>alarm #" + (i + 1) + ":</b> " + alarmTime.toLocaleString() + (thisAlarm.action ? ("<br><b><i>" + thisAlarm.action + "</i></b>") : "") + "</li>"
 								}
-								message += " ... alarm " + (i + 1) + ": " + alarmTime.toLocaleTimeString()
-								responseHTML += "<li><b>alarm #" + (i + 1) + ":</b> " + alarmTime.toLocaleString() + "</li>"
 							}
 						}
 						responseHTML += "</ul>"
@@ -3677,7 +3742,7 @@
 						var icon = "&#x23f0;"
 
 					// no remainder
-						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim()
+						remainder = remainder.replace(/[?!.,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().replace("number","").replace("for", "four").trim()
 						if (!remainder || !remainder.trim()) {
 							callback({icon: icon, error: true, message: "What alarm should I cancel?", html: "<h2>Error: invalid query</h2>"})
 							return
@@ -3702,13 +3767,21 @@
 							return
 						}
 
-					// cancel alarm
-						var time = new Date(window.CONTEXT_LIBRARY.alarms[index - 1])
+					// get alarm
+						var thisAlarm = window.CONTEXT_LIBRARY.alarms[index - 1]
+						if (!thisAlarm || !thisAlarm.time) {
+							callback({icon: icon, error: true, message: "I was unable to find that alarm.", html: "<h2>Error: unable to cancel alarm:</h2>" + remainder})
+							return
+						}
+
+					// cancel
+						var time = new Date(thisAlarm.time)
+						var action = thisAlarm.action
 						window.CONTEXT_LIBRARY.alarms[index - 1] = null
 
 					// response
-						var message = "I cancelled alarm #" + index + ", which was set for " + time.toLocaleString() + "."
-						var responseHTML = "<h2>cancelled alarm #" + index + ": <b>" + time.toLocaleString() + "</b></h2>"
+						var message = "I cancelled alarm #" + index + ", which was set for " + time.toLocaleString() + (action ? (" ... to do this action... " + action) : "")
+						var responseHTML = "<h2>cancelled alarm #" + index + ": <b>" + time.toLocaleString() + "</b></h2>" + (thisAlarm.action ? ("<br><b><i>" + thisAlarm.action + "</i></b>") : "")
 						callback({icon: icon, message: message, html: responseHTML, time: time})
 				}
 				catch (error) {
@@ -3724,8 +3797,8 @@
 						window.CONTEXT_LIBRARY.alarms = []
 
 					// response
-						var message = "I turned off all alarms."
-						var responseHTML = "<h2>all alarms cancelled</h2>"
+						var message = "I turned off all alarms and scheduled actions."
+						var responseHTML = "<h2>all alarms & scheduled actions cancelled</h2>"
 						callback({icon: icon, message: message, html: responseHTML})
 				}
 				catch (error) {

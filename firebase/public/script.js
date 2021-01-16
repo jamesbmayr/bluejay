@@ -45,7 +45,8 @@ window.addEventListener("load", function() {
 				flow: null,
 				alarms: [],
 				startListening: null,
-				loop: null
+				loop: null,
+				overrideFollowup: false
 			}
 
 		/* error library */
@@ -105,6 +106,50 @@ window.addEventListener("load", function() {
 		/* number word library */
 			var NUMBER_WORD_LIBRARY = window.NUMBER_WORD_LIBRARY = {
 				"zero": 		0,
+				"quadrillionth": (1 / 1000000000000000),
+				"quadrillionths": (1 / 1000000000000000),
+				"trillionth": 	(1 / 1000000000000),
+				"trillionths": 	(1 / 1000000000000),
+				"billionth": 	(1 / 1000000000),
+				"billionths": 	(1 / 1000000000),
+				"millionth": 	(1 / 1000000),
+				"millionths": 	(1 / 1000000),
+				"thousandth": 	(1 / 1000),
+				"thousandths": 	(1 / 1000),
+				"hundredth": 	(1 / 100),
+				"hundredths": 	(1 / 100),
+				"ninetieth": 	(1 / 90),
+				"ninetieths": 	(1 / 90),
+				"eightieth": 	(1 / 80),
+				"eightieths": 	(1 / 80),
+				"seventieth": 	(1 / 70),
+				"seventieths": 	(1 / 70),
+				"sixtieth": 	(1 / 60),
+				"sixtieths": 	(1 / 60),
+				"fiftieth": 	(1 / 50),
+				"fiftieths": 	(1 / 50),
+				"fortieth": 	(1 / 40),
+				"fortieths": 	(1 / 40),
+				"fourtieth": 	(1 / 40),
+				"fourtieths": 	(1 / 40),
+				"thirtieth": 	(1 / 30),
+				"thirtieths": 	(1 / 30),
+				"twentieth": 	(1 / 20),
+				"twentieths": 	(1 / 20),
+				"nineteenth": 	(1 / 19),
+				"nineteenths": 	(1 / 19),
+				"eighteenth": 	(1 / 18),
+				"eighteenths": 	(1 / 18),
+				"seventeenth": 	(1 / 17),
+				"seventeenths": (1 / 17),
+				"sixteenth": 	(1 / 16),
+				"sixteenths": 	(1 / 16),
+				"fifteenth": 	(1 / 15),
+				"fifteenths": 	(1 / 15),
+				"fourteenth": 	(1 / 14),
+				"fourteenths": 	(1 / 14),
+				"thirteenth": 	(1 / 13),
+				"thirteenths": 	(1 / 13),
 				"twelfth": 		(1 / 12),
 				"twelfths": 	(1 / 12),
 				"eleventh": 	(1 / 11),
@@ -154,6 +199,7 @@ window.addEventListener("load", function() {
 				"twenty": 		20,
 				"thirty": 		30,
 				"forty": 		40,
+				"fourty": 		40,
 				"fifty": 		50,
 				"sixty": 		60,
 				"seventy": 		70,
@@ -163,7 +209,8 @@ window.addEventListener("load", function() {
 				"thousand": 	1000,
 				"million": 		1000000,
 				"billion": 		1000000000,
-				"trillion": 	1000000000000
+				"trillion": 	1000000000000,
+				"quadrillion": 	1000000000000000
 			}
 
 		/* letter word library */
@@ -951,6 +998,7 @@ window.addEventListener("load", function() {
 
 								if (CONFIGURATION_LIBRARY.settings["whistle-interval-minimum"] <= difference && difference <= CONFIGURATION_LIBRARY.settings["whistle-interval-maximum"]) { // minor 2nd to perfect 4th
 									FUNCTION_LIBRARY.setLastInteraction()
+									CONTEXT_LIBRARY.overrideFollowup = false
 									FUNCTION_LIBRARY.startRecognizing({chirp: true})
 								}
 							}
@@ -1428,9 +1476,35 @@ window.addEventListener("load", function() {
 
 					// loop through timers to check (and send a message)
 						for (var i = 0; i < CONTEXT_LIBRARY.alarms.length; i++) {
-							if (CONTEXT_LIBRARY.alarms[i] && CONTEXT_LIBRARY.alarms[i] <= timeNow) {
-								createHistory("...", "alarm", "", {icon: "&#x23f0;", auto: true, message: "This is your alarm for " + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleTimeString(), html: "<h2>alarm #" + (i + 1) + ": <b>" + new Date(CONTEXT_LIBRARY.alarms[i]).toLocaleString() + "</b></h2>", followup: false, auto: true})
-								CONTEXT_LIBRARY.alarms[i] = null
+							if (CONTEXT_LIBRARY.alarms[i] && CONTEXT_LIBRARY.alarms[i].time <= timeNow) {
+								// if speaking, stop and don't follow up
+									if (VOICE_LIBRARY.synthesizer.speaking) {
+										CONTEXT_LIBRARY.overrideFollowup = true
+										VOICE_LIBRARY.synthesizer.pause()
+									}
+
+								// if recognizing, stop
+									if (RECOGNITION_LIBRARY.active) {
+										FUNCTION_LIBRARY.stopRecognizing(false)
+									}
+
+								// clear alarm
+									var time = new Date(CONTEXT_LIBRARY.alarms[i].time).toLocaleString()
+									var action = CONTEXT_LIBRARY.alarms[i].action
+									CONTEXT_LIBRARY.alarms[i] = null
+
+								// action
+									if (action) {
+										FUNCTION_LIBRARY.matchPhrase({
+											inputType: "result",
+											results: [[{transcript: action}]]
+										})
+									}
+
+								// alarm message
+									else {
+										createHistory("...", "alarm", "", {icon: "&#x23f0;", auto: true, message: "This is your alarm for " + time, html: "<h2>alarm #" + (i + 1) + ": <b>" + time + "</b></h2>", followup: false, auto: true})
+									}
 							}
 						}
 				} catch (error) {}
@@ -1610,13 +1684,20 @@ window.addEventListener("load", function() {
 										utterance.voice = VOICE_LIBRARY.voices[voiceName || CONFIGURATION_LIBRARY.settings["voice"]]
 										utterance.volume = Math.max(0, Math.min(1, CONFIGURATION_LIBRARY.settings["voice-volume"] / 100))
 									if (response.followup) {
-										utterance.onend = FUNCTION_LIBRARY.startRecognizing
+										utterance.onend = function() {
+											if (CONTEXT_LIBRARY.overrideFollowup) {
+												CONTEXT_LIBRARY.overrideFollowup = false
+											}
+											else {
+												FUNCTION_LIBRARY.startRecognizing()
+											}
+										}
 									}
 
 								// speak
 									setTimeout(function() {
 										VOICE_LIBRARY.synthesizer.speak(utterance)
-									}, 1000)
+									}, CONFIGURATION_LIBRARY.settings["voice-delay"])
 							}
 					}, CONFIGURATION_LIBRARY.settings["voice-delay"])
 				} catch (error) {}
