@@ -1697,7 +1697,7 @@ window.addEventListener("load", function() {
 								// speak
 									setTimeout(function() {
 										VOICE_LIBRARY.synthesizer.speak(utterance)
-									}, CONFIGURATION_LIBRARY.settings["voice-delay"])
+									}, MOBILE ? 1000 : CONFIGURATION_LIBRARY.settings["voice-delay"])
 							}
 					}, CONFIGURATION_LIBRARY.settings["voice-delay"])
 				} catch (error) {}

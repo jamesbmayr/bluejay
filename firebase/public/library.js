@@ -2133,6 +2133,22 @@
 			"turn up the players in the": 		"turn up sonos device",
 			"turn up all players": 				"turn up sonos device",
 			"turn up the volume": 				"turn up sonos device",
+			"on sonos turn up the speaker in": 	"turn up sonos device",
+			"on sonos turn up the speaker in the": "turn up sonos device",
+			"on sonos turn up the speakers in": "turn up sonos device",
+			"on sonos turn up the speakers in the": "turn up sonos device",
+			"on sonos turn up all speakers": 	"turn up sonos device",
+			"on sonos turn up the device in": 	"turn up sonos device",
+			"on sonos turn up the device in the": "turn up sonos device",
+			"on sonos turn up the devices in": "turn up sonos device",
+			"on sonos turn up the devices in the": "turn up sonos device",
+			"on sonos turn up all devices": 	"turn up sonos device",
+			"on sonos turn up the player in": 	"turn up sonos device",
+			"on sonos turn up the player in the": "turn up sonos device",
+			"on sonos turn up the players in": 	"turn up sonos device",
+			"on sonos turn up the players in the": "turn up sonos device",
+			"on sonos turn up all players": 	"turn up sonos device",
+			"on sonos turn up the volume": 		"turn up sonos device",
 
 			"turn down sonos device": 			"turn down sonos device",
 			"turn down the speaker in": 		"turn down sonos device",
@@ -2146,6 +2162,22 @@
 			"turn down the players in the": 	"turn down sonos device",
 			"turn down all players": 			"turn down sonos device",
 			"turn down the volume": 			"turn down sonos device",
+			"on sonos turn down the speaker in": "turn down sonos device",
+			"on sonos turn down the speaker in the":"turn down sonos device",
+			"on sonos turn down the speakers in": "turn down sonos device",
+			"on sonos turn down the speakers in the":"turn down sonos device",
+			"on sonos turn down all speakers": 	"turn down sonos device",
+			"on sonos turn down the player in": "turn down sonos device",
+			"on sonos turn down the player in the": "turn down sonos device",
+			"on sonos turn down the players in": "turn down sonos device",
+			"on sonos turn down the players in the":"turn down sonos device",
+			"on sonos turn down the device in": "turn down sonos device",
+			"on sonos turn down the device in the":"turn down sonos device",
+			"on sonos turn down the devices in": "turn down sonos device",
+			"on sonos turn down the devices in the":"turn down sonos device",
+			"on sonos turn down all devices": 	"turn down sonos device",
+			"on sonos turn down all players": 	"turn down sonos device",
+			"on sonos turn down the volume": 	"turn down sonos device",
 
 			"pause sonos device": 				"pause sonos device",
 			"pause sonos devices": 				"pause sonos device",
@@ -2439,6 +2471,19 @@
 			"do a decryption for": 				"decrypt message",
 			"perform a decryption": 			"decrypt message",
 			"perform a decryption for": 		"decrypt message",
+
+			"generate words": 					"generate words",
+			"generate word": 					"generate words",
+			"generate a word": 					"generate words",
+			"invent words": 					"generate words",
+			"invent word": 						"generate words",
+			"invent a word": 					"generate words",
+			"make up words": 					"generate words",
+			"make up word": 					"generate words",
+			"make up a word": 					"generate words",
+			"create words": 					"generate words",
+			"create word": 						"generate words",
+			"create a word": 					"generate words",
 	}
 
 /* action library */
@@ -10972,6 +11017,60 @@
 							}
 							catch (error) {
 								callback({icon: icon, error: true, message: "I was unable to decrypt.", html: "<h2>Error: unable to access messageEncrypter</h2>"})
+							}
+						})
+				}
+				catch (error) {
+					callback({icon: icon, error: true, message: "I was unable to " + arguments.callee.name + ".", html: "<h2>Unknown error in <b>" + arguments.callee.name + "</b>:</h2>" + error})
+				}
+			},
+			"generate words": function(remainder, callback) {
+				try {
+					// icon
+						var icon = "&#x1f4dd;"
+
+					// clean remainder
+						remainder = " " + remainder.replace(/[?!,:;'"_\/\(\)\$\%]/gi,"").toLowerCase().trim() + " "
+
+					// parameters
+						var type = remainder.split(/ that are type | that is type | thats type | of type | type | that is | that are | thats /gi)
+							type = type[1] ? type[1].split(/ with /gi)[0].trim() : null
+
+						if (remainder.indexOf("syllable") >= 0) {
+							var syllableCount = remainder.split(/ syllable | syllables /gi)
+								syllableCount = (syllableCount[0].split(/ with /gi)[1] || "").trim()
+
+							if (syllableCount && syllableCount.length) {
+								syllableCount = syllableCount.split(/\s/g)
+								for (var i in syllableCount) {
+									syllableCount[i] = window.FUNCTION_LIBRARY.getDigits(syllableCount[i])
+								}
+								syllableCount = Number(syllableCount.join("")) || null
+							}
+						}
+						
+					// options
+						var options = {
+							responseType: "json",
+							url: "https://us-central1-projects-3bd0e.cloudfunctions.net/wordsgenerator?from=bluejay" + (type ? "&type=" + type : "") + (syllableCount ? "&syllableCounts=[" + syllableCount + "]" : "")
+						}
+
+					// proxy to server
+						window.FUNCTION_LIBRARY.proxyRequest(options, function(response) {
+							try {
+								// failure
+									if (!response.success) {
+										callback({icon: icon, error: true, message: "I was unable to generate words.", html: "<h2>Error: unable to generate words</h2>" + (type ? "<li>type: <b>" + type + "</b></li>" : "") + (syllableCount ? "<li>syllables: <b>" + syllableCount + "</b></li>" : "")})
+										return
+									}
+
+								// response
+									var message = "Here are some " + (type ? type : "") + " words " + (syllableCount ? "with " + syllableCount + " syllable" + (syllableCount > 1 ? "s" : "") : "") + " ... " + response.words.join(" ... ")
+									var responseHTML = "<h2>" + (type ? "<b>" + type + "</b> " : "") + "words" + (syllableCount ? " with <b>" + syllableCount + "</b> syllable" + (syllableCount > 1 ? "s" : "") : "") + "</h2><li>" + response.words.join("</li><li>") + "</li>"
+									callback({icon: icon, message: message, html: responseHTML})
+							}
+							catch (error) {
+								callback({icon: icon, error: true, message: "I was unable to generate words.", html: "<h2>Error: unable to access wordsGenerator</h2>"})
 							}
 						})
 				}
