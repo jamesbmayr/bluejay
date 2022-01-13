@@ -10796,7 +10796,7 @@
 								
 								// response
 									var message = response.smallOutput.replace(/\#/gi," sharp").replace(/b/g, " flat")
-									var responseHTML = response.chord.join(" - ") + "<h2>" + response.bigOutput + "</h2>" + response.smallOutput
+									var responseHTML = response.chord.join(" - ") + "<h2>" + response.shortName + "</h2>" + response.longName
 									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
@@ -10963,8 +10963,8 @@
 									}
 
 								// response
-									var message = response.html
-									var responseHTML = "<h2>" + response.html + "</h2>"
+									var message = response.output
+									var responseHTML = "<h2>" + response.output + "</h2>"
 									callback({icon: icon, message: message, html: responseHTML})
 							}
 							catch (error) {
